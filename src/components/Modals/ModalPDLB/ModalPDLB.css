@@ -1,0 +1,23 @@
+.pdlbBtns{
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: -5px;
+    background-color:rgb(87, 30, 30);
+    padding: 12px;
+}
+
+.pdlbBtn{
+    border: none;
+    padding: 6px;
+    background-image: linear-gradient(to bottom, rgb(126, 25, 25), rgb(177, 63, 63));
+    color: whitesmoke;
+    border-radius: 5px;
+}
+
+.pdlbBtn:hover{
+    background-color: black;
+}
+
+.formSelectApi{
+    height: 250px;
+}

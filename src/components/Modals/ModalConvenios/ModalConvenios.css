@@ -1,0 +1,43 @@
+.tableSectionConvenios{
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.btnSection{
+    display: flex;
+    gap: 4px;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.inputNumSection{
+   display: flex;
+}
+
+.tableSectionConvenios button{
+    text-align: center;
+    font-size: 30px;
+    background-color: rgb(211, 174, 174);
+    border-radius: 8px;
+    border: none;
+    padding: 8px;
+}
+
+.tableSectionConvenios button:hover{
+    background-color: rgb(134, 55, 72);
+    color: whitesmoke;
+}
+
+
+.inlineBlock{
+    display: inline-block;
+}
+
+.radioInputs{
+    display: flex;
+    align-items: center;
+    position: relative;
+    bottom: 10px;
+    box-shadow: 1px 1px 3px 2px rgb(95, 8, 8);
+}
