@@ -1,13 +1,14 @@
 import axios from 'axios'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { AXIOS_ERROR, SET_LOADING } from '../../redux/types/fetchTypes'
 import ButtonLarge from '../Buttons/ButtonLarge'
 import "./Footer.css"
 
-const Footer = () => {
+const Footer = ({setTokenDef}) => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const empleadoUno = useSelector((state)=> state.employeStates.employe);
     const urlReporteAsignacionesFamiliares = `http://54.243.192.82/api/ReporteAsignacionesFamiliares/${empleadoUno.iDempleado},%201`;
     const urlReporteResumenLegajo = `http://54.243.192.82/api/ResumenDeLegajo/Get?IDempleado=${empleadoUno.iDempleado}&idParametro=1`
@@ -45,7 +46,7 @@ const Footer = () => {
         <div className="col-4 salirExit ">
             <div className="row justify-content-end">
                 <div className="col-md-1">
-                    <Link className="btn btn-danger btn-lg contFooter" to="/">Salir</Link>
+                    <Link className="btn btn-danger btn-lg contFooter" to="/" onClick={()=>{setTokenDef(""); navigate("/")}}>Salir</Link>
                 </div>
             </div>
         </div>
