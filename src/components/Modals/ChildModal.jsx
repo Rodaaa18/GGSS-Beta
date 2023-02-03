@@ -30,7 +30,8 @@ const ChildModal = ({nameModalProp, disabled, array , propsModal, optionsInputs,
                         <option
                             key={i}
                             value={op && op[propsModal.propArrayId]}
-                            onClick={() => setValueItemModal(op)}  // si se rompe el abm comentar esta linea y descomentar la de abajo
+                            onClick={() => setValueItemModal(op)}  
+                            // si se rompe el abm comentar esta linea y descomentar la de abajo
                             //onClick={() => dispatch(dispatchGetID(op[propArrayId]))}
                         >
                             {op && op[propsModal.propArrayOp]}

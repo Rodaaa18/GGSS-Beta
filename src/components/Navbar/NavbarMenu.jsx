@@ -14,7 +14,7 @@ import { addEstadosCiviles, addEstados, addPaises, addEstudios, addTiposDocument
 import { addSelectedCargo, addSelectedEstado, addSelectedEstadoCivil, addSelectedEstudio, addSelectedFormaPago, addSelectedParentesco, addSelectedTarea, addSelectedTipoDocu, setRefetch } from '../../redux/actions/modalesActions';
 import ButtonCallModal from "../ButtonCallModal/ButtonCallModal";
 import ChildModal from "../Modals/ChildModal";
-import { propsModal } from "../Modals/props";
+import { propsModal, propsModalTiposDocumento } from "../Modals/props";
 
 
 // import { getEstadosCivilesModal } from '../../services/fetchAPI';
@@ -132,8 +132,6 @@ const NavbarMenu = () => {
         
     }
 	
-    
-
 	const urlEstadosCiviles = "http://54.243.192.82/api/EstadosCiviles"
 	const urlEstudios = "http://54.243.192.82/api/Estudios"
 	const urlTiposDocumento = "http://54.243.192.82/api/TiposDocumento"
@@ -249,6 +247,24 @@ const NavbarMenu = () => {
         femenino : modalValues?.femenino
     }
 	//Estudios
+	
+	//Tipo Documento
+	const bodyTipoDocumento =
+		{
+			"iDtipoDocumento": ((tiposDocumentoValue && tiposDocumentoValue[tiposDocumentoValue.length - 1] !== undefined && (tiposDocumentoValue[tiposDocumentoValue.length - 1].iDtipoDocumento)) + 1),
+			"tipoDocumento": modalValues?.tipoDocumento,
+			"id": null
+		}
+	const bodyUpdateTipoDocumento = {
+		"iDtipoDocumento": valueItemModal?.iDtipoDocumento, 
+		"tipoDocumento": modalValues?.tipoDocumento,
+		"id": null
+	}
+
+	
+
+
+	//Estudios
 	const idEstudio = ((estudiosValue && estudiosValue[estudiosValue.length - 1] !== undefined && (estudiosValue[estudiosValue.length - 1].iDestudios)) + 1)
 	const bodyPetEstudio = { ...responses.modalDataInputs, iDestudios: idEstudio }
 	//Tipos de documento
@@ -354,8 +370,38 @@ const NavbarMenu = () => {
 															disableModal={disableModal}
 															setDisableMOdal={setDisableMOdal}
 														/>
+														
 													</ButtonCallModal>
-												</li>  
+												</li>
+												<li>
+													<ButtonCallModal nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="TipoDocumento"  setTransition={setTransition} nameButton="Tipo de Documento">
+														<ChildModal 
+															modalValues={modalValues} 
+															onChangeValues={onChangeValues}  
+															valueItemModal={valueItemModal} 
+															setValueItemModal={setValueItemModal} 
+															nameModalProp="TipoDocumento" 
+															handleClickClose={handleClickClose} 
+															setTransition={setTransition} 
+															array={ tiposDocumentoValue && tiposDocumentoValue }  
+															nameModal="Tipo de Documento" 
+															propsModal={propsModalTiposDocumento} 
+															optionsInputs={objectTipoDocumento} 
+															transition={transition}
+															functionAdd={sendModalData}
+															urlApi={urlTiposDocumento}
+															bodyPetition ={bodyTipoDocumento}
+															bodyUpdate={bodyUpdateTipoDocumento}
+															modify={modify} 
+															setModify={setModify}
+															idAModificar={ valueItemModal?.iDtipoDocumento }
+															functionDelete={deleteItemModal}
+															disableModal={disableModal}
+															setDisableMOdal={setDisableMOdal}
+														/>
+														
+													</ButtonCallModal>
+												</li>    
 											</div>
 										</ul>
 									</li>
