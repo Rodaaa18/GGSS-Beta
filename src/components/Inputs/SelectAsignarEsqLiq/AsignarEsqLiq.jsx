@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import ButtonCallModal from "../../Buttons/ButtonCallModal";
 import "./AsignarEsqLiq.css";
 const AsignarEsqLiq = ({
   nameInput,

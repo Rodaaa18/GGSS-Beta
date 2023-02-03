@@ -53,9 +53,9 @@ const InputParentescoOpNac = ({
           })}
         </select>
       </div>
-      <div className="ml-0 d-flex justify-content-cener align-items-center">
+      {/* <div className="ml-0 d-flex justify-content-cener align-items-center">
         <ButtonCallModal idModal={idModal} className={mostrarComponente ? "tercero btn btn-validacion btn-outline-danger btn-sm ml-2 " : "none"} nameButton={nameButton} useNavbar={false} useButton={true} disabled={disable}/> 
-      </div>
+      </div> */}
       <div
         className={
           mostrarComponente
