@@ -3,21 +3,18 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import swal from "sweetalert";
 import "./Navbar.css";
-import ButtonCallModal from "../Buttons/ButtonCallModal";
-import BasicModal from "../Modals/BasicModal/BasicModal";
-import ModalPDLB from "../Modals/ModalPDLB/ModalPDLB";
-import ModalEmpleadores from "../Modals/ModalEmpleadores/ModalEmpleadores";
 // ------------------------ OBJECTS ------------------------
 import { objectParentescos, objectCategorias, inputsNumCategorias, objectConvenios, inputsNumConvenios, inputNumDataValores, tableValoresHeadings, inputNumDataEscala, inputDateDataEscala, inputNumDataDeducciones, inputDateDataDeducciones, objectBancos, objectEmpresasTelefonia, objectSindicatos, objectTareas, objectEstadosCiviles, objectEstudios, objectTipoDocumento, objectEstado, objectFormasDePago, objectMotivosEgreso, objectCalles, objectPaises, objectModosLiquidacion, objectModosContratacion, objectCargos, objectObrasSociales, objectAFJP, objectCentrosCosto, objectSectoresDptos, objectDirecciones, objectLugaresPago, objectDocumentacion, tableReduccionHeadings, tableConvenios, tableJerarquia, tableLicencias, inputsNumLicencias, objectAlicuotas, checkboxParentescos, checkboxNumParentescos, textAreaObject, textAreaCargos,urls } from './Objects'
 // -----------------------------------------------------------
-import ModalTable from '../Modals/ModalTable/ModalTable';
-import ModalEscala from '../Modals/ModalEscala/ModalEscala';
-import ModalConvenios from '../Modals/ModalConvenios/ModalConvenios';
+
 import { AXIOS_ERROR, SET_LOADING } from '../../redux/types/fetchTypes';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { addEstadosCiviles, addEstados, addPaises, addEstudios, addTiposDocumento, addCargos, addTareasDesempeñadas, addParentescos, addFormasPago, addModosContratacion, addModosLiquidacion, addEmpleadores, addDomicilios, addCalles, addDepartamentos, addBarrios, addProvincias, addLocalidades, addNewEstadoCivil, addNewEstudio, getIdEstadoCivil, deleteEstadoCivil, getIdEstudio, deleteEstudio, addNewTipoDoc, deleteTipoDoc, getIdTipoDoc, putEstadoCivil, putEstudio, putTipoDoc, addNewParentesco, deleteParentesco, putParentesco, getIdParentesco, addNewEstado, deleteEstado, putEstado, getIdEstado, addNewFormaPago, deleteFormaPago, putFormaPago, getIdFormaPago, addNewCargo, deleteCargo, putCargo, getIdCargo, addNewTarea, deleteTarea, putTarea, getIdTarea } from '../../redux/actions/fetchActions';
 import { addSelectedCargo, addSelectedEstado, addSelectedEstadoCivil, addSelectedEstudio, addSelectedFormaPago, addSelectedParentesco, addSelectedTarea, addSelectedTipoDocu, setRefetch } from '../../redux/actions/modalesActions';
+import ButtonCallModal from "../ButtonCallModal/ButtonCallModal";
+import ChildModal from "../Modals/ChildModal";
+import { propsModal } from "../Modals/props";
 
 
 // import { getEstadosCivilesModal } from '../../services/fetchAPI';
@@ -25,7 +22,118 @@ import { addSelectedCargo, addSelectedEstado, addSelectedEstadoCivil, addSelecte
 //#endregion
 
 const NavbarMenu = () => {
+	const [ modalValues, setModalValues ] = useState({});
+	const [ nameModal, setNameModal ] = useState({});
+	const [ valueItemModal , setValueItemModal ] = useState({});
+    const [ modify, setModify ] = useState(false);
+    const [ disableModal, setDisableMOdal ] = useState(true);
+	const [ transition, setTransition ] = useState(false);
+	const dispatch = useDispatch();
+	const refetch = useSelector((state)=> state.modalState.refetch);
+
+	const handleClickClose=(nameModalProp)=>{
+        let newState = {...nameModal}
+    
+        newState[nameModalProp] = false;
+        setNameModal(newState);
+        setTransition(true);
+    }
+
+	async function sendModalData(url, body,bodyUpdate, id){
+        if(modify){
+            try{
+                await axios
+                .put(`${url}/${id}`, bodyUpdate)
+                .then((res)=>{
+                    if(res.status === 200){
+                        dispatch(setRefetch(!refetch))
+                        setModify(false);
+                        setDisableMOdal(true)
+                        return swal({
+                            title : "Ok",
+                            text : "Item actualizado con éxito",
+                            icon : "success"
+                        });
+                    }
+                    return;
+                })
+            }catch(err){
+                setModify(false);
+                setDisableMOdal(true)
+                return swal({
+                    title : "Error",
+                    text : "Error al actualizar el item" + `${err}`,
+                    icon : "error"
+                });
+            }
+            return;
+        }
+        try{
+            //debugger;
+            await axios
+            .post(url, body)
+            .then((res)=>{
+                if(res.status === 200){
+                    dispatch(setRefetch(!refetch))
+                    setDisableMOdal(true)
+                    return swal({
+                        title : "Ok",
+                        text : "Item guardado con éxito",
+                        icon : "success"
+                    });
+                }
+            })
+        }catch(err){
+            setDisableMOdal(true)
+            return swal({
+                title : "Error",
+                text : "Error al guardar el item" + `${err}`,
+                icon : "error"
+            });
+        }
+    }
+    async function deleteItemModal(url, id){
+        swal({
+              title: "Desea eliminar el item?",
+              text: "Si confirma el item será borrado de la Base de Datos",
+              icon: "warning",
+              buttons: true,
+              dangerMode: true,
+            })
+            .then( async (willDelete) => {
+              if (willDelete) {
+                    try{
+                    await axios
+                        .delete(`${url}/${id}`)
+                        .then((res)=>{
+                            if(res.status === 200){
+                                dispatch(setRefetch(!refetch))
+                                setDisableMOdal(true)
+                                return swal({
+                                    title : "Ok",
+                                    text : "Item eliminado con éxito",
+                                    icon : "success"
+                                });
+                            }
+                            return;
+                        })
+                }catch(err){
+                    setDisableMOdal(true)
+                    return swal({
+                        title : "Error",
+                        text : "Error al eliminar el item" + `${err}`,
+                        icon : "error"
+                    });
+                }
+              } else {
+                swal("Puede seguir operando");
+              }
+            });
+        
+    }
 	
+    
+
 	const urlEstadosCiviles = "http://54.243.192.82/api/EstadosCiviles"
 	const urlEstudios = "http://54.243.192.82/api/Estudios"
 	const urlTiposDocumento = "http://54.243.192.82/api/TiposDocumento"
@@ -33,18 +141,18 @@ const NavbarMenu = () => {
 	const urlTareas = "http://54.243.192.82/api/TareasDesempeñadas";
 	// estado para recargar cada vez que se ejecute un post/put/delete
 
-	const refetch = useSelector((state)=> state.modalState.refetch);
 	// ESTADOS QUE GUARDAN EL VALOR DE LOS INPUTS
 	const [responses, setResponses] = useState({});
 	const [modalDataInputs, setModalDataInputs] = useState(responses["modalDataInputs"])
 
-  function onChangeValues(e, key) {
-    const newResponse = { ...modalDataInputs };
-    newResponse[key] = e;
-    setModalDataInputs({
-      ...newResponse,
-    });
-  }
+	function onChangeValues(e, key){
+        
+        const newResponse = {...modalValues};
+        newResponse[key] = e;
+        setModalValues({
+          ...newResponse
+        });
+    }
   useEffect(() => {
     setResponses({
       ...responses,
@@ -130,7 +238,16 @@ const NavbarMenu = () => {
 	// ----------------------------------- ID & PETITION  -----------------------------------
 	//Estados Civiles
 	const idEstadoCivil = ((estadosCivilesValue && estadosCivilesValue[estadosCivilesValue.length -1] !== undefined && (estadosCivilesValue[estadosCivilesValue.length -1].idEstadoCivil))+1)
-	const bodyPetitionEC = { ...responses.modalDataInputs, idEstadoCivil: idEstadoCivil };
+	const bodyEstadosCiviles = {
+        idEstadoCivil : idEstadoCivil,
+        masculino : modalValues?.masculino,
+        femenino : modalValues?.femenino
+    }
+    const bodyUpdateEstadosCiviles = {
+        idEstadoCivil : valueItemModal?.idEstadoCivil,
+        masculino : modalValues?.masculino,
+        femenino : modalValues?.femenino
+    }
 	//Estudios
 	const idEstudio = ((estudiosValue && estudiosValue[estudiosValue.length - 1] !== undefined && (estudiosValue[estudiosValue.length - 1].iDestudios)) + 1)
 	const bodyPetEstudio = { ...responses.modalDataInputs, iDestudios: idEstudio }
@@ -211,25 +328,34 @@ const NavbarMenu = () => {
 										<a className='dropdown-item' tabindex="-1" href="#">Para Empleados</a>
 										<ul class="dropdown-menu">
 											<div className="datosEmpleados" style={{ fontSize: "13px" }}>
-												<ButtonCallModal idModal="EstadoCivil" nameButton="Estados Civiles" useNavbar={true} />
-												<ButtonCallModal idModal="Estudios" nameButton="Estudios" useNavbar={true} />
-												<ButtonCallModal idModal="TipoDocumento" nameButton="Tipo de Documento" useNavbar={true} />
-												<ButtonCallModal idModal="Parentescos" nameButton="Parentescos" useNavbar={true} />
-												<hr />
-												<ButtonCallModal idModal="estadosEmpleados" nameButton="Estados para empleados" useNavbar={true} />
-												<ButtonCallModal idModal="cargos" nameButton="Cargos" useNavbar={true} />
-												<ButtonCallModal idModal="tareasDesempeñadas" nameButton="Tareas Desempeñadas" useNavbar={true} />
-												<ButtonCallModal idModal="formasDePago" nameButton="Formas de Pago" useNavbar={true} />
-												<ButtonCallModal idModal="modosDeContratacion" nameButton="Modos de Contratación" useNavbar={true} />
-												<ButtonCallModal idModal="modosDeLiquidacion" nameButton="Modos de Liquidacion" useNavbar={true} />
-												<ButtonCallModal idModal="motivosEgreso" nameButton="Motivos de Egreso" useNavbar={true} />
-												<hr />
-												<ButtonCallModal idModal="paises" nameButton="Paises" useNavbar={true} />
-												<ButtonCallModal idModal="pdlb" nameButton="Provincias - Departamentos - Localidades - Barrios" useNavbar={true} />
-												<ButtonCallModal idModal="calles" nameButton="Calles" useNavbar={true} />
-												<hr />
-												<ButtonCallModal idModal="empleadores" nameButton="Empleadores" useNavbar={true} />
-												<ButtonCallModal idModal="alicuotas" nameButton="Alicuotas" useNavbar={true} />
+												<li>
+													<ButtonCallModal nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="estadosCiviles"  setTransition={setTransition} nameButton="Estados Civiles">
+														<ChildModal 
+															modalValues={modalValues} 
+															onChangeValues={onChangeValues}  
+															valueItemModal={valueItemModal} 
+															setValueItemModal={setValueItemModal} 
+															nameModalProp="estadosCiviles" 
+															handleClickClose={handleClickClose} 
+															setTransition={setTransition} 
+															array={estadosCivilesValue && estadosCivilesValue}  
+															nameModal="Estados Civiles" 
+															propsModal={propsModal} 
+															optionsInputs={objectEstadosCiviles} 
+															transition={transition}
+															functionAdd={sendModalData}
+															urlApi={urlEstadosCiviles}
+															bodyPetition ={bodyEstadosCiviles}
+															bodyUpdate={bodyUpdateEstadosCiviles}
+															modify={modify} 
+															setModify={setModify}
+															idAModificar={valueItemModal?.idEstadoCivil}
+															functionDelete={deleteItemModal}
+															disableModal={disableModal}
+															setDisableMOdal={setDisableMOdal}
+														/>
+													</ButtonCallModal>
+												</li>  
 											</div>
 										</ul>
 									</li>
