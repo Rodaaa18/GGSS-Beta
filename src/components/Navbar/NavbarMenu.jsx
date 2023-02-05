@@ -247,7 +247,14 @@ const NavbarMenu = () => {
         femenino : modalValues?.femenino
     }
 	//Estudios
-	
+	const idEstudio = ((estudiosValue && estudiosValue[estudiosValue.length - 1] !== undefined && (estudiosValue[estudiosValue.length - 1].iDestudios)) + 1)
+	const bodyEstudios = {
+		iDestudios: idEstudio,
+		nivelEstudio: modalValues?.nivelEstudio
+	}
+
+
+
 	//Tipo Documento
 	const bodyTipoDocumento =
 		{
