@@ -31,8 +31,8 @@ export const objectEstadosCiviles = [
 ]
 export const objectEstudios = [
 	{
-		"label": "Nivel de Estudios",
-		"placeholder": "Universitario",
+	"label": "Nivel de Estudios",
+	"placeholder": "Universitario",
     "idInput": "estudiosNivel",
     "nameInput": "estudiosNivel"
 	}

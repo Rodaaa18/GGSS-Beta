@@ -14,7 +14,7 @@ import { addEstadosCiviles, addEstados, addPaises, addEstudios, addTiposDocument
 import { addSelectedCargo, addSelectedEstado, addSelectedEstadoCivil, addSelectedEstudio, addSelectedFormaPago, addSelectedParentesco, addSelectedTarea, addSelectedTipoDocu, setRefetch } from '../../redux/actions/modalesActions';
 import ButtonCallModal from "../ButtonCallModal/ButtonCallModal";
 import ChildModal from "../Modals/ChildModal";
-import { propsModal, propsModalTiposDocumento } from "../Modals/props";
+import { propsModal, propsModalEstudios, propsModalTiposDocumento } from "../Modals/props";
 
 
 // import { getEstadosCivilesModal } from '../../services/fetchAPI';
@@ -158,6 +158,10 @@ const NavbarMenu = () => {
     });
   }, [modalDataInputs]);
 	
+
+
+//#region ----------------------------------- ESTADOS DECLARADOS de Lauty  -----------------------------------
+
 	//Paises
 	const paisNacionalidad = useSelector((state)=> state.generalState.paises)
 	//Calles
@@ -233,7 +237,11 @@ const NavbarMenu = () => {
 	const textAreaTarea = useSelector((state) => state.modalState.formulario.textAreaTarea)
 	const valueIdTarea = useSelector((state) => state.generalState.idTarea)
 
-	// ----------------------------------- ID & PETITION  -----------------------------------
+//#endregion ----------------------------------- ESTADOS DECLARADOS de Lauty  -----------------------------------
+
+
+
+//#region ----------------------------------- ID & PETITION REview -----------------------------------
 	//Estados Civiles
 	const idEstadoCivil = ((estadosCivilesValue && estadosCivilesValue[estadosCivilesValue.length -1] !== undefined && (estadosCivilesValue[estadosCivilesValue.length -1].idEstadoCivil))+1)
 	const bodyEstadosCiviles = {
@@ -247,20 +255,23 @@ const NavbarMenu = () => {
         femenino : modalValues?.femenino
     }
 	//Estudios
-	const idEstudio = ((estudiosValue && estudiosValue[estudiosValue.length - 1] !== undefined && (estudiosValue[estudiosValue.length - 1].iDestudios)) + 1)
 	const bodyEstudios = {
-		iDestudios: idEstudio,
-		nivelEstudio: modalValues?.nivelEstudio
+		"iDestudios": ((estudiosValue && estudiosValue[estudiosValue.length - 1] !== undefined && (estudiosValue[estudiosValue.length - 1].iDestudios)) + 1),
+		"nivelEstudio": modalValues?.nivelEstudio,
+		"id" : null,
 	}
-
-
-
+	const bodyUpdateEstudios = {
+		"iDestudios": valueItemModal?.iDestudios,
+		"nivelEstudio": modalValues?.nivelEstudio,
+		"id" : null,
+	}
+	
 	//Tipo Documento
 	const bodyTipoDocumento =
 		{
-			"iDtipoDocumento": ((tiposDocumentoValue && tiposDocumentoValue[tiposDocumentoValue.length - 1] !== undefined && (tiposDocumentoValue[tiposDocumentoValue.length - 1].iDtipoDocumento)) + 1),
-			"tipoDocumento": modalValues?.tipoDocumento,
-			"id": null
+		"iDtipoDocumento": ((tiposDocumentoValue && tiposDocumentoValue[tiposDocumentoValue.length - 1] !== undefined && (tiposDocumentoValue[tiposDocumentoValue.length - 1].iDtipoDocumento)) + 1),
+		"tipoDocumento": modalValues?.tipoDocumento,
+		"id": null
 		}
 	const bodyUpdateTipoDocumento = {
 		"iDtipoDocumento": valueItemModal?.iDtipoDocumento, 
@@ -268,12 +279,22 @@ const NavbarMenu = () => {
 		"id": null
 	}
 
-	
 
+
+
+
+
+
+
+
+
+//#endregion ----------------------------------- ID Review 2023  -----------------------------------
+	
+//#region ----------------------------------- Body de Lauty  -----------------------------------
 
 	//Estudios
-	const idEstudio = ((estudiosValue && estudiosValue[estudiosValue.length - 1] !== undefined && (estudiosValue[estudiosValue.length - 1].iDestudios)) + 1)
-	const bodyPetEstudio = { ...responses.modalDataInputs, iDestudios: idEstudio }
+	// const idEstudio = ((estudiosValue && estudiosValue[estudiosValue.length - 1] !== undefined && (estudiosValue[estudiosValue.length - 1].iDestudios)) + 1)
+	// const bodyPetEstudio = { ...responses.modalDataInputs, iDestudios: idEstudio }
 	//Tipos de documento
 	const idTiposDocumento = ((tiposDocumentoValue && tiposDocumentoValue[tiposDocumentoValue.length - 1] !== undefined && (tiposDocumentoValue[tiposDocumentoValue.length - 1].iDtipoDocumento)) + 1)
 	const bodyPetTiposDoc = { ...responses.modalDataInputs, iDtipoDocumento: idTiposDocumento }
@@ -308,7 +329,13 @@ const NavbarMenu = () => {
 		"tareaDesempeñada": responses.modalDataInputs?.tareaDesempeñada,
 		"obs": responses.modalDataInputs?.obs
 	}
-	// --------------------------------------------------------------------------------------------------------------------------------------
+
+//#endregion ----------------------------------- Body de Lauty  -----------------------------------
+
+
+
+
+
 	return (
 		<nav className="row gy-3 navbar navbar-expand-lg navbar-light bg-light col-sm-12">
 			<div className="container-sm">
@@ -379,6 +406,63 @@ const NavbarMenu = () => {
 														/>
 														
 													</ButtonCallModal>
+												</li>
+												<li>
+													<ButtonCallModal nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="Estudios"  setTransition={setTransition} nameButton="Estudios">
+{/* Estudios no va funciona CRUD  */}
+														<ChildModal
+															modalValues={modalValues}
+															onChangeValues={onChangeValues}
+															valueItemModal={valueItemModal}
+															setValueItemModal={setValueItemModal}
+															nameModalProp="Estudios"
+															handleClickClose={handleClickClose}
+															setTransition={setTransition}
+															array={estudiosValue && estudiosValue}
+															nameModal="Estudios"
+															propsModal={ propsModalEstudios }
+															optionsInputs={objectEstudios}
+															transition={transition}
+															functionAdd={sendModalData}
+															urlApi={urlEstudios}
+															bodyPetition ={bodyEstudios}
+															bodyUpdate={bodyUpdateEstudios}
+															modify={modify}
+															setModify={setModify}
+															idAModificar={valueItemModal?.idEstudios}
+															functionDelete={deleteItemModal}
+															disableModal={disableModal}
+															setDisableMOdal={setDisableMOdal}
+														/>
+													</ButtonCallModal>
+
+													{/* <ButtonCallModal nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="Estudios"  setTransition={setTransition} nameButton="Estudios">
+														<ChildModal 
+															modalValues={modalValues} 
+															onChangeValues={onChangeValues}  
+															valueItemModal={valueItemModal} 
+															setValueItemModal={setValueItemModal} 
+															nameModalProp="Estudios" 
+															handleClickClose={handleClickClose} 
+															setTransition={setTransition} 
+															array={ estudiosValue && estudiosValue }  
+															nameModal="Estudios" 
+															propsModal={propsModal} 
+															optionsInputs={objectEstudios} 
+															transition={transition}
+															functionAdd={sendModalData}
+															urlApi={ urlEstudios }
+															bodyPetition ={ bodyEstudios } 
+															bodyUpdate={ bodyUpdateEstudios }
+															modify={modify} 
+															setModify={setModify}
+															idAModificar={valueItemModal?.idEstudios}
+															functionDelete={deleteItemModal}
+															disableModal={disableModal}
+															setDisableMOdal={setDisableMOdal}
+														/>
+														
+													</ButtonCallModal> */}
 												</li>
 												<li>
 													<ButtonCallModal nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="TipoDocumento"  setTransition={setTransition} nameButton="Tipo de Documento">
