@@ -8,6 +8,11 @@ export const propsModalEstudios = {
     propArrayOp : "estudiosNivel",
     nameModal : "Estudios"
 };
+export const propsModalParentesco = {
+    propArrayId : "iDparentesco",
+    propArrayOp : "nombreParentesco",
+    nameModal : "Parentescos"
+};
 export const propsModalTiposDocumento = {
     propArrayId : "iDtipoDocumento",
     propArrayOp : "tipoDocumento",

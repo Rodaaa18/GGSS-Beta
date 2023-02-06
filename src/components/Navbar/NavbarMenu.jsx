@@ -14,7 +14,7 @@ import { addEstadosCiviles, addEstados, addPaises, addEstudios, addTiposDocument
 import { addSelectedCargo, addSelectedEstado, addSelectedEstadoCivil, addSelectedEstudio, addSelectedFormaPago, addSelectedParentesco, addSelectedTarea, addSelectedTipoDocu, setRefetch } from '../../redux/actions/modalesActions';
 import ButtonCallModal from "../ButtonCallModal/ButtonCallModal";
 import ChildModal from "../Modals/ChildModal";
-import { propsModal, propsModalEstudios, propsModalTiposDocumento } from "../Modals/props";
+import { propsModal, propsModalEstudios, propsModalParentesco, propsModalTiposDocumento } from "../Modals/props";
 
 
 // import { getEstadosCivilesModal } from '../../services/fetchAPI';
@@ -134,6 +134,7 @@ const NavbarMenu = () => {
 	
 	const urlEstadosCiviles = "http://54.243.192.82/api/EstadosCiviles"
 	const urlEstudios = "http://54.243.192.82/api/Estudios"
+	const urlParentescos = "http://54.243.192.82/api/Parentescos"
 	const urlTiposDocumento = "http://54.243.192.82/api/TiposDocumento"
 	const urlCargos = "http://54.243.192.82/api/Cargos";
 	const urlTareas = "http://54.243.192.82/api/TareasDesempeñadas";
@@ -255,6 +256,7 @@ const NavbarMenu = () => {
         femenino : modalValues?.femenino
     }
 	//Estudios
+	//no funciona la llamada a AXIOS
 	const bodyEstudios = {
 		"iDestudios": ((estudiosValue && estudiosValue[estudiosValue.length - 1] !== undefined && (estudiosValue[estudiosValue.length - 1].iDestudios)) + 1),
 		"nivelEstudio": modalValues?.nivelEstudio,
@@ -278,6 +280,33 @@ const NavbarMenu = () => {
 		"tipoDocumento": modalValues?.tipoDocumento,
 		"id": null
 	}
+
+	//Parentesco
+
+	const bodyParentesco = {
+		"iDparentesco": ((parentescosValue && parentescosValue[parentescosValue.length - 1] !== undefined && (parentescosValue[parentescosValue.length - 1].iDparentesco)) + 1),
+		"parentesco": modalValues?.parentesco,
+		"id": null
+	}
+	const bodyUpdateParentesco = {
+		"iDparentesco": valueItemModal?.iDparentesco,
+		"parentesco": modalValues?.parentesco,
+		"id": null
+	}
+
+	//Estados
+	const bodyEstado = {
+		"iDestado": ((estadosValue && estadosValue[estadosValue.length - 1] !== undefined && (estadosValue[estadosValue.length - 1].iDestado)) + 1),
+		"estado": modalValues?.estado,
+		"id": null
+	}
+	const bodyUpdateEstado = {
+		"iDestado": valueItemModal?.iDestado,
+		"estado": modalValues?.estado,
+		"id": null
+	}
+
+
 
 
 
@@ -435,35 +464,37 @@ const NavbarMenu = () => {
 															setDisableMOdal={setDisableMOdal}
 														/>
 													</ButtonCallModal>
-
-													{/* <ButtonCallModal nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="Estudios"  setTransition={setTransition} nameButton="Estudios">
-														<ChildModal 
-															modalValues={modalValues} 
-															onChangeValues={onChangeValues}  
-															valueItemModal={valueItemModal} 
-															setValueItemModal={setValueItemModal} 
-															nameModalProp="Estudios" 
-															handleClickClose={handleClickClose} 
-															setTransition={setTransition} 
-															array={ estudiosValue && estudiosValue }  
-															nameModal="Estudios" 
-															propsModal={propsModal} 
-															optionsInputs={objectEstudios} 
-															transition={transition}
-															functionAdd={sendModalData}
-															urlApi={ urlEstudios }
-															bodyPetition ={ bodyEstudios } 
-															bodyUpdate={ bodyUpdateEstudios }
-															modify={modify} 
-															setModify={setModify}
-															idAModificar={valueItemModal?.idEstudios}
-															functionDelete={deleteItemModal}
-															disableModal={disableModal}
-															setDisableMOdal={setDisableMOdal}
-														/>
-														
-													</ButtonCallModal> */}
 												</li>
+
+												<ButtonCallModal nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="Parentesco"  setTransition={setTransition} nameButton="Parentesco">
+													<ChildModal
+														modalValues={modalValues}
+														onChangeValues={onChangeValues}
+														valueItemModal={valueItemModal}
+														setValueItemModal={setValueItemModal}
+														nameModalProp="Parentesco"
+														handleClickClose={handleClickClose}
+														setTransition={setTransition}
+														array={ parentescosValue && parentescosValue }
+														nameModal="Parentesco"
+														propsModal={ propsModalParentesco }
+														optionsInputs={objectParentescos}
+														transition={transition}
+														functionAdd={sendModalData}
+														urlApi={ urlParentescos }
+														bodyPetition ={bodyParentesco}
+														bodyUpdate={bodyUpdateParentesco}
+														modify={modify} 
+														setModify={setModify}
+														idAModificar={ valueItemModal?.idParentesco }
+														functionDelete={deleteItemModal}
+														disableModal={disableModal}
+														setDisableMOdal={setDisableMOdal}
+													/>
+												</ButtonCallModal>
+
+
+
 												<li>
 													<ButtonCallModal nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="TipoDocumento"  setTransition={setTransition} nameButton="Tipo de Documento">
 														<ChildModal 
