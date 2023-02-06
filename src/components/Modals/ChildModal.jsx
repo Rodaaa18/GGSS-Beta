@@ -12,7 +12,7 @@ const ChildModal = ({nameModalProp, disabled, array , propsModal, optionsInputs,
         <div className="row p-2">
             <div className='d-flex flex-row justify-content-between align-items-center'>
                 <h3>{propsModal.nameModal}</h3>
-                <button className='btn btn-outline-danger btn-sm buttonModal border border-dark' onClick={()=>{handleClickClose(nameModalProp); setTransition(false);}}>
+                <button className='btn btn-outline-danger text-white fs-6 btn-md buttonModal border border-white' onClick={()=>{handleClickClose(nameModalProp); setTransition(false);}}>
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>            
@@ -43,7 +43,7 @@ const ChildModal = ({nameModalProp, disabled, array , propsModal, optionsInputs,
                 </select>
                 <div className='d-flex flex-row justify-content-evenly align-items-center mt-1'>
                     <button className='btn btn-success' onClick={()=> {setDisableMOdal(false)}}>Agregar</button>
-                    <button className='btn btn-warning' onClick={()=> {setModify(true);setDisableMOdal(false)}}>Modificar</button>
+                    <button className='btn btnModificar btn-info text-light' onClick={()=> {setModify(true);setDisableMOdal(false)}}>Modificar</button>
                     <button className='btn btn-danger' onClick={()=> functionDelete(urlApi, idAModificar)}>Eliminar</button>
                 </div>
             </div>

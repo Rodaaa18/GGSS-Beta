@@ -6,9 +6,9 @@
 
 .form__grupo__label__label{
 	margin: 0;
-    margin-left: 5px;
+    margin-left: 3rem;
     height: 100%;
-	font-size: 15px;
+	font-size: 10rem;
 }
 .txtArea{
     width: 10rem;
@@ -56,7 +56,7 @@
 	padding: 0%;
 	margin-bottom: 3px;
 	width: 10rem;
-	height: 90px;
+	height: 20rem;
 	margin-left: 0px;
 	margin-right: 0px;
 	border: none;
