@@ -134,6 +134,7 @@ const NavbarMenu = () => {
 	
 	const urlEstadosCiviles = "http://54.243.192.82/api/EstadosCiviles"
 	const urlEstudios = "http://54.243.192.82/api/Estudios"
+
 	const urlParentescos = "http://54.243.192.82/api/Parentescos"
 	const urlTiposDocumento = "http://54.243.192.82/api/TiposDocumento"
 	const urlCargos = "http://54.243.192.82/api/Cargos";
@@ -259,14 +260,18 @@ const NavbarMenu = () => {
 	//no funciona la llamada a AXIOS
 	const bodyEstudios = {
 		"iDestudios": ((estudiosValue && estudiosValue[estudiosValue.length - 1] !== undefined && (estudiosValue[estudiosValue.length - 1].iDestudios)) + 1),
-		"nivelEstudio": modalValues?.nivelEstudio,
+		"nivelEstudio": modalValues?.estudiosNivel,
 		"id" : null,
 	}
 	const bodyUpdateEstudios = {
 		"iDestudios": valueItemModal?.iDestudios,
-		"nivelEstudio": modalValues?.nivelEstudio,
+		"nivelEstudio": modalValues?.estudiosNivel,
 		"id" : null,
 	}
+	console.log (bodyUpdateEstudios)
+	console.log (modalValues)
+	console.log (valueItemModal)
+
 	
 	//Tipo Documento
 	const bodyTipoDocumento =
@@ -282,7 +287,6 @@ const NavbarMenu = () => {
 	}
 
 	//Parentesco
-
 	const bodyParentesco = {
 		"iDparentesco": ((parentescosValue && parentescosValue[parentescosValue.length - 1] !== undefined && (parentescosValue[parentescosValue.length - 1].iDparentesco)) + 1),
 		"parentesco": modalValues?.parentesco,
@@ -458,11 +462,12 @@ const NavbarMenu = () => {
 															bodyUpdate={bodyUpdateEstudios}
 															modify={modify}
 															setModify={setModify}
-															idAModificar={valueItemModal?.idEstudios}
+															idAModificar={valueItemModal?.iDestudios}
 															functionDelete={deleteItemModal}
 															disableModal={disableModal}
 															setDisableMOdal={setDisableMOdal}
 														/>
+														
 													</ButtonCallModal>
 												</li>
 
