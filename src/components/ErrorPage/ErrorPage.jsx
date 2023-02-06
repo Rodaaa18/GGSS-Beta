@@ -9,7 +9,7 @@ const ErrorPage = ({ error, statusCode }) => {
           Error al Autentificar el Usuario {statusCode ? statusCode : '500 Server Error'}
           </h1>
           <p className="">{ error }</p>
-          <a target='_blank' href="https://www.google.com/" className='btn btn-outline-danger btn-lg' >Volver a intentarlo</a>
+          <a target='_blank' href="https://www.google.com/" className='btn btn-outline-danger btn-lg' >Volver</a>
         </div>
       </div>
     </div>
