@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import './TextArea.css'
 
 
-const TextArea = ({ characterLimit = 255, onChange,idInput }) => {
+const TextArea = ({ characterLimit = 255, onChange,idInput, disableModal }) => {
     const [input, setInput] = useState('');
 
     function handleChange(event) {
@@ -29,6 +29,7 @@ return (
               </label>
               <div class="input-group">
                 <textarea
+                  disabled={disableModal}
                   placeholder="Ingrese Observaciones "
                   maxLength={characterLimit}
                   id={idInput}

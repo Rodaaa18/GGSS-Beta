@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import InputModal from '../Inputs/InputModal/InputModal';
+import TextArea from '../Inputs/TextArea/TextArea';
 import "./BasicModal.css"
-const ChildModal = ({nameModalProp, disabled, array , propsModal, optionsInputs, transition, setTransition, handleClickClose,functionAdd, functionUpdate, functionDelete, valueItemModal, setValueItemModal, onChangeValues, modalValues, urlApi, bodyPetition, bodyUpdate,setModify, modify, idAModificar, disableModal, setDisableMOdal}) => {
+const ChildModal = ({nameModalProp, disabled, array , propsModal, optionsInputs, transition, setTransition, handleClickClose,functionAdd, functionUpdate, functionDelete, valueItemModal, setValueItemModal, onChangeValues, modalValues, urlApi, bodyPetition, bodyUpdate,setModify, modify, idAModificar, disableModal, setDisableMOdal, usaEstados, idInputTextArea }) => {
 
     
   return (
@@ -63,6 +64,20 @@ const ChildModal = ({nameModalProp, disabled, array , propsModal, optionsInputs,
                             )
                         })
                     }
+                </div>
+                <div className='d-flex flex-column justify-content-center align-items-center'
+                >
+                    {
+                        usaEstados && <TextArea
+                        idInput={idInputTextArea}
+                        onChange={onChangeValues}
+                        characterLimit={255}
+                        disableModal={disableModal}
+                        >
+                        </TextArea>
+                    }
+
+
                 </div>
                 <div className='d-flex flex-row-reverse w-100 '>
                     <button className='btn btn-success m-1' onClick={()=>functionAdd(urlApi, bodyPetition, bodyUpdate, idAModificar)}>

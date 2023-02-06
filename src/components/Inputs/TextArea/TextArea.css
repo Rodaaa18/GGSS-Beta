@@ -1,5 +1,5 @@
 .form__grupo__inputs_Obs{
-    width: 280px;
+    width: 10rem;
     resize: none;
 	
 }
@@ -11,11 +11,11 @@
 	font-size: 15px;
 }
 .txtArea{
-    width: 280px;
+    width: 10rem;
     resize: none;
 }
 .count-container form .input-group{
-	width: 700px;
+	width: 20rem;
 }
 .input-control :focus{
 	/* background-image: linear-gradient(to bottom, transparent, rgb(189, 103, 103, 0.3)); */
@@ -55,7 +55,7 @@
 .formulario-input-TextArea{
 	padding: 0%;
 	margin-bottom: 3px;
-	width: 550px;
+	width: 10rem;
 	height: 90px;
 	margin-left: 0px;
 	margin-right: 0px;
