@@ -82,7 +82,7 @@ const Empleados = () => {
   const [empleados, setEmpleados] = useState([]);
   const [licenciaEmpleadoDatos, setLicenciaEmpladoDatos] = useState([]);
   const [datosExtraEmpleado, setDatosExtraEmpleado ] = useState([]);
-  const [ inCancel, setInCancel ] = useState(false);
+  const [ modify, setModify ] = useState(false);
   const [ valueempl, setValueEmpl ] = useState(false);
   const [saveEmpleado , setSaveEmpleado ] = useState(false);
 
@@ -506,6 +506,7 @@ useEffect(()=>{
     setValueEmpl(false)
     setRefectch(!refetch)
     dispatch(setRefetch(!refetching))
+    setModify(false)
   }
   async function deleteEmploye(id){
     try{
@@ -551,27 +552,27 @@ useEffect(()=>{
       "idNacionalidad": responses.formDatosPersonales?.nacionalidadesInput,
       "fechaNacimiento": responses.formDatosPersonales?.inputDateNac,
       "iDEstudios": responses.formDatosPersonales?.estudiosInput,
-      "fechaIngreso": responses.formLiquidacion?.ingresoDateInput,
-      "fechaEfectiva": responses.formLiquidacion?.inputDateEfectivo,
-      "iDCategoria": responses.formLiquidacion?.inputCategoria,
-      "iDCargo": responses.formLiquidacion?.inputCargo,
-      "iDTareaDesempeñada": responses.formLiquidacion?.inputTareaDesempeñada,
-      "idCentrodeCosto": responses.formLiquidacion?.inputCentroCosto,
-      "iDSectorDpto": responses.formLiquidacion?.inputSectorDepto,
-      "iDModoContratacion": responses.formLiquidacion?.inputModoCOntratacion,
-      "iDModoLiquidacion": responses.formLiquidacion?.inputModoLiquidacion,
-      "iDFormadePago": responses.formLiquidacion?.inputFormaDePago,
-      "idBanco": responses.formLiquidacion?.inputBanco,
-      "nroCtaBanco": responses.formLiquidacion?.inputNumCta,
-      "cbu": responses.formLiquidacion?.inputCBU,
-      "iDLugardePago": responses.formLiquidacion?.inputLugaresDePago,
+      "fechaIngreso": null,
+      "fechaEfectiva": null,
+      "iDCategoria": 0,
+      "iDCargo": 0,
+      "iDTareaDesempeñada": 0,
+      "idCentrodeCosto":  0,
+      "iDSectorDpto": 0,
+      "iDModoContratacion": 0,
+      "iDModoLiquidacion": 0,
+      "iDFormadePago": 0,
+      "idBanco": 0,
+      "nroCtaBanco": 0,
+      "cbu": null,
+      "iDLugardePago": 0,
       "iDAFJP": 1,
-      "idObraSocial": responses.formLiquidacion?.inputObraSocial,
-      "iDSindicato": responses.formLiquidacion?.sindicatosLiquidacion,
+      "idObraSocial": 0,
+      "iDSindicato":0,
       "fechaEgreso": "2022-12-27T15:45:01.031Z",
       "iDMotivoEgreso": 4,
-      "iDEsquema": responses.formLiquidacion?.selectOptionsId,
-      "iDEmpleador": responses.formLiquidacion?.inputEmpleadorLiquidacion,
+      "iDEsquema": 0,
+      "iDEmpleador": 0,
       "nombres": responses.formDatosPersonales?.nombresInput,
       "idEstado": responses.formDatosPersonales?.estadosEmpleados,
       "idEmpresadeTelefonia": 2,
@@ -579,20 +580,20 @@ useEffect(()=>{
       "rutaFoto": null,
       "telFijo": responses.formDatosPersonales?.telefonoInput,
       "acuerdo": 0,
-      "neto": responses.formLiquidacion?.inputTotalNeto,
+      "neto": null,
       "idPaisOrigen": responses.formDatosPersonales?.paisOrigenInput,
       "mail": responses.formDatosPersonales?.email,
       "telMovil": responses.formDatosPersonales?.movil,
-      "tipoCuenta": responses.formLiquidacion?.inputRadioAsidePagos,
-      "totalRemuneracion": responses.formLiquidacion?.inputTotalRemu,
-      "totalNeto": responses.formLiquidacion?.inputTotalNeto,
-      "tieneEmbargos": responses.formLiquidacion?.inputCheckEmbargo,
-      "tieneSumarioAdministrativo": responses.formLiquidacion?.inputCheckSumAdministrativo,
-      "tieneLicenciaSinGoceHaberes": responses.formLiquidacion?.inputCheckLicSinGoce,
+      "tipoCuenta": null,
+      "totalRemuneracion": null,
+      "totalNeto": null,
+      "tieneEmbargos": null,
+      "tieneSumarioAdministrativo": null,
+      "tieneLicenciaSinGoceHaberes": null,
       "obsEstudios": responses.formDatosPersonales?.observacionesEstudios,
       "obsFechaIngreso": responses.formDatosPersonales?.inputImagen,
-      "idAgrupamiento": responses.formLiquidacion?.inputAgrupamiento,
-      "idDireccion": responses.formLiquidacion?.inputDireccionLiquidacion,
+      "idAgrupamiento": 0,
+      "idDireccion":0,
       "idInstrumentoLegal": 2
     }
     let bodyPetitionEmpleadoUpdate = {
@@ -748,7 +749,7 @@ useEffect(()=>{
               icon: "error",
             })
           }
-          if(!bodyPetitionEmpleadoGuarda.iDEmpleador){
+          /* if(!bodyPetitionEmpleadoGuarda.iDEmpleador){
             return swal({
               title: "Error",
               text: "Debe seleccionar el Empleador del Empleado",
@@ -803,7 +804,7 @@ useEffect(()=>{
               text: "Debe seleccionar el Centro de Costo del Empleado",
               icon: "error",
             })
-          }
+          } */
           /* if(!bodyPetitionEmpleadoGuarda.iDSectorDpto){
             return swal({
               title: "Error",
@@ -811,7 +812,7 @@ useEffect(()=>{
               icon: "error",
             })
           } */
-          if(!bodyPetitionEmpleadoGuarda.idObraSocial){
+          /* if(!bodyPetitionEmpleadoGuarda.idObraSocial){
             return swal({
               title: "Error",
               text: "Debe seleccionar la Obra Social del Empleado",
@@ -866,7 +867,7 @@ useEffect(()=>{
               text: "Debe seleccionar el Esquema del Empleado",
               icon: "error",
             })
-          }
+          } */
         //#endregion
       
       }else{
@@ -1246,7 +1247,7 @@ useEffect(()=>{
     <div className="container-fluid">
       <div className="row">
         <div className="col-xl-3 col-lg-3 col-md-3">
-          <Browser deleteEmploye={deleteEmploye} setRefectch={setRefectch} refetch={refetch} disable={disable} setDisable={setDisable} setValueEmpl={setValueEmpl} responses={responses} setResponses={setResponses} />
+          <Browser modify={modify} setModify={setModify} deleteEmploye={deleteEmploye} setRefectch={setRefectch} refetch={refetch} disable={disable} setDisable={setDisable} setValueEmpl={setValueEmpl} responses={responses} setResponses={setResponses} />
         </div>
         <div className="col-xl-9 col-lg-9 col-md-9 ">
           <Navbar handleTabChange={handleTabChange} tabIndex={tabIndex} />
@@ -1283,6 +1284,7 @@ useEffect(()=>{
               setDisable={setDisable}
               responses={responses}
               setResponses={setResponses}
+              modify={modify}
             />
           )}
           {tabIndex === 3 && (
@@ -1291,6 +1293,7 @@ useEffect(()=>{
               setDisable={setDisable}
               responses={responses}
               setResponses={setResponses}
+              modify={modify}
             />
           )}
           {tabIndex === 4 && (

@@ -7,11 +7,11 @@ import InputButtonLiquidacion from '../../Inputs/InputButton/InputButtonLiquidac
 import InputRadio from '../../Inputs/InputRadio/InputRadio'
 
 
-const AsidePago = ({formasPAgo, lugaresDePago, bancos, onChange, formLiquidacion, disabled, mostrarComponente}) => {
+const AsidePago = ({formasPAgo, lugaresDePago, bancos, onChange, formLiquidacion, disabled, mostrarComponente, modify}) => {
 
   const dispatch = useDispatch();
   const empleadoUno = useSelector((state)=> state.employeStates.employe);
-  
+  console.log(modify)
   return (
   <>
       <div className="border border-3 p-2 col mt-2">
@@ -28,7 +28,7 @@ const AsidePago = ({formasPAgo, lugaresDePago, bancos, onChange, formLiquidacion
                   idInput="inputFormaDePago"
                   onChange={onChange}
                   action={GET_INPUTS_VALUE}
-                  disabled={disabled}
+                  disabled={modify ? false : true}
                   idSelected={empleadoUno?.iDformadePago}
                 />
               </div>
@@ -45,7 +45,7 @@ const AsidePago = ({formasPAgo, lugaresDePago, bancos, onChange, formLiquidacion
                   idInput="inputLugaresDePago"
                   onChange={onChange}
                   action={GET_INPUTS_VALUE}
-                  disabled={disabled}
+                  disabled={modify ? false : true}
                   idSelected={empleadoUno?.iDlugardePago}
                 />
               </div>
@@ -63,7 +63,7 @@ const AsidePago = ({formasPAgo, lugaresDePago, bancos, onChange, formLiquidacion
                   idInput="inputBanco"
                   onChange={onChange}
                   action={GET_INPUTS_VALUE}
-                  disabled={disabled}
+                  disabled={modify ? false : true}
                   idSelected={empleadoUno?.idbanco}
                 />
               </div>
@@ -78,7 +78,7 @@ const AsidePago = ({formasPAgo, lugaresDePago, bancos, onChange, formLiquidacion
                 onChange={onChange}
                 action={GET_INPUTS_VALUE}
                 id="inputNumCta"
-                disabled={disabled}
+                disabled={modify ? false : true}
                 />
               </div>
               <div >
@@ -90,7 +90,7 @@ const AsidePago = ({formasPAgo, lugaresDePago, bancos, onChange, formLiquidacion
                 onChange={onChange}
                 idInput="inputRadioAsidePagos"
                 asidePagos={true}
-                disabled={disabled}
+                disabled={modify ? false : true}
                 value={formLiquidacion?.inputRadioAsidePagos && formLiquidacion?.inputRadioAsidePagos}
               />
               </div>
@@ -104,13 +104,13 @@ const AsidePago = ({formasPAgo, lugaresDePago, bancos, onChange, formLiquidacion
                 onChange={onChange}
                 action={GET_INPUTS_VALUE}
                 id="inputCBU"
-                disabled={disabled}
+                disabled={modify ? false : true}
               />
               </div>
 
-              <div className='mt-2'>
+              {/* <div className='mt-2'>
               <button type="button" class="btn btn-danger btn-sm" >Actualización masiva de datos</button>
-              </div>
+              </div> */}
 
               </div>
     </>

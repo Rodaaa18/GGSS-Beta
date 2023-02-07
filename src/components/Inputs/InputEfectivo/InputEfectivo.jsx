@@ -43,6 +43,7 @@ const InputEfectivo = ({nameLabel, idInputCheck,idInputDate, idInputCheckAsigna,
         <label className='labelAsigna' htmlFor="">{nameLabelAsigna}</label>
         <select className={obligatorio ? 'selectAsigna obligatorio' : 'selectAsigna'} disabled={disabled2} onChange={(e)=> onChange(e.target.value, idSelect)} name={idSelect} id={idSelect}>
           <option value="">Seleccionar</option>
+          <option value="0">(Sin Definir)</option>   
           {
             esquemas && esquemas.map((op, index)=>{
               return(

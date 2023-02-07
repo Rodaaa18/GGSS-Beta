@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import ButtonCallModal from "../../ButtonCallModal/ButtonCallModal";
 import "./InputCbo.css";
 
-const InputCbo = ({nameLabel, array, value, display, nameButton, idSelected, sexo, idModal, disabled, idInput,onChange, datosPersonalesValue, action, propArrayOp,propArrayOpFem,provinciaAction,valueId, clasess, obligatorio}) => {
+const InputCbo = ({nameLabel, array, value, display, nameButton, idSelected, sexo, idModal, disabled, idInput,onChange, datosPersonalesValue, action, propArrayOp,propArrayOpFem,provinciaAction,valueId, clasess, obligatorio, licencia}) => {
   
     const [mostrarComponente, setMostrarComponente] = useState(true);
     const [valor, setValor] = useState("");
@@ -31,7 +31,10 @@ const InputCbo = ({nameLabel, array, value, display, nameButton, idSelected, sex
             </div>
             <div className={`${clasess.classFive}`}>
                 <select className={`${clasess.classSix}`} defaultValue="" onChange={(e)=>onChange(e.target.value, idInput)} value={datosPersonalesValue} id={idInput} disabled={disabled} name={idInput}>
-                <option className="options" selected value="">Seleccionar</option>                    
+                <option value="">Seleccionar</option> 
+                {
+                    !licencia && <option value="0">(Sin Definir)</option>   
+                }   
                     {
                     sexo  && sexo  && sexo.length > 0  && sexo === "M" ? array !== undefined && array.map((op, index)=>{
                         return(
@@ -81,7 +84,8 @@ const InputCbo = ({nameLabel, array, value, display, nameButton, idSelected, sex
             </div>
             <div className='segundo'>
                 <select className={obligatorio ? "formulario-input-Estado form-select ml-0 px-0 obligatorio" : "formulario-input-Estado form-select ml-0 px-0"} onChange={(e)=>onChange(e.target.value, idInput)} value={datosPersonalesValue} id={idInput} disabled={disabled} name={idInput}>
-                <option selected value="">Seleccionar</option>                    
+                <option selected value="">Seleccionar</option>   
+                <option value="0">(Sin Definir)</option>                    
                     {
                        sexo !== null && sexo !== undefined && sexo.length > 0  && sexo === "M" ? array !== undefined && array.map((op, index)=>{
                         return(
