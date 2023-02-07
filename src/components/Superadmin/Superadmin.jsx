@@ -1,7 +1,14 @@
 import React from 'react'
+import { useSelector } from 'react-redux';
 import "./Superadmin.css";
 
 const Superadmin = () => {
+    const datosPersonalesState = useSelector((state)=> state.generalState);
+    //Ahora traigo los datos desde Datos PErsonales pero deberia tal vez hacer un fetch aca en el componente por si luegi
+    //se requiere que se inicie directamente de superadmin si es que tiene este permiso.
+
+    //Por otro lado luego habria que hacer el endpoint de PArSueldos para poder traer los datos y comparar con lo que
+    //se selecciona aca y muestre siempre lo que esta selecionado, aparte para luego mostrar lo de aqui en los inputs.
   return (
     <div className='container-flex p-0 m-0 contenedorSuperadmin'>
         <fieldset className="border fieldSetSuper">
@@ -15,35 +22,68 @@ const Superadmin = () => {
                             <label htmlFor="estadoAltaEmpleado">Estado Predeterminado Alta de un Empleado:</label>
                             <select className="formulario-input-Estado form-select ml-0 px-0" defaultValue="" id="estadoAltaEmpleado" name="estadoAltaEmpleado">
                             <option value="">Seleccionar</option> 
-                            
+                            {
+                                datosPersonalesState.estados && datosPersonalesState.estados.map((item, index)=>{
+                                    console.log(item)
+                                    return(
+                                        <option key={index} value={item.idEstado}>{item.nombreEstado}</option>
+                                    )
+                                })
+                            }
                             </select>
                         </div>
                         <div className='d-flex flex-column justify-content-center align-items-start'>
                             <label htmlFor="estadoBajaEmpleado">Estado Predeterminado Baja de un Empleado:</label>
                             <select className="formulario-input-Estado form-select ml-0 px-0" defaultValue="" id="estadoBajaEmpleado" name="estadoBajaEmpleado">
                             <option value="">Seleccionar</option> 
-                            
+                            {
+                                datosPersonalesState.estados && datosPersonalesState.estados.map((item, index)=>{
+                                    console.log(item)
+                                    return(
+                                        <option key={index} value={item.idEstado}>{item.nombreEstado}</option>
+                                    )
+                                })
+                            }
                             </select>
                         </div>
                         <div className='d-flex flex-column justify-content-center align-items-start'>
                             <label htmlFor="IdTipoDocumentoPredeterminado">Tipo de Documento Predeterminado:</label>
                             <select className="formulario-input-Estado form-select ml-0 px-0" defaultValue="" id="IdTipoDocumentoPredeterminado" name="IdTipoDocumentoPredeterminado">
                             <option value="">Seleccionar</option> 
-                            
+                            {
+                                datosPersonalesState.tiposDocumento && datosPersonalesState.tiposDocumento.map((item,index)=>{
+                                    return(
+                                        <option key={index} value={item.iDtipoDocumento}>{item.tipoDocumento}</option>
+                                    )
+                                })
+                            }
                             </select>
                         </div>
                         <div className='d-flex flex-column justify-content-center align-items-start'>
                             <label htmlFor="IdTipoDocumentoSinDatos">Tipo de Documento "Sin Datos":</label>
                             <select className="formulario-input-Estado form-select ml-0 px-0" defaultValue="" id="IdTipoDocumentoSinDatos" name="IdTipoDocumentoSinDatos">
                             <option value="">Seleccionar</option> 
-                            
+                            <option value="0">(Sin Datos)</option> 
+                            {
+                                datosPersonalesState.tiposDocumento && datosPersonalesState.tiposDocumento.map((item,index)=>{
+                                    return(
+                                        <option key={index} value={item.iDtipoDocumento}>{item.tipoDocumento}</option>
+                                    )
+                                })
+                            }
                             </select>
                         </div>
                         <div className='d-flex flex-column justify-content-center align-items-start'>
                             <label htmlFor="IdPaisPredeterminado">País Predeterminado:</label>
                             <select className="formulario-input-Estado form-select ml-0 px-0" defaultValue="" id="IdPaisPredeterminado" name="IdPaisPredeterminado">
                             <option value="">Seleccionar</option> 
-                            
+                            {
+                                datosPersonalesState.paises && datosPersonalesState.paises.map((item,index)=>{
+                                    return(
+                                        <option key={index} value={item.idPais}>{item.nombrePais}</option>
+                                    )
+                                })
+                            }
                             </select>
                         </div>
                         <fieldset className="border p-2">
