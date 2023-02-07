@@ -27,14 +27,14 @@ return (
               >
                 Observaciones
               </label>
-              <div class="input-group">
+              <div className="input-group">
                 <textarea
                   disabled={disableModal}
                   placeholder="Ingrese Observaciones "
                   maxLength={characterLimit}
                   id={idInput}
                   name={idInput}
-                  class="formulario-input-TextArea"
+                  className="bg-white w-100 form-control text-black fs-6 pt-0 pb-0"
                   onChange={handleChange}
                   value={input}
                   cols="51" 
