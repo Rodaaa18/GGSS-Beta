@@ -127,7 +127,11 @@ const NavbarMenu = () => {
 	const textAreaTarea = useSelector((state) => state.modalState.formulario.textAreaTarea)
 	const valueIdTarea = useSelector((state) => state.generalState.idTarea)
 
-	// ----------------------------------- ID & PETITION  -----------------------------------
+//#endregion ----------------------------------- ESTADOS DECLARADOS de Lauty  -----------------------------------
+
+
+
+//#region ----------------------------------- ID & PETITION REview -----------------------------------
 	//Estados Civiles
 	const idEstadoCivil = ((estadosCivilesValue && estadosCivilesValue[estadosCivilesValue.length -1] !== undefined && (estadosCivilesValue[estadosCivilesValue.length -1].idEstadoCivil))+1)
 	const bodyPetitionEC = { ...responses.modalDataInputs, idEstadoCivil: idEstadoCivil };
