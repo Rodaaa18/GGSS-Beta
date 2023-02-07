@@ -25,7 +25,7 @@ import {
 import { setRefetch } from "../../redux/actions/modalesActions";
 import { recharge } from "../../redux/actions/domiciliosActions";
 
-const Browser = ({ disable, setDisable, setValueEmpl, responses, setResponses, setRefectch, refetch, deleteEmploye }) => {
+const Browser = ({ disable, setDisable, setValueEmpl, responses, setResponses, setRefectch, refetch, deleteEmploye,setModify }) => {
   const [checked, setChecked] = useState(false);
   const [ browser, setBrowser ] = useState(responses["browser"]);
 
@@ -88,6 +88,7 @@ const Browser = ({ disable, setDisable, setValueEmpl, responses, setResponses, s
     setValueEmpl(true)
     setRefectch(!refetch)
     dispatch(cleanEmploye())
+    
     Array.from(document.querySelectorAll("input")).forEach(
       (input) => (input.value = "")
     );
@@ -121,6 +122,7 @@ const Browser = ({ disable, setDisable, setValueEmpl, responses, setResponses, s
 
   function habilitaUpdate(e) {
     e.preventDefault();
+    setModify(true);
     setValueEmpl(true)
     setRefectch(!refetch)
     if (empleadoUno.iDempleado && empleadoUno.iDempleado) {

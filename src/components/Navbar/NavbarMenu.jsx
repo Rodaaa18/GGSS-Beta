@@ -400,8 +400,13 @@ const NavbarMenu = () => {
 										</ul>
 									</li> 
 									<li class="nav-item">
-								<a class="nav-link" href="/">Salir</a>
-							</li>
+										<a class="nav-link" href="/">Salir</a>
+									</li>
+									{
+										<li class="nav-item">
+											<Link class="nav-link" to="/superadmin">Superadmin</Link>
+										</li>
+									}									
 								</ul>
 								<ul> 
 							{/* <li className="nav-item">

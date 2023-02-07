@@ -15,7 +15,7 @@ import DireccionSindicato from "./ChildrenComponents/DireccionSindicato";
 import IngresoContrato from "./ChildrenComponents/IngresoContrato";
 import "./Liquidacion.css"
 
-const Liquidacion = ({responses, setResponses, disable, setDisable}) => {
+const Liquidacion = ({responses, setResponses, disable, setDisable, modify}) => {
 
   const empleadoUno = useSelector((state)=> state.employeStates.employe);
     const [ formLiquidacion, setFormLiquidacion ] = useState(responses["formLiquidacion"]);
@@ -123,7 +123,6 @@ return (
                         propIdOption="iDempleador"
                         idInput="inputEmpleadorLiquidacion"
                         onChange={onChangeValues}
-                        obligatorio = {true}
                         disabled={disable}
                         idSelected={empleadoUno?.iDempleador}
                         />
@@ -172,6 +171,8 @@ return (
                             onChange={onChangeValues}
                             disabled={disable}
                             idSelected={empleadoUno?.idAgrupamiento}
+                            obligatorio = {false}
+
                         />
                         <InputButtonLiquidacion
                             clasess={inputButtonClasess}
@@ -273,7 +274,7 @@ return (
                         />
                     </div>
                     <div className="col-xl-6">
-                        <AsidePago formLiquidacion={formLiquidacion && formLiquidacion} formasPAgo ={formasPago && formasPago} onChange={onChangeValues} lugaresDePago={lugaresDePago && lugaresDePago} bancos={bancos && bancos} 
+                        <AsidePago modify={modify}formLiquidacion={formLiquidacion && formLiquidacion} formasPAgo ={formasPago && formasPago} onChange={onChangeValues} lugaresDePago={lugaresDePago && lugaresDePago} bancos={bancos && bancos} 
                         disabled={disable}/>
                         <DireccionSindicato formLiquidacion={formLiquidacion && formLiquidacion} onChange={onChangeValues} direcciones={direcciones && direcciones} sindicatos={sindicatos} 
                         disabled={disable} />

@@ -46,6 +46,7 @@ const EstudioFlia = ({
           }
           >
             <option value="">Seleccionar</option>
+            <option value="0">(Sin Definir)</option>   
             {array && array.map((op, i) => {
               return propArray === op[idSelect] ? (
                 <option key={i} 

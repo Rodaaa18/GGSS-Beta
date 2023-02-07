@@ -100,6 +100,7 @@ return (
             </div>
             <div className='d-flex flex-row justify-content-center align-items-center col-xl-12 contenedorLicencias'>
                 <InputCbo 
+                licencia={true}
                 clasess={inputSelectedoptionLicencias}
                 display={false} 
                 idInput="inputOpcionsLicencias" 
