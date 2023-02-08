@@ -81,7 +81,7 @@ const ChildModal = ({nameModalProp, disabled, array , propsModal, optionsInputs,
                 </div>
                 <div className='d-flex flex-row-reverse w-100 '>
                     <button className='btn btn-success m-1' onClick={()=>functionAdd(urlApi, bodyPetition, bodyUpdate, idAModificar)}>
-                    Aceptar
+                    Aceptarr
                     </button>
                     <button className='btn btn-danger m-1'>
                     Cancelar
