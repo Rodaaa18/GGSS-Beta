@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+// import React, { useState } from 'react'
 import InputModal from '../Inputs/InputModal/InputModal';
 import TextArea from '../Inputs/TextArea/TextArea';
 import "./BasicModal.css"
@@ -42,7 +42,7 @@ const ChildModal = ({nameModalProp, disabled, array , propsModal, optionsInputs,
                     }
                 </select>
                 <div className='d-flex flex-row justify-content-evenly align-items-center mt-1'>
-                    <button className='btn btn-success' onClick={()=> {setDisableMOdal(false)}}>Agregar</button>
+                    <button className='btn btn-primary' onClick={()=> {setDisableMOdal(false)}}>Agregar</button>
                     <button className='btn btnModificar btn-info text-light' onClick={()=> {setModify(true);setDisableMOdal(false)}}>Modificar</button>
                     <button className='btn btn-danger' onClick={()=> functionDelete(urlApi, idAModificar)}>Eliminar</button>
                 </div>
