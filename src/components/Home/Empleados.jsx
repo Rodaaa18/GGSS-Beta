@@ -72,8 +72,9 @@ import { addOneDomicilio, cleanIdsDom } from "../../redux/actions/domiciliosActi
 import { addDatosExtraPorEmpleado, cleanIdDe } from "../../redux/actions/extrasActions";
 import { setRefetch } from "../../redux/actions/modalesActions";
 import "./Home.css"
+import ErrorPage from "../ErrorPage/ErrorPage";
 
-const Empleados = () => {
+const Empleados = ({tokenDef, setTokenDef}) => {
   const [tabIndex, setTabIndex] = useState(0);
   const [responses, setResponses] = useState({});
   const [disable, setDisable] = useState(true);
@@ -85,7 +86,7 @@ const Empleados = () => {
   const [ inCancel, setInCancel ] = useState(false);
   const [ valueempl, setValueEmpl ] = useState(false);
   const [saveEmpleado , setSaveEmpleado ] = useState(false);
-
+  const token = useSelector((state)=> state.generalState.token);
 
   const refetching = useSelector((state)=> state.modalState.refetch);
   const [refetch, setRefectch] = useState(false);
@@ -1243,7 +1244,8 @@ useEffect(()=>{
     }
 }
   return (
-    <div className="container-fluid">
+    <>
+    {tokenDef ? <div className="container-fluid">
       <div className="row">
         <div className="col-xl-3 col-lg-3 col-md-3">
           <Browser deleteEmploye={deleteEmploye} setRefectch={setRefectch} refetch={refetch} disable={disable} setDisable={setDisable} setValueEmpl={setValueEmpl} responses={responses} setResponses={setResponses} />
@@ -1345,8 +1347,9 @@ useEffect(()=>{
         </button>
         <button className="btn btn-success btnEmpl" onClick={()=> deleteItems( objectRequest)}>Aceptar</button>
       </div>
-      <Footer />
-    </div>
+      <Footer setTokenDef={setTokenDef}/>
+    </div> : <ErrorPage/>}
+    </>
   );
 };
 export default Empleados;
