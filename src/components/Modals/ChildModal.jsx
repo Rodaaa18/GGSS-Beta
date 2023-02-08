@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import InputModal from '../Inputs/InputModal/InputModal';
 import "./BasicModal.css"
-const ChildModal = ({nameModalProp, disabled, array , propsModal, optionsInputs, transition, setTransition, handleClickClose,functionAdd, functionUpdate, functionDelete, valueItemModal, setValueItemModal, onChangeValues, modalValues, urlApi, bodyPetition, bodyUpdate,setModify, modify, idAModificar, disableModal, setDisableMOdal}) => {
+const ChildModal = ({nameModalProp, disabled, array , propsModal, optionsInputs, transition, setTransition, handleClickClose,functionAdd, functionUpdate, functionDelete, valueItemModal, setValueItemModal, onChangeValues, modalValues, urlApi, bodyPetition, bodyUpdate,setModify, modify, idAModificar, disableModal, setDisableMOdal, actionActualizaDelete, disableModalButtons , setDisableModalButtons}) => {
 
-    
   return (
     
     <section className={transition ? 'transitionClassUp' : ' transitionClassneDone '} >
+        <div className='cortina'></div>
     <div className='modalBodyClass p-2' >
         <div className="row p-2">
             <div className='d-flex flex-row justify-content-between align-items-center'>
@@ -22,8 +22,7 @@ const ChildModal = ({nameModalProp, disabled, array , propsModal, optionsInputs,
                     className="form-select selectMenus p-0 m-0"
                     multiple
                     aria-label="multiple select example"
-                    disabled={disabled}
-                    
+                    disabled={disableModalButtons}
                     >
                     {array && array.map((op, i) => {
                         return (
@@ -40,9 +39,9 @@ const ChildModal = ({nameModalProp, disabled, array , propsModal, optionsInputs,
                     }
                 </select>
                 <div className='d-flex flex-row justify-content-evenly align-items-center mt-1'>
-                    <button className='btn btn-success' onClick={()=> {setDisableMOdal(false)}}>Agregar</button>
-                    <button className='btn btn-warning' onClick={()=> {setModify(true);setDisableMOdal(false)}}>Modificar</button>
-                    <button className='btn btn-danger' onClick={()=> functionDelete(urlApi, idAModificar)}>Eliminar</button>
+                    <button className='btn btn-success' disabled={disableModalButtons} onClick={()=> {setDisableMOdal(false); setDisableModalButtons(true)}}>Agregar</button>
+                    <button className='btn btn-warning' disabled={disableModalButtons} onClick={()=> {setModify(true);setDisableMOdal(true); setDisableModalButtons(true)}}>Modificar</button>
+                    <button className='btn btn-danger' disabled={disableModalButtons} onClick={()=> {functionDelete(urlApi, idAModificar,actionActualizaDelete); setDisableModalButtons(true)}}>Eliminar</button>
                 </div>
             </div>
             <div className='col-xl-6'>
@@ -51,7 +50,7 @@ const ChildModal = ({nameModalProp, disabled, array , propsModal, optionsInputs,
                         optionsInputs.map((option, index)=>{
                             return(
                                 <InputModal
-                                    disableModal={disableModal}
+                                    disableModal={!disableModalButtons}
                                     key={index}
                                     placeholder={option.placeholder}
                                     nameLabel = {option.label}
@@ -64,10 +63,10 @@ const ChildModal = ({nameModalProp, disabled, array , propsModal, optionsInputs,
                     }
                 </div>
                 <div className='d-flex flex-row-reverse w-100 '>
-                    <button className='btn btn-success m-1' onClick={()=>functionAdd(urlApi, bodyPetition, bodyUpdate, idAModificar)}>
+                    <button disabled={!disableModalButtons} className='btn btn-success m-1' onClick={()=>{functionAdd(urlApi, bodyPetition, bodyUpdate, idAModificar); setDisableModalButtons(false)}}>
                     Aceptar
                     </button>
-                    <button className='btn btn-danger m-1'>
+                    <button disabled={!disableModalButtons} onClick={()=>{ setDisableModalButtons(false)}} className='btn btn-danger m-1'>
                     Cancelar
                     </button>
                 </div>

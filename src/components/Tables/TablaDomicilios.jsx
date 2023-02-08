@@ -15,7 +15,7 @@ const dispatch = useDispatch();
 
   return (
     <>
-      <div className="row mt-5 overflow-scroll">
+      <div className="row mt-5 overflow-scroll rowTAbles">
         <table className="table table-danger">
           <thead>
             <tr>
