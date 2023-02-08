@@ -33,10 +33,11 @@ const ChildModal = ({
     <section
       className={transition ? "transitionClassUp" : " transitionClassneDone "}
     >
+        <div className='cortina'></div>
       <div className="modalBodyClass p-2">
         <div className="row p-2">
           <div className="d-flex flex-row justify-content-between align-items-center">
-            <h3>{propsModal.nameModal}</h3>
+          <p className="h3"><ins>{propsModal.nameModal}</ins></p>
             <button
               className="btn btn-outline-danger text-white fs-6 btn-md buttonModal border border-white"
               onClick={() => {
@@ -73,7 +74,7 @@ const ChildModal = ({
             </select>
             <div className="d-flex flex-row justify-content-evenly align-items-center mt-1">
               <button
-                className="btn btn-primary"
+                className="btn btn-dark text-light"
                 onClick={() => {
                   setDisableMOdal(false);
                 }}
@@ -81,7 +82,7 @@ const ChildModal = ({
                 Agregar
               </button>
               <button
-                className="btn btnModificar btn-info text-light"
+                className="btn btn-dark text-light"
                 onClick={() => {
                   setModify(true);
                   setDisableMOdal(false);

@@ -1,43 +1,27 @@
-.modalClass {
-  width: 100%;
-  height: 100vh;
+.modalClass{
+    width: 100%;
+    height: 100vh;
+    z-index: 99999;
 }
-.backgroundModal {
-  display: flex;
-  flex-flow: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 140%;
-  background-color: rgba(1, 26, 26, 0.4);
+.cortina{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100%;
+    background-color: rgba(104, 104, 101, 0.35);
 }
-.modalBodyClass {
-  color: black;
-  width: 45rem;
-  height: 25rem;
-  border-radius: 10px;
-  border: 2px solid rgb(128, 124, 124);
-  background-color: rgb(128, 124, 110);
-  color: #fff;
-  /* color : rgb(77, 4, 4); */
-  /* background-color: rgba(220, 53, 69, 0.5); */
-  /* background-image: linear-gradient(315deg, rgba(220, 53, 69, 0.5) 0%, rgba(252, 176, 69, 0.5) 74%); */
+.modalBodyClass{
+    position : absolute;    
+    z-index: 40;
+    width: 45rem;
+    height: 20rem;
+    border-radius: 10px;
+    border: 2px solid rgb(157, 156, 156);
+    background-color: rgba(223, 120, 105);
+    top: 25%;
+    left: 25%;
 }
-
-.btnModificar {
-  background-color: rgb(13, 202, 240, 0.6);
-  border-color: #fff;
-}
-.btnModificar:hover {
-  background-color: rgb(13, 202, 240, 0.8);
-}
-.buttonModal {
-  /* color: white;
-    width: 1.5rem;
-    height: 1.5rem;
-    font-size: 2rem; */
-}
-
 .selectModal {
   height: 15rem;
 }
@@ -68,4 +52,67 @@
 .btn-danger:hover {
   background-color: rgb(188, 23, 40);
   border: none;
+}
+
+
+
+
+
+
+/* color del modal estandarizado a confirmar con Luis */
+.btn-info{
+  --bs-btn-bg:rgba(223, 120, 105);
+  --bs-btn-border-color: rgba(223, 120, 105);
+  --bs-btn-hover-bg: rgba(223, 120, 105);
+  --bs-btn-hover-border-color: rgba(223, 120, 105);
+}
+.btn:first-child:active{
+  --bs-btn-bg:rgba(223, 120, 105);
+  --bs-btn-border-color: rgba(223, 120, 105);
+  --bs-btn-hover-bg: rgba(223, 120, 105);
+  --bs-btn-hover-border-color: rgba(223, 120, 105);
+}
+.btn:first-child:active, :not(.btn-check)+.btn:active{
+  color: #fff;
+  --bs-btn-bg:rgba(223, 120, 105);
+  --bs-btn-border-color: rgba(223, 120, 105);
+  --bs-btn-hover-bg: rgba(223, 120, 105);
+  --bs-btn-hover-border-color: rgba(223, 120, 105);
+}
+
+.btn-info {
+  color: #fff;
+  text-decoration-color: #fff;
+  background-color:  rgba(223, 120, 105);
+  border: 1px solid  rgba(223, 120, 105);
+}
+.btn-info :hover {
+  color: #fff;
+  text-decoration-color: #fff;
+  background-color:  rgba(213, 110, 95);
+  border: 1px solid  rgba(223, 120, 105);
+}
+.btn-info :active {
+  color: #fff;
+  text-decoration-color: #fff;
+  background-color:  rgba(223, 120, 105);
+  border: 1px solid  rgba(223, 120, 105);
+}
+.btn-info :focus {
+  color: #fff;
+  text-decoration-color: #fff;
+  background-color:  rgba(223, 120, 105);
+  border: 1px solid  rgba(223, 120, 105);
+}
+.btn-info ::after {
+  color: #fff;
+  text-decoration-color: #fff;
+  background-color:  rgba(223, 120, 105);
+  border: 1px solid  rgba(223, 120, 105);
+}
+.btn-info ::before {
+  color: #fff;
+  text-decoration-color: #fff;
+  background-color:  rgba(223, 120, 105);
+  border: 1px solid  rgba(223, 120, 105);
 }
