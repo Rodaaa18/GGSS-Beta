@@ -1,10 +1,3 @@
-<<<<<<< Updated upstream
-import React, { useState } from 'react'
-import InputModal from '../Inputs/InputModal/InputModal';
-import TextArea from '../Inputs/TextArea/TextArea';
-import "./BasicModal.css"
-const ChildModal = ({nameModalProp, disabled, array , propsModal, optionsInputs, transition, setTransition, handleClickClose,functionAdd, functionUpdate, functionDelete, valueItemModal, setValueItemModal, onChangeValues, modalValues, urlApi, bodyPetition, bodyUpdate,setModify, modify, idAModificar, disableModal, setDisableMOdal, usaEstados, idInputTextArea }) => {
-=======
 // import React, { useState } from 'react'
 import axios from "axios";
 import swal from "sweetalert";
@@ -75,8 +68,6 @@ const ChildModal = ({
             swal("Puede seguir operando");
           }
         });
-    
-}
 
 
   return (
@@ -142,7 +133,7 @@ const ChildModal = ({
               </button>
               <button
                 className="btn btn-danger"
-                onClick={() => functionDelete(urlApi, idAModificar)}
+                onClick={() => deleteItemModal(url, actionActualizaDelete, id)}
               >
                 Eliminar
               </button>
@@ -195,7 +186,6 @@ const ChildModal = ({
     </section>
   );
 };
->>>>>>> Stashed changes
 
     
   return (
