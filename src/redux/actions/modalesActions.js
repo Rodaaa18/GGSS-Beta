@@ -130,12 +130,7 @@ export const cancelModals = (payload) => {
 }
 
 
-export const actualizaDelete = (payload) => {
-    return {
-        type: ACTUALIZA_DELETE,
-        payload
-    };
-}
+
 
 
 

@@ -27,5 +27,5 @@ export const CANCEL_MODALS = "CANCEL_MODALS";
 
 export const SET_REFETCH = "SET_REFETCH"
 
-export const ACTUALIZA_DELETE = "ACTUALIZA_DELETE";
+
 
