@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import InputModal from '../Inputs/InputModal/InputModal';
 import TextArea from '../Inputs/TextArea/TextArea';
 import "./BasicModal.css"
-const ChildModal = ({nameModalProp, disabled, array , propsModal, optionsInputs, transition, setTransition, handleClickClose,functionAdd, functionUpdate, functionDelete, valueItemModal, setValueItemModal, onChangeValues, modalValues, urlApi, bodyPetition, bodyUpdate,setModify, modify, idAModificar, disableModal, setDisableMOdal, actionActualizaDelete, disableModalButtons , setDisableModalButtons}) => {
+const ChildModal = ({nameModalProp, disabled, array , propsModal, optionsInputs, transition, setTransition, handleClickClose,functionAdd, functionUpdate, functionDelete, valueItemModal, setValueItemModal, onChangeValues, modalValues, urlApi, bodyPetition, bodyUpdate,setModify, modify, idAModificar, disableModal, setDisableMOdal, actionActualizaDelete, disableModalButtons , setDisableModalButtons, usaEstados}) => {
 
   return (
     
@@ -70,7 +70,7 @@ const ChildModal = ({nameModalProp, disabled, array , propsModal, optionsInputs,
                 Modificar
               </button>
               <button
-                className="btn btn-danger"
+                className="btn btn-dark"
                 disabled={disableModalButtons}
                 onClick={() => {
                   functionDelete(urlApi, idAModificar, actionActualizaDelete);
@@ -102,18 +102,18 @@ const ChildModal = ({nameModalProp, disabled, array , propsModal, optionsInputs,
               })}
             </div>
             <div className="d-flex flex-column justify-content-center align-items-center">
-              {/* {usaEstados && ( */}
+               {usaEstados && ( 
                 <TextArea
                   disableModal={!disableModalButtons}
                   // idInput={idInputTextArea}
                   onChange={onChangeValues}
                   characterLimit={255}
                 ></TextArea>
-              {/* )} */}
+               )} 
             </div>
             <div className="d-flex flex-row-reverse w-100 ">
               <button
-                className="btn btn-success m-1"
+                className="btn btn-dark m-1"
                 disabled={!disableModalButtons}
                 onClick={() =>
                   {functionAdd(urlApi, bodyPetition, bodyUpdate, idAModificar);
@@ -122,7 +122,7 @@ const ChildModal = ({nameModalProp, disabled, array , propsModal, optionsInputs,
               >
                 Aceptar
               </button>
-              <button className="btn btn-danger m-1"
+              <button className="btn btn-dark m-1"
               disabled={!disableModalButtons}
               onClick={() => {
                 setDisableModalButtons(false);
