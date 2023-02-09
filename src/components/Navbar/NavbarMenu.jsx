@@ -28,6 +28,7 @@ const NavbarMenu = () => {
     const [ modify, setModify ] = useState(false);
     const [ disableModal, setDisableMOdal ] = useState(true);
 	const [ transition, setTransition ] = useState(false);
+	const [ disableModalButtons, setDisableModalButtons ] = useState(false);
 	const dispatch = useDispatch();
 	const refetch = useSelector((state)=> state.modalState.refetch);
 
@@ -437,6 +438,8 @@ const NavbarMenu = () => {
 															disableModal={disableModal}
 															setDisableMOdal={setDisableMOdal}
 															actionActualizaDelete={actualizaDelete}
+															disableModalButtons={disableModalButtons}
+															setDisableModalButtons={setDisableModalButtons}
 														/>
 													</ButtonCallModal>
 												</li>
@@ -466,6 +469,7 @@ const NavbarMenu = () => {
 															functionDelete={deleteItemModal}
 															disableModal={disableModal}
 															setDisableMOdal={setDisableMOdal}
+															actionActualizaDelete={actualizaDelete}
 														/>
 														
 													</ButtonCallModal>
@@ -495,6 +499,7 @@ const NavbarMenu = () => {
 															functionDelete={deleteItemModal}
 															disableModal={disableModal}
 															setDisableMOdal={setDisableMOdal}
+															actionActualizaDelete={actualizaDelete}
 														/>
 														
 													</ButtonCallModal>
@@ -524,6 +529,7 @@ const NavbarMenu = () => {
 															functionDelete={deleteItemModal}
 															disableModal={disableModal}
 															setDisableMOdal={setDisableMOdal}
+															actionActualizaDelete={actualizaDelete}
 															//props texarea
 															idInputTextArea="observacion"
 															usaEstados={true}

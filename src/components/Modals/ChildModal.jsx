@@ -29,6 +29,8 @@ const ChildModal = ({
   usaEstados,
   idInputTextArea,
   actionActualizaDelete,
+  disableModalButtons,
+  setDisableModalButtons
 }) => {
 
   return (
@@ -57,7 +59,7 @@ const ChildModal = ({
               className="form-select selectMenus p-0 m-0"
               multiple
               aria-label="multiple select example"
-              disabled={disabled}
+              disabled={disableModalButtons}
             >
               {array &&
                 array.map((op, i) => {
@@ -74,28 +76,37 @@ const ChildModal = ({
                   );
                 })}
             </select>
-            <div className="d-flex flex-row justify-content-evenly align-items-center mt-1">
+            <div className="d-flex flex-row justify-content-evenly align-items-center mt-1 ">
               <button
                 className="btn btn-dark text-light"
+                disabled={disableModalButtons}
                 onClick={() => {
                   setDisableMOdal(false);
+                  setDisableModalButtons(true);
+
                 }}
               >
                 Agregar
               </button>
               <button
                 className="btn btn-dark text-light"
+                disabled={disableModalButtons}
                 onClick={() => {
                   setModify(true);
                   setDisableMOdal(false);
+                  setDisableModalButtons(true);
                 }}
               >
                 Modificar
               </button>
               <button
                 className="btn btn-danger"
-                onClick={() => functionDelete(urlApi, idAModificar, actionActualizaDelete)}
-              >
+                disabled={disableModalButtons}
+                onClick={() => {
+                  functionDelete(urlApi, idAModificar, actionActualizaDelete);
+                  setDisableModalButtons(true);
+                }}
+                >
                 Eliminar
               </button>
             </div>
@@ -105,7 +116,7 @@ const ChildModal = ({
               {optionsInputs.map((option, index) => {
                 return (
                   <InputModal
-                    disableModal={disableModal}
+                    disableModal={!disableModalButtons}
                     key={index}
                     placeholder={option.placeholder}
                     nameLabel={option.label}
@@ -123,23 +134,30 @@ const ChildModal = ({
             <div className="d-flex flex-column justify-content-center align-items-center">
               {usaEstados && (
                 <TextArea
+                  disableModal={!disableModalButtons}
                   idInput={idInputTextArea}
                   onChange={onChangeValues}
                   characterLimit={255}
-                  disableModal={disableModal}
                 ></TextArea>
               )}
             </div>
             <div className="d-flex flex-row-reverse w-100 ">
               <button
                 className="btn btn-success m-1"
+                disabled={!disableModalButtons}
                 onClick={() =>
-                  functionAdd(urlApi, bodyPetition, bodyUpdate, idAModificar)
-                }
+                  {functionAdd(urlApi, bodyPetition, bodyUpdate, idAModificar);
+                  setDisableModalButtons(false);
+                }}
               >
                 Aceptar
               </button>
-              <button className="btn btn-danger m-1">Cancelar</button>
+              <button className="btn btn-danger m-1"
+              disabled={!disableModalButtons}
+              onClick={() => {
+                setDisableModalButtons(false);
+              }}
+              >Cancelar</button>
             </div>
           </div>
         </div>
