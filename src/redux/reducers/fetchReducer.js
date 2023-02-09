@@ -352,7 +352,7 @@ export const fetchReducer = (state = initialState, action) =>{
         
         case ADD_NEW_DOC : {
         return{
-            ...state.documentacionEmpleados,
+            ...state,
             documentacionEmpleados : [ ...state.documentacionEmpleados, action.payload]
         }
         }

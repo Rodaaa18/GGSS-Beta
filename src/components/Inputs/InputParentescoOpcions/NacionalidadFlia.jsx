@@ -60,8 +60,7 @@ const NacionalidadFlia = ({
           name={idInput}
           onChange={(e)=> onChange(e.target.value, idInput)}
         >
-          <option value="">Seleccionar</option>
-          <option value="0">(Sin Definir)</option>   
+          <option value="">Seleccionar</option>  
             {/* {
             array.map((op, i) => {
               return propArray === op ?<option selected defaultValue  key={i}>{op}</option> : <option key={i}>{op}</option>

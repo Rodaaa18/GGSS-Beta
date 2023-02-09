@@ -65,8 +65,7 @@ const InputMultiple = ({
           </div>
           <div className="col-xl-4 divCboMultiple  d-flex justify-content-start align-items-center">
             <select className={obligatorio ? "formulario-input-DNI-familia form-select  px-0 obligatorio" : "formulario-input-DNI-familia form-select  px-0"} value={datosFamiliaValue1 !== undefined ? datosFamiliaValue1 : null}  disabled={disable} id={propsRadioButton.idCboDni} name={propsRadioButton.idCboDni} onChange={(e)=>onChange(e.target.value,propsRadioButton.idCboDni)}>
-              <option value="">Seleccionar</option>
-              <option value="0">(Sin Definir)</option>   
+              <option value="">Seleccionar</option>  
               {optionsDNI && optionsDNI.map((op, i) => {
                 return propSelected === op[idSelected] ? <option key={i} selected value={op[idSelected]}>{op[namePropOp]}</option> :
                 <option key={i} value={op[idSelected]}>{op[namePropOp]}</option> 

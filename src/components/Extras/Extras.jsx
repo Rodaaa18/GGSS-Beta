@@ -29,6 +29,7 @@ const Extras = ({responses, setResponses, disable, setRefetch, refetch}) => {
     //const datosExtraEmpleado = useSelector((state)=>state.generalState.datosExtrasPorEmpleadosSelect);
     const datosExtraEmpleado = useSelector((state)=> state.extrasState.datosExtrasEmp);
 
+    const descripcion = datosExtras && datosExtras.filter((de)=> de.idDatoExtra === datoExtraSelected?.idDatoExtra);
     
     const urlPetition = `http://54.243.192.82/api/GuardarDatosExtras/0?Fecha=${formDatosExtras?.inputFechaExtras}&IdEmpleado=${empleadoUno.iDempleado}&IdDatoExtra=${formDatosExtras?.inputDatosExtrasCbo}&Obs=${formDatosExtras?.inputTextExtras}`
    
@@ -149,7 +150,7 @@ const Extras = ({responses, setResponses, disable, setRefetch, refetch}) => {
                       <div className='col-xl-12 fs-6 '>
                           <TextArea onChange={onChangeValues} idInput="inputTextExtras" value={formDatosExtras?.inputTextExtras && formDatosExtras?.inputTextExtras} inputName="Observaciones" action={GET_INPUT_VALUES_EXTRAS} disabled={disable} />
                           <ButtonCancelarAceptar cancelar="-" aceptar="+" idElimiar={datoExtraSelected.idEmpleadoDatoExtra} functionDelete={deleteDatoExtra} functionSend={sendData} disabled={disable} />
-                          <TableExtras disabled={disable} datosExtraEmpleado={datosExtraEmpleado && datosExtraEmpleado} columns={columns} />
+                          <TableExtras descripcion={descripcion} disabled={disable} datosExtraEmpleado={datosExtraEmpleado && datosExtraEmpleado} columns={columns} />
                       </div>
                 </div>
             </div>

@@ -50,8 +50,7 @@ const InputParentesco = ({
             value={value}
             onChange={(e)=> onChange(e.target.value, idInput)}
           >
-            <option value="">Seleccionar</option>
-            <option value="0">(Sin Definir)</option>   
+            <option value="">Seleccionar</option>  
             {array  &&
               array.map((op, i) => {
                 return propArray === op[propIdSelect] ? (
