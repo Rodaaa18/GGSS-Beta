@@ -39,13 +39,13 @@ const InputButton = ({nameButton, placeholder, nameLabel, maxLeght, value, disab
                 disabled={disabled}
                 onChange={(e)=> onChange(e.target.value, id)}
                 />
-        <button type="button" onClick={()=>setValor(funcionCuil(nroDocumento,genre, swal))}
-              className={disabled ? "none" : `${clasess.classFive}`} 
+       {/*  <button type="button" onClick={()=>setValor(funcionCuil(nroDocumento,genre, swal))}
+              className={`${clasess.classFive}`} 
               disabled={disabled}
               // disabled={mostrarAsidePagos}
               >
               {nameButton}
-        </button>
+        </button> */}
     </div>
 </div>
         : 

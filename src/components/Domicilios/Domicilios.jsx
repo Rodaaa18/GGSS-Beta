@@ -73,15 +73,7 @@ const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValu
 
   const sendDataDomicilios= async ()=>{
     try{
-    let predeterminadoExiste = empleadoDomicilio && empleadoDomicilio.filter((dom) => dom.predeterminado === true );
     
-    if(predeterminadoExiste.length > 0 && (formDatosPersonales?.inputPredeterminado === true)){
-      return swal({
-        title: "Error",
-        text: "No puede tener más de un domicilio Predeterminado",
-        icon: "error",
-      }) 
-    }
 
     await axios.post(urlDomicilios, {
       headers: {

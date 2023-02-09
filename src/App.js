@@ -5,13 +5,10 @@ import { Routes as Switch,  Route, useParams, useLocation,
   // useLocation
 } from "react-router-dom";
 import Empleados from './components/Home/Empleados';
+import Superadmin from './components/Superadmin/Superadmin';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import swal from 'sweetalert';
-import ErrorPage from './components/ErrorPage/ErrorPage';
-import { divide } from 'lodash';
-import { useDispatch } from 'react-redux';
-import { saveToken } from './redux/actions/fetchActions';
 
 
 function App() {
@@ -52,14 +49,12 @@ function App() {
     validationUser();
   },[])
   return (
-  <>
-    {
-      existe ? <><NavbarMenu /><Switch>
-        <Route path="/:token" exact element={<ErrorPage />} />
-        <Route path="/ficha-empleados" exact element={<Empleados tokenDef={tokenDef} setTokenDef={setTokenDef} />} />
-      </Switch></> : <ErrorPage />
-
-    }
+    <>
+      <NavbarMenu />
+      <Switch>
+        <Route path="/ficha-empleados" exact element={<Empleados />} /> 
+        <Route path="/superadmin" exact element={<Superadmin />} /> 
+      </Switch>        
     </>
     
     

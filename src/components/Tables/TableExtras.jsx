@@ -27,7 +27,7 @@ const TableExtras = ({columns, datosExtraEmpleado}) => {
                     return(
                             <tr>
                                 <th scope="row"> <input type="radio" name="selectExtra" id="selectExtra" onClick={()=> {dispatch(getDatoExtraSelected(item))}} /> </th>
-                                <td>{item?.fecha}</td>
+                                <td>{item?.fecha.substring(0, item?.fecha.length -9)}</td>
                                 <td>{item?.descripcion}</td>
                                 <td>{item?.obs}</td>
                             </tr>

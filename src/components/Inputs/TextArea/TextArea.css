@@ -15,8 +15,7 @@
     resize: none;
 }
 .count-container form .input-group{
-	width: 17rem;
-	margin-bottom: 0.2rem;
+	width: 30rem;
 }
 .input-control :focus{
 	/* background-image: linear-gradient(to bottom, transparent, rgb(189, 103, 103, 0.3)); */
