@@ -78,10 +78,17 @@ const Documentacion = ({responses, setResponses, disable, setRefectch, refetch})
             try{
                 axios.post(urlPost, bodyPetition)
                 .then((res)=>{
-                    console.log(res.data)
-                    dispatch(addNewDoc(res.data))
+                    if(res.status === 200){
+                        dispatch(addNewDoc(res.data))
                     setRefectch(!refetch)
                     dispatch(setRefetch(!refetching))
+                        return swal({
+                            title: "Ok",
+                            text: "Documentacion agregada con éxito",
+                            icon: "success",
+                        })
+                    }
+                    return;
                 })
             }catch(err){
                 return swal({
