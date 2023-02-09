@@ -19,16 +19,20 @@
     color: black;
     width: 50vw;
     border-radius: 10px;
-    height: 20rem;
-    border: 2px solid black;
+    height: 50vh;
+    border: 2px solid rgb(128, 124, 124);
+    background-color: rgb(187, 45, 59, 0.6);
+    color:#fff;
     /* color : rgb(77, 4, 4); */
     background-color: rgba(223, 120, 120, 0.911);
     top: 25%;
     left: 25%;
 }
 .buttonModal{
-    color: black;
-    width: 2rem;
+    /* color: white;
+    width: 1.5rem;
+    height: 1.5rem;
+    font-size: 2rem; */
 }
 
 .selectModal{

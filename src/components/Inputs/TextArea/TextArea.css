@@ -1,21 +1,22 @@
 .form__grupo__inputs_Obs{
-    width: 280px;
-    resize: none;
+    /* width: 10rem;
+    resize: none; */
 	
 }
 
 .form__grupo__label__label{
-	margin: 0;
-    margin-left: 5px;
-    height: 100%;
-	font-size: 15px;
+	/* margin: 0; */
+    /* margin-left: 3rem; */
+    /* height: 100%;
+	font-size: 10rem; */
 }
 .txtArea{
-    width: 280px;
+    width: 10rem;
     resize: none;
 }
 .count-container form .input-group{
-	width: 30rem;
+	width: 17rem;
+	margin-bottom: 0.2rem;
 }
 .input-control :focus{
 	/* background-image: linear-gradient(to bottom, transparent, rgb(189, 103, 103, 0.3)); */
@@ -23,9 +24,9 @@
 
 }
 .count-container form .input-msg{
-	font-size: 15px;
+	/* font-size: 15px; */
 	/* background-image: linear-gradient(to bottom, transparent, rgb(189, 103, 103, 0.3)); */
-	transition: .3s ease all;
+	/* transition: .3s ease all; */
 	/* border-bottom: 1px solid rgb(78, 6, 6); */
 	/* padding-top: 4px; */
 }
@@ -40,7 +41,7 @@
 	color: orange;
 }
 .input-control{
-	width: 32.5rem;
+	/* width: 32.5rem; */
 }
 .textarea:active{
 	/* background-image: linear-gradient(to bottom, transparent, rgb(189, 103, 103, 0.3));
@@ -53,17 +54,17 @@
 	color: orange;
 }
 .formulario-input-TextArea{
-	padding: 0%;
+	/* padding: 0%;
 	margin-bottom: 3px;
-	width: 550px;
-	height: 90px;
-	margin-left: 0px;
+	/* width: 10rem;
+	height: 20rem; */
+	/* margin-left: 0px;
 	margin-right: 0px;
-	border: none;
-	/* border-radius: 3px; */
+	border: none; */
+	/* border-radius: 3px;
 	transition: .3s ease all;
 	border-bottom: 0.5px solid;
-	font-size: 14px;
+	font-size: 14px; */
 }
 
 .formulario-input-TextArea:focus{

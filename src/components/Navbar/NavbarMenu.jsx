@@ -10,11 +10,11 @@ import { objectParentescos, objectCategorias, inputsNumCategorias, objectConveni
 import { AXIOS_ERROR, SET_LOADING } from '../../redux/types/fetchTypes';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
-import { addEstadosCiviles, addEstados, addPaises, addEstudios, addTiposDocumento, addCargos, addTareasDesempeñadas, addParentescos, addFormasPago, addModosContratacion, addModosLiquidacion, addEmpleadores, addDomicilios, addCalles, addDepartamentos, addBarrios, addProvincias, addLocalidades, addNewEstadoCivil, addNewEstudio, getIdEstadoCivil, deleteEstadoCivil, getIdEstudio, deleteEstudio, addNewTipoDoc, deleteTipoDoc, getIdTipoDoc, putEstadoCivil, putEstudio, putTipoDoc, addNewParentesco, deleteParentesco, putParentesco, getIdParentesco, addNewEstado, deleteEstado, putEstado, getIdEstado, addNewFormaPago, deleteFormaPago, putFormaPago, getIdFormaPago, addNewCargo, deleteCargo, putCargo, getIdCargo, addNewTarea, deleteTarea, putTarea, getIdTarea, actualizaDeleteEstadosCiviles } from '../../redux/actions/fetchActions';
+import { addEstadosCiviles, addEstados, addPaises, addEstudios, addTiposDocumento, addCargos, addTareasDesempeñadas, addParentescos, addFormasPago, addModosContratacion, addModosLiquidacion, addEmpleadores, addDomicilios, addCalles, addDepartamentos, addBarrios, addProvincias, addLocalidades, addNewEstadoCivil, addNewEstudio, getIdEstadoCivil, deleteEstadoCivil, getIdEstudio, deleteEstudio, addNewTipoDoc, deleteTipoDoc, getIdTipoDoc, putEstadoCivil, putEstudio, putTipoDoc, addNewParentesco, deleteParentesco, putParentesco, getIdParentesco, addNewEstado, deleteEstado, putEstado, getIdEstado, addNewFormaPago, deleteFormaPago, putFormaPago, getIdFormaPago, addNewCargo, deleteCargo, putCargo, getIdCargo, addNewTarea, deleteTarea, putTarea, getIdTarea, actualizaDelete } from '../../redux/actions/fetchActions';
 import { addSelectedCargo, addSelectedEstado, addSelectedEstadoCivil, addSelectedEstudio, addSelectedFormaPago, addSelectedParentesco, addSelectedTarea, addSelectedTipoDocu, setRefetch } from '../../redux/actions/modalesActions';
 import ButtonCallModal from "../ButtonCallModal/ButtonCallModal";
 import ChildModal from "../Modals/ChildModal";
-import { propsModal } from "../Modals/props";
+import { propsModal, propsModalEstado, propsModalEstudios, propsModalParentesco, propsModalTiposDocumento } from "../Modals/props";
 
 
 // import { getEstadosCivilesModal } from '../../services/fetchAPI';
@@ -134,10 +134,12 @@ const NavbarMenu = () => {
         
     }
 	
-    
-
 	const urlEstadosCiviles = "http://54.243.192.82/api/EstadosCiviles"
 	const urlEstudios = "http://54.243.192.82/api/Estudios"
+	const urlEstado = "http://54.243.192.82/api/Estados"
+
+
+	const urlParentescos = "http://54.243.192.82/api/Parentescos"
 	const urlTiposDocumento = "http://54.243.192.82/api/TiposDocumento"
 	const urlCargos = "http://54.243.192.82/api/Cargos";
 	const urlTareas = "http://54.243.192.82/api/TareasDesempeñadas";
@@ -162,6 +164,10 @@ const NavbarMenu = () => {
     });
   }, [modalDataInputs]);
 	
+
+
+//#region ----------------------------------- ESTADOS DECLARADOS de Lauty  -----------------------------------
+
 	//Paises
 	const paisNacionalidad = useSelector((state)=> state.generalState.paises)
 	//Calles
@@ -237,7 +243,11 @@ const NavbarMenu = () => {
 	const textAreaTarea = useSelector((state) => state.modalState.formulario.textAreaTarea)
 	const valueIdTarea = useSelector((state) => state.generalState.idTarea)
 
-	// ----------------------------------- ID & PETITION  -----------------------------------
+//#endregion ----------------------------------- ESTADOS DECLARADOS de Lauty  -----------------------------------
+
+
+
+//#region ----------------------------------- ID & PETITION REview -----------------------------------
 	//Estados Civiles
 	const idEstadoCivil = ((estadosCivilesValue && estadosCivilesValue[estadosCivilesValue.length -1] !== undefined && (estadosCivilesValue[estadosCivilesValue.length -1].idEstadoCivil))+1)
 	const bodyEstadosCiviles = {
@@ -251,8 +261,74 @@ const NavbarMenu = () => {
         femenino : modalValues?.femenino
     }
 	//Estudios
-	const idEstudio = ((estudiosValue && estudiosValue[estudiosValue.length - 1] !== undefined && (estudiosValue[estudiosValue.length - 1].iDestudios)) + 1)
-	const bodyPetEstudio = { ...responses.modalDataInputs, iDestudios: idEstudio }
+	const bodyEstudios = {
+		"iDestudios": ((estudiosValue && estudiosValue[estudiosValue.length - 1] !== undefined && (estudiosValue[estudiosValue.length - 1].iDestudios)) + 1),
+		"estudiosNivel": modalValues?.estudiosNivel,
+		"id" : null,
+	}
+	const bodyUpdateEstudios = {
+		"iDestudios": valueItemModal?.iDestudios,
+		"estudiosNivel": modalValues?.estudiosNivel,
+		"id" : null,
+	}
+	
+	//Tipo Documento
+	const bodyTipoDocumento =
+		{
+		"iDtipoDocumento": ((tiposDocumentoValue && tiposDocumentoValue[tiposDocumentoValue.length - 1] !== undefined && (tiposDocumentoValue[tiposDocumentoValue.length - 1].iDtipoDocumento)) + 1),
+		"tipoDocumento": modalValues?.tipoDocumento,
+		"id": null
+		}
+	const bodyUpdateTipoDocumento = {
+		"iDtipoDocumento": valueItemModal?.iDtipoDocumento, 
+		"tipoDocumento": modalValues?.tipoDocumento,
+		"id": null
+	}
+
+	//Parentesco para después
+	// const bodyParentesco = {
+	// 	"iDparentesco": ((parentescosValue && parentescosValue[parentescosValue.length - 1] !== undefined && (parentescosValue[parentescosValue.length - 1].iDparentesco)) + 1),
+	// 	"parentesco": modalValues?.parentesco,
+	// 	"id": null
+	// }
+	// const bodyUpdateParentesco = {
+	// 	"iDparentesco": valueItemModal?.iDparentesco,
+	// 	"parentesco": modalValues?.parentesco,
+	// 	"id": null
+	// }
+
+	//Estados
+	const bodyEstado = {
+		"idEstado": ((estadosValue && estadosValue[estadosValue.length - 1] !== undefined && (estadosValue[estadosValue.length - 1].idEstado)) + 1),
+		"nombreEstado": modalValues?.nombreEstado,
+		"observacion": modalValues?.observacion
+	}
+	const bodyUpdateEstado = {
+		"idEstado": valueItemModal?.idEstado,
+		"nombreEstado": modalValues?.nombreEstado,
+		"observacion": modalValues?.observacion
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//#endregion ----------------------------------- ID Review 2023  -----------------------------------
+	
+//#region ----------------------------------- Body de Lauty  -----------------------------------
+
+	//Estudios
+	// const idEstudio = ((estudiosValue && estudiosValue[estudiosValue.length - 1] !== undefined && (estudiosValue[estudiosValue.length - 1].iDestudios)) + 1)
+	// const bodyPetEstudio = { ...responses.modalDataInputs, iDestudios: idEstudio }
 	//Tipos de documento
 	const idTiposDocumento = ((tiposDocumentoValue && tiposDocumentoValue[tiposDocumentoValue.length - 1] !== undefined && (tiposDocumentoValue[tiposDocumentoValue.length - 1].iDtipoDocumento)) + 1)
 	const bodyPetTiposDoc = { ...responses.modalDataInputs, iDtipoDocumento: idTiposDocumento }
@@ -287,7 +363,13 @@ const NavbarMenu = () => {
 		"tareaDesempeñada": responses.modalDataInputs?.tareaDesempeñada,
 		"obs": responses.modalDataInputs?.obs
 	}
-	// --------------------------------------------------------------------------------------------------------------------------------------
+
+//#endregion ----------------------------------- Body de Lauty  -----------------------------------
+
+
+
+
+
 	return (
 		<nav className="row gy-3 navbar navbar-expand-lg navbar-light bg-light col-sm-12">
 			<div className="container-sm">
@@ -355,12 +437,106 @@ const NavbarMenu = () => {
 															functionDelete={deleteItemModal}
 															disableModal={disableModal}
 															setDisableMOdal={setDisableMOdal}
-															actionActualizaDelete={actualizaDeleteEstadosCiviles}
+															actionActualizaDelete={actualizaDelete}
 															disableModalButtons={disableModalButtons}
-															setDisableModalButtons ={setDisableModalButtons}
+															setDisableModalButtons={setDisableModalButtons}
 														/>
 													</ButtonCallModal>
-												</li>  
+												</li>
+												<li>
+													<ButtonCallModal nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="Estudios"  setTransition={setTransition} nameButton="Estudios">
+{/* Estudios no va funciona CRUD  */}
+														<ChildModal
+															modalValues={modalValues}
+															onChangeValues={onChangeValues}
+															valueItemModal={valueItemModal}
+															setValueItemModal={setValueItemModal}
+															nameModalProp="Estudios"
+															handleClickClose={handleClickClose}
+															setTransition={setTransition}
+															array={estudiosValue && estudiosValue}
+															nameModal="Estudios"
+															propsModal={ propsModalEstudios }
+															optionsInputs={objectEstudios}
+															transition={transition}
+															functionAdd={sendModalData}
+															urlApi={urlEstudios}
+															bodyPetition ={bodyEstudios}
+															bodyUpdate={bodyUpdateEstudios}
+															modify={modify}
+															setModify={setModify}
+															idAModificar={valueItemModal?.iDestudios}
+															functionDelete={deleteItemModal}
+															disableModal={disableModal}
+															setDisableMOdal={setDisableMOdal}
+															actionActualizaDelete={actualizaDelete}
+														/>
+														
+													</ButtonCallModal>
+												</li>
+											<li>
+													<ButtonCallModal nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="TipoDocumento"  setTransition={setTransition} nameButton="Tipo de Documento">
+														<ChildModal 
+															modalValues={modalValues} 
+															onChangeValues={onChangeValues}  
+															valueItemModal={valueItemModal} 
+															setValueItemModal={setValueItemModal} 
+															nameModalProp="TipoDocumento" 
+															handleClickClose={handleClickClose} 
+															setTransition={setTransition} 
+															array={ tiposDocumentoValue && tiposDocumentoValue }  
+															nameModal="Tipo de Documento" 
+															propsModal={propsModalTiposDocumento} 
+															optionsInputs={objectTipoDocumento} 
+															transition={transition}
+															functionAdd={sendModalData}
+															urlApi={urlTiposDocumento}
+															bodyPetition ={bodyTipoDocumento}
+															bodyUpdate={bodyUpdateTipoDocumento}
+															modify={modify} 
+															setModify={setModify}
+															idAModificar={ valueItemModal?.iDtipoDocumento }
+															functionDelete={deleteItemModal}
+															disableModal={disableModal}
+															setDisableMOdal={setDisableMOdal}
+															actionActualizaDelete={actualizaDelete}
+														/>
+														
+													</ButtonCallModal>
+												</li>    
+												<li>
+												<ButtonCallModal nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="Estado"  setTransition={setTransition} nameButton="Estado">
+														<ChildModal 
+															modalValues={modalValues} 
+															onChangeValues={onChangeValues}  
+															valueItemModal={valueItemModal} 
+															setValueItemModal={setValueItemModal} 
+															nameModalProp="Estado" 
+															handleClickClose={handleClickClose} 
+															setTransition={setTransition} 
+															array={ estadosValue && estadosValue }  
+															nameModal="Estado" 
+															propsModal={ propsModalEstado } 
+															optionsInputs={objectEstado} 
+															transition={transition}
+															functionAdd={sendModalData}
+															urlApi={urlEstado}
+															bodyPetition ={bodyEstado}
+															bodyUpdate={ bodyUpdateEstado }
+															modify={modify} 
+															setModify={setModify}
+															idAModificar={ valueItemModal?.idEstado }
+															functionDelete={deleteItemModal}
+															disableModal={disableModal}
+															setDisableMOdal={setDisableMOdal}
+															actionActualizaDelete={actualizaDelete}
+															//props texarea
+															idInputTextArea="observacion"
+															usaEstados={true}
+															/>
+														
+													</ButtonCallModal>
+												</li>
 											</div>
 										</ul>
 									</li>
