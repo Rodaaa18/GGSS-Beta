@@ -56,3 +56,71 @@
         opacity: 1;
     }
 }
+
+
+
+/* color del modal estandarizado a confirmar con Luis */
+.btn-danger {
+  background-color: rgb(194, 33, 50);
+  border: none;
+}
+.btn-danger:hover {
+  background-color: rgb(188, 23, 40);
+  border: none;
+}
+.btn-info{
+  --bs-btn-bg:rgba(223, 120, 105);
+  --bs-btn-border-color: rgba(223, 120, 105);
+  --bs-btn-hover-bg: rgba(223, 120, 105);
+  --bs-btn-hover-border-color: rgba(223, 120, 105);
+}
+.btn:first-child:active{
+  --bs-btn-bg:rgba(223, 120, 105);
+  --bs-btn-border-color: rgba(223, 120, 105);
+  --bs-btn-hover-bg: rgba(223, 120, 105);
+  --bs-btn-hover-border-color: rgba(223, 120, 105);
+}
+.btn:first-child:active, :not(.btn-check)+.btn:active{
+  color: #fff;
+  --bs-btn-bg:rgba(223, 120, 105);
+  --bs-btn-border-color: rgba(223, 120, 105);
+  --bs-btn-hover-bg: rgba(223, 120, 105);
+  --bs-btn-hover-border-color: rgba(223, 120, 105);
+}
+
+.btn-info {
+  color: #fff;
+  text-decoration-color: #fff;
+  background-color:  rgba(223, 120, 105);
+  border: 1px solid  rgba(223, 120, 105);
+}
+.btn-info :hover {
+  color: #fff;
+  text-decoration-color: #fff;
+  background-color:  rgba(213, 110, 95);
+  border: 1px solid  rgba(223, 120, 105);
+}
+.btn-info :active {
+  color: #fff;
+  text-decoration-color: #fff;
+  background-color:  rgba(223, 120, 105);
+  border: 1px solid  rgba(223, 120, 105);
+}
+.btn-info :focus {
+  color: #fff;
+  text-decoration-color: #fff;
+  background-color:  rgba(223, 120, 105);
+  border: 1px solid  rgba(223, 120, 105);
+}
+.btn-info ::after {
+  color: #fff;
+  text-decoration-color: #fff;
+  background-color:  rgba(223, 120, 105);
+  border: 1px solid  rgba(223, 120, 105);
+}
+.btn-info ::before {
+  color: #fff;
+  text-decoration-color: #fff;
+  background-color:  rgba(223, 120, 105);
+  border: 1px solid  rgba(223, 120, 105);
+}
