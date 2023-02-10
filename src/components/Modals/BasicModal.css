@@ -48,6 +48,13 @@
     transition: 0.3s;
 }
 
+
+
+
+
+
+
+/* color del modal estandarizado a confirmar con Luis */
 .btn-danger {
   background-color: rgb(194, 33, 50);
   border: none;
@@ -56,13 +63,6 @@
   background-color: rgb(188, 23, 40);
   border: none;
 }
-
-
-
-
-
-
-/* color del modal estandarizado a confirmar con Luis */
 .btn-info{
   --bs-btn-bg:rgba(223, 120, 105);
   --bs-btn-border-color: rgba(223, 120, 105);
