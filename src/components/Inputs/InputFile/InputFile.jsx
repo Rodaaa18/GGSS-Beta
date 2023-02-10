@@ -4,14 +4,13 @@ import "./InputFile.css";
 import imagenAlt from "./cambieImagen.png";
 import { useDispatch } from "react-redux";
 
-function InputFile({ disabled, imagen,onChange, idInput,action }) {
-  const [ImageSelectedPrevious, setImageSelectedPrevious] = useState(null);
+function InputFile({ disabled, imagen,onChange, idInput,action,ImageSelectedPrevious, setImageSelectedPrevious, setRefectch, refetch }) {
+  
   const [displayButton, setDisplayButton] = useState("");
   const dispatch = useDispatch();
   
   
-  const changeImage = (e) => {
-    console.log(e.target.files[0]);
+ /*  const changeImage = (e) => {
     if (e.target.files[0] !== undefined) {
       const reader = new FileReader();
       reader.readAsDataURL(e.target.files[0]);
@@ -26,6 +25,31 @@ function InputFile({ disabled, imagen,onChange, idInput,action }) {
         setDisplayButton("none");
       };
     }
+  }; */
+  const changeImage = (event) => {
+    const imageFile = event.target.files[0];
+    const blob = new Blob([imageFile], { type: imageFile.type });
+    
+    const reader = new FileReader();
+    reader.readAsDataURL(blob);
+    reader.onloadend = () => {
+      const imageDataURL = reader.result;
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      const image = new Image();
+      image.src = imageDataURL;
+      image.onload = () => {
+        canvas.width = image.width;
+        canvas.height = image.height;
+        ctx.drawImage(image, 0, 0);
+        const pngImageDataURL = canvas.toDataURL('image/png');
+        // Usar pngImageDataURL aquí
+        onChange(pngImageDataURL, idInput)
+        setImageSelectedPrevious(pngImageDataURL);
+        setDisplayButton("none");
+      };
+    };
+    setRefectch(!refetch)
   };
 
   useEffect(() => {
@@ -75,8 +99,9 @@ function InputFile({ disabled, imagen,onChange, idInput,action }) {
                 src={
                   ImageSelectedPrevious === null ||
                   ImageSelectedPrevious === undefined
-                    ? imagen : ImageSelectedPrevious
+                    ? `data:image/png;base64,${imagen}` : ImageSelectedPrevious
                 }
+                
                 alt=""
               />
             </div>

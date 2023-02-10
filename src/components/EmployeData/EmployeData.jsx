@@ -21,7 +21,7 @@ const EmployeData = ({disabled, image, responses}) => {
                 <img
                   className="border border-1 imgData"
                   id="imagen"
-                  src={empleadoUno?.obsFechaIngreso ? empleadoUno?.obsFechaIngreso : responses?.inputImage}
+                  src={empleadoUno?.imagen && `data:image/png;base64,${empleadoUno?.imagen}`}
                   alt=""
                 />
             </div>

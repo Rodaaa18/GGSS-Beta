@@ -85,7 +85,7 @@ const Empleados = () => {
   const [ modify, setModify ] = useState(false);
   const [ valueempl, setValueEmpl ] = useState(false);
   const [saveEmpleado , setSaveEmpleado ] = useState(false);
-
+  const [ImageSelectedPrevious, setImageSelectedPrevious] = useState(null);
 
   const refetching = useSelector((state)=> state.modalState.refetch);
   const [refetch, setRefectch] = useState(false);
@@ -431,7 +431,7 @@ useEffect(()=>{
   useEffect(() => {
     getEmpleados();
     
-  }, [responses?.browser?.inputApellidoNombreBrowser,responses?.browser?.inpurLegajoBrowser,responses?.browser?.ordered, saveEmpleado]);
+  }, [responses?.browser?.inputApellidoNombreBrowser,responses?.browser?.inpurLegajoBrowser,responses?.browser?.ordered, saveEmpleado, refetch]);
 
   const idsTrabajosAnterioresDelete = useSelector((state)=> state.trabajosAnteriores.ids);
   const documentacionDelte = useSelector((state)=> state.documentacionState.ids);
@@ -478,7 +478,7 @@ useEffect(()=>{
   function cleanIdsGeneral(){
     
     
-    
+    setImageSelectedPrevious(null);
     Array.from(document.querySelectorAll("input[type=text]")).forEach(
       (input) => (input.value = "")
     );
@@ -538,6 +538,8 @@ useEffect(()=>{
       });
     }
   }
+  console.log(responses.formDatosPersonales?.inputImage)
+ 
   async function deleteItems(objectRequest){
     const { urls, arrays } = objectRequest;
     let bodyPetitionEmpleadoGuarda = {
@@ -576,7 +578,7 @@ useEffect(()=>{
       "nombres": responses.formDatosPersonales?.nombresInput,
       "idEstado": responses.formDatosPersonales?.estadosEmpleados,
       "idEmpresadeTelefonia": 2,
-      //"imagen": null,
+      "imagen": (responses.formDatosPersonales?.inputImage).substring(22),
       "rutaFoto": null,
       "telFijo": responses.formDatosPersonales?.telefonoInput,
       "acuerdo": 0,
@@ -591,11 +593,12 @@ useEffect(()=>{
       "tieneSumarioAdministrativo": null,
       "tieneLicenciaSinGoceHaberes": null,
       "obsEstudios": responses.formDatosPersonales?.observacionesEstudios,
-      "obsFechaIngreso": responses.formDatosPersonales?.inputImagen,
+      "obsFechaIngreso": "",
       "idAgrupamiento": 0,
       "idDireccion":0,
       "idInstrumentoLegal": 2
     }
+    
     let bodyPetitionEmpleadoUpdate = {
       "iDempleado": empleadoUno.iDempleado && empleadoUno.iDempleado,
       "legajo": responses.formDatosPersonales?.numLegajo ?  responses.formDatosPersonales?.numLegajo : empleadoUno.legajo,
@@ -632,7 +635,7 @@ useEffect(()=>{
       "nombres": responses.formDatosPersonales?.nombresInput ? responses.formDatosPersonales?.nombresInput  : empleadoUno.nombres,
       "idEstado": responses.formDatosPersonales?.estadosEmpleados ? responses.formDatosPersonales?.estadosEmpleados  : empleadoUno.idEstado,
       "idEmpresadeTelefonia": 2,
-      "imagen": responses.formDatosPersonales?.inputImagen ? responses.formDatosPersonales?.inputImagen  : empleadoUno.imagen,
+      "imagen": (responses.formDatosPersonales?.inputImage).substring(22) ? (responses.formDatosPersonales?.inputImage).substring(22) : empleadoUno?.imagen,
       "rutaFoto": null,
       "telFijo": responses.formDatosPersonales?.telefonoInput ? responses.formDatosPersonales?.telefonoInput  : empleadoUno.telFijo,
       "acuerdo": 0,
@@ -647,7 +650,7 @@ useEffect(()=>{
       "tieneSumarioAdministrativo": responses.formLiquidacion?.inputCheckSumAdministrativo ? responses.formLiquidacion?.inputCheckSumAdministrativo  : empleadoUno.tieneSumarioAdministrativo,
       "tieneLicenciaSinGoceHaberes": responses.formLiquidacion?.inputCheckLicSinGoce ? responses.formLiquidacion?.inputCheckLicSinGoce  : empleadoUno.tieneLicenciaSinGoceHaberes,
       "obsEstudios": responses.formDatosPersonales?.observacionesEstudios ? responses.formDatosPersonales?.observacionesEstudios  : empleadoUno.obsEstudios,
-      "obsFechaIngreso": responses.formDatosPersonales?.inputImage ? responses.formDatosPersonales?.inputImage : empleadoUno.obsFechaIngreso,
+      "obsFechaIngreso": "",
       "idAgrupamiento": responses.formDatosPersonales?.inputAgrupamiento ?  responses.formDatosPersonales?.inputAgrupamiento : empleadoUno.idAgrupamiento,
       "idDireccion": responses.formLiquidacion?.inputDireccionLiquidacion ? responses.formLiquidacion?.inputDireccionLiquidacion  : empleadoUno.idDireccion,
       "idInstrumentoLegal": 2
@@ -1266,6 +1269,8 @@ useEffect(()=>{
               refetch={refetch}
               handleTabChange={handleTabChange}
               tabIndex={tabIndex}
+              ImageSelectedPrevious={ImageSelectedPrevious}
+              setImageSelectedPrevious={setImageSelectedPrevious}
             />
           )}
           {tabIndex === 1 && (
