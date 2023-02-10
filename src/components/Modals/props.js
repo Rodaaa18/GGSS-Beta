@@ -8,6 +8,16 @@ export const propsModalEstudios = {
     propArrayOp : "estudiosNivel",
     nameModal : "Estudios"
 };
+export const propsModalEstado = {
+    propArrayId : "idEstado",
+    propArrayOp : "nombreEstado",
+    nameModal : "Estado"
+};
+export const propsModalParentesco = {
+    propArrayId : "iDparentesco",
+    propArrayOp : "nombreParentesco",
+    nameModal : "Parentescos"
+};
 export const propsModalTiposDocumento = {
     propArrayId : "iDtipoDocumento",
     propArrayOp : "tipoDocumento",
@@ -31,8 +41,8 @@ export const objectEstadosCiviles = [
 ]
 export const objectEstudios = [
 	{
-		"label": "Nivel de Estudios",
-		"placeholder": "Universitario",
+	"label": "Nivel de Estudios",
+	"placeholder": "Universitario",
     "idInput": "estudiosNivel",
     "nameInput": "estudiosNivel"
 	}

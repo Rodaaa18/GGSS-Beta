@@ -19,16 +19,19 @@
     color: black;
     width: 50vw;
     border-radius: 10px;
-    height: 20rem;
-    border: 2px solid black;
+    border: 2px solid rgb(128, 124, 124);
+    background-color: rgb(187, 45, 59, 0.6);
+    color:#fff;
     /* color : rgb(77, 4, 4); */
     background-color: rgba(223, 120, 120, 0.911);
     top: 25%;
     left: 25%;
 }
 .buttonModal{
-    color: black;
-    width: 2rem;
+    /* color: white;
+    width: 1.5rem;
+    height: 1.5rem;
+    font-size: 2rem; */
 }
 
 .selectModal{
@@ -52,4 +55,72 @@
     100%{
         opacity: 1;
     }
+}
+
+
+
+/* color del modal estandarizado a confirmar con Luis */
+.btn-danger {
+  background-color: rgb(194, 33, 50);
+  border: none;
+}
+.btn-danger:hover {
+  background-color: rgb(188, 23, 40);
+  border: none;
+}
+.btn-info{
+  --bs-btn-bg:rgba(223, 120, 105);
+  --bs-btn-border-color: rgba(223, 120, 105);
+  --bs-btn-hover-bg: rgba(223, 120, 105);
+  --bs-btn-hover-border-color: rgba(223, 120, 105);
+}
+.btn:first-child:active{
+  --bs-btn-bg:rgba(223, 120, 105);
+  --bs-btn-border-color: rgba(223, 120, 105);
+  --bs-btn-hover-bg: rgba(223, 120, 105);
+  --bs-btn-hover-border-color: rgba(223, 120, 105);
+}
+.btn:first-child:active, :not(.btn-check)+.btn:active{
+  color: #fff;
+  --bs-btn-bg:rgba(223, 120, 105);
+  --bs-btn-border-color: rgba(223, 120, 105);
+  --bs-btn-hover-bg: rgba(223, 120, 105);
+  --bs-btn-hover-border-color: rgba(223, 120, 105);
+}
+
+.btn-info {
+  color: #fff;
+  text-decoration-color: #fff;
+  background-color:  rgba(223, 120, 105);
+  border: 1px solid  rgba(223, 120, 105);
+}
+.btn-info :hover {
+  color: #fff;
+  text-decoration-color: #fff;
+  background-color:  rgba(213, 110, 95);
+  border: 1px solid  rgba(223, 120, 105);
+}
+.btn-info :active {
+  color: #fff;
+  text-decoration-color: #fff;
+  background-color:  rgba(223, 120, 105);
+  border: 1px solid  rgba(223, 120, 105);
+}
+.btn-info :focus {
+  color: #fff;
+  text-decoration-color: #fff;
+  background-color:  rgba(223, 120, 105);
+  border: 1px solid  rgba(223, 120, 105);
+}
+.btn-info ::after {
+  color: #fff;
+  text-decoration-color: #fff;
+  background-color:  rgba(223, 120, 105);
+  border: 1px solid  rgba(223, 120, 105);
+}
+.btn-info ::before {
+  color: #fff;
+  text-decoration-color: #fff;
+  background-color:  rgba(223, 120, 105);
+  border: 1px solid  rgba(223, 120, 105);
 }
