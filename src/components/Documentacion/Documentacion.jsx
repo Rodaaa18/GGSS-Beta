@@ -11,11 +11,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AXIOS_ERROR, SET_LOADING } from '../../redux/types/fetchTypes';
 import { addDocumentacionEmpleados, addNewDoc, deleteDocu } from '../../redux/actions/fetchActions';
 import axios from 'axios';
-import { cleanIdsDoc, deleteDocuEmpleado, getInputValue, getOneDocumento, saveIds } from '../../redux/actions/documentacionActions';
+import { cleanIdsDoc, deleteDocuEmpleado, getArAdjuntos, getInputValue, getOneDocumento, saveIds } from '../../redux/actions/documentacionActions';
 import { inputButtonClasess, inputButtonClasessDocumentacion } from '../../classes/classes';
 import { GET_INPUT_VALUE } from '../../redux/types/documentacionTypes';
 import swal from 'sweetalert';
 import { setRefetch } from '../../redux/actions/modalesActions';
+import ButtonCallModal from '../ButtonCallModal/ButtonCallModal';
+import ArchivosAdjuntos from './ArchivosAdjuntos/ArchivosAdjuntos';
 
 const Documentacion = ({responses, setResponses, disable, setRefectch, refetch}) => {
     const empleadoUno = useSelector((state)=> state.employeStates.employe);
@@ -25,10 +27,16 @@ const Documentacion = ({responses, setResponses, disable, setRefectch, refetch})
     const [ disableI, setDisableI] = useState(true);
     const [ formDocumentacion, setFormDocumentacion ] = useState(responses["formDocumentacion"]);
     const [ body , setBody ] = useState(0);
+    const [ nameModal, setNameModal ] = useState({});
 
     const urlDocPost= `http://54.243.192.82/api/EmpleadosDocumentacion?id=${empleadoUno.iDempleado}`;
     const urlPost = "http://54.243.192.82/api/EmpleadosDocumentacion"
     const documentacionSeleccionada = useSelector((state)=> state.documentacionState.documentacionSeleccionada);
+    const urlArchivosAdjuntos = `http://54.243.192.82/api/ArchivosDocumentacionEmpleados/${empleadoUno?.iDempleado}`
+
+    const archivosAdjuntosEmpleado = useSelector((state)=> state.documentacionState.archivosAdjuntosEmpleado);
+
+        console.log(archivosAdjuntosEmpleado)
 
     function onChangeValues(e, key){
         const newResponse = {...formDocumentacion};
@@ -43,9 +51,20 @@ const Documentacion = ({responses, setResponses, disable, setRefectch, refetch})
           formDocumentacion
         });      
     },[formDocumentacion]);
-    
+    const handleFetchComun = async (url, action) => {
+        dispatch({ type: SET_LOADING });
+        await axios
+          .get(url)
+          .then((res) => {
+           console.log(res)
+            dispatch(action(res.data));
+          })
+          .catch((err) => {
+            dispatch({ type: AXIOS_ERROR });
+          });
+      };
     useEffect(()=>{
-        
+        handleFetchComun(urlArchivosAdjuntos, getArAdjuntos);
     },[])
     
     const documentacionEmpleados = useSelector((state)=> state.generalState.documentacionEmpleados);
@@ -111,6 +130,12 @@ const Documentacion = ({responses, setResponses, disable, setRefectch, refetch})
         dispatch(deleteDocuEmpleado(id))
         dispatch(saveIds(id))
     }
+    const handleClickClose=(nameModalProp)=>{
+        let newState = {...nameModal}
+    
+        newState[nameModalProp] = false;
+        setNameModal(newState);
+    }
     
 return (
     <div className='container'>
@@ -152,6 +177,15 @@ return (
             <div className='col-xl-12 contDocumentacion'>
                 <ButtonCancelarAceptar idElimiar={documentacionSeleccionada.idEmpleadoDocumentacion && documentacionSeleccionada.idEmpleadoDocumentacion} cancelar="-" aceptar="+" functionSend={sendDataDoc} functionDelete={deleteData} disabled={disable} />
                 <TableBasic1 refetch={refetch} setRefetch={setRefectch} columns={columns} value={documentacionDelEmpleado}  documentaciones={documentaciones} disabled={disable} />
+            </div>
+            <div className='col-xl-12 contDocumentacion'>
+                <ButtonCallModal esBoton={true} nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="archivosAdjuntos" nameButton="Adjuntar Archivos">
+                    <ArchivosAdjuntos 
+                    handleClickClose={handleClickClose}
+                    nameModal = "Archivos Adjuntos"
+                    nameModalProp="archivosAdjuntos"
+                    />
+                </ButtonCallModal>
             </div>
         </div>
     </div>

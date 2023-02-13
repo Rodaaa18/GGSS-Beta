@@ -366,7 +366,115 @@ const NavbarMenu = () => {
 
 //#endregion ----------------------------------- Body de Lauty  -----------------------------------
 
-
+	//#region ----------------------------------------------------------------------------------------------- MODAL PROPS
+	const propsEstadosCiviles = {
+		modalValues,
+		onChangeValues,
+		valueItemModal,
+		setValueItemModal,
+		nameModalProp: "estadosCiviles",
+		handleClickClose,
+		setTransition,
+		array: estadosCivilesValue && estadosCivilesValue,
+		nameModal: "Estados Civiles",
+		propsModal,
+		optionsInputs: objectEstadosCiviles,
+		transition,
+		functionAdd: sendModalData,
+		urlApi: urlEstadosCiviles,
+		bodyPetition: bodyEstadosCiviles,
+		bodyUpdate: bodyUpdateEstadosCiviles,
+		modify,
+		setModify,
+		idAModificar: valueItemModal?.idEstadoCivil,
+		functionDelete: deleteItemModal,
+		disableModal,
+		setDisableMOdal,
+		actionActualizaDelete: actualizaDelete,
+		disableModalButtons,
+		setDisableModalButtons,
+		usaEstados: false
+	  };
+	  const propsEstudios = {
+		modalValues: modalValues,
+		onChangeValues: onChangeValues,
+		valueItemModal: valueItemModal,
+		setValueItemModal: setValueItemModal,
+		nameModalProp: "Estudios",
+		handleClickClose: handleClickClose,
+		setTransition: setTransition,
+		array: estudiosValue && estudiosValue,
+		nameModal: "Estudios",
+		propsModal: propsModalEstudios,
+		optionsInputs: objectEstudios,
+		transition: transition,
+		functionAdd: sendModalData,
+		urlApi: urlEstudios,
+		bodyPetition: bodyEstudios,
+		bodyUpdate: bodyUpdateEstudios,
+		modify: modify,
+		setModify: setModify,
+		idAModificar: valueItemModal?.iDestudios,
+		functionDelete: deleteItemModal,
+		disableModal: disableModal,
+		setDisableMOdal: setDisableMOdal,
+		actionActualizaDelete: actualizaDelete,
+		usaEstados: false
+	  };
+	  const propsTipoDocumento = {
+		modalValues: modalValues,
+		onChangeValues: onChangeValues,
+		valueItemModal: valueItemModal,
+		setValueItemModal: setValueItemModal,
+		nameModalProp: "TipoDocumento",
+		handleClickClose: handleClickClose,
+		setTransition: setTransition,
+		array: tiposDocumentoValue && tiposDocumentoValue,
+		nameModal: "Tipo de Documento",
+		propsModal: propsModalTiposDocumento,
+		optionsInputs: objectTipoDocumento,
+		transition: transition,
+		functionAdd: sendModalData,
+		urlApi: urlTiposDocumento,
+		bodyPetition: bodyTipoDocumento,
+		bodyUpdate: bodyUpdateTipoDocumento,
+		modify: modify,
+		setModify: setModify,
+		idAModificar: valueItemModal?.iDtipoDocumento,
+		functionDelete: deleteItemModal,
+		disableModal: disableModal,
+		setDisableMOdal: setDisableMOdal,
+		actionActualizaDelete: actualizaDelete,
+		usaEstados: false
+		};
+		const propsEstado = {
+			modalValues: modalValues,
+			onChangeValues: onChangeValues,
+			valueItemModal: valueItemModal,
+			setValueItemModal: setValueItemModal,
+			nameModalProp: "Estado",
+			handleClickClose: handleClickClose,
+			setTransition: setTransition,
+			array: estadosValue && estadosValue,
+			nameModal: "Estado",
+			propsModal: propsModalEstado,
+			optionsInputs: objectEstado,
+			transition: transition,
+			functionAdd: sendModalData,
+			urlApi: urlEstado,
+			bodyPetition: bodyEstado,
+			bodyUpdate: bodyUpdateEstado,
+			modify: modify,
+			setModify: setModify,
+			idAModificar: valueItemModal?.idEstado,
+			functionDelete: deleteItemModal,
+			disableModal: disableModal,
+			setDisableMOdal: setDisableMOdal,
+			actionActualizaDelete: actualizaDelete,
+			idInputTextArea: "observacion",
+			usaEstados: true
+		  };
+	//#endregion
 
 
 
@@ -415,32 +523,7 @@ const NavbarMenu = () => {
 												<li>
 													<ButtonCallModal nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="estadosCiviles"  setTransition={setTransition} nameButton="Estados Civiles">
 														<ChildModal 
-															modalValues={modalValues} 
-															onChangeValues={onChangeValues}  
-															valueItemModal={valueItemModal} 
-															setValueItemModal={setValueItemModal} 
-															nameModalProp="estadosCiviles" 
-															handleClickClose={handleClickClose} 
-															setTransition={setTransition} 
-															array={estadosCivilesValue && estadosCivilesValue}  
-															nameModal="Estados Civiles" 
-															propsModal={propsModal} 
-															optionsInputs={objectEstadosCiviles} 
-															transition={transition}
-															functionAdd={sendModalData}
-															urlApi={urlEstadosCiviles}
-															bodyPetition ={bodyEstadosCiviles}
-															bodyUpdate={bodyUpdateEstadosCiviles}
-															modify={modify} 
-															setModify={setModify}
-															idAModificar={valueItemModal?.idEstadoCivil}
-															functionDelete={deleteItemModal}
-															disableModal={disableModal}
-															setDisableMOdal={setDisableMOdal}
-															actionActualizaDelete={actualizaDelete}
-															disableModalButtons={disableModalButtons}
-															setDisableModalButtons={setDisableModalButtons}
-															usaEstados={false}
+															{...propsEstadosCiviles} 
 														/>
 													</ButtonCallModal>
 												</li>
@@ -448,96 +531,23 @@ const NavbarMenu = () => {
 													<ButtonCallModal nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="Estudios"  setTransition={setTransition} nameButton="Estudios">
 {/* Estudios no va funciona CRUD  */}
 														<ChildModal
-															modalValues={modalValues}
-															onChangeValues={onChangeValues}
-															valueItemModal={valueItemModal}
-															setValueItemModal={setValueItemModal}
-															nameModalProp="Estudios"
-															handleClickClose={handleClickClose}
-															setTransition={setTransition}
-															array={estudiosValue && estudiosValue}
-															nameModal="Estudios"
-															propsModal={ propsModalEstudios }
-															optionsInputs={objectEstudios}
-															transition={transition}
-															functionAdd={sendModalData}
-															urlApi={urlEstudios}
-															bodyPetition ={bodyEstudios}
-															bodyUpdate={bodyUpdateEstudios}
-															modify={modify}
-															setModify={setModify}
-															idAModificar={valueItemModal?.iDestudios}
-															functionDelete={deleteItemModal}
-															disableModal={disableModal}
-															setDisableMOdal={setDisableMOdal}
-															actionActualizaDelete={actualizaDelete}
-															usaEstados={false}
-														/>
-														
+															{...propsEstudios}
+														/>														
 													</ButtonCallModal>
 												</li>
-											<li>
+												<li>
 													<ButtonCallModal nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="TipoDocumento"  setTransition={setTransition} nameButton="Tipo de Documento">
 														<ChildModal 
-															modalValues={modalValues} 
-															onChangeValues={onChangeValues}  
-															valueItemModal={valueItemModal} 
-															setValueItemModal={setValueItemModal} 
-															nameModalProp="TipoDocumento" 
-															handleClickClose={handleClickClose} 
-															setTransition={setTransition} 
-															array={ tiposDocumentoValue && tiposDocumentoValue }  
-															nameModal="Tipo de Documento" 
-															propsModal={propsModalTiposDocumento} 
-															optionsInputs={objectTipoDocumento} 
-															transition={transition}
-															functionAdd={sendModalData}
-															urlApi={urlTiposDocumento}
-															bodyPetition ={bodyTipoDocumento}
-															bodyUpdate={bodyUpdateTipoDocumento}
-															modify={modify} 
-															setModify={setModify}
-															idAModificar={ valueItemModal?.iDtipoDocumento }
-															functionDelete={deleteItemModal}
-															disableModal={disableModal}
-															setDisableMOdal={setDisableMOdal}
-															actionActualizaDelete={actualizaDelete}
-															usaEstados={false}
+															{...propsTipoDocumento}
 														/>
 														
 													</ButtonCallModal>
 												</li>    
 												<li>
-												<ButtonCallModal nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="Estado"  setTransition={setTransition} nameButton="Estado">
+													<ButtonCallModal nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="Estado"  setTransition={setTransition} nameButton="Estado">
 														<ChildModal 
-															modalValues={modalValues} 
-															onChangeValues={onChangeValues}  
-															valueItemModal={valueItemModal} 
-															setValueItemModal={setValueItemModal} 
-															nameModalProp="Estado" 
-															handleClickClose={handleClickClose} 
-															setTransition={setTransition} 
-															array={ estadosValue && estadosValue }  
-															nameModal="Estado" 
-															propsModal={ propsModalEstado } 
-															optionsInputs={objectEstado} 
-															transition={transition}
-															functionAdd={sendModalData}
-															urlApi={urlEstado}
-															bodyPetition ={bodyEstado}
-															bodyUpdate={ bodyUpdateEstado }
-															modify={modify} 
-															setModify={setModify}
-															idAModificar={ valueItemModal?.idEstado }
-															functionDelete={deleteItemModal}
-															disableModal={disableModal}
-															setDisableMOdal={setDisableMOdal}
-															actionActualizaDelete={actualizaDelete}
-															//props texarea
-															idInputTextArea="observacion"
-															usaEstados={true}
-															/>
-														
+															{...propsEstado}
+															/>														
 													</ButtonCallModal>
 												</li>
 											</div>

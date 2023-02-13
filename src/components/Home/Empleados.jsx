@@ -57,7 +57,7 @@ import {
 import { AXIOS_ERROR, SET_LOADING } from "../../redux/types/fetchTypes";
 import axios from "axios";
 import { cleanIds, getTrabajosAnteriores, reloadItem } from "../../redux/actions/trabajosAnterioresActions";
-import { cleanIdsDoc, documentacionDelEmpleado, getOneDocumento } from "../../redux/actions/documentacionActions";
+import { cleanIdsDoc, documentacionDelEmpleado, getArAdjuntos, getOneDocumento } from "../../redux/actions/documentacionActions";
 import {
   addDetalleLicencia,
   addLicEmpleado,
@@ -152,6 +152,9 @@ const Empleados = () => {
   const urlDetalleLicenciasEmpleados =
     "http://54.243.192.82/api/DetalleLicenciasEmpleados";
   const urlEsquemasConceptos = "http://54.243.192.82/api/ConceptosEsquemas";
+
+  const urlArchivosAdjuntos = `http://54.243.192.82/api/ArchivosDocumentacionEmpleados/${empleadoUno?.iDempleado}`
+
   //#endregion
 
   function setImageEmpleado() {
@@ -237,6 +240,8 @@ useEffect(()=>{
    handleFetch(urlDomicilios, addDomicilios);
    
    handleFetch(urlDocumentacionEmpleados, addDocumentacionEmpleados);
+
+   handleFetch(urlArchivosAdjuntos, getArAdjuntos);
 },[refetching, empleadoUno, refetch])
 
 useEffect(()=>{
@@ -248,6 +253,56 @@ useEffect(()=>{
         dispatch(saveDatosExtrasEmpleados(res.data));
       });//
 },[empleadoUno, refetch])
+
+
+
+
+
+/* const fetchData = async (url, action) => {
+  dispatch({ type: SET_LOADING });
+  try {
+    const res = await axios.get(url);
+    dispatch(action(res.data.result));
+  } catch (err) {
+    dispatch({ type: AXIOS_ERROR });
+  }
+}; */
+
+/* const urls = [  
+  { url: urlEstados, action: addEstados },  
+  { url: urlEstadosCiviles, action: addEstadosCiviles }, 
+  { url: urlSindicatos, action: addSindicatos },  
+  { url: urlEsquemas, action: addEsquemas },  
+  { url: urlConceptos, action: addConceptos }
+];
+
+useEffect(() => {
+  urls.forEach((item) => {
+    fetchData(item.url, item.action);
+  });
+}, []); */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   useEffect(() => {
     handleFetch(urlEstados, addEstados);
@@ -1246,6 +1301,112 @@ useEffect(()=>{
         })
     }
 }
+const getTabComponent = (tabIndex) => {
+  switch (tabIndex) {
+    case 0:
+      return (
+        <DatosPersonales
+          empleados={empleados}
+          disableEstado={disableEstado}
+          image={image}
+          disable={disable}
+          setDisable={setDisable}
+          responses={responses}
+          setResponses={setResponses}
+          valueempl={valueempl}
+          domiciliosEmpleados={domiciliosEmpleados}
+          setRefectch={setRefectch}
+          refetch={refetch}
+          handleTabChange={handleTabChange}
+          tabIndex={tabIndex}
+          ImageSelectedPrevious={ImageSelectedPrevious}
+          setImageSelectedPrevious={setImageSelectedPrevious}
+        />
+      );
+    case 1:
+      return (
+        <Familia
+          disable={disable}
+          setDisable={setDisable}
+          responses={responses}
+          setResponses={setResponses}
+          setRefetch={setRefectch}
+          refetch={refetch}
+        />
+      )
+    case 2 :
+      return(
+        <Liquidacion
+            disable={disable}
+            setDisable={setDisable}
+            responses={responses}
+            setResponses={setResponses}
+            modify={modify}
+          />
+      )
+    case 3 :
+      return(
+        <AdicLiquidacion
+          disable={disable}
+          setDisable={setDisable}
+          responses={responses}
+          setResponses={setResponses}
+          modify={modify}
+        />
+      )
+    case 4 :
+      return(
+        <TrabajosAnteriores
+        setRefetch={setRefectch}
+        refetch={refetch}
+        disable={disable}
+        setDisable={setDisable}
+        responses={responses}
+        setResponses={setResponses}
+      />
+      )
+    case 5 :
+      return(
+        <Documentacion
+          setRefectch={setRefectch}
+          refetch={refetch}
+          disable={disable}
+          setDisable={setDisable}
+          responses={responses}
+          setResponses={setResponses}
+        />
+      )
+      case 6 :
+        return(
+          <Licencias
+            setRefectch={setRefectch}
+            refetch={refetch}
+            setLicenciaEmpladoDatos={setLicenciaEmpladoDatos}
+            licenciaEmpleadoDatos={licenciaEmpleadoDatos}
+            disable={disable}
+            setDisable={setDisable}
+            responses={responses}
+            setResponses={setResponses}
+          />
+        )
+      case 7 :
+        return(
+          <Extras
+            setDatosExtraEmpleado={setDatosExtraEmpleado}
+            datosExtraEmpleado={datosExtraEmpleado}
+            disable={disable}
+            setDisable={setDisable}
+            responses={responses}
+            setResponses={setResponses}
+            refetch={refetch}
+            setRefetch={setRefectch}
+          />
+        )
+      ;default:
+      return null;
+  }
+};
+console.log(tabIndex)
   return (
     <div className="container-fluid">
       <div className="row">
@@ -1254,97 +1415,7 @@ useEffect(()=>{
         </div>
         <div className="col-xl-9 col-lg-9 col-md-9 ">
           <Navbar handleTabChange={handleTabChange} tabIndex={tabIndex} />
-          {(tabIndex === 0 || tabIndex === 8) && (
-            <DatosPersonales
-              empleados={empleados}
-              disableEstado={disableEstado}
-              image={image}
-              disable={disable}
-              setDisable={setDisable}
-              responses={responses}
-              setResponses={setResponses}
-              valueempl ={valueempl}
-              domiciliosEmpleados={domiciliosEmpleados}
-              setRefectch={setRefectch}
-              refetch={refetch}
-              handleTabChange={handleTabChange}
-              tabIndex={tabIndex}
-              ImageSelectedPrevious={ImageSelectedPrevious}
-              setImageSelectedPrevious={setImageSelectedPrevious}
-            />
-          )}
-          {tabIndex === 1 && (
-            <Familia
-              disable={disable}
-              setDisable={setDisable}
-              responses={responses}
-              setResponses={setResponses}
-              setRefetch={setRefectch}
-              refetch={refetch}
-            />
-          )}
-          {tabIndex === 2 && (
-            <Liquidacion
-              disable={disable}
-              setDisable={setDisable}
-              responses={responses}
-              setResponses={setResponses}
-              modify={modify}
-            />
-          )}
-          {tabIndex === 3 && (
-            <AdicLiquidacion
-              disable={disable}
-              setDisable={setDisable}
-              responses={responses}
-              setResponses={setResponses}
-              modify={modify}
-            />
-          )}
-          {tabIndex === 4 && (
-            <TrabajosAnteriores
-              setRefetch={setRefectch}
-              refetch={refetch}
-              disable={disable}
-              setDisable={setDisable}
-              responses={responses}
-              setResponses={setResponses}
-            />
-          )}
-          {tabIndex === 5 && (
-            <Documentacion
-              setRefectch={setRefectch}
-              refetch={refetch}
-              disable={disable}
-              setDisable={setDisable}
-              responses={responses}
-              setResponses={setResponses}
-            />
-          )}
-          {tabIndex === 6 && (
-            <Licencias
-              setRefectch={setRefectch}
-              refetch={refetch}
-              setLicenciaEmpladoDatos={setLicenciaEmpladoDatos}
-              licenciaEmpleadoDatos={licenciaEmpleadoDatos}
-              disable={disable}
-              setDisable={setDisable}
-              responses={responses}
-              setResponses={setResponses}
-            />
-          )}
-          {tabIndex === 7 && (
-            <Extras
-            setDatosExtraEmpleado={setDatosExtraEmpleado}
-            datosExtraEmpleado={datosExtraEmpleado}
-              disable={disable}
-              setDisable={setDisable}
-              responses={responses}
-              setResponses={setResponses}
-              refetch={refetch}
-              setRefetch={setRefectch}
-            />
-          )}
+         {getTabComponent(tabIndex)}
         </div>
       </div>
       <div className="d-flex flex-row-reverse  w-100 ">

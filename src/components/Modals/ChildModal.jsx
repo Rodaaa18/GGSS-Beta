@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import InputModal from '../Inputs/InputModal/InputModal';
 import TextArea from '../Inputs/TextArea/TextArea';
 import "./BasicModal.css"
-const ChildModal = ({nameModalProp, disabled, array , propsModal, optionsInputs, transition, setTransition, handleClickClose,functionAdd, functionUpdate, functionDelete, valueItemModal, setValueItemModal, onChangeValues, modalValues, urlApi, bodyPetition, bodyUpdate,setModify, modify, idAModificar, disableModal, setDisableMOdal, actionActualizaDelete, disableModalButtons , setDisableModalButtons, usaEstados}) => {
-
+const ChildModal = ({...props}) => {
+  const { modalValues, onChangeValues, valueItemModal, setValueItemModal, nameModalProp, handleClickClose, setTransition, array, nameModal, propsModal, optionsInputs, transition, functionAdd, urlApi, bodyPetition, bodyUpdate, modify, setModify, idAModificar, functionDelete, disableModal, setDisableMOdal, actionActualizaDelete, disableModalButtons, setDisableModalButtons, usaEstados } = props;
   return (
     
     <section className={transition ? 'transitionClassUp' : ' transitionClassneDone '} >

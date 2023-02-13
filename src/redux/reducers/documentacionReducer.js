@@ -1,4 +1,4 @@
-import { ADD_NEW_DOC, CLEAN_IDS_DOC, DELETE_DOC_EMPLEADO, DOCU_DEL_EMPLEADO, GET_DOC_EMPL, GET_DOC_SELECT, GET_INPUT_VALUE, SAVE_IDS } from "../types/documentacionTypes";
+import { ADD_NEW_DOC, CLEAN_IDS_DOC, DELETE_DOC_EMPLEADO, DOCU_DEL_EMPLEADO, GET_AR_AD, GET_DOC_EMPL, GET_DOC_SELECT, GET_INPUT_VALUE, SAVE_IDS } from "../types/documentacionTypes";
 
 export const initialState = {
     domiciliosDelEmpleado : "",
@@ -12,7 +12,8 @@ export const initialState = {
     },
     documentacionSeleccionada : "",
     ids : [],
-    documentacionDelEmpleado : ""
+    documentacionDelEmpleado : "",
+    archivosAdjuntosEmpleado : ""
 }
 
 export const documentacionReducer=(state = initialState, action)=>{
@@ -59,6 +60,12 @@ export const documentacionReducer=(state = initialState, action)=>{
         return{
             ...state,
             documentacionDelEmpleado : state.documentacionDelEmpleado.filter((doc)=> doc.idEmpleadoDocumentacion !== payload)
+        }
+    }
+    case GET_AR_AD : {
+        return{
+            ...state,
+            archivosAdjuntosEmpleado : payload
         }
     }
     default : return state

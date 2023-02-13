@@ -123,7 +123,7 @@ const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValu
     
       //#region Menú Principal
     
-    <div to="/domicilios" className="accordion-item" onClick={handleTabChange(8)} >
+    <div to="/domicilios" className="accordion-item" onClick={handleTabChange(0)} >
       <h2 className="accordion-header" id="headingTwo">
             <button
               className="accordion-button collapsed"
@@ -139,7 +139,7 @@ const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValu
           </h2>
           
           {
-            tabIndex === 8 && <div
+            tabIndex === 0 && <div
             id="collapseTwo"
             className="accordion-collapse collapse"
             aria-labelledby="headingTwo"
