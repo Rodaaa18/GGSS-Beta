@@ -13,11 +13,26 @@ export const propsModalEstado = {
     propArrayOp : "nombreEstado",
     nameModal : "Estado"
 };
-export const propsModalParentesco = {
-    propArrayId : "iDparentesco",
-    propArrayOp : "nombreParentesco",
-    nameModal : "Parentescos"
+export const propsModalFormasdePagos = {
+    propArrayId : "iDformadePago",
+    propArrayOp : "nombreFormadePago",
+    nameModal : "Formas de Pago"
 };
+export const propsModalCalles = {
+    propArrayId : "idCalle",
+    propArrayOp : "calle",
+    nameModal : "Calle"
+};
+// export const propsModalMotivosdeEgresos = {
+//     propArrayId : "idFormaPago",
+//     propArrayOp : "nombreFormaPago",
+//     nameModal : "Formas de Pago"
+// };
+// export const propsModalParentesco = {
+//     propArrayId : "iDparentesco",
+//     propArrayOp : "nombreParentesco",
+//     nameModal : "Parentescos"
+// };
 export const propsModalTiposDocumento = {
     propArrayId : "iDtipoDocumento",
     propArrayOp : "tipoDocumento",

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import InputModal from '../Inputs/InputModal/InputModal';
 import TextArea from '../Inputs/TextArea/TextArea';
 import "./BasicModal.css"
-const ChildModal = ({nameModalProp, disabled, array , propsModal, optionsInputs, transition, setTransition, handleClickClose,functionAdd, functionUpdate, functionDelete, valueItemModal, setValueItemModal, onChangeValues, modalValues, urlApi, bodyPetition, bodyUpdate,setModify, modify, idAModificar, disableModal, setDisableMOdal, actionActualizaDelete, disableModalButtons , setDisableModalButtons, usaEstados}) => {
+const ChildModal = ({nameModalProp, disabled, array , propsModal, optionsInputs, transition, setTransition, handleClickClose,functionAdd, functionUpdate, functionDelete, valueItemModal, setValueItemModal, onChangeValues, modalValues, urlApi, bodyPetition, bodyUpdate,setModify, modify, idAModificar, disableModal, setDisableMOdal, actionActualizaDelete, idInputTextArea, disableModalButtons , setDisableModalButtons, usaEstados}) => {
 
   return (
     
@@ -105,7 +105,7 @@ const ChildModal = ({nameModalProp, disabled, array , propsModal, optionsInputs,
                {usaEstados && ( 
                 <TextArea
                   disableModal={!disableModalButtons}
-                  // idInput={idInputTextArea}
+                  idInput={idInputTextArea}
                   onChange={onChangeValues}
                   characterLimit={255}
                 ></TextArea>
