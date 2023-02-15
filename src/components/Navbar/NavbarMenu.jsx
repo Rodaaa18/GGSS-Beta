@@ -440,6 +440,7 @@ const NavbarMenu = () => {
 															actionActualizaDelete={actualizaDelete}
 															disableModalButtons={disableModalButtons}
 															setDisableModalButtons={setDisableModalButtons}
+															usaEstados={false}
 														/>
 													</ButtonCallModal>
 												</li>
@@ -470,6 +471,7 @@ const NavbarMenu = () => {
 															disableModal={disableModal}
 															setDisableMOdal={setDisableMOdal}
 															actionActualizaDelete={actualizaDelete}
+															usaEstados={false}
 														/>
 														
 													</ButtonCallModal>
@@ -500,6 +502,7 @@ const NavbarMenu = () => {
 															disableModal={disableModal}
 															setDisableMOdal={setDisableMOdal}
 															actionActualizaDelete={actualizaDelete}
+															usaEstados={false}
 														/>
 														
 													</ButtonCallModal>

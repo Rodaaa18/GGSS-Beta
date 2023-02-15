@@ -544,7 +544,7 @@ export const saveDatosExtrasEmpleados=(payload)=>{
         payload
     }
 }
-
+//Estados Civiles
 export const actualizaDelete = (payload) => {
     return {
         type: ACTUALIZA_DELETE,

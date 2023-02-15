@@ -23,7 +23,7 @@ import InputButtonCUIL from "../Inputs/InputButtonCUIL/InputButtonCUIL";
 
 //#endregion
 
-const DatosPersonales = ({ tabIndex ,handleTabChange, responses, setResponses, cancelar, image, disableEstado, disable, empleados, valueempl, domiciliosEmpleados, setRefectch, refetch}) => {
+const DatosPersonales = ({ tabIndex ,handleTabChange, responses, setResponses, cancelar, image, disableEstado, disable, empleados, valueempl, domiciliosEmpleados, setRefectch, refetch,ImageSelectedPrevious, setImageSelectedPrevious}) => {
   //#region ---------------------------------------------------------ONCHANGE-HANDLER
 
   const [ formDatosPersonales, setFormDatosPersonales ] = useState(responses["formDatosPersonales"]);
@@ -334,7 +334,7 @@ const DatosPersonales = ({ tabIndex ,handleTabChange, responses, setResponses, c
                             propArrayOp="nombreEstado"
                             propArrayOpFem="nombreEstado"
                             idSelected={formDatosPersonales?.estadosEmpleados ? formDatosPersonales?.estadosEmpleados : empleadoUno.idEstado}
-                            valueId="c"
+                            valueId="idEstado"
                             masculinos=""
                             femeninos=""
                             onChange={onChangeValues}
@@ -443,12 +443,17 @@ const DatosPersonales = ({ tabIndex ,handleTabChange, responses, setResponses, c
 
                         <div className="col-xl-3 col-lg-3 col-md-3 colImagen">
                           <InputFile
+                            ImageSelectedPrevious={ImageSelectedPrevious}
+                            setImageSelectedPrevious={setImageSelectedPrevious}
                             inputName="Arrastre su imagen"
                             disabled={disable}
-                            imagen={empleadoUno.obsFechaIngreso}
+                            imagen={empleadoUno?.imagen}
                             onChange={onChangeValues}
                             idInput="inputImage"
-                            action={ADD_DATOS_PERSONALES} />
+                            action={ADD_DATOS_PERSONALES} 
+                            setRefectch={setRefectch}
+                            refetch={refetch}
+                            />
                         </div>
                       </div>
                     </form>

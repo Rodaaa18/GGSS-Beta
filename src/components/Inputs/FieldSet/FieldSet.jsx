@@ -8,7 +8,7 @@ import {
   updateLicencia,
   deleteLicencia,
 } from "../../../redux/actions/fetchActions";
-import { deleteLicEmpleado, saveIdsLic } from "../../../redux/actions/licenciasActions";
+import { deleteLicEmpleado, licenciaSelected, saveIdsLic } from "../../../redux/actions/licenciasActions";
 import TableLicencias from "../../Tables/TableLicencias";
 import TableSuspenLicencia from "../../Tables/TableSuspenLicencia";
 import FechaSuspencion from "./Childs/FechaSuspencion";
@@ -357,9 +357,9 @@ const FieldSet = ({
         return null;
     }
   }
-
+  console.log(licenciuaSelected)
   async function solicitanuevaLic(bodyDetalleLicencia) {
-     
+     debugger;
     if (licenciuaSelected.fechaProrroga && licenciuaSelected.fechaProrroga) {
       let dateProrroga = new Date(licenciuaSelected.fechaProrroga).setHours(
         0,

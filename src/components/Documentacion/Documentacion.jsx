@@ -15,6 +15,7 @@ import { cleanIdsDoc, deleteDocuEmpleado, getInputValue, getOneDocumento, saveId
 import { inputButtonClasess, inputButtonClasessDocumentacion } from '../../classes/classes';
 import { GET_INPUT_VALUE } from '../../redux/types/documentacionTypes';
 import swal from 'sweetalert';
+import { setRefetch } from '../../redux/actions/modalesActions';
 
 const Documentacion = ({responses, setResponses, disable, setRefectch, refetch}) => {
     const empleadoUno = useSelector((state)=> state.employeStates.employe);
@@ -50,7 +51,7 @@ const Documentacion = ({responses, setResponses, disable, setRefectch, refetch})
     const documentacionEmpleados = useSelector((state)=> state.generalState.documentacionEmpleados);
 
     const documentaciones = useSelector((state)=> state.documentacionState.domiciliosDelEmpleado);
-   
+    const refetching = useSelector((state)=> state.modalState.refetch);
     //const datosFormulario = useSelector((state)=> state.documentacionState.formulario);
 
     /* const documentacionDelEmpleado = empleadoUno && documentacionEmpleados && documentacionEmpleados.filter((doc)=> {return(doc.idEmpleado === empleadoUno.iDempleado)}); */
@@ -77,10 +78,17 @@ const Documentacion = ({responses, setResponses, disable, setRefectch, refetch})
             try{
                 axios.post(urlPost, bodyPetition)
                 .then((res)=>{
-                    console.log(res.data)
-                    dispatch(addNewDoc(res.data))
+                    if(res.status === 200){
+                        dispatch(addNewDoc(res.data))
                     setRefectch(!refetch)
-
+                    dispatch(setRefetch(!refetching))
+                        return swal({
+                            title: "Ok",
+                            text: "Documentacion agregada con éxito",
+                            icon: "success",
+                        })
+                    }
+                    return;
                 })
             }catch(err){
                 return swal({

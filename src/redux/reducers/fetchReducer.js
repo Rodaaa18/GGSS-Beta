@@ -359,7 +359,7 @@ export const fetchReducer = (state = initialState, action) =>{
         
         case ADD_NEW_DOC : {
         return{
-            ...state.documentacionEmpleados,
+            ...state,
             documentacionEmpleados : [ ...state.documentacionEmpleados, action.payload]
         }
         }
@@ -601,7 +601,7 @@ export const fetchReducer = (state = initialState, action) =>{
                 estados: [...state.estados, action.payload]
             }
         }
-
+//Estados Civiles
         case ACTUALIZA_DELETE : {
             return {
                 ...state, estadosCiviles : state.estadosCiviles && state.estadosCiviles.filter((estadoCivil) => estadoCivil.idEstadoCivil !== action.payload)

@@ -38,7 +38,7 @@ return (
                   onChange={handleChange}
                   value={input}
                   cols="51" 
-                  rows="6"
+                  rows="2"
                 />
                {/* (caracteres_restantes < 10) ? "Contador de caracteres: " + caracteres_restantes : "" */}
                

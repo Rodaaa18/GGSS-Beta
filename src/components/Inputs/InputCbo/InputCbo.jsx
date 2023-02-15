@@ -32,16 +32,14 @@ const InputCbo = ({nameLabel, array, value, display, nameButton, idSelected, sex
             <div className={`${clasess.classFive}`}>
                 <select className={`${clasess.classSix}`} defaultValue="" onChange={(e)=>onChange(e.target.value, idInput)} value={datosPersonalesValue} id={idInput} disabled={disabled} name={idInput}>
                 <option value="">Seleccionar</option> 
-                {
-                    !licencia && <option value="0">(Sin Definir)</option>   
-                }   
+                  
                     {
                     sexo  && sexo  && sexo.length > 0  && sexo === "M" ? array !== undefined && array.map((op, index)=>{
                         return(
                       ( Number(idSelected) === op[valueId]) ? <option className="options" key={index}  onClick={(e)=>onClickOption(op)} selected value={op[valueId]}>
                         {op[propArrayOp]} 
                       </option> :
-                      <option defaultValue={op[propArrayOp]} onClick={(e)=>onClickOption(op)} value={op[valueId]} key={index}>                                                          
+                      <option onClick={(e)=>onClickOption(op)} value={op[valueId]} key={index}>                                                          
                         {op[propArrayOp]}
                       </option> 
                         )
@@ -53,7 +51,7 @@ const InputCbo = ({nameLabel, array, value, display, nameButton, idSelected, sex
                               (Number(idSelected) === op[valueId]) ? <option key={index} selected onClick={(e)=>onClickOption(op)} value={op[valueId]}>
                               {op[propArrayOpFem]} 
                             </option> :
-                            <option defaultValue={op[propArrayOpFem]} onClick={(e)=>onClickOption(op)} value={op[valueId]} key={index}>
+                            <option  onClick={(e)=>onClickOption(op)} value={op[valueId]} key={index}>
                             
                               {op[propArrayOpFem]}
                             </option> 
@@ -84,8 +82,7 @@ const InputCbo = ({nameLabel, array, value, display, nameButton, idSelected, sex
             </div>
             <div className='segundo'>
                 <select className={obligatorio ? "formulario-input-Estado form-select ml-0 px-0 obligatorio" : "formulario-input-Estado form-select ml-0 px-0"} onChange={(e)=>onChange(e.target.value, idInput)} value={datosPersonalesValue} id={idInput} disabled={disabled} name={idInput}>
-                <option selected value="">Seleccionar</option>   
-                <option value="0">(Sin Definir)</option>                    
+                <option selected value="">Seleccionar</option>                     
                     {
                        sexo !== null && sexo !== undefined && sexo.length > 0  && sexo === "M" ? array !== undefined && array.map((op, index)=>{
                         return(
