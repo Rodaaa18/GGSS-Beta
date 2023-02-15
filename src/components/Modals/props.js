@@ -18,6 +18,12 @@ export const propsModalFormasdePagos = {
     propArrayOp : "nombreFormadePago",
     nameModal : "Formas de Pago"
 };
+export const propsModalCargos = {
+    propArrayId : "iDcargo",
+    propArrayOp : "nombreCargo",
+    nameModal : "Cargos"
+}
+
 export const propsModalCalles = {
     propArrayId : "idCalle",
     propArrayOp : "calle",

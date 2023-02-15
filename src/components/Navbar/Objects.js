@@ -115,7 +115,7 @@ export const objectTareas = [
     "placeholder": "Tarea 1",
     "idInput": "tareaDesempeñada",
     "nameInput": "tareaDesempeñada"
-  }
+  } 
 ]
 
 

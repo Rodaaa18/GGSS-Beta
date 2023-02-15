@@ -14,7 +14,8 @@ import { addEstadosCiviles, addEstados, addPaises, addEstudios, addTiposDocument
 import { addSelectedCargo, addSelectedEstado, addSelectedEstadoCivil, addSelectedEstudio, addSelectedFormaPago, addSelectedParentesco, addSelectedTarea, addSelectedTipoDocu, setRefetch } from '../../redux/actions/modalesActions';
 import ButtonCallModal from "../ButtonCallModal/ButtonCallModal";
 import ChildModal from "../Modals/ChildModal";
-import { propsModal, propsModalCalles, propsModalEstado, propsModalEstudios, propsModalFormasdePagos, propsModalMotivosdeEgresos, propsModalParentesco, propsModalTiposDocumento } from "../Modals/props";
+import { propsModal, propsModalCalles, propsModalCargos, propsModalEstado, propsModalEstudios, propsModalFormasdePagos, propsModalMotivosdeEgresos, propsModalParentesco, propsModalTiposDocumento } from "../Modals/props";
+import ChildModalOptions from "../Modals/ChildModalOptions";
 
 
 // import { getEstadosCivilesModal } from '../../services/fetchAPI';
@@ -145,13 +146,13 @@ const NavbarMenu = () => {
 	const urlEstado = "http://54.243.192.82/api/Estados"
 	const urlFormasdePago = "http://54.243.192.82/api/FormasdePagos"
 	// const urlMotivosdeEgresos = "http://54.243.192.82/api/MotivosdeEgresos"
+	const urlTiposDocumento = "http://54.243.192.82/api/TiposDocumento"
 	const urlCalles = "http://54.243.192.82/api/Calles"
+	const urlCargos = "http://54.243.192.82/api/Cargos"
 
 
 
 	const urlParentescos = "http://54.243.192.82/api/Parentescos"
-	const urlTiposDocumento = "http://54.243.192.82/api/TiposDocumento"
-	const urlCargos = "http://54.243.192.82/api/Cargos";
 	const urlTareas = "http://54.243.192.82/api/TareasDesempeñadas";
 	
 	// estado para recargar cada vez que se ejecute un post/put/delete
@@ -330,6 +331,19 @@ const NavbarMenu = () => {
 		"iDformadePago": valueItemModal?.iDformadePago,
 		"nombreFormadePago": modalValues?.nombreFormadePago,
 		"obs": modalValues?.observacion
+	}
+
+	//Cargos
+	const bodyCargo = {
+		"iDcargo": ((cargosValue && cargosValue[cargosValue.length - 1] !== undefined && (cargosValue[cargosValue.length - 1].iDcargo)) + 1),
+		"nombreCargo": modalValues?.nombreCargo,
+		"observacion": modalValues?.observacion
+	}
+
+	const bodyUpdateCargo = {
+		"iDcargo": valueItemModal?.iDcargo,
+		"nombreCargo": modalValues?.nombreCargo,
+		"observacion": modalValues?.observacion
 	}
 
 	//Motivos de Ingreso se deja para VERSION 2.0
@@ -640,6 +654,38 @@ const NavbarMenu = () => {
 															usaEstados={false}
 														/>
 														
+													</ButtonCallModal>
+												</li>    
+												<li>
+													<ButtonCallModal nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="Cargos"  setTransition={setTransition} nameButton="Cargos">
+														<ChildModalOptions 
+															modalValues={modalValues} 
+															onChangeValues={onChangeValues}  
+															valueItemModal={valueItemModal} 
+															setValueItemModal={setValueItemModal} 
+															nameModalProp="Cargos" 
+															handleClickClose={handleClickClose} 
+															setTransition={setTransition} 
+															array={ cargosValue && cargosValue }  
+															nameModal="Cargos" 
+															propsModal={propsModalCargos} 
+															optionsInputs={objectCargos} 
+															transition={transition}
+															functionAdd={sendModalData}
+															urlApi={urlCargos}
+															bodyPetition ={bodyCargo}
+															bodyUpdate={bodyUpdateCargo}
+															modify={modify} 
+															setModify={setModify}
+															idAModificar={ valueItemModal?.idCargo }
+															functionDelete={deleteItemModal}
+															disableModal={disableModal}
+															setDisableMOdal={setDisableMOdal}
+															actionActualizaDelete={actualizaDelete}
+															disableModalButtons={disableModalButtons}
+															setDisableModalButtons={setDisableModalButtons}
+															usaEstados={true}
+														/>
 													</ButtonCallModal>
 												</li>    
 											</div>
