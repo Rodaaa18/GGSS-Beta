@@ -10,7 +10,7 @@ import { objectParentescos, objectCategorias, inputsNumCategorias, objectConveni
 import { AXIOS_ERROR, SET_LOADING } from '../../redux/types/fetchTypes';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
-import { addEstadosCiviles, addEstados, addPaises, addEstudios, addTiposDocumento, addCargos, addTareasDesempeñadas, addParentescos, addFormasPago, addModosContratacion, addModosLiquidacion, addEmpleadores, addDomicilios, addCalles, addDepartamentos, addBarrios, addProvincias, addLocalidades, addNewEstadoCivil, addNewEstudio, getIdEstadoCivil, deleteEstadoCivil, getIdEstudio, deleteEstudio, addNewTipoDoc, deleteTipoDoc, getIdTipoDoc, putEstadoCivil, putEstudio, putTipoDoc, addNewParentesco, deleteParentesco, putParentesco, getIdParentesco, addNewEstado, deleteEstado, putEstado, getIdEstado, addNewFormaPago, deleteFormaPago, putFormaPago, getIdFormaPago, addNewCargo, deleteCargo, putCargo, getIdCargo, addNewTarea, deleteTarea, putTarea, getIdTarea, actualizaDelete } from '../../redux/actions/fetchActions';
+import { addEstadosCiviles, addEstados, addPaises, addEstudios, addTiposDocumento, addCargos, addTareasDesempeñadas, addParentescos, addFormasPago, addModosContratacion, addModosLiquidacion, addEmpleadores, addDomicilios, addCalles, addDepartamentos, addBarrios, addProvincias, addLocalidades, addNewEstadoCivil, addNewEstudio, getIdEstadoCivil, deleteEstadoCivil, getIdEstudio, deleteEstudio, addNewTipoDoc, deleteTipoDoc, getIdTipoDoc, putEstadoCivil, putEstudio, putTipoDoc, addNewParentesco, deleteParentesco, putParentesco, getIdParentesco, addNewEstado, deleteEstado, putEstado, getIdEstado, addNewFormaPago, deleteFormaPago, putFormaPago, getIdFormaPago, addNewCargo, deleteCargo, putCargo, getIdCargo, addNewTarea, deleteTarea, putTarea, getIdTarea, actualizaDelete, actualizaDeleteFormasdePago, actualizaModificarESCI, actualizaCreaFormasdePago, actualizaModificarFormasdePago } from '../../redux/actions/fetchActions';
 import { addSelectedCargo, addSelectedEstado, addSelectedEstadoCivil, addSelectedEstudio, addSelectedFormaPago, addSelectedParentesco, addSelectedTarea, addSelectedTipoDocu, setRefetch } from '../../redux/actions/modalesActions';
 import ButtonCallModal from "../ButtonCallModal/ButtonCallModal";
 import ChildModal from "../Modals/ChildModal";
@@ -40,7 +40,7 @@ const NavbarMenu = () => {
         setTransition(true);
     }
 
-	async function sendModalData(url, body,bodyUpdate, id){
+	async function sendModalData(url, body,bodyUpdate, id, actualizaCreaFormasdePago, actualizaModificarFormasdePago ){
         if(modify){
             try{
                 await axios
@@ -50,6 +50,8 @@ const NavbarMenu = () => {
                         dispatch(setRefetch(!refetch))
                         setModify(false);
                         setDisableMOdal(true)
+						dispatch(actualizaModificarFormasdePago(id))
+
                         return swal({
                             title : "Ok",
                             text : "Item actualizado con éxito",
@@ -77,6 +79,9 @@ const NavbarMenu = () => {
                 if(res.status === 200){
                     dispatch(setRefetch(!refetch))
                     setDisableMOdal(true)
+					dispatch(actualizaCreaFormasdePago(body))
+
+
                     return swal({
                         title : "Ok",
                         text : "Item guardado con éxito",
@@ -110,6 +115,7 @@ const NavbarMenu = () => {
                             if(res.status === 200){
                                 dispatch(setRefetch(!refetch))
 								dispatch(actionActualizaDelete(id))
+
                                 setDisableMOdal(true)
                                 return swal({
                                     title : "Ok",
@@ -138,7 +144,7 @@ const NavbarMenu = () => {
 	const urlEstudios = "http://54.243.192.82/api/Estudios"
 	const urlEstado = "http://54.243.192.82/api/Estados"
 	const urlFormasdePago = "http://54.243.192.82/api/FormasdePagos"
-	const urlMotivosdeEgresos = "http://54.243.192.82/api/MotivosdeEgresos"
+	// const urlMotivosdeEgresos = "http://54.243.192.82/api/MotivosdeEgresos"
 	const urlCalles = "http://54.243.192.82/api/Calles"
 
 
@@ -456,6 +462,8 @@ const NavbarMenu = () => {
 															disableModal={disableModal}
 															setDisableMOdal={setDisableMOdal}
 															actionActualizaDelete={actualizaDelete}
+															
+
 															disableModalButtons={disableModalButtons}
 															setDisableModalButtons={setDisableModalButtons}
 															usaEstados={false}
@@ -591,7 +599,10 @@ const NavbarMenu = () => {
 															setDisableMOdal={setDisableMOdal}
 															disableModalButtons={disableModalButtons}
 															setDisableModalButtons={setDisableModalButtons}
-															actionActualizaDelete={actualizaDelete}
+															actionActualizaDelete={actualizaDeleteFormasdePago}
+															actualizaCreaFormasdePago={actualizaCreaFormasdePago}
+															actualizaModificarFormasdePago={
+																actualizaModificarFormasdePago}
 															//props texarea
 															idInputTextArea="observacion"
 															usaEstados={true}
