@@ -1,43 +1,34 @@
-import InputModal from "../Inputs/InputModal/InputModal";
-import TextArea from "../Inputs/TextArea/TextArea";
-import "./BasicModal.css";
-import { CheckDate } from "./CheckDate";
-import { InputCboChild } from "./InputCboChild";
-const ChildModalOptions = ({
-  nameModalProp,
-  disabled,
-  array,
-  propsModal,
-  optionsInputs,
-  transition,
-  setTransition,
-  handleClickClose,
-  functionAdd,
-  functionUpdate,
-  functionDelete,
-  valueItemModal,
-  setValueItemModal,
-  onChangeValues,
-  modalValues,
-  urlApi,
-  bodyPetition,
-  bodyUpdate,
-  setModify,
-  modify,
-  idAModificar,
-  disableModal,
-  setDisableMOdal,
-  actionActualizaDelete,
-  actualizaCreaFormasdePago,
-  actualizaModificarFormasdePago,
-  idInputTextArea,
-  disableModalButtons,
-  setDisableModalButtons,
-  usaEstados,
-  usaCheck,
+import React from 'react'
+import InputModal from '../../Inputs/InputModal/InputModal';
+
+export const ModalPaises = ({
+    nameModalProp,
+    disabled,
+    array,
+    propsModal,
+    optionsInputs,
+    transition,
+    setTransition,
+    handleClickClose,
+    functionAdd,
+    functionDelete,
+    setValueItemModal,
+    onChangeValues,
+    modalValues,
+    urlApi,
+    bodyPetition,
+    bodyUpdate,
+    setModify,
+    idAModificar,
+    setDisableMOdal,
+    actionActualizaDelete,
+    actualizaCreaFormasdePago,
+    actualizaModificarFormasdePago,
+    disableModalButtons,
+    setDisableModalButtons,
 }) => {
   return (
-    <section
+        <section
       className={transition ? "transitionClassUp" : " transitionClassneDone "}
     >
       <div className="cortina"></div>
@@ -135,77 +126,6 @@ const ChildModalOptions = ({
                 );
               })}
             </div>
-            <div className="col-xl">
-              <div
-                className="d-flex flex-column justify-content-start align-items-center"
-                disabled={!disableModalButtons}
-              >
-                {optionsInputs.map((option, index) => {
-                  return (
-                    <InputCboChild
-                      disabled={!disableModalButtons}
-                      placeholder={option.placeholder}
-                      nameLabel={option.label}
-                      idInput={option.idInput}
-                      // value={empleadoUno && empleadoUno
-                      //   ? empleadoUno.iDestadoCivil
-                      //   : null}
-                      // action={ADD_DATOS_PERSONALES}
-                      // sexo={empleadoUno && empleadoUno ? empleadoUno.sexo : formDatosPersonales?.inputSexo && formDatosPersonales?.inputSexo}
-                      // nameButton="..."
-                      // nameLabel="Estado Civil"
-                      // array={datosPersonalesState.estadosCiviles && datosPersonalesState.estadosCiviles && datosPersonalesState.estadosCiviles !== "" ? datosPersonalesState.estadosCiviles : ["no entro"]}
-                      // propArrayOp="masculino"
-                      // propArrayOpFem="femenino"
-                      // idSelected={formDatosPersonales?.estadoCivilInput ? formDatosPersonales?.estadoCivilInput : empleadoUno.iDestadoCivil}
-                      // valueId="idEstadoCivil"
-                      // propArray="Casado"
-                      // display={false}
-                      // idModal="EstadoCivil"
-                      // disabled={(formDatosPersonales?.inputSexo && formDatosPersonales?.inputSexo && formDatosPersonales?.inputSexo === "") ? disableEstado : disable}
-                      // nameInput="estadoCivilInput"
-                      // idInput="estadoCivilInput"
-                      // onChange={onChangeValues}
-                      // obligatorio ={true}
-                    />
-                  );
-                })}
-              </div>
-            </div>
-            <div
-              className="d-flex flex-column justify-content-center align-items-center"
-              disabled={!disableModalButtons}
-            >
-              {usaCheck && (
-                <CheckDate
-                  disableModal={!disableModalButtons}
-                  idInputCheck={true}
-                  nameInput="Vencimiento"
-                  onChange={onChangeValues}
-                  // idInput="inputDatePresentacion"
-                  // display={false}
-                  // action={GET_INPUT_VALUE}
-                  // disabled={disable}
-                  // value={
-                  //   formDocumentacion?.inputDatePresentacion &&
-                  //   formDocumentacion?.inputDatePresentacion
-                  // }
-                ></CheckDate>
-              )}
-            </div>
-            <div
-              className="d-flex flex-column justify-content-center align-items-center"
-              disabled={!disableModalButtons}
-            >
-              {usaEstados && (
-                <TextArea
-                  disableModal={!disableModalButtons}
-                  idInput={idInputTextArea}
-                  onChange={onChangeValues}
-                  characterLimit={255}
-                ></TextArea>
-              )}
-            </div>
             <div className="d-flex flex-row-reverse w-100 ">
               <button
                 className="btn btn-dark m-1"
@@ -237,8 +157,6 @@ const ChildModalOptions = ({
           </div>
         </div>
       </div>
-    </section>
-  );
-};
-
-export default ChildModalOptions;
+    </section> 
+  )
+}

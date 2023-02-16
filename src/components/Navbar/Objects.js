@@ -164,14 +164,14 @@ export const objectPaises = [
 
 export const objectModosContratacion = [
   {
-    "label": "Modo de contratación",
+    "label": "Modos de contratación",
     "placeholder": "Contratado"
   }
 ]
 
 export const objectModosLiquidacion = [
   {
-    "label": "Modo de liquidación",
+    "label": "Modos de liquidación",
     "placeholder": "Diario"
   }
 ]

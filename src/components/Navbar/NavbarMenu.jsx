@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import swal from "sweetalert";
 import "./Navbar.css";
 // ------------------------ OBJECTS ------------------------
-import { objectParentescos, objectCategorias, inputsNumCategorias, objectConvenios, inputsNumConvenios, inputNumDataValores, tableValoresHeadings, inputNumDataEscala, inputDateDataEscala, inputNumDataDeducciones, inputDateDataDeducciones, objectBancos, objectEmpresasTelefonia, objectSindicatos, objectTareas, objectEstadosCiviles, objectEstudios, objectTipoDocumento, objectEstado, objectFormasDePago, objectMotivosEgreso, objectCalles, objectPaises, objectModosLiquidacion, objectModosContratacion, objectCargos, objectObrasSociales, objectAFJP, objectCentrosCosto, objectSectoresDptos, objectDirecciones, objectLugaresPago, objectDocumentacion, tableReduccionHeadings, tableConvenios, tableJerarquia, tableLicencias, inputsNumLicencias, objectAlicuotas, checkboxParentescos, checkboxNumParentescos, textAreaObject, textAreaCargos,urls } from './Objects'
+import { objectParentescos, objectCategorias, inputsNumCategorias, objectConvenios, inputsNumConvenios, inputNumDataValores, tableValoresHeadings, inputNumDataEscala, inputDateDataEscala, inputNumDataDeducciones, inputDateDataDeducciones, objectBancos, objectEmpresasTelefonia, objectSindicatos, objectTareas, objectEstadosCiviles, objectEstudios, objectTipoDocumento, objectEstado, objectFormasDePago, objectMotivosEgreso, objectCalles, objectPaises, objectModosLiquidacion, objectModosContratacion, objectCargos, objectObrasSociales, objectAFJP, objectCentrosCosto, objectSectoresDptos, objectDirecciones, objectLugaresPago, objectDocumentacion, tableReduccionHeadings, tableConvenios, tableJerarquia, tableLicencias, inputsNumLicencias, objectAlicuotas, checkboxParentescos, checkboxNumParentescos, textAreaObject, textAreaCargos,urls, objectProvincias } from './Objects'
 // -----------------------------------------------------------
 
 import { AXIOS_ERROR, SET_LOADING } from '../../redux/types/fetchTypes';
@@ -14,8 +14,11 @@ import { addEstadosCiviles, addEstados, addPaises, addEstudios, addTiposDocument
 import { addSelectedCargo, addSelectedEstado, addSelectedEstadoCivil, addSelectedEstudio, addSelectedFormaPago, addSelectedParentesco, addSelectedTarea, addSelectedTipoDocu, setRefetch } from '../../redux/actions/modalesActions';
 import ButtonCallModal from "../ButtonCallModal/ButtonCallModal";
 import ChildModal from "../Modals/ChildModal";
-import { propsModal, propsModalCalles, propsModalCargos, propsModalEstado, propsModalEstudios, propsModalFormasdePagos, propsModalMotivosdeEgresos, propsModalParentesco, propsModalTiposDocumento } from "../Modals/props";
+import { propsModal, propsModalCalles, propsModalCargos, propsModalEstado, propsModalEstudios, propsModalFormasdePagos, propsModalModosContratacion, propsModalModosLiquidacion, propsModalMotivosdeEgresos, propsModalPaises, propsModalParentesco, propsModalProvincias, propsModalTareas, propsModalTiposDocumento } from "../Modals/props";
 import ChildModalOptions from "../Modals/ChildModalOptions";
+import { ModalParentesco } from "../Modals/Modales Complejos/ModalParentesco";
+import { ModalPaises } from "../Modals/Modales Complejos/ModalPaises";
+import { ModalProvinciasDptos } from "../Modals/Modales Complejos/ModalProvinciasDptos";
 
 
 // import { getEstadosCivilesModal } from '../../services/fetchAPI';
@@ -140,7 +143,7 @@ const NavbarMenu = () => {
             });
         
     }
-	
+//#region ----------------------------------- URLS DE LOS MODALES	
 	const urlEstadosCiviles = "http://54.243.192.82/api/EstadosCiviles"
 	const urlEstudios = "http://54.243.192.82/api/Estudios"
 	const urlEstado = "http://54.243.192.82/api/Estados"
@@ -149,11 +152,16 @@ const NavbarMenu = () => {
 	const urlTiposDocumento = "http://54.243.192.82/api/TiposDocumento"
 	const urlCalles = "http://54.243.192.82/api/Calles"
 	const urlCargos = "http://54.243.192.82/api/Cargos"
-
-
-
-	const urlParentescos = "http://54.243.192.82/api/Parentescos"
 	const urlTareas = "http://54.243.192.82/api/TareasDesempeñadas";
+	const urlModosLiquidacion = "http://54.243.192.82/api/ModosLiquidacion";
+	const urlModosContratacion = "http://54.243.192.82/api/ModosContratacion";
+	const urlParentescos = "http://54.243.192.82/api/Parentescos"
+	const urlPaises = "http://54.243.192.82/api/Paises"
+	const urlProvincias = "http://54.243.192.82/api/Provincias"
+
+
+//#endregion
+
 	
 	// estado para recargar cada vez que se ejecute un post/put/delete
 	// ESTADOS QUE GUARDAN EL VALOR DE LOS INPUTS
@@ -180,7 +188,7 @@ const NavbarMenu = () => {
 //#region ----------------------------------- ESTADOS DECLARADOS de Lauty  -----------------------------------
 
 	//Paises
-	const paisNacionalidad = useSelector((state)=> state.generalState.paises)
+	const paisesValue = useSelector((state)=> state.generalState.paises)
 	//Calles
 	const calleValue = useSelector((state)=> state.generalState.calles)
 	//Departamentos
@@ -200,7 +208,7 @@ const NavbarMenu = () => {
 	//ModosContratacion
 	const modosContratacionValue = useSelector((state)=> state.generalState.modosContratacion)
 	//Modos Liquidacion
-	const modosLiqValue = useSelector((state)=> state.generalState.modosLiquidacion);
+	const modosLiquidacionValue = useSelector((state)=> state.generalState.modosLiquidacion);
 	//Empleadores
 	const empleadoresValue = useSelector((state)=> state.generalState.empleadores)
 	// ----------------------------------- ID & PETITION  -----------------------------------
@@ -214,14 +222,10 @@ const NavbarMenu = () => {
 
 	// Estudios
 	const estudiosValue = useSelector((state) => state.generalState.estudios)
-	const estudioSelected = useSelector((state) => state.modalState.estudioSelected);
-	const inputNivelEstudio = useSelector((state) => state.modalState.formulario.inputNivelEstudio)
-	const valueIdEstudio = useSelector((state) => state.generalState.idEstudio);
+	
 	// Tipos de documento
 	const tiposDocumentoValue = useSelector((state) => state.generalState.tiposDocumento)
-	const tipoDocumentoSelected = useSelector((state) => state.modalState.tipoDocumentoSelected)
-	const inputTipoDocumento = useSelector((state) => state.modalState.formulario.inputTipoDocumento)
-	const valueIdTipoDoc = useSelector((state) => state.generalState.idTipoDoc)
+	
 	// Parentescos
 	const parentescosValue = useSelector((state) => state.generalState.parentescos)
 	const parentescoSelected = useSelector((state) => state.modalState.parentescoSelected)
@@ -233,27 +237,10 @@ const NavbarMenu = () => {
 	const valueIdParentesco = useSelector((state) => state.generalState.idParentesco)
 	// estados para los empleados
 	const estadosValue = useSelector((state) => state.generalState.estados)
-	const estadoSelected = useSelector((state) => state.modalState.estadoSelected)
-	const inputEstado = useSelector((state) => state.modalState.formulario.inputEstado)
-	const valueIdEstado = useSelector((state) => state.generalState.idEstado)
 	// formas de pago
 	const formasPagoValue = useSelector((state) => state.generalState.formasDePago)
-	const formaPagoSelected = useSelector((state) => state.modalState.formaPagoSelected)
-	const inputFormaDePago = useSelector((state) => state.modalState.formulario.inputFormaDePago)
-	const textAreaFormaPago = useSelector((state) => state.modalState.formulario.textAreaFormaPago)
-	const valueIdFormaPago = useSelector((state) => state.generalState.idFormaPago)
-	// cargos
-	const cargoSelected = useSelector((state) => state.modalState.cargoSelected)
-	const inputCargo = useSelector((state) => state.modalState.formulario.inputCargo)
-	const textAreaCargo = useSelector((state) => state.modalState.formulario.textAreaCargo)
-	const valueIdCargo = useSelector((state) => state.generalState.idCargo)
 	// tareas desempeñadas
 	const tareasValue = useSelector((state) => state.generalState.tareasDesempeñadas)
-	const tareaSelected = useSelector((state) => state.modalState.tareaSelected)
-	const inputTarea = useSelector((state) => state.modalState.formulario.inputTarea)
-	const textAreaTarea = useSelector((state) => state.modalState.formulario.textAreaTarea)
-	const valueIdTarea = useSelector((state) => state.generalState.idTarea)
-
 //#endregion ----------------------------------- ESTADOS DECLARADOS de Lauty  -----------------------------------
 
 
@@ -296,18 +283,7 @@ const NavbarMenu = () => {
 		"id": null
 	}
 
-	//Parentesco para después
-	// const bodyParentesco = {
-	// 	"iDparentesco": ((parentescosValue && parentescosValue[parentescosValue.length - 1] !== undefined && (parentescosValue[parentescosValue.length - 1].iDparentesco)) + 1),
-	// 	"parentesco": modalValues?.parentesco,
-	// 	"id": null
-	// }
-	// const bodyUpdateParentesco = {
-	// 	"iDparentesco": valueItemModal?.iDparentesco,
-	// 	"parentesco": modalValues?.parentesco,
-	// 	"id": null
-	// }
-
+	
 	//Estados
 	const bodyEstado = {
 		"idEstado": ((estadosValue && estadosValue[estadosValue.length - 1] !== undefined && (estadosValue[estadosValue.length - 1].idEstado)) + 1),
@@ -326,7 +302,6 @@ const NavbarMenu = () => {
 		"nombreFormadePago": modalValues?.nombreFormadePago,
 		"obs": modalValues?.observacion
 	}
-
 	const bodyUpdateFormasDePago = {
 		"iDformadePago": valueItemModal?.iDformadePago,
 		"nombreFormadePago": modalValues?.nombreFormadePago,
@@ -339,12 +314,131 @@ const NavbarMenu = () => {
 		"nombreCargo": modalValues?.nombreCargo,
 		"observacion": modalValues?.observacion
 	}
-
 	const bodyUpdateCargo = {
 		"iDcargo": valueItemModal?.iDcargo,
 		"nombreCargo": modalValues?.nombreCargo,
 		"observacion": modalValues?.observacion
 	}
+
+	//Tareas Desempeñadas
+
+	const bodyTareas = {
+		"idTareaDesempeñada" : ((tareasValue && tareasValue[tareasValue.length - 1] !== undefined && (tareasValue[tareasValue.length - 1].idTareaDesempeñada)) + 1),
+		"tareaDesempeñada" : modalValues?.tareaDesempeñada,
+		"observacion" : modalValues?.observacion
+	}
+	const bodyUpdateTareas = {
+		"idTareaDesempeñada" : valueItemModal?.idTareaDesempeñada,
+		"tareaDesempeñada" : modalValues?.tareaDesempeñada,
+		"observacion" : modalValues?.observacion
+	}
+
+	//Modos Liquidación
+
+	const bodyModosLiquidacion = {
+		"iDmodoLiquidacion": ((modosLiquidacionValue && modosLiquidacionValue[modosLiquidacionValue.length - 1] !== undefined && (modosLiquidacionValue[modosLiquidacionValue.length - 1].iDmodoLiquidacion)) + 1),
+		"nombreModoLiquidacion": modalValues?.nombreModoLiquidacion,
+		"observacion": modalValues?.observacion
+	}
+	const bodyUpdateModosLiquidacion = {
+		"iDmodoLiquidacion": valueItemModal?.iDmodoLiquidacion,
+		"nombreModoLiquidacion": modalValues?.nombreModoLiquidacion,
+		"observacion": modalValues?.observacion
+	}
+
+	//Calles
+	const bodyCalle = {
+		"idCalle": ((calleValue && calleValue[calleValue.length - 1] !== undefined && (calleValue[calleValue.length - 1].idCalle)) + 1),
+		"calle": modalValues?.calle,
+		"obs": modalValues?.observacion
+	}
+	const bodyUpdateCalle = {
+		"idCalle": valueItemModal?.idCalle,
+		"calle": modalValues?.calle,
+		"obs": modalValues?.observacion
+	}
+
+	//Modos Contratación
+
+	const bodyModosContratacion = {
+		"iDmodoContratacion": ((modosContratacionValue && modosContratacionValue[modosContratacionValue.length - 1] !== undefined && (modosContratacionValue[modosContratacionValue.length - 1].iDmodoContratacion)) + 1),
+		"modoContratacion": modalValues?.modoContratacion,
+		"observacion": modalValues?.observacion,
+		"fechaVto": modalValues?.fechaVto
+	}
+	const bodyUpdateModosContratacion = {
+		"iDmodoContratacion": valueItemModal?.iDmodoContratacion,
+		"modoContratacion": modalValues?.modoContratacion,
+		"observacion": modalValues?.observacion,
+		"fechaVto": modalValues?.fechaVto
+	}
+	
+	console.log(bodyModosContratacion)
+	
+
+	//Parentescos
+	//falta lógica
+	const bodyParentesco = {
+		"iDparentesco": ((parentescosValue && parentescosValue[parentescosValue.length - 1] !== undefined && (parentescosValue[parentescosValue.length - 1].iDparentesco)) + 1),
+		"nombreParentesco": modalValues?.nombreParentesco,
+		"observacion": modalValues?.observacion
+	}
+	const bodyUpdateParentesco = {
+		"iDparentesco": valueItemModal?.iDparentesco,
+		"nombreParentesco": modalValues?.nombreParentesco,
+		"observacion": modalValues?.observacion
+	}
+
+	//Paises
+
+	const bodyPaises = {
+		"idPais": ((paisesValue && paisesValue[paisesValue.length - 1] !== undefined && (paisesValue[paisesValue.length - 1].idPais)) + 1),
+		"nombrePais": modalValues?.nombrePais,
+		"observacion": modalValues?.observacion
+	}
+	const bodyUpdatePaises = {
+		"idPais": valueItemModal?.idPais,
+		"nombrePais": modalValues?.nombrePais,
+		"observacion": modalValues?.observacion
+	}
+
+	//Alicuotas
+
+	//Provincias, Deptos y demás.
+	
+	const bodyProvincias = {
+		"idProvincia": ((provinciasValue && provinciasValue[provinciasValue.length - 1] !== undefined && (provinciasValue[provinciasValue.length - 1].idProvincia)) + 1),
+		"provincia": modalValues?.provincia,
+		"observacion": modalValues?.observacion
+	}
+	const bodyUpdateProvincias = {
+		"idProvincia": valueItemModal?.idProvincia,
+		"provincia": modalValues?.provincia,
+		"observacion": modalValues?.observacion
+	}
+	
+	
+	
+	
+	
+	
+	//Empleadores
+
+
+
+	
+	
+	//Parentesco para después
+	// const bodyParentesco = {
+	// 	"iDparentesco": ((parentescosValue && parentescosValue[parentescosValue.length - 1] !== undefined && (parentescosValue[parentescosValue.length - 1].iDparentesco)) + 1),
+	// 	"parentesco": modalValues?.parentesco,
+	// 	"id": null
+	// }
+	// const bodyUpdateParentesco = {
+	// 	"iDparentesco": valueItemModal?.iDparentesco,
+	// 	"parentesco": modalValues?.parentesco,
+	// 	"id": null
+	// }
 
 	//Motivos de Ingreso se deja para VERSION 2.0
 	// const bodyMotivoIngreso = {
@@ -358,18 +452,6 @@ const NavbarMenu = () => {
 	// 	"observacion": modalValues?.observacion
 	// }
 
-	//Calles
-	const bodyCalle = {
-		"idCalle": ((calleValue && calleValue[calleValue.length - 1] !== undefined && (calleValue[calleValue.length - 1].idCalle)) + 1),
-		"calle": modalValues?.calle,
-		"obs": modalValues?.observacion
-	}
-
-	const bodyUpdateCalle = {
-		"idCalle": valueItemModal?.idCalle,
-		"calle": modalValues?.calle,
-		"obs": modalValues?.observacion
-	}
 
 
 
@@ -486,7 +568,7 @@ const NavbarMenu = () => {
 												</li>
 												<li>
 													<ButtonCallModal nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="Estudios"  setTransition={setTransition} nameButton="Estudios">
-{/* Estudios no va funciona CRUD  */}
+
 														<ChildModal
 															modalValues={modalValues}
 															onChangeValues={onChangeValues}
@@ -678,6 +760,210 @@ const NavbarMenu = () => {
 															modify={modify} 
 															setModify={setModify}
 															idAModificar={ valueItemModal?.idCargo }
+															functionDelete={deleteItemModal}
+															disableModal={disableModal}
+															setDisableMOdal={setDisableMOdal}
+															actionActualizaDelete={actualizaDelete}
+															disableModalButtons={disableModalButtons}
+															setDisableModalButtons={setDisableModalButtons}
+															usaEstados={true}
+															usaCheck={false}
+														/>
+													</ButtonCallModal>
+												</li>    
+												<li>
+													<ButtonCallModal nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="Tareas Desempeñadas"  setTransition={setTransition} nameButton="Tareas Desempeñadas">
+														<ChildModalOptions 
+															modalValues={modalValues} 
+															onChangeValues={onChangeValues}  
+															valueItemModal={valueItemModal} 
+															setValueItemModal={setValueItemModal} 
+															nameModalProp="Tareas Desempeñadas" 
+															handleClickClose={handleClickClose} 
+															setTransition={setTransition} 
+															array={ tareasValue && tareasValue  }  
+															nameModal="Tareas Desempeñadas" 
+															propsModal={propsModalTareas} 
+															optionsInputs={objectTareas} 
+															transition={transition}
+															functionAdd={sendModalData}
+															urlApi={urlTareas}
+															bodyPetition ={bodyTareas}
+															bodyUpdate={bodyUpdateTareas}
+															modify={modify} 
+															setModify={setModify}
+															idAModificar={ valueItemModal?.idTareaDesempeñada }
+															functionDelete={deleteItemModal}
+															disableModal={disableModal}
+															setDisableMOdal={setDisableMOdal}
+															actionActualizaDelete={actualizaDelete}
+															disableModalButtons={disableModalButtons}
+															setDisableModalButtons={setDisableModalButtons}
+															usaEstados={true}
+															usaCheck={false}
+														/>
+													</ButtonCallModal>
+												</li>    
+												<li>
+													<ButtonCallModal nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="Modos de Liquidacion"  setTransition={setTransition} nameButton="Modos de Liquidacion">
+														<ChildModalOptions 
+															modalValues={modalValues} 
+															onChangeValues={onChangeValues}  
+															valueItemModal={valueItemModal} 
+															setValueItemModal={setValueItemModal} 
+															nameModalProp="Modos de Liquidacion" 
+															handleClickClose={handleClickClose} 
+															setTransition={setTransition} 
+															array={ modosLiquidacionValue && modosLiquidacionValue  }  
+															nameModal="Modos de Liquidacion" 
+															propsModal={propsModalModosLiquidacion} 
+															optionsInputs={objectModosLiquidacion} 
+															transition={transition}
+															functionAdd={sendModalData}
+															urlApi={urlModosLiquidacion}
+															bodyPetition ={bodyModosLiquidacion}
+															bodyUpdate={bodyUpdateModosLiquidacion}
+															modify={modify} 
+															setModify={setModify}
+															idAModificar={ valueItemModal?.iDmodoLiquidacion }
+															functionDelete={deleteItemModal}
+															disableModal={disableModal}
+															setDisableMOdal={setDisableMOdal}
+															actionActualizaDelete={actualizaDelete}
+															disableModalButtons={disableModalButtons}
+															setDisableModalButtons={setDisableModalButtons}
+															usaEstados={true}
+															usaCheck={false}
+														/>
+													</ButtonCallModal>
+												</li>    
+												<li>
+													<ButtonCallModal nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="Modos de Contratacion"  setTransition={setTransition} nameButton="Modos de Contratacion">
+														<ChildModalOptions 
+															modalValues={modalValues} 
+															onChangeValues={onChangeValues}  
+															valueItemModal={valueItemModal} 
+															setValueItemModal={setValueItemModal} 
+															nameModalProp="Modos de Contratacion" 
+															handleClickClose={handleClickClose} 
+															setTransition={setTransition} 
+															array={ modosContratacionValue && modosContratacionValue  }  
+															nameModal="Modos de Contratacion" 
+															propsModal={propsModalModosContratacion} 
+															optionsInputs={objectModosContratacion} 
+															transition={transition}
+															functionAdd={sendModalData}
+															urlApi={urlModosContratacion}
+															bodyPetition ={bodyModosContratacion}
+															bodyUpdate={bodyUpdateModosContratacion}
+															modify={modify} 
+															setModify={setModify}
+															idAModificar={ valueItemModal?.iDmodoContratacion }
+															functionDelete={deleteItemModal}
+															disableModal={disableModal}
+															setDisableMOdal={setDisableMOdal}
+															actionActualizaDelete={actualizaDelete}
+															disableModalButtons={disableModalButtons}
+															setDisableModalButtons={setDisableModalButtons}
+															usaEstados={true}
+															usaCheck={true}
+														/>
+													</ButtonCallModal>
+												</li>    
+												<li>
+													<ButtonCallModal nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="Parentescos"  setTransition={setTransition} nameButton="Parentescos">
+														<ModalParentesco 
+															modalValues={modalValues} 
+															onChangeValues={onChangeValues}  
+															valueItemModal={valueItemModal} 
+															setValueItemModal={setValueItemModal} 
+															nameModalProp="Parentescos" 
+															handleClickClose={handleClickClose} 
+															setTransition={setTransition} 
+															array={ parentescosValue && parentescosValue  }  
+															nameModal="Parentescos" 
+															propsModal={propsModalParentesco} 
+															optionsInputs={objectParentescos} 
+															transition={transition}
+															functionAdd={sendModalData}
+															urlApi={urlParentescos}
+															bodyPetition ={bodyParentesco}
+															bodyUpdate={bodyUpdateParentesco}
+															modify={modify} 
+															setModify={setModify}
+															idAModificar={ valueItemModal?.iDparentesco }
+															functionDelete={deleteItemModal}
+															disableModal={disableModal}
+															setDisableMOdal={setDisableMOdal}
+															actionActualizaDelete={actualizaDelete}
+															disableModalButtons={disableModalButtons}
+															setDisableModalButtons={setDisableModalButtons}
+															usaEstados={true}
+															nameInputCheck="Genera Asignación"
+															nameInputCheckTwo="Deduce Ganancias"
+															nameLabelValorDeduccion="Importe"
+															// checked={valueItemModal?.generaAsignacion}
+														/>
+													</ButtonCallModal>
+												</li>    
+												<li>
+													<ButtonCallModal nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="Paises"  setTransition={setTransition} nameButton="Paises">
+														<ModalPaises 
+															modalValues={modalValues} 
+															onChangeValues={onChangeValues}  
+															valueItemModal={valueItemModal} 
+															setValueItemModal={setValueItemModal} 
+															nameModalProp="Paises" 
+															handleClickClose={handleClickClose} 
+															setTransition={setTransition} 
+															array={ paisesValue && paisesValue }  
+															nameModal="Paises" 
+															propsModal={propsModalPaises} 
+															optionsInputs={objectPaises} 
+															transition={transition}
+															functionAdd={sendModalData}
+															urlApi={urlPaises}
+															bodyPetition ={bodyPaises}
+															bodyUpdate={bodyUpdatePaises}
+															modify={modify} 
+															setModify={setModify}
+															idAModificar={ valueItemModal?.idPais }
+															functionDelete={deleteItemModal}
+															disableModal={disableModal}
+															setDisableMOdal={setDisableMOdal}
+															actionActualizaDelete={actualizaDelete}
+															disableModalButtons={disableModalButtons}
+															setDisableModalButtons={setDisableModalButtons}
+															// usaEstados={true}
+															// nameInputCheck="Genera Asignación"
+															// nameInputCheckTwo="Deduce Ganancias"
+															// nameLabelValorDeduccion="Importe"
+															// checked={valueItemModal?.generaAsignacion}
+														/>
+													</ButtonCallModal>
+												</li>    
+												<li>
+												<ButtonCallModal nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="Provincias - Localidades - Departamentos - Barrios "  setTransition={setTransition} nameButton="Provincias - Localidades - Departamentos - Barrios ">
+														<ModalProvinciasDptos 
+															modalValues={modalValues} 
+															onChangeValues={onChangeValues}  
+															valueItemModal={valueItemModal} 
+															setValueItemModal={setValueItemModal} 
+															nameModalProp="Provincias - Localidades - Departamentos - Barrios " 
+															handleClickClose={handleClickClose} 
+															setTransition={setTransition} 
+															array={ provinciasValue && provinciasValue }  
+															nameModal="Provincia" 
+															propsModal={propsModalProvincias} 
+															optionsInputs={objectProvincias} 
+															transition={transition}
+															functionAdd={sendModalData}
+															urlApi={urlProvincias}
+															bodyPetition ={bodyProvincias}
+															bodyUpdate={bodyUpdateProvincias}
+															modify={modify} 
+															setModify={setModify}
+															idAModificar={ valueItemModal?.idProvincia }
 															functionDelete={deleteItemModal}
 															disableModal={disableModal}
 															setDisableMOdal={setDisableMOdal}

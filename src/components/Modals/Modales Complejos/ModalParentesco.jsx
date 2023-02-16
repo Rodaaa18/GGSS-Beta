@@ -1,9 +1,9 @@
-import InputModal from "../Inputs/InputModal/InputModal";
-import TextArea from "../Inputs/TextArea/TextArea";
-import "./BasicModal.css";
-import { CheckDate } from "./CheckDate";
-import { InputCboChild } from "./InputCboChild";
-const ChildModalOptions = ({
+import React from "react";
+import InputModal from "../../Inputs/InputModal/InputModal";
+import TextArea from "../../Inputs/TextArea/TextArea";
+import { CheckDate } from "../CheckDate";
+
+export const ModalParentesco = ({
   nameModalProp,
   disabled,
   array,
@@ -35,6 +35,11 @@ const ChildModalOptions = ({
   setDisableModalButtons,
   usaEstados,
   usaCheck,
+  nameInputCheck,
+  nameInputCheckTwo,
+  checked,
+  nameLabelValorDeduccion,
+
 }) => {
   return (
     <section
@@ -135,64 +140,51 @@ const ChildModalOptions = ({
                 );
               })}
             </div>
-            <div className="col-xl">
-              <div
-                className="d-flex flex-column justify-content-start align-items-center"
-                disabled={!disableModalButtons}
-              >
-                {optionsInputs.map((option, index) => {
-                  return (
-                    <InputCboChild
-                      disabled={!disableModalButtons}
-                      placeholder={option.placeholder}
-                      nameLabel={option.label}
-                      idInput={option.idInput}
-                      // value={empleadoUno && empleadoUno
-                      //   ? empleadoUno.iDestadoCivil
-                      //   : null}
-                      // action={ADD_DATOS_PERSONALES}
-                      // sexo={empleadoUno && empleadoUno ? empleadoUno.sexo : formDatosPersonales?.inputSexo && formDatosPersonales?.inputSexo}
-                      // nameButton="..."
-                      // nameLabel="Estado Civil"
-                      // array={datosPersonalesState.estadosCiviles && datosPersonalesState.estadosCiviles && datosPersonalesState.estadosCiviles !== "" ? datosPersonalesState.estadosCiviles : ["no entro"]}
-                      // propArrayOp="masculino"
-                      // propArrayOpFem="femenino"
-                      // idSelected={formDatosPersonales?.estadoCivilInput ? formDatosPersonales?.estadoCivilInput : empleadoUno.iDestadoCivil}
-                      // valueId="idEstadoCivil"
-                      // propArray="Casado"
-                      // display={false}
-                      // idModal="EstadoCivil"
-                      // disabled={(formDatosPersonales?.inputSexo && formDatosPersonales?.inputSexo && formDatosPersonales?.inputSexo === "") ? disableEstado : disable}
-                      // nameInput="estadoCivilInput"
-                      // idInput="estadoCivilInput"
-                      // onChange={onChangeValues}
-                      // obligatorio ={true}
-                    />
-                  );
-                })}
-              </div>
-            </div>
-            <div
-              className="d-flex flex-column justify-content-center align-items-center"
-              disabled={!disableModalButtons}
-            >
-              {usaCheck && (
-                <CheckDate
-                  disableModal={!disableModalButtons}
-                  idInputCheck={true}
-                  nameInput="Vencimiento"
-                  onChange={onChangeValues}
-                  // idInput="inputDatePresentacion"
-                  // display={false}
-                  // action={GET_INPUT_VALUE}
-                  // disabled={disable}
-                  // value={
-                  //   formDocumentacion?.inputDatePresentacion &&
-                  //   formDocumentacion?.inputDatePresentacion
-                  // }
-                ></CheckDate>
-              )}
-            </div>
+    <div class="form-check p-0">
+        <label class="form-check-label" for="flexCheckDefault">
+          {nameInputCheck}
+        </label>
+        </div>
+      <div className="d-flex flex-row justify-content-start align-items-center ">
+        <input
+          className="form-check-input "
+          type="checkbox"
+          id="flexCheckChecked"
+          checked={checked}
+          disabled={disabled}
+        />
+        </div>
+        <div class="form-check p-0">
+        <label class="form-check-label" for="flexCheckDefault">
+          {nameInputCheckTwo}
+        </label>
+        </div>
+      <div className="d-flex flex-row justify-content-start align-items-center ">
+        <input
+          className="form-check-input "
+          type="checkbox"
+          id="flexCheckChecked"
+          checked={checked}
+          disabled={disabled}
+        />
+        </div>
+    <div className="">
+
+    <label for="inputPassword3" className="col-sm-4 col-form-label">{nameLabelValorDeduccion}</label>
+    <div className="col-sm-8">
+        <input
+            type="text"
+            className="inputModal"
+            // id={idInputValorDeducciones}
+            // name={idInput}
+            // placeholder={placeholder}
+            // value={value}
+            // onChange={(e) => onChange(e.target.value, inputId)} // ON CHANGE NUEVO PARA LA NUEVA FUNCION (NO ANDA)
+            // onChange={(e) => onChangeValues(e.target.value, idInput)}
+            // disabled={disableModal}
+        />
+    </div>
+        </div>
             <div
               className="d-flex flex-column justify-content-center align-items-center"
               disabled={!disableModalButtons}
@@ -240,5 +232,3 @@ const ChildModalOptions = ({
     </section>
   );
 };
-
-export default ChildModalOptions;

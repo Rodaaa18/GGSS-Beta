@@ -23,27 +23,70 @@ export const propsModalCargos = {
     propArrayOp : "nombreCargo",
     nameModal : "Cargos"
 }
+export const propsModalTareas = {
+    propArrayId : "idTareaDesempeñada",
+    propArrayOp : "tareaDesempeñada",
+    nameModal : "Tareas"
+}
+export const propsModalModosLiquidacion = {
+    propArrayId : "iDmodoLiquidacion",
+    propArrayOp : "modoLiquidacion",
+    nameModal : "Modos de Liquidación"
+}
+export const propsModalTiposDocumento = {
+    propArrayId : "iDtipoDocumento",
+    propArrayOp : "tipoDocumento",
+    nameModal : "Tipos Documento"
+}
+export const propsModalModosContratacion = {
+    prosArrayId : "iDmodoContratacion",
+    propArrayOp : "modoContratacion",
+    nameModal : "Modos de Contratación"
+}
 
 export const propsModalCalles = {
     propArrayId : "idCalle",
     propArrayOp : "calle",
     nameModal : "Calle"
 };
+export const propsModalParentesco = {
+    propArrayId : "iDparentesco",
+    propArrayOp : "nombreParentesco",
+    nameModal : "Parentescos"
+};
+export const propsModalPaises = {
+    propArrayId : "idPais",
+    propArrayOp : "nombrePais",
+    nameModal : "Paises"
+};
+export const propsModalProvincias = {
+    propArrayId : "idProvincia",
+    propArrayOp : "provincia",
+    nameModal : "Provincias"
+}
+
+
+//FALTA EP
+// export const propsModalAlicuotas = {
+//     propArrayId : "idAlicuota",
+//     propArrayOp : "alicuota",
+//     nameModal : "Alicuotas"
+// }
+//FALTA EP
 // export const propsModalMotivosdeEgresos = {
 //     propArrayId : "idFormaPago",
 //     propArrayOp : "nombreFormaPago",
 //     nameModal : "Formas de Pago"
 // };
-// export const propsModalParentesco = {
-//     propArrayId : "iDparentesco",
-//     propArrayOp : "nombreParentesco",
-//     nameModal : "Parentescos"
-// };
-export const propsModalTiposDocumento = {
-    propArrayId : "iDtipoDocumento",
-    propArrayOp : "tipoDocumento",
-    nameModal : "Tipos Documento"
-}
+
+
+
+
+
+
+
+
+
 export const objectEstadosCiviles = [
 	{
 		"label": "Masculino",
