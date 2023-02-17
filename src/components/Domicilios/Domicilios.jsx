@@ -73,8 +73,6 @@ const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValu
 
   const sendDataDomicilios= async ()=>{
     try{
-    
-
     await axios.post(urlDomicilios, {
       headers: {
         'Access-Control-Allow-Origin' : '*', 

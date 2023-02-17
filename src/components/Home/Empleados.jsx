@@ -74,7 +74,7 @@ import { setRefetch } from "../../redux/actions/modalesActions";
 import "./Home.css"
 import ErrorPage from "../ErrorPage/ErrorPage";
 
-const Empleados = ({tokenDef, setTokenDef}) => {
+const Empleados = ({tokenDef, setTokenDef, sePerfilesUSuario}) => {
   const [tabIndex, setTabIndex] = useState(0);
   const [responses, setResponses] = useState({});
   const [disable, setDisable] = useState(true);
@@ -105,7 +105,7 @@ const Empleados = ({tokenDef, setTokenDef}) => {
     (state) => state.generalState.conceptosXesquemas
   );
 
-
+console.log(tokenDef)
   //#region URLs
 
   const urlEstados = "http://54.243.192.82/api/Estados";
@@ -382,52 +382,66 @@ useEffect(()=>{
   const valueInputApellido = useSelector(
     (state) => state.employeStates.formulario.inputApellidoNombreBrowser
   );
-  const url = `http://54.243.192.82/api/Empleados?page=2000&ordered=true`;
-    const urlEmpleadoPorApellido = `http://54.243.192.82/api/Empleados?records=10000&filter=${responses?.browser?.inputApellidoNombreBrowser ? responses?.browser?.inputApellidoNombreBrowser : null}&ordered=true`;
-    const urlEmpleadoPorLegajo = `http://54.243.192.82/api/Empleados?records=10000&legajo=${responses?.browser?.inpurLegajoBrowser ? responses?.browser?.inpurLegajoBrowser : null}&ordered=true`;
-    const urlEmpleadoApYLegajo = `http://54.243.192.82/api/Empleados?records=10000&filter=${responses?.browser?.inputApellidoNombreBrowser ? responses?.browser.inputApellidoNombreBrowser : null}&legajo=${responses?.browser?.inpurLegajoBrowser ? responses?.browser?.inpurLegajoBrowser : null}&ordered=true`;
+  const urlBasica = `http://54.243.192.82/api/Empleados?page=2000&ordered=true`;
+    
+
+
+    const url = `http://54.243.192.82/api/Empleados`;
+    const urlEmpleadoPorApellido = `http://54.243.192.82/api/Empleados?records=0&page=1&filter=${responses?.browser?.inputApellidoNombreBrowser ? responses?.browser?.inputApellidoNombreBrowser : null}&ordered=true`;
+    const urlEmpleadoPorLegajo = `http://54.243.192.82/api/Empleados?records=0&page=1&legajo=${responses?.browser?.inpurLegajoBrowser ? responses?.browser?.inpurLegajoBrowser : null}&ordered=true`;
+    const urlEmpleadoApYLegajo = `http://54.243.192.82/api/Empleados?records=0&page=1&filter=${responses?.browser?.inputApellidoNombreBrowser ? responses?.browser.inputApellidoNombreBrowser : null}&legajo=${responses?.browser?.inpurLegajoBrowser ? responses?.browser?.inpurLegajoBrowser : null}&ordered=true`;
     const urlApeLegOrdered = `http://54.243.192.82/api/Empleados?records=10000&filter=${responses?.browser?.inputApellidoNombreBrowser ? responses?.browser?.inputApellidoNombreBrowser : null}&legajo=${responses?.browser?.inpurLegajoBrowser ? responses?.browser?.inpurLegajoBrowser : null}&ordered=true`;
 
     async function getEmpleados(){
       if(responses.browser.inputApellidoNombreBrowser){
         await axios({method: 'get',
                       url: urlEmpleadoPorApellido,
-                      timeout: 1000}).then((res) => {
-          dispatch(getEmployes(res.data.result));    
+                      timeout: 2000}).then((res) => {
+          dispatch(getEmployes(res.data));    
         });
         return;
       }
       else if(responses.browser.inpurLegajoBrowser){
         await axios({method: 'get',
                     url: urlEmpleadoPorLegajo,
-                    timeout: 1000}).then((res) => {
-          dispatch(getEmployes(res.data.result));    
+                    timeout: 2000}).then((res) => {
+          dispatch(getEmployes(res.data));    
         });
         return;
       }else if(responses.browser.inputApellidoNombreBrowser && responses.browser.inpurLegajoBrowser){
         await axios({method: 'get',
                     url: urlEmpleadoApYLegajo,
-                    timeout: 1000}).then((res) => {
-            dispatch(getEmployes(res.data.result));    
+                    timeout: 2000}).then((res) => {
+            dispatch(getEmployes(res.data));    
         });
         return;
       }else if(responses.browser.inputApellidoNombreBrowser && responses.browser.inpurLegajoBrowser && responses?.browser.ordered){
         await axios.get({method: 'get',
                         url: urlApeLegOrdered,
-                        timeout: 1000}).then((res) => {
-          dispatch(getEmployes(res.data.result));    
+                        timeout: 2000}).then((res) => {
+          dispatch(getEmployes(res.data));    
         });
         return;
       }else{
         await axios.get(url).then((res) => {
 
-          dispatch(getEmployes(res.data.result));
+          dispatch(getEmployes(res.data));
     
         });
       }
       
     }
+    async function getTotalEmployes(){
+      try{
+        await axios
+        .get(url)
+        .then((res)=>{
+          
+        })
+      }catch(err){
 
+      }
+    }
   
 
   useEffect(() => {

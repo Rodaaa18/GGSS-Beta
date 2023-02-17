@@ -15,13 +15,13 @@ import { addSelectedCargo, addSelectedEstado, addSelectedEstadoCivil, addSelecte
 import ButtonCallModal from "../ButtonCallModal/ButtonCallModal";
 import ChildModal from "../Modals/ChildModal";
 import { propsModal, propsModalEstado, propsModalEstudios, propsModalParentesco, propsModalTiposDocumento } from "../Modals/props";
-
+import { useNavigate } from "react-router-dom";
 
 // import { getEstadosCivilesModal } from '../../services/fetchAPI';
 // import { useEffect } from 'react';
 //#endregion
 
-const NavbarMenu = () => {
+const NavbarMenu = ({setTokenDef, sePerfilesUSuario, perfilesUsuario}) => {
 	const [ modalValues, setModalValues ] = useState({});
 	const [ nameModal, setNameModal ] = useState({});
 	const [ valueItemModal , setValueItemModal ] = useState({});
@@ -31,6 +31,7 @@ const NavbarMenu = () => {
 	const [ disableModalButtons, setDisableModalButtons ] = useState(false);
 	const dispatch = useDispatch();
 	const refetch = useSelector((state)=> state.modalState.refetch);
+	const navigate = useNavigate();
 
 	const handleClickClose=(nameModalProp)=>{
         let newState = {...nameModal}
@@ -39,7 +40,11 @@ const NavbarMenu = () => {
         setNameModal(newState);
         setTransition(true);
     }
-
+	function closeSession(){
+		setTokenDef(null);
+		sePerfilesUSuario(null);
+		return navigate("/");
+	}
 	async function sendModalData(url, body,bodyUpdate, id){
         if(modify){
             try{
@@ -365,8 +370,16 @@ const NavbarMenu = () => {
 	}
 
 //#endregion ----------------------------------- Body de Lauty  -----------------------------------
+	function showSuperadmin(){
 
-
+		let perfilAdmin = perfilesUsuario && perfilesUsuario.filter((perfil)=> perfil.nombre.toLowerCase() === "administrador");
+		console.log(perfilAdmin)
+		if(perfilAdmin.length > 0){
+			return(<Link class="nav-link" to="/superadmin">Superadmin</Link>)
+		}else{
+			return null;
+		}
+	}
 
 
 
@@ -584,11 +597,13 @@ const NavbarMenu = () => {
 										</ul>
 									</li> 
 									<li class="nav-item">
-										<a class="nav-link" href="/">Salir</a>
+										<a class="nav-link" onClick={()=> closeSession()} href="http://www.loginweb.ggmm.com.ar/" target="_blank">Salir</a>
 									</li>
 									{
 										<li class="nav-item">
-											<Link class="nav-link" to="/superadmin">Superadmin</Link>
+											{
+												showSuperadmin()
+											}
 										</li>
 									}									
 								</ul>
