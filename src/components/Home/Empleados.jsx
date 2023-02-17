@@ -386,7 +386,7 @@ useEffect(()=>{
     
 
 
-    const url = `http://54.243.192.82/api/Empleados`;
+    const url = `http://54.243.192.82/api/Empleados?page=2000`;
     const urlEmpleadoPorApellido = `http://54.243.192.82/api/Empleados?records=0&page=1&filter=${responses?.browser?.inputApellidoNombreBrowser ? responses?.browser?.inputApellidoNombreBrowser : null}&ordered=true`;
     const urlEmpleadoPorLegajo = `http://54.243.192.82/api/Empleados?records=0&page=1&legajo=${responses?.browser?.inpurLegajoBrowser ? responses?.browser?.inpurLegajoBrowser : null}&ordered=true`;
     const urlEmpleadoApYLegajo = `http://54.243.192.82/api/Empleados?records=0&page=1&filter=${responses?.browser?.inputApellidoNombreBrowser ? responses?.browser.inputApellidoNombreBrowser : null}&legajo=${responses?.browser?.inpurLegajoBrowser ? responses?.browser?.inpurLegajoBrowser : null}&ordered=true`;
@@ -425,23 +425,13 @@ useEffect(()=>{
       }else{
         await axios.get(url).then((res) => {
 
-          dispatch(getEmployes(res.data));
+          dispatch(getEmployes(null));
     
         });
       }
       
     }
-    async function getTotalEmployes(){
-      try{
-        await axios
-        .get(url)
-        .then((res)=>{
-          
-        })
-      }catch(err){
-
-      }
-    }
+    
   
 
   useEffect(() => {
