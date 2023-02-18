@@ -100,6 +100,14 @@ export const objectCargos = [
     "nameInput": "nombreCargo"
   }
 ]
+export const objectEmpleadores = [
+  {
+    "label": "Empleadores",
+    "placeholder": "Ninguno",
+    "idInput": "razonSocial",
+    "nameInput": "razonSocial"
+  }
+]
 export const textAreaCargos = [
   {
     "label": "Observaciones",

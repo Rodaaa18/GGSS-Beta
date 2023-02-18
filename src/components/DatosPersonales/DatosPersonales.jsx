@@ -30,12 +30,14 @@ const DatosPersonales = ({ tabIndex ,handleTabChange, responses, setResponses, c
 
   const dispatch = useDispatch();
 
-
+  
   //#region ------------------------------------------------------REDUX
   const empleadoUno = useSelector((state)=> state.employeStates.employe);
   const datosPersonalesState = useSelector((state)=> state.generalState);
   const numeradores = useSelector((state)=> state.generalState.numeradores);
-
+  
+ 
+  
   //#endregion
   function onChangeValues(e, key){
       const newResponse = {...formDatosPersonales};
@@ -132,6 +134,8 @@ const DatosPersonales = ({ tabIndex ,handleTabChange, responses, setResponses, c
      
   }
 
+  console.log(empleadoUno);
+  
   return (
       //#region Menú Principal
 
@@ -167,6 +171,7 @@ const DatosPersonales = ({ tabIndex ,handleTabChange, responses, setResponses, c
                           }
                           <InputForm
                             value={valueempl ? formDatosPersonales?.numLegajo : empleadoUno.legajo}
+                          
                             idInput="numLegajo"
                             messageError="Solo puede contener números."
                             placeHolder="N° Legajo"
@@ -180,6 +185,7 @@ const DatosPersonales = ({ tabIndex ,handleTabChange, responses, setResponses, c
                             />
                           <InputForm
                             value={valueempl ? formDatosPersonales?.apellidoInput  : empleadoUno.apellido}
+                           
                             idInput="apellidoInput"
                             messageError="Solo puede contener letras."
                             placeHolder="Ingrese Apellidos"
@@ -192,6 +198,7 @@ const DatosPersonales = ({ tabIndex ,handleTabChange, responses, setResponses, c
                             />
                           <InputForm
                             value={valueempl ? formDatosPersonales?.nombresInput  : empleadoUno.nombres}
+                           
                             action={ADD_DATOS_PERSONALES}
                             idInput="nombresInput"
                             messageError="Solo puede contener letras."
@@ -205,6 +212,7 @@ const DatosPersonales = ({ tabIndex ,handleTabChange, responses, setResponses, c
                             />
                           <DNICboBox
                             value={valueempl ? formDatosPersonales?.documentoInput  : empleadoUno.nroDocumento}
+                          
                             action={ADD_DATOS_PERSONALES}
                             idInput="documentoInput"
                             messageError="Solo puede contener números, sin puntos."
@@ -217,11 +225,13 @@ const DatosPersonales = ({ tabIndex ,handleTabChange, responses, setResponses, c
                             onChange={onChangeValues}
                             selectedId="dniSelected"
                             idSelected={formDatosPersonales?.dniSelected && formDatosPersonales?.dniSelected  !== "" ? formDatosPersonales?.dniSelected && formDatosPersonales?.dniSelected : empleadoUno.iDtipoDocumento}
+                         
                             validateNumbersDNI={validateNumbersDNI}
                             obligatorio ={true}
                             />
                        {/*    <InputButton
                             value={valueempl ? formDatosPersonales?.inputCuil  : empleadoUno.cuil}
+                            console.log("🚀 ~ file: DatosPersonales.jsx:232 ~ DatosPersonales ~ empleadoUno", empleadoUno)
                             action={ADD_DATOS_PERSONALES}
                             id="inputCuil"
                             clasess={inputButtonClasessCUIL}
@@ -242,6 +252,7 @@ const DatosPersonales = ({ tabIndex ,handleTabChange, responses, setResponses, c
                             /> */}
                             <InputButtonCUIL
                              value={valueempl ? formDatosPersonales?.inputCuil  : empleadoUno.cuil}
+                       
                              action={ADD_DATOS_PERSONALES}
                              idInput="inputCuil"
                              nameInput="inputCuil"
@@ -264,6 +275,7 @@ const DatosPersonales = ({ tabIndex ,handleTabChange, responses, setResponses, c
                             />
                           <InputForm
                             value={valueempl ? formDatosPersonales?.telefonoInput  : empleadoUno.telFijo}
+                           
                             action={ADD_DATOS_PERSONALES}
                             nameInput="telefonoInput"
                             idInput="telefonoInput"
@@ -279,16 +291,22 @@ const DatosPersonales = ({ tabIndex ,handleTabChange, responses, setResponses, c
                             />
                           <InputCbo
                             value={empleadoUno && empleadoUno
+                          
+                              
                               ? empleadoUno.iDestadoCivil
                               : null}
+                           
                             action={ADD_DATOS_PERSONALES}
                             sexo={empleadoUno && empleadoUno ? empleadoUno.sexo : formDatosPersonales?.inputSexo && formDatosPersonales?.inputSexo}
+                           
+                           
                             nameButton="..."
                             nameLabel="Estado Civil"
                             array={datosPersonalesState.estadosCiviles && datosPersonalesState.estadosCiviles && datosPersonalesState.estadosCiviles !== "" ? datosPersonalesState.estadosCiviles : ["no entro"]}
                             propArrayOp="masculino"
                             propArrayOpFem="femenino"
                             idSelected={formDatosPersonales?.estadoCivilInput ? formDatosPersonales?.estadoCivilInput : empleadoUno.iDestadoCivil}
+                           
                             valueId="idEstadoCivil"
                             propArray="Casado"
                             display={false}
@@ -301,16 +319,22 @@ const DatosPersonales = ({ tabIndex ,handleTabChange, responses, setResponses, c
                             />
                           <InputCbo
                             value={empleadoUno && empleadoUno
+                            
+                             
                               ? empleadoUno.idNacionalidad
                               : null}
+                              
                             action={ADD_DATOS_PERSONALES}
                             sexo={empleadoUno && empleadoUno ? empleadoUno.sexo : formDatosPersonales?.inputSexo && formDatosPersonales?.inputSexo}
+                       
+                        
                             nameButton="..."
                             nameLabel="Nacionalidad"
                             array={datosPersonalesState.paises !== undefined && datosPersonalesState.paises !== "" ? datosPersonalesState.paises : ["Nacionalidad"]}
                             propArrayOp="nacionalidad_masc"
                             propArrayOpFem="nacionalidad_fem"
                             idSelected={formDatosPersonales?.nacionalidadesInput ? formDatosPersonales?.nacionalidadesInput : empleadoUno.iDnacionalidad}
+                           
                             valueId="idPais"
                             propArray="Casado"
                             display={false}
@@ -324,8 +348,10 @@ const DatosPersonales = ({ tabIndex ,handleTabChange, responses, setResponses, c
                         <div className="tercera_columna col-xl-4 col-lg-4 col-md-4">
                           <InputCbo
                             value={empleadoUno !== undefined
+                             
                               ? empleadoUno.idEstado
                               : null}
+                            
                             action={ADD_DATOS_PERSONALES}
                             sexo=""
                             nameButton="..."
@@ -334,6 +360,7 @@ const DatosPersonales = ({ tabIndex ,handleTabChange, responses, setResponses, c
                             propArrayOp="nombreEstado"
                             propArrayOpFem="nombreEstado"
                             idSelected={formDatosPersonales?.estadosEmpleados ? formDatosPersonales?.estadosEmpleados : empleadoUno.idEstado}
+                         
                             valueId="idEstado"
                             masculinos=""
                             femeninos=""
@@ -346,6 +373,7 @@ const DatosPersonales = ({ tabIndex ,handleTabChange, responses, setResponses, c
                             />
                           <InputRadio
                             value={formDatosPersonales?.inputSexo ? formDatosPersonales?.inputSexo : empleadoUno.sexo}
+                      
                             action={ADD_DATOS_PERSONALES}
                             nameFirst="Masculino"
                             nameSecond="Femenino"
@@ -359,6 +387,8 @@ const DatosPersonales = ({ tabIndex ,handleTabChange, responses, setResponses, c
                             />
                           <InputDate
                             value={formDatosPersonales?.inputDateNac ? formDatosPersonales?.inputDateNac : empleadoUno?.fechaNacimiento?.substring(0, empleadoUno.fechaNacimiento.length -9)}
+                      
+                            
                             action={ADD_DATOS_PERSONALES}
                             nameInput="Nacimiento"
                             disabled={disable}
@@ -366,6 +396,7 @@ const DatosPersonales = ({ tabIndex ,handleTabChange, responses, setResponses, c
                             onChange={onChangeValues} />
                           <InputForm
                             value={formDatosPersonales?.movil ? formDatosPersonales?.movil : empleadoUno.movil}
+                  
                             action={ADD_DATOS_PERSONALES}
                             nameInput="movil"
                             idInput="movil"
@@ -378,6 +409,7 @@ const DatosPersonales = ({ tabIndex ,handleTabChange, responses, setResponses, c
                             numbers={true} />
                           <InputForm
                             value={formDatosPersonales?.email ? formDatosPersonales?.email : empleadoUno.email}
+                 
                             action={ADD_DATOS_PERSONALES}
                             nameInput="email"
                             idInput="email"
@@ -391,6 +423,7 @@ const DatosPersonales = ({ tabIndex ,handleTabChange, responses, setResponses, c
                             email={true} />
                           <InputCbo
                             value={formDatosPersonales?.inputSexo ? formDatosPersonales?.inputSexo : empleadoUno.idPaisdeOrigen}
+                  
                             action={ADD_DATOS_PERSONALES}
                             sexo=""
                             nameButton="..."
@@ -399,6 +432,7 @@ const DatosPersonales = ({ tabIndex ,handleTabChange, responses, setResponses, c
                             propArrayOp="nombrePais"
                             propArrayOpFem="nombrePais"
                             idSelected={formDatosPersonales?.paisOrigenInput ? formDatosPersonales?.paisOrigenInput : empleadoUno.idPaisOrigen}
+                           
                             valueId="idPais"
                             masculinos=""
                             femeninos=""
@@ -411,6 +445,7 @@ const DatosPersonales = ({ tabIndex ,handleTabChange, responses, setResponses, c
                             />
                           <InputCbo
                             value={formDatosPersonales?.estudiosInput ? formDatosPersonales?.estudiosInput : empleadoUno.idEstudios}
+                     
                             action={ADD_DATOS_PERSONALES}
                             sexo=""
                             nameButton="..."
@@ -419,6 +454,7 @@ const DatosPersonales = ({ tabIndex ,handleTabChange, responses, setResponses, c
                             propArrayOp="estudiosNivel"
                             propArrayOpFem="estudiosNivel"
                             idSelected={formDatosPersonales?.estudiosInput ? formDatosPersonales?.estudiosInput : empleadoUno.iDestudios}
+                            
                             valueId="iDestudios"
                             masculinos=""
                             femeninos=""
@@ -434,6 +470,7 @@ const DatosPersonales = ({ tabIndex ,handleTabChange, responses, setResponses, c
                             idInput="observacionesEstudios"
                             maxLength="255"
                             value={formDatosPersonales?.observacionesEstudios ? formDatosPersonales?.observacionesEstudios : empleadoUno.obsEstudios}
+                    
                             disabled={disable}
                             action={ADD_DATOS_PERSONALES}
                             onChange={onChangeValues} />
@@ -446,6 +483,7 @@ const DatosPersonales = ({ tabIndex ,handleTabChange, responses, setResponses, c
                             inputName="Arrastre su imagen"
                             disabled={disable}
                             imagen={empleadoUno.obsFechaIngreso}
+                         
                             onChange={onChangeValues}
                             idInput="inputImage"
                             action={ADD_DATOS_PERSONALES} />

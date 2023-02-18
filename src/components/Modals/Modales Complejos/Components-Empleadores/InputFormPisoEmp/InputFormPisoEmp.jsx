@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import "./InputForm.css";
+import "./InputFormPisoEmp.css";
 
-const InputFormPiso = ({
+const InputFormPisoEmp = ({
   nameInput,
   messageError,
   placeHolder,
@@ -41,7 +41,7 @@ const InputFormPiso = ({
       <div className="form__grupo-input">
         <input
           type="text"
-          className="form-input-Piso"
+          className="form-input-Piso-Emp"
           id={idInput}
           placeholder={placeHolder}
           value={ valor  }
@@ -61,4 +61,4 @@ const InputFormPiso = ({
     </div>
   );
 };
-export default InputFormPiso;
+export default InputFormPisoEmp;

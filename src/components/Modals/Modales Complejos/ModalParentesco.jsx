@@ -1,7 +1,6 @@
 import React from "react";
 import InputModal from "../../Inputs/InputModal/InputModal";
 import TextArea from "../../Inputs/TextArea/TextArea";
-import { CheckDate } from "../CheckDate";
 
 export const ModalParentesco = ({
   nameModalProp,

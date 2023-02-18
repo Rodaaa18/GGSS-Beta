@@ -62,9 +62,13 @@ export const propsModalPaises = {
 export const propsModalProvincias = {
     propArrayId : "idProvincia",
     propArrayOp : "provincia",
-    nameModal : "Provincias"
+    nameModal : "Provincias - Localidades - Departamentos - Barrios "
+};
+export const propsModalEmpleadores = {
+    propArrayId : "iDempleador",
+    propArrayOp : "razonSocial",
+    nameModal : "Empleadores"
 }
-
 
 //FALTA EP
 // export const propsModalAlicuotas = {
@@ -78,14 +82,6 @@ export const propsModalProvincias = {
 //     propArrayOp : "nombreFormaPago",
 //     nameModal : "Formas de Pago"
 // };
-
-
-
-
-
-
-
-
 
 export const objectEstadosCiviles = [
 	{

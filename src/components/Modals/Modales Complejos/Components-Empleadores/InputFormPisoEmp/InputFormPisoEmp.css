@@ -1,0 +1,64 @@
+.form-input-Piso-Emp{
+    margin-bottom: 3px;
+	width: 15rem;
+	margin-left: 0px;
+	margin-right: 0px;
+	border: none;
+	height: 42px;
+	transition: .3s ease all;
+	border-bottom: 1px solid rgb(78, 6, 6);
+}
+.obligatorio{
+    background-color: rgb(253, 237, 216);
+}
+@media screen and (max-width : 1366px){
+    .formulario-input-Legajo-Form-Button{
+        width: 13rem;
+        height: 35px;
+    }
+    .form-input-Piso{
+        width: 10.4rem;
+        height: 35px;
+    }
+    .form__grupo__label__label{
+        font-size: small;
+    }
+    .form__grupo__label{
+        margin: 0;
+        width: 28%;
+    }
+}
+@media screen and (max-width : 1280px){
+    .formulario-input-Legajo-Form-Button{
+        width: 12rem;
+        height: 32px;
+    }
+    .form-input-Piso{
+        width: 8.7rem;
+        height: 35px;
+    }
+    .form__grupo__label__label{
+        font-size: small;
+    }
+    .form__grupo__label{
+        margin: 0;
+        width: 29%;
+    }
+}
+@media screen and (max-width: 1024px){
+    .formulario-input-Legajo-Form-Button{
+        width: 10rem;
+        height: 32px;
+    }
+    .form-input-Piso{
+        width: 6rem;
+        height: 35px;
+    }
+    .form__grupo__label__label{
+        font-size: small;
+    }
+    .form__grupo__label{
+        margin: 0;
+        width: 17%;
+    }
+}

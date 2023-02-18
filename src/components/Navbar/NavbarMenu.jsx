@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import swal from "sweetalert";
 import "./Navbar.css";
 // ------------------------ OBJECTS ------------------------
-import { objectParentescos, objectCategorias, inputsNumCategorias, objectConvenios, inputsNumConvenios, inputNumDataValores, tableValoresHeadings, inputNumDataEscala, inputDateDataEscala, inputNumDataDeducciones, inputDateDataDeducciones, objectBancos, objectEmpresasTelefonia, objectSindicatos, objectTareas, objectEstadosCiviles, objectEstudios, objectTipoDocumento, objectEstado, objectFormasDePago, objectMotivosEgreso, objectCalles, objectPaises, objectModosLiquidacion, objectModosContratacion, objectCargos, objectObrasSociales, objectAFJP, objectCentrosCosto, objectSectoresDptos, objectDirecciones, objectLugaresPago, objectDocumentacion, tableReduccionHeadings, tableConvenios, tableJerarquia, tableLicencias, inputsNumLicencias, objectAlicuotas, checkboxParentescos, checkboxNumParentescos, textAreaObject, textAreaCargos,urls, objectProvincias } from './Objects'
+import { objectParentescos, objectCategorias, inputsNumCategorias, objectConvenios, inputsNumConvenios, inputNumDataValores, tableValoresHeadings, inputNumDataEscala, inputDateDataEscala, inputNumDataDeducciones, inputDateDataDeducciones, objectBancos, objectEmpresasTelefonia, objectSindicatos, objectTareas, objectEstadosCiviles, objectEstudios, objectTipoDocumento, objectEstado, objectFormasDePago, objectMotivosEgreso, objectCalles, objectPaises, objectModosLiquidacion, objectModosContratacion, objectCargos, objectObrasSociales, objectAFJP, objectCentrosCosto, objectSectoresDptos, objectDirecciones, objectLugaresPago, objectDocumentacion, tableReduccionHeadings, tableConvenios, tableJerarquia, tableLicencias, inputsNumLicencias, objectAlicuotas, checkboxParentescos, checkboxNumParentescos, textAreaObject, textAreaCargos,urls, objectProvincias, objectEmpleadores } from './Objects'
 // -----------------------------------------------------------
 
 import { AXIOS_ERROR, SET_LOADING } from '../../redux/types/fetchTypes';
@@ -14,11 +14,12 @@ import { addEstadosCiviles, addEstados, addPaises, addEstudios, addTiposDocument
 import { addSelectedCargo, addSelectedEstado, addSelectedEstadoCivil, addSelectedEstudio, addSelectedFormaPago, addSelectedParentesco, addSelectedTarea, addSelectedTipoDocu, setRefetch } from '../../redux/actions/modalesActions';
 import ButtonCallModal from "../ButtonCallModal/ButtonCallModal";
 import ChildModal from "../Modals/ChildModal";
-import { propsModal, propsModalCalles, propsModalCargos, propsModalEstado, propsModalEstudios, propsModalFormasdePagos, propsModalModosContratacion, propsModalModosLiquidacion, propsModalMotivosdeEgresos, propsModalPaises, propsModalParentesco, propsModalProvincias, propsModalTareas, propsModalTiposDocumento } from "../Modals/props";
+import { propsModal, propsModalCalles, propsModalCargos, propsModalEmpleadores, propsModalEstado, propsModalEstudios, propsModalFormasdePagos, propsModalModosContratacion, propsModalModosLiquidacion, propsModalMotivosdeEgresos, propsModalPaises, propsModalParentesco, propsModalProvincias, propsModalTareas, propsModalTiposDocumento } from "../Modals/props";
 import ChildModalOptions from "../Modals/ChildModalOptions";
 import { ModalParentesco } from "../Modals/Modales Complejos/ModalParentesco";
 import { ModalPaises } from "../Modals/Modales Complejos/ModalPaises";
 import { ModalProvinciasDptos } from "../Modals/Modales Complejos/ModalProvinciasDptos";
+import { ModalEmpleadores } from "../Modals/Modales Complejos/Components-Empleadores/ModalEmpleadores";
 
 
 // import { getEstadosCivilesModal } from '../../services/fetchAPI';
@@ -158,6 +159,8 @@ const NavbarMenu = () => {
 	const urlParentescos = "http://54.243.192.82/api/Parentescos"
 	const urlPaises = "http://54.243.192.82/api/Paises"
 	const urlProvincias = "http://54.243.192.82/api/Provincias"
+	const urlEmpleadores = "http://54.243.192.82/api/Empleadores"
+
 
 
 //#endregion
@@ -417,13 +420,17 @@ const NavbarMenu = () => {
 		"observacion": modalValues?.observacion
 	}
 	
-	
-	
-	
-	
-	
 	//Empleadores
-
+	const bodyEmpleadores = {
+		"iDempleador": ((empleadoresValue && empleadoresValue[empleadoresValue.length - 1] !== undefined && (empleadoresValue[empleadoresValue.length - 1].iDempleador)) + 1),
+		"razonSocial": modalValues?.razonSocial,
+		"cuit": modalValues?.cuit
+	}
+	const bodyUpdateEmpleadores = {
+		"iDempleador": valueItemModal?.iDempleador,
+		"razonSocial": modalValues?.razonSocial,
+		"cuit": modalValues?.cuit
+	}
 
 
 	
@@ -953,7 +960,7 @@ const NavbarMenu = () => {
 															handleClickClose={handleClickClose} 
 															setTransition={setTransition} 
 															array={ provinciasValue && provinciasValue }  
-															nameModal="Provincia" 
+															nameModal="Provincias - Localidades - Departamentos - Barrios " 
 															propsModal={propsModalProvincias} 
 															optionsInputs={objectProvincias} 
 															transition={transition}
@@ -973,7 +980,40 @@ const NavbarMenu = () => {
 															usaEstados={true}
 														/>
 													</ButtonCallModal>
-												</li>    
+												</li>  
+												<li>
+													<ButtonCallModal nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="Empleadores"  setTransition={setTransition} nameButton="Empleadores">
+														<ModalEmpleadores 
+															modalValues={modalValues} 
+															onChangeValues={onChangeValues}  
+															valueItemModal={valueItemModal} 
+															setValueItemModal={setValueItemModal} 
+															nameModalProp="Empleadores" 
+															handleClickClose={handleClickClose} 
+															setTransition={setTransition} 
+															array={ empleadoresValue && empleadoresValue }  
+															nameModal="Empleadores" 
+															propsModal={propsModalEmpleadores} 
+															optionsInputs={objectEmpleadores} 
+															transition={transition}
+															functionAdd={sendModalData}
+															urlApi={urlEmpleadores}
+															bodyPetition ={bodyEmpleadores}
+															bodyUpdate={bodyUpdateEmpleadores}
+															modify={modify} 
+															setModify={setModify}
+															idAModificar={ valueItemModal?.iDempleador }
+															functionDelete={deleteItemModal}
+															disableModal={disableModal}
+															setDisableMOdal={setDisableMOdal}
+															actionActualizaDelete={actualizaDelete}
+															disableModalButtons={disableModalButtons}
+															setDisableModalButtons={setDisableModalButtons}
+															usaEstados={true}
+															usaCheck={false}
+														/>
+													</ButtonCallModal>
+												</li>      
 											</div>
 										</ul>
 									</li>
