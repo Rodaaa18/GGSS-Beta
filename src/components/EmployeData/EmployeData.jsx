@@ -60,7 +60,7 @@ const EmployeData = ({disabled, image, responses}) => {
                 <InputEmpData
                   idInput="estadoInfo"
                   inputValue={
-                    estadoSEleccionado !== undefined ? estadoSEleccionado.nombreEstado : "Sin Estado"
+                    estadoSEleccionado !== undefined ? estadoSEleccionado?.nombreEstado : "Sin Estado"
                   }
                   nameLabel="Estado: "
                   disabled={disabled}
