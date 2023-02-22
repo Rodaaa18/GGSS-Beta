@@ -498,6 +498,7 @@ useEffect(()=>{
     getEmpleados();
   }, [responses?.browser?.inputApellidoNombreBrowser,responses?.browser?.inpurLegajoBrowser,responses?.browser?.ordered, saveEmpleado, refetch]);
 
+
   const idsTrabajosAnterioresDelete = useSelector((state)=> state.trabajosAnteriores.ids);
   const documentacionDelte = useSelector((state)=> state.documentacionState.ids);
   const licenciasDelete = useSelector((state)=> state.licenciasState.idsLic);
