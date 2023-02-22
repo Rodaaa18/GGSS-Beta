@@ -445,12 +445,12 @@ export const fetchReducer = (state = initialState, action) =>{
       };
     }
 
-    // case ADD_NEW_FORMAPAGO : {
-    //     return {
-    //         ...state,
-    //         formasDePago: [...state.formasDePago, action.payload]
-    //     }
-    // }
+    case ADD_NEW_FORMAPAGO : {
+        return {
+            ...state,
+            formasDePago: [...state.formasDePago, action.payload]
+        }
+    }
     case SAVE_DATOS_EXTRAS_EMPLEADOS: {
       return {
         ...state,
@@ -731,12 +731,12 @@ export const fetchReducer = (state = initialState, action) =>{
         //     }
         // }
 
-        case ADD_NEW_FORMAPAGO : {
-            return {
-                ...state,
-                formasDePago: [...state.formasDePago, action.payload]
-            }
-        }
+        // case ADD_NEW_FORMAPAGO : {
+        //     return {
+        //         ...state,
+        //         formasDePago: [...state.formasDePago, action.payload]
+        //     }
+        // }
         // case SAVE_DATOS_EXTRAS_EMPLEADOS : {
    
         //     return{
@@ -901,7 +901,7 @@ export const fetchReducer = (state = initialState, action) =>{
 //                 ...state, estadosCiviles : state.estadosCiviles && state.estadosCiviles.filter((estadoCivil) => estadoCivil.idEstadoCivil !== action.payload)
 //             }
 //         }
-        case SAVE_ERROR : {
+        case SAVE_ERROR: {
             return {
                 ...state,
                 errorMessage: action.payload

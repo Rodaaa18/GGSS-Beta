@@ -14,8 +14,12 @@ import { addEstadosCiviles, addEstados, addPaises, addEstudios, addTiposDocument
 import { addSelectedCargo, addSelectedEstado, addSelectedEstadoCivil, addSelectedEstudio, addSelectedFormaPago, addSelectedParentesco, addSelectedTarea, addSelectedTipoDocu, setRefetch } from '../../redux/actions/modalesActions';
 import ButtonCallModal from "../ButtonCallModal/ButtonCallModal";
 import ChildModal from "../Modals/ChildModal";
-import { propsModal, propsModalEstado, propsModalEstudios, propsModalParentesco, propsModalTiposDocumento } from "../Modals/props";
+import { propsModal, propsModalCalles, propsModalCargos, propsModalEstado, propsModalEstudios, propsModalFormasdePagos, propsModalModosContratacion, propsModalModosLiquidacion, propsModalPaises, propsModalParentesco, propsModalProvincias, propsModalTareas, propsModalTiposDocumento } from "../Modals/props";
 import { useNavigate } from "react-router-dom";
+import ChildModalOptions from "../Modals/ChildModalOptions";
+import { ModalParentesco } from "../Modals/Modales Complejos/ModalParentesco";
+import { ModalPaises } from "../Modals/Modales Complejos/ModalPaises";
+import { ModalProvinciasDptos } from "../Modals/Modales Complejos/ModalProvinciasDptos";
 
 // import { getEstadosCivilesModal } from '../../services/fetchAPI';
 // import { useEffect } from 'react';
