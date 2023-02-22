@@ -19,7 +19,6 @@ import ChildModalOptions from "../Modals/ChildModalOptions";
 import { ModalParentesco } from "../Modals/Modales Complejos/ModalParentesco";
 import { ModalPaises } from "../Modals/Modales Complejos/ModalPaises";
 import { ModalProvinciasDptos } from "../Modals/Modales Complejos/ModalProvinciasDptos";
-import { ModalEmpleadores } from "../Modals/Modales Complejos/Components-Empleadores/ModalEmpleadores";
 
 
 // import { getEstadosCivilesModal } from '../../services/fetchAPI';
@@ -981,39 +980,7 @@ const NavbarMenu = () => {
 														/>
 													</ButtonCallModal>
 												</li>  
-												<li>
-													<ButtonCallModal nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="Empleadores"  setTransition={setTransition} nameButton="Empleadores">
-														<ModalEmpleadores 
-															modalValues={modalValues} 
-															onChangeValues={onChangeValues}  
-															valueItemModal={valueItemModal} 
-															setValueItemModal={setValueItemModal} 
-															nameModalProp="Empleadores" 
-															handleClickClose={handleClickClose} 
-															setTransition={setTransition} 
-															array={ empleadoresValue && empleadoresValue }  
-															nameModal="Empleadores" 
-															propsModal={propsModalEmpleadores} 
-															optionsInputs={objectEmpleadores} 
-															transition={transition}
-															functionAdd={sendModalData}
-															urlApi={urlEmpleadores}
-															bodyPetition ={bodyEmpleadores}
-															bodyUpdate={bodyUpdateEmpleadores}
-															modify={modify} 
-															setModify={setModify}
-															idAModificar={ valueItemModal?.iDempleador }
-															functionDelete={deleteItemModal}
-															disableModal={disableModal}
-															setDisableMOdal={setDisableMOdal}
-															actionActualizaDelete={actualizaDelete}
-															disableModalButtons={disableModalButtons}
-															setDisableModalButtons={setDisableModalButtons}
-															usaEstados={true}
-															usaCheck={false}
-														/>
-													</ButtonCallModal>
-												</li>      
+												
 											</div>
 										</ul>
 									</li>
