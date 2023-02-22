@@ -1,10 +1,4 @@
 
-export const urls = {
-  urlParentescos : "http://54.243.192.82/api/Parentescos",
-  urlEstados : "http://54.243.192.82/api/Estados",
-  urlFormasPago : "http://54.243.192.82/api/FormasdePagos"
-}
-
 // -----  OBJECTS TABLA PARA EMPLEADOS -----
 
 
@@ -106,6 +100,14 @@ export const objectCargos = [
     "nameInput": "nombreCargo"
   }
 ]
+export const objectEmpleadores = [
+  {
+    "label": "Empleadores",
+    "placeholder": "Ninguno",
+    "idInput": "razonSocial",
+    "nameInput": "razonSocial"
+  }
+]
 export const textAreaCargos = [
   {
     "label": "Observaciones",
@@ -121,7 +123,7 @@ export const objectTareas = [
     "placeholder": "Tarea 1",
     "idInput": "tareaDesempeñada",
     "nameInput": "tareaDesempeñada"
-  }
+  } 
 ]
 
 
@@ -170,14 +172,14 @@ export const objectPaises = [
 
 export const objectModosContratacion = [
   {
-    "label": "Modo de contratación",
+    "label": "Modos de contratación",
     "placeholder": "Contratado"
   }
 ]
 
 export const objectModosLiquidacion = [
   {
-    "label": "Modo de liquidación",
+    "label": "Modos de liquidación",
     "placeholder": "Diario"
   }
 ]

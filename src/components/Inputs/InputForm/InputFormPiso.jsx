@@ -17,7 +17,9 @@ const InputFormPiso = ({
   validateLetters,
   validateEmails,
   numbers,
-  email
+  email,
+ 
+
 }) => {
   const [valor, setValor] = useState("");
 
@@ -49,6 +51,7 @@ const InputFormPiso = ({
           onKeyPress={(numbers && validateNumbers) || (!numbers && validateLetters)}
         />
       </div>
+     
       <div className="form__grupo__icons">
         <i className="fas fa-times-circle form__grupo__icon"></i>
       </div>

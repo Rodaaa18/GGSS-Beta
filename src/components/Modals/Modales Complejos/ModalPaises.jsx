@@ -1,16 +1,43 @@
-import InputModal from '../Inputs/InputModal/InputModal';
-import TextArea from '../Inputs/TextArea/TextArea';
-import "./BasicModal.css"
-const ChildModal = ({nameModalProp, disabled, array , propsModal, optionsInputs, transition, setTransition, handleClickClose,functionAdd, functionUpdate, functionDelete, valueItemModal, setValueItemModal, onChangeValues, modalValues, urlApi, bodyPetition, bodyUpdate,setModify, modify, idAModificar, disableModal, setDisableMOdal, actionActualizaDelete, actualizaCreaFormasdePago, actualizaModificarFormasdePago, idInputTextArea, disableModalButtons , setDisableModalButtons, usaEstados}) => {
+import React from 'react'
+import InputModal from '../../Inputs/InputModal/InputModal';
 
+export const ModalPaises = ({
+    nameModalProp,
+    disabled,
+    array,
+    propsModal,
+    optionsInputs,
+    transition,
+    setTransition,
+    handleClickClose,
+    functionAdd,
+    functionDelete,
+    setValueItemModal,
+    onChangeValues,
+    modalValues,
+    urlApi,
+    bodyPetition,
+    bodyUpdate,
+    setModify,
+    idAModificar,
+    setDisableMOdal,
+    actionActualizaDelete,
+    actualizaCreaFormasdePago,
+    actualizaModificarFormasdePago,
+    disableModalButtons,
+    setDisableModalButtons,
+}) => {
   return (
-    
-    <section className={transition ? 'transitionClassUp' : ' transitionClassneDone '} >
-        <div className='cortina'></div>
-    <div className='modalBodyClass p-2' >
+        <section
+      className={transition ? "transitionClassUp" : " transitionClassneDone "}
+    >
+      <div className="cortina"></div>
+      <div className="modalBodyClass p-2">
         <div className="row p-2">
           <div className="d-flex flex-row justify-content-between align-items-center">
-          <p className="h3"><ins>{propsModal.nameModal}</ins></p>
+            <p className="h3">
+              <ins>{propsModal.nameModal}</ins>
+            </p>
             <button
               className="btn btn-outline-danger text-white fs-6 btn-md buttonModal border border-white"
               onClick={() => {
@@ -52,8 +79,6 @@ const ChildModal = ({nameModalProp, disabled, array , propsModal, optionsInputs,
                 onClick={() => {
                   setDisableMOdal(false);
                   setDisableModalButtons(true);
-
-
                 }}
               >
                 Agregar
@@ -76,7 +101,7 @@ const ChildModal = ({nameModalProp, disabled, array , propsModal, optionsInputs,
                   functionDelete(urlApi, idAModificar, actionActualizaDelete);
                   setDisableModalButtons(true);
                 }}
-                >
+              >
                 Eliminar
               </button>
             </div>
@@ -101,39 +126,37 @@ const ChildModal = ({nameModalProp, disabled, array , propsModal, optionsInputs,
                 );
               })}
             </div>
-            <div className="d-flex flex-column justify-content-center align-items-center">
-               {usaEstados && ( 
-                <TextArea
-                  disableModal={!disableModalButtons}
-                  idInput={idInputTextArea}
-                  onChange={onChangeValues}
-                  characterLimit={255}
-                ></TextArea>
-               )} 
-            </div>
             <div className="d-flex flex-row-reverse w-100 ">
               <button
                 className="btn btn-dark m-1"
                 disabled={!disableModalButtons}
-                onClick={() =>
-                  {functionAdd(urlApi, bodyPetition, bodyUpdate, idAModificar, actualizaCreaFormasdePago, actualizaModificarFormasdePago );
+                onClick={() => {
+                  functionAdd(
+                    urlApi,
+                    bodyPetition,
+                    bodyUpdate,
+                    idAModificar,
+                    actualizaCreaFormasdePago,
+                    actualizaModificarFormasdePago
+                  );
                   setDisableModalButtons(false);
                 }}
               >
                 Aceptar
               </button>
-              <button className="btn btn-dark m-1"
-              disabled={!disableModalButtons}
-              onClick={() => {
-                setDisableModalButtons(false);
-              }}
-              >Cancelar</button>
+              <button
+                className="btn btn-dark m-1"
+                disabled={!disableModalButtons}
+                onClick={() => {
+                  setDisableModalButtons(false);
+                }}
+              >
+                Cancelar
+              </button>
             </div>
           </div>
         </div>
       </div>
-    </section>
-  );
-};
-
-export default ChildModal;
+    </section> 
+  )
+}

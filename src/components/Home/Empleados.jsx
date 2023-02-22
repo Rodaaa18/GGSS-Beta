@@ -154,6 +154,8 @@ console.log(tokenDef)
   const urlDetalleLicenciasEmpleados =
     "http://54.243.192.82/api/DetalleLicenciasEmpleados";
   const urlEsquemasConceptos = "http://54.243.192.82/api/ConceptosEsquemas";
+
+
   //#endregion
 
   function setImageEmpleado() {
@@ -181,9 +183,9 @@ console.log(tokenDef)
     setResponses({
       ...responses,
       inputsJson})
-    
+
     setDisable(true);
-    
+
   }
   // console.log(tabIndex)
   const handleFetch = async (url, action) => {
@@ -209,7 +211,7 @@ console.log(tokenDef)
         .catch((err) => {
           dispatch({ type: AXIOS_ERROR });
         });
-    } 
+    }
     return;
   };
   const handleFetchComun = async (url, action) => {
@@ -217,7 +219,7 @@ console.log(tokenDef)
     await axios
       .get(url)
       .then((res) => {
-       
+
         dispatch(action(res.data));
       })
       .catch((err) => {
@@ -237,7 +239,7 @@ useEffect(()=>{
    handleFetch(urlEstudios, addEstudios);
    handleFetch(urlTiposDNI, addTiposDocumento);
    handleFetch(urlDomicilios, addDomicilios);
-   
+
    handleFetch(urlDocumentacionEmpleados, addDocumentacionEmpleados);
 },[refetching, empleadoUno, refetch])
 
@@ -258,7 +260,7 @@ useEffect(()=>{
    handleFetch(urlEstudios, addEstudios);
    handleFetch(urlTiposDNI, addTiposDocumento);
    handleFetch(urlDomicilios, addDomicilios);
-   
+
    handleFetch(urlDocumentacionEmpleados, addDocumentacionEmpleados);
 
      handleFetch(urlEstados, addEstados);
@@ -269,7 +271,7 @@ useEffect(()=>{
      handleFetch(urlTiposDNI, addTiposDocumento);
      handleFetch(urlFamiliares, addFamiliares);
      handleFetch(urlNumeradores, addNumeradores);
-     
+
      handleFetch(urlCalles, addCalles);
      handleFetch(urlDeptos, addDepartamentos);
      handleFetch(urlProvincias, addProvincias);
@@ -298,21 +300,21 @@ useEffect(()=>{
 
      handleFetch(urlDocumentacion, getOneDocumento);
 
-     
- 
-   
+
+
+
 
    handleFetchComun(urlSectorDepto, addSectorDepto);
-     handleFetchComun(urlInstrumLegal, addInstrumLegales); 
+     handleFetchComun(urlInstrumLegal, addInstrumLegales);
      handleFetchComun(urlDatosExtras, addDatosExtras);
      handleFetch(urlDomicilios, addDomicilios);
 
-     
+
      handleFetch(urlTrabajosAnteriores, getTrabajosAnteriores);
   }, [disable, refetch,refetching]);
 
   useEffect(() => {
-    
+
     handleFetch(urlLicenciaEmpleados, addLicenciaEmpleados);
      handleFetch(urlDetalleLicenciasEmpleados, addDetalleLicencia);
 
@@ -327,24 +329,24 @@ useEffect(()=>{
     setDisableEstado(false);
   }, [responses?.inputSexo]);
 
-  
+
 
   useEffect(() => {
     axios
       .get(
         `http://54.243.192.82/api/MostrarDatosPorEmpleado/${empleadoUno?.iDempleado}`
-        
+
       )
       .then((res) => {
         dispatch(addLicEmpleado(res.data));
         setLicenciaEmpladoDatos(res.data);
       });
-      
+
       axios.get(`http://54.243.192.82/api/MostrarDatosFamiliarPorEmpleado/${empleadoUno?.iDempleado}`)
       .then((res)=>{
         dispatch(getDAtosFamiliaresEmpleado(res.data))
-      })        
-      
+      })
+
       axios.get(`http://54.243.192.82/api/Documentacion/sp_DocumentacionDatosXIdEmpleado?IdEmpleado=${empleadoUno?.iDempleado}`)
       .then((res)=>{
         dispatch(documentacionDelEmpleado(res.data))
@@ -383,7 +385,7 @@ useEffect(()=>{
     (state) => state.employeStates.formulario.inputApellidoNombreBrowser
   );
   const urlBasica = `http://54.243.192.82/api/Empleados?page=2000&ordered=true`;
-    
+
 
 
     const url = `http://54.243.192.82/api/Empleados?page=2000`;
@@ -397,7 +399,7 @@ useEffect(()=>{
         await axios({method: 'get',
                       url: urlEmpleadoPorApellido,
                       timeout: 2000}).then((res) => {
-          dispatch(getEmployes(res.data));    
+          dispatch(getEmployes(res.data));
         });
         return;
       }
@@ -405,38 +407,95 @@ useEffect(()=>{
         await axios({method: 'get',
                     url: urlEmpleadoPorLegajo,
                     timeout: 2000}).then((res) => {
-          dispatch(getEmployes(res.data));    
+          dispatch(getEmployes(res.data));
         });
         return;
       }else if(responses.browser.inputApellidoNombreBrowser && responses.browser.inpurLegajoBrowser){
         await axios({method: 'get',
                     url: urlEmpleadoApYLegajo,
                     timeout: 2000}).then((res) => {
-            dispatch(getEmployes(res.data));    
+            dispatch(getEmployes(res.data));
         });
         return;
       }else if(responses.browser.inputApellidoNombreBrowser && responses.browser.inpurLegajoBrowser && responses?.browser.ordered){
         await axios.get({method: 'get',
                         url: urlApeLegOrdered,
                         timeout: 2000}).then((res) => {
-          dispatch(getEmployes(res.data));    
+          dispatch(getEmployes(res.data));
         });
         return;
       }else{
         await axios.get(url).then((res) => {
 
           dispatch(getEmployes(null));
-    
         });
       }
-      
     }
-    
-  
 
-  useEffect(() => {
+//   }
+
+
+
+// useEffect(() => {
+//   getEmpleados();
+
+// }, [responses?.browser?.inputApellidoNombreBrowser,responses?.browser?.inpurLegajoBrowser,responses?.browser?.ordered, saveEmpleado, refetch]);
+
+
+
+
+
+
+  // const url = `http://54.243.192.82/api/Empleados?page=2000&ordered=true`;
+  //   const urlEmpleadoPorApellido = `http://54.243.192.82/api/Empleados?records=10000&filter=${responses?.browser?.inputApellidoNombreBrowser ? responses?.browser?.inputApellidoNombreBrowser : null}&ordered=true`;
+  //   const urlEmpleadoPorLegajo = `http://54.243.192.82/api/Empleados?records=10000&legajo=${responses?.browser?.inpurLegajoBrowser ? responses?.browser?.inpurLegajoBrowser : null}&ordered=true`;
+  //   const urlEmpleadoApYLegajo = `http://54.243.192.82/api/Empleados?records=10000&filter=${responses?.browser?.inputApellidoNombreBrowser ? responses?.browser.inputApellidoNombreBrowser : null}&legajo=${responses?.browser?.inpurLegajoBrowser ? responses?.browser?.inpurLegajoBrowser : null}&ordered=true`;
+  //   const urlApeLegOrdered = `http://54.243.192.82/api/Empleados?records=10000&filter=${responses?.browser?.inputApellidoNombreBrowser ? responses?.browser?.inputApellidoNombreBrowser : null}&legajo=${responses?.browser?.inpurLegajoBrowser ? responses?.browser?.inpurLegajoBrowser : null}&ordered=true`;
+
+  //   async function getEmpleados(){
+  //     if(responses.browser.inputApellidoNombreBrowser){
+  //       await axios({method: 'get',
+  //                     url: urlEmpleadoPorApellido,
+  //                     timeout: 1000}).then((res) => {
+  //         dispatch(getEmployes(res.data.result));
+  //       });
+  //       return;
+  //     }
+  //     else if(responses.browser.inpurLegajoBrowser){
+  //       await axios({method: 'get',
+  //                   url: urlEmpleadoPorLegajo,
+  //                   timeout: 1000}).then((res) => {
+  //         dispatch(getEmployes(res.data.result));
+  //       });
+  //       return;
+  //     }else if(responses.browser.inputApellidoNombreBrowser && responses.browser.inpurLegajoBrowser){
+  //       await axios({method: 'get',
+  //                   url: urlEmpleadoApYLegajo,
+  //                   timeout: 1000}).then((res) => {
+  //           dispatch(getEmployes(res.data.result));
+  //       });
+  //       return;
+  //     }else if(responses.browser.inputApellidoNombreBrowser && responses.browser.inpurLegajoBrowser && responses?.browser.ordered){
+  //       await axios.get({method: 'get',
+  //                       url: urlApeLegOrdered,
+  //                       timeout: 1000}).then((res) => {
+  //         dispatch(getEmployes(res.data.result));
+  //       });
+  //       return;
+  //     }else{
+  //       await axios.get(url).then((res) => {
+
+  //         dispatch(getEmployes(res.data.result));
+
+  //       });
+  //     }
+
+    // }
+
+
+
+    useEffect(() => {
     getEmpleados();
-    
   }, [responses?.browser?.inputApellidoNombreBrowser,responses?.browser?.inpurLegajoBrowser,responses?.browser?.ordered, saveEmpleado, refetch]);
 
   const idsTrabajosAnterioresDelete = useSelector((state)=> state.trabajosAnteriores.ids);
@@ -478,12 +537,12 @@ useEffect(()=>{
 
 
   const { urls, arrays } = objectRequest;
-  
+
 
 
   function cleanIdsGeneral(){
-    
-    
+
+
     setImageSelectedPrevious(null);
     Array.from(document.querySelectorAll("input[type=text]")).forEach(
       (input) => (input.value = "")
@@ -533,7 +592,7 @@ useEffect(()=>{
             icon: "error",
           });
         }
-        
+
       })
     }catch(err){
       console.log(err)
@@ -545,7 +604,7 @@ useEffect(()=>{
     }
   }
   console.log(responses.formDatosPersonales?.inputImage)
- 
+
   async function deleteItems(objectRequest){
     const { urls, arrays } = objectRequest;
     let bodyPetitionEmpleadoGuarda = {
@@ -604,7 +663,7 @@ useEffect(()=>{
       "idDireccion":0,
       "idInstrumentoLegal": 2
     }
-    
+
     let bodyPetitionEmpleadoUpdate = {
       "iDempleado": empleadoUno.iDempleado && empleadoUno.iDempleado,
       "legajo": responses.formDatosPersonales?.numLegajo ?  responses.formDatosPersonales?.numLegajo : empleadoUno.legajo,
@@ -662,11 +721,11 @@ useEffect(()=>{
       "idInstrumentoLegal": 2
     }
     try{
-     
+
     if(tabIndex === 0 || tabIndex === 2 || tabIndex === 8){
       if(empleadoUno.iDempleado === 0 || empleadoUno.iDempleado === undefined){
         //#region Validation alerts
-       
+
           if(!bodyPetitionEmpleadoGuarda.legajo){
               return swal({
                 title: "Error",
@@ -878,7 +937,7 @@ useEffect(()=>{
             })
           } */
         //#endregion
-      
+
       }else{
           //#region validation Updates
           if(!bodyPetitionEmpleadoUpdate.legajo){
@@ -1086,8 +1145,8 @@ useEffect(()=>{
         }
           //#endregion
       }
-      
-        
+
+
           if(empleadoUno.iDempleado === 0 || empleadoUno.iDempleado === undefined){
              await axios.post(urls.urlEmpleadoGuarda, bodyPetitionEmpleadoGuarda, {
               headers: {
@@ -1096,18 +1155,18 @@ useEffect(()=>{
              .then((res)=>{
               setRefectch(!refetch);
               setSaveEmpleado(!saveEmpleado)
-             
+
                swal({
                 title: "Ok",
                 text: "Empleado Guardado con éxito",
                 icon: "success",
             })
-  
+
              })
           }else{
             await axios.put(urls.urlEmpleadoGuarda, bodyPetitionEmpleadoUpdate)
             .then((res)=>{
-          
+
               setRefectch(!refetch);
               setSaveEmpleado(!saveEmpleado)
                swal({
@@ -1117,13 +1176,13 @@ useEffect(()=>{
             })
             })
             arrays[3].map(async (id)=>{
-               
+
               let array = {
                 "arrayList": [
                   id
                 ]
               }
-             
+
               await axios.delete(`${urls.urlDOmicilioElimina}`, {data : array, headers : {'Content-Type': 'application/json;'}})
               .then((res) => {console.log(res);setRefectch(!refetch)})
            });
@@ -1194,19 +1253,19 @@ useEffect(()=>{
                 id
               ]
             }
-           
+
             try{
               await axios.delete(`${urls.urlLicDelete}0`, {data : array, headers : {'Content-Type': 'application/json;'}})
             .then((res) => {
-                  
+
                   if(res.status === 200){
                   return swal({
                     title: "Ok",
                     text: "Licencia eliminada con éxito",
                     icon: "success",
                 })
-                }                
-              }  
+                }
+              }
             )
             }catch(err){
               setRefectch(!refetch);
@@ -1216,9 +1275,9 @@ useEffect(()=>{
                 icon: "error",
             })
             }
-            
+
          });
-            arrays[4].map(async (id)=>{    
+            arrays[4].map(async (id)=>{
               await axios.delete(`${urls.urlDeleteFAmiliar}${id}`)
               .then((res) => {
                 if(res.status === 200){
@@ -1229,7 +1288,7 @@ useEffect(()=>{
               })
               }} )
           });
-            arrays[5].map(async (id)=>{    
+            arrays[5].map(async (id)=>{
               await axios.delete(`${urls.urlDatoExtraElimina}${id}`)
               .then((res) => {if(res.status === 200){
                 swal({
@@ -1242,7 +1301,7 @@ useEffect(()=>{
         }
       }
     }
-       
+
     }catch(err){
         //codigo de error
         swal({

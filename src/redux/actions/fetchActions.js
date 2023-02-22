@@ -263,12 +263,12 @@ export const addNewEstado = (payload) => {
     }
 }
 
-export const addNewFormaPago = (payload) => {
-    return {
-        type: ADD_NEW_FORMAPAGO,
-        payload
-    }
-}
+// export const addNewFormaPago = (payload) => {
+//     return {
+//         type: ADD_NEW_FORMAPAGO,
+//         payload
+//     }
+// }
 
 export const addNewCargo = (payload) => {
     return {
