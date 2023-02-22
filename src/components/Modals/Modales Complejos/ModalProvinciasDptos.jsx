@@ -1,6 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import InputModal from "../../Inputs/InputModal/InputModal";
 import TextArea from "../../Inputs/TextArea/TextArea";
+import ChildBarrios from "./ChildsModalPDLB/ChildBarrios";
+import ChildDepartamentos from "./ChildsModalPDLB/ChildDepartamentos";
+import ChildLocalidades from "./ChildsModalPDLB/ChildLocalidades";
+import ChildProvincias from "./ChildsModalPDLB/ChildProvincias";
 // import { Link } from 'react-router-dom';
 // import ButtonCallModal from '../../ButtonCallModal/ButtonCallModal';
 // import InputModal from '../../Inputs/InputModal/InputModal';
@@ -38,6 +42,8 @@ export const ModalProvinciasDptos = ({
   setDisableMOdal,
   setModify,
 }) => {
+  const [ index, setIndex ] = useState(0);
+
   return (
     <div>
       <section
@@ -62,139 +68,81 @@ export const ModalProvinciasDptos = ({
             </div>
           </div>
         <ul class="nav nav-tabs">
-  <li class="nav-item">
-    <a class="nav-link active" aria-current="page" href="#">Provincias</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link active" aria-current="page" href="#">Localidades</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link active" aria-current="page" href="#">Departamentos</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link active" aria-current="page" href="#">Barrios</a>
-  </li>
-          <div className="row p-2 selectModal">
-            <div className="col-xl-6 border border-2 p-2 ">
-              <select
-                className="form-select selectMenus p-0 m-0"
-                multiple
-                aria-label="multiple select example"
-                disabled={disableModalButtons}
-              >
-                {array &&
-                  array.map((op, i) => {
-                    return (
-                      <option
-                        key={i}
-                        value={op && op[propsModal.propArrayId]}
-                        onClick={() => setValueItemModal(op)}
-                        // si se rompe el abm comentar esta linea y descomentar la de abajo
-                        //onClick={() => dispatch(dispatchGetID(op[propArrayId]))}
-                      >
-                        {op && op[propsModal.propArrayOp]}
-                      </option>
-                    );
-                  })}
-              </select>
-              <div className="d-flex flex-row justify-content-evenly align-items-center mt-1 ">
-                <button
-                  className="btn btn-dark text-light"
-                  disabled={disableModalButtons}
-                  onClick={() => {
-                    setDisableMOdal(false);
-                    setDisableModalButtons(true);
-                  }}
-                >
-                  Agregar
-                </button>
-                <button
-                  className="btn btn-dark text-light"
-                  disabled={disableModalButtons}
-                  onClick={() => {
-                    setModify(true);
-                    setDisableMOdal(false);
-                    setDisableModalButtons(true);
-                  }}
-                >
-                  Modificar
-                </button>
-                <button
-                  className="btn btn-dark"
-                  disabled={disableModalButtons}
-                  onClick={() => {
-                    functionDelete(urlApi, idAModificar, actionActualizaDelete);
-                    setDisableModalButtons(true);
-                  }}
-                >
-                  Eliminar
-                </button>
-              </div>
-            </div>
-            <div className="col-xl-6">
-              <div className="d-flex flex-column justify-content-start align-items-center">
-                {optionsInputs.map((option, index) => {
-                  return (
-                    <InputModal
-                      disableModal={!disableModalButtons}
-                      key={index}
-                      placeholder={option.placeholder}
-                      nameLabel={option.label}
-                      idInput={option.idInput}
-                      onChangeValues={onChangeValues}
-                      value={
-                        option.idInput === "masculino"
-                          ? modalValues?.masculino
-                          : modalValues?.femenino
-                      }
-                    />
-                  );
-                })}
-              </div>
-              <div
-                className="d-flex flex-column justify-content-center align-items-center"
-                disabled={!disableModalButtons}
-              >
-                {usaEstados && (
-                  <TextArea
-                    disableModal={!disableModalButtons}
-                    idInput={idInputTextArea}
-                    onChange={onChangeValues}
-                    characterLimit={255}
-                  ></TextArea>
-                )}
-              </div>
-              <div className="d-flex flex-row-reverse w-100 ">
-                <button
-                  className="btn btn-dark m-1"
-                  disabled={!disableModalButtons}
-                  onClick={() => {
-                    functionAdd(
-                      urlApi,
-                      bodyPetition,
-                      bodyUpdate,
-                      idAModificar,
-                      actualizaCreaFormasdePago,
-                      actualizaModificarFormasdePago
-                    );
-                    setDisableModalButtons(false);
-                  }}
-                >
-                  Aceptar
-                </button>
-                <button
-                  className="btn btn-dark m-1"
-                  disabled={!disableModalButtons}
-                  onClick={() => {
-                    setDisableModalButtons(false);
-                  }}
-                >
-                  Cancelar
-                </button>
-              </div>
-            </div>
-          </div>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#" onClick={()=> setIndex(1)}>Provincias</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#" onClick={()=> setIndex(2)}>Localidades</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#" onClick={()=> setIndex(3)}>Departamentos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#" onClick={()=> setIndex(4)}>Barrios</a>
+          </li>
         </ul>
+        <div className="row p-2 selectModal">
+          {
+            index === 1 &&  <ChildProvincias  
+                              disableModalButtons={disableModalButtons}
+                              array = {array}
+                              propsModal={propsModal}
+                              setValueItemModal={setValueItemModal}
+                              setDisableMOdal={setDisableMOdal}
+                              setDisableModalButtons={setDisableModalButtons}
+                              setModify={setModify}
+                              functionDelete={functionDelete}
+                              urlApi={urlApi}
+                              idAModificar={idAModificar}
+                              actionActualizaDelete={actionActualizaDelete}
+                              optionsInputs={optionsInputs}
+                              usaEstados={usaEstados}
+                              idInputTextArea={idInputTextArea}
+                              onChangeValues={onChangeValues}
+                              modalValues={modalValues}
+                            />
+          }
+          {
+            index === 2 && <ChildDepartamentos 
+                            />
+          }
+          {
+            index === 3 && <ChildLocalidades 
+                            />
+          }
+          {
+            index === 4 && <ChildBarrios 
+                            />
+          }
+                      <div className="d-flex flex-row-reverse w-100 ">
+                          <button
+                            className="btn btn-dark m-1"
+                            disabled={!disableModalButtons}
+                            onClick={() => {
+                              functionAdd(
+                                urlApi,
+                                bodyPetition,
+                                bodyUpdate,
+                                idAModificar,
+                                actualizaCreaFormasdePago,
+                                actualizaModificarFormasdePago
+                              );
+                              setDisableModalButtons(false);
+                            }}
+                          >
+                            Aceptar
+                          </button>
+                          <button
+                            className="btn btn-dark m-1"
+                            disabled={!disableModalButtons}
+                            onClick={() => {
+                              setDisableModalButtons(false);
+                            }}
+                          >
+                            Cancelar
+                          </button>
+                      </div>
+                      </div>
         </div>
       </section>
     </div>
