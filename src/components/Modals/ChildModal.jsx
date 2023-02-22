@@ -1,7 +1,7 @@
 import InputModal from '../Inputs/InputModal/InputModal';
 import TextArea from '../Inputs/TextArea/TextArea';
 import "./BasicModal.css"
-const ChildModal = ({nameModalProp, disabled, array , propsModal, optionsInputs, transition, setTransition, handleClickClose,functionAdd, functionUpdate, functionDelete, valueItemModal, setValueItemModal, onChangeValues, modalValues, urlApi, bodyPetition, bodyUpdate,setModify, modify, idAModificar, disableModal, setDisableMOdal, actionActualizaDelete, actualizaCreaFormasdePago, actualizaModificarFormasdePago, idInputTextArea, disableModalButtons , setDisableModalButtons, usaEstados}) => {
+const ChildModal = ({nameModalProp, disabled, array , propsModal, optionsInputs, transition, setTransition, handleClickClose,functionAdd, functionUpdate, functionDelete, valueItemModal, setValueItemModal, onChangeValues, modalValues, urlApi, bodyPetition, bodyUpdate,setModify, modify, idAModificar, disableModal, setDisableMOdal, actionActualizaDelete, actualizaCreaFormasdePago, actualizaModificarFormasdePago, idInputTextArea, disableModalButtons , setDisableModalButtons, usaEstados, urlDelete, changeUrl}) => {
 
   return (
     
@@ -69,16 +69,28 @@ const ChildModal = ({nameModalProp, disabled, array , propsModal, optionsInputs,
               >
                 Modificar
               </button>
-              <button
-                className="btn btn-dark"
-                disabled={disableModalButtons}
-                onClick={() => {
-                  functionDelete(urlApi, idAModificar, actionActualizaDelete);
-                  setDisableModalButtons(true);
-                }}
-                >
-                Eliminar
-              </button>
+                {changeUrl ? <button
+                              className="btn btn-dark"
+                              disabled={disableModalButtons}
+                              onClick={() => {
+                                functionDelete(urlDelete, idAModificar, actionActualizaDelete);
+                                setDisableModalButtons(true);
+                              }}
+                              >
+                                Eliminar
+                              </button> 
+                              : 
+                              <button
+                                className="btn btn-dark"
+                                disabled={disableModalButtons}
+                                onClick={() => {
+                                  functionDelete(urlApi, idAModificar, actionActualizaDelete);
+                                  setDisableModalButtons(true);
+                                }}
+                                >
+                                Eliminar
+                              </button>
+              }
             </div>
           </div>
           <div className="col-xl-6">

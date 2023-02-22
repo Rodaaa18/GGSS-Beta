@@ -149,7 +149,10 @@ export const objectMotivosEgreso = [
 export const objectCalles = [
   {
     "label": "Calle",
-    "placeholder": "Calle falsa 123"
+    "placeholder": "Calle",
+    "idInput" : "calle",
+    "nameInput" : "calle"
+
   }
 ]
 

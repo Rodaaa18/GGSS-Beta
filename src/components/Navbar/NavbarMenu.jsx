@@ -4,14 +4,13 @@ import { Link } from "react-router-dom";
 import swal from "sweetalert";
 import "./Navbar.css";
 // ------------------------ OBJECTS ------------------------
-import { objectParentescos, objectCategorias, inputsNumCategorias, objectConvenios, inputsNumConvenios, inputNumDataValores, tableValoresHeadings, inputNumDataEscala, inputDateDataEscala, inputNumDataDeducciones, inputDateDataDeducciones, objectBancos, objectEmpresasTelefonia, objectSindicatos, objectTareas, objectEstadosCiviles, objectEstudios, objectTipoDocumento, objectEstado, objectFormasDePago, objectMotivosEgreso, objectCalles, objectPaises, objectModosLiquidacion, objectModosContratacion, objectCargos, objectObrasSociales, objectAFJP, objectCentrosCosto, objectSectoresDptos, objectDirecciones, objectLugaresPago, objectDocumentacion, tableReduccionHeadings, tableConvenios, tableJerarquia, tableLicencias, inputsNumLicencias, objectAlicuotas, checkboxParentescos, checkboxNumParentescos, textAreaObject, textAreaCargos,urls, objectProvincias, objectEmpleadores } from './Objects'
+import { objectParentescos, objectTareas, objectEstadosCiviles, objectEstudios, objectTipoDocumento, objectEstado, objectFormasDePago, objectCalles, objectPaises, objectModosLiquidacion, objectModosContratacion, objectCargos,objectProvincias } from './Objects'
 // -----------------------------------------------------------
 
-import { AXIOS_ERROR, SET_LOADING } from '../../redux/types/fetchTypes';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
-import { addEstadosCiviles, addEstados, addPaises, addEstudios, addTiposDocumento, addCargos, addTareasDesempeñadas, addParentescos, addFormasPago, addModosContratacion, addModosLiquidacion, addEmpleadores, addDomicilios, addCalles, addDepartamentos, addBarrios, addProvincias, addLocalidades, addNewEstadoCivil, addNewEstudio, getIdEstadoCivil, deleteEstadoCivil, getIdEstudio, deleteEstudio, addNewTipoDoc, deleteTipoDoc, getIdTipoDoc, putEstadoCivil, putEstudio, putTipoDoc, addNewParentesco, deleteParentesco, putParentesco, getIdParentesco, addNewEstado, deleteEstado, putEstado, getIdEstado, addNewFormaPago, deleteFormaPago, putFormaPago, getIdFormaPago, addNewCargo, deleteCargo, putCargo, getIdCargo, addNewTarea, deleteTarea, putTarea, getIdTarea, actualizaDelete, actualizaDeleteFormasdePago, actualizaModificarESCI, actualizaCreaFormasdePago, actualizaModificarFormasdePago } from '../../redux/actions/fetchActions';
-import { addSelectedCargo, addSelectedEstado, addSelectedEstadoCivil, addSelectedEstudio, addSelectedFormaPago, addSelectedParentesco, addSelectedTarea, addSelectedTipoDocu, setRefetch } from '../../redux/actions/modalesActions';
+import {  actualizaDelete, actualizaDeleteFormasdePago, actualizaCreaFormasdePago, actualizaModificarFormasdePago } from '../../redux/actions/fetchActions';
+import {  setRefetch } from '../../redux/actions/modalesActions';
 import ButtonCallModal from "../ButtonCallModal/ButtonCallModal";
 import ChildModal from "../Modals/ChildModal";
 import { propsModal, propsModalCalles, propsModalCargos, propsModalEstado, propsModalEstudios, propsModalFormasdePagos, propsModalModosContratacion, propsModalModosLiquidacion, propsModalPaises, propsModalParentesco, propsModalProvincias, propsModalTareas, propsModalTiposDocumento } from "../Modals/props";
@@ -81,7 +80,6 @@ const NavbarMenu = ({setTokenDef, sePerfilesUSuario, perfilesUsuario}) => {
             return;
         }
         try{
-            //debugger;
             await axios
             .post(url, body)
             .then((res)=>{
@@ -155,7 +153,8 @@ const NavbarMenu = ({setTokenDef, sePerfilesUSuario, perfilesUsuario}) => {
 	const urlFormasdePago = "http://54.243.192.82/api/FormasdePagos"
 	// const urlMotivosdeEgresos = "http://54.243.192.82/api/MotivosdeEgresos"
 	const urlTiposDocumento = "http://54.243.192.82/api/TiposDocumento"
-	const urlCalles = "http://54.243.192.82/api/Calles"
+	const urlCallesDelete = "http://54.243.192.82/api/Calles"
+	const urlCalles = `http://54.243.192.82/api/Calles/0?calle=${modalValues?.calle}&obs=${modalValues?.obsCalles}&newId=0`;
 	const urlCargos = "http://54.243.192.82/api/Cargos"
 	const urlTareas = "http://54.243.192.82/api/TareasDesempeñadas";
 	const urlModosLiquidacion = "http://54.243.192.82/api/ModosLiquidacion";
@@ -166,7 +165,7 @@ const NavbarMenu = ({setTokenDef, sePerfilesUSuario, perfilesUsuario}) => {
 	const urlEmpleadores = "http://54.243.192.82/api/Empleadores"
 
 
-
+console.log(modalValues)
 //#endregion
 
 	
@@ -752,7 +751,10 @@ const NavbarMenu = ({setTokenDef, sePerfilesUSuario, perfilesUsuario}) => {
 															actionActualizaDelete={actualizaDelete}
 															disableModalButtons={disableModalButtons}
 															setDisableModalButtons={setDisableModalButtons}
-															usaEstados={false}
+															usaEstados={true}
+															idInputTextArea = "obsCalles"
+															urlDelete = {urlCallesDelete}
+															changeUrl = {true}
 														/>
 														
 													</ButtonCallModal>
