@@ -331,25 +331,26 @@ console.log(modalValues)
 	const bodyTareas = {
 		"idTareaDesempeñada" : ((tareasValue && tareasValue[tareasValue.length - 1] !== undefined && (tareasValue[tareasValue.length - 1].idTareaDesempeñada)) + 1),
 		"tareaDesempeñada" : modalValues?.tareaDesempeñada,
-		"observacion" : modalValues?.observacion
+		"observacion" : modalValues?.obsTareas
 	}
 	const bodyUpdateTareas = {
 		"idTareaDesempeñada" : valueItemModal?.idTareaDesempeñada,
 		"tareaDesempeñada" : modalValues?.tareaDesempeñada,
-		"observacion" : modalValues?.observacion
+		"observacion" : modalValues?.obsTareas
 	}
 
 	//Modos Liquidación
 
 	const bodyModosLiquidacion = {
 		"iDmodoLiquidacion": ((modosLiquidacionValue && modosLiquidacionValue[modosLiquidacionValue.length - 1] !== undefined && (modosLiquidacionValue[modosLiquidacionValue.length - 1].iDmodoLiquidacion)) + 1),
-		"nombreModoLiquidacion": modalValues?.nombreModoLiquidacion,
-		"observacion": modalValues?.observacion
+		"modoLiquidacion": modalValues?.modoLiquidacion,
+		"observacion": modalValues?.obsModoLiquidacion,
+		"idPlanCuenta" : 0
 	}
 	const bodyUpdateModosLiquidacion = {
 		"iDmodoLiquidacion": valueItemModal?.iDmodoLiquidacion,
-		"nombreModoLiquidacion": modalValues?.nombreModoLiquidacion,
-		"observacion": modalValues?.observacion
+		"modoLiquidacion": modalValues?.modoLiquidacion,
+		"observacion": modalValues?.obsModoLiquidacion
 	}
 
 	//Calles
@@ -379,7 +380,7 @@ console.log(modalValues)
 		"fechaVto": modalValues?.fechaVto
 	}
 	
-	console.log(bodyModosContratacion)
+	console.log(valueItemModal )
 	
 
 	//Parentescos
@@ -780,7 +781,7 @@ console.log(modalValues)
 															bodyUpdate={bodyUpdateCargo}
 															modify={modify} 
 															setModify={setModify}
-															idAModificar={ valueItemModal?.idCargo }
+															idAModificar={ valueItemModal?.iDcargo }
 															functionDelete={deleteItemModal}
 															disableModal={disableModal}
 															setDisableMOdal={setDisableMOdal}
@@ -789,6 +790,7 @@ console.log(modalValues)
 															setDisableModalButtons={setDisableModalButtons}
 															usaEstados={true}
 															usaCheck={false}
+															idInputTextArea="observacion"
 														/>
 													</ButtonCallModal>
 												</li>    
@@ -822,6 +824,7 @@ console.log(modalValues)
 															setDisableModalButtons={setDisableModalButtons}
 															usaEstados={true}
 															usaCheck={false}
+															idInputTextArea="obsTareas"
 														/>
 													</ButtonCallModal>
 												</li>    
@@ -855,6 +858,7 @@ console.log(modalValues)
 															setDisableModalButtons={setDisableModalButtons}
 															usaEstados={true}
 															usaCheck={false}
+															idInputTextArea="obsModoLiquidacion"
 														/>
 													</ButtonCallModal>
 												</li>    

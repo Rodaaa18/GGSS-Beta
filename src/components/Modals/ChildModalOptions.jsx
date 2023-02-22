@@ -140,36 +140,16 @@ const ChildModalOptions = ({
                 className="d-flex flex-column justify-content-start align-items-center"
                 disabled={!disableModalButtons}
               >
-                {optionsInputs.map((option, index) => {
+                {/* {optionsInputs.map((option, index) => {
                   return (
                     <InputCboChild
                       disabled={!disableModalButtons}
                       placeholder={option.placeholder}
                       nameLabel={option.label}
                       idInput={option.idInput}
-                      // value={empleadoUno && empleadoUno
-                      //   ? empleadoUno.iDestadoCivil
-                      //   : null}
-                      // action={ADD_DATOS_PERSONALES}
-                      // sexo={empleadoUno && empleadoUno ? empleadoUno.sexo : formDatosPersonales?.inputSexo && formDatosPersonales?.inputSexo}
-                      // nameButton="..."
-                      // nameLabel="Estado Civil"
-                      // array={datosPersonalesState.estadosCiviles && datosPersonalesState.estadosCiviles && datosPersonalesState.estadosCiviles !== "" ? datosPersonalesState.estadosCiviles : ["no entro"]}
-                      // propArrayOp="masculino"
-                      // propArrayOpFem="femenino"
-                      // idSelected={formDatosPersonales?.estadoCivilInput ? formDatosPersonales?.estadoCivilInput : empleadoUno.iDestadoCivil}
-                      // valueId="idEstadoCivil"
-                      // propArray="Casado"
-                      // display={false}
-                      // idModal="EstadoCivil"
-                      // disabled={(formDatosPersonales?.inputSexo && formDatosPersonales?.inputSexo && formDatosPersonales?.inputSexo === "") ? disableEstado : disable}
-                      // nameInput="estadoCivilInput"
-                      // idInput="estadoCivilInput"
-                      // onChange={onChangeValues}
-                      // obligatorio ={true}
                     />
                   );
-                })}
+                })} */}
               </div>
             </div>
             <div
@@ -182,14 +162,6 @@ const ChildModalOptions = ({
                   idInputCheck={true}
                   nameInput="Vencimiento"
                   onChange={onChangeValues}
-                  // idInput="inputDatePresentacion"
-                  // display={false}
-                  // action={GET_INPUT_VALUE}
-                  // disabled={disable}
-                  // value={
-                  //   formDocumentacion?.inputDatePresentacion &&
-                  //   formDocumentacion?.inputDatePresentacion
-                  // }
                 ></CheckDate>
               )}
             </div>

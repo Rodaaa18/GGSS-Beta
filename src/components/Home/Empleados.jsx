@@ -432,65 +432,7 @@ useEffect(()=>{
       }
     }
 
-//   }
 
-
-
-// useEffect(() => {
-//   getEmpleados();
-
-// }, [responses?.browser?.inputApellidoNombreBrowser,responses?.browser?.inpurLegajoBrowser,responses?.browser?.ordered, saveEmpleado, refetch]);
-
-
-
-
-
-
-  // const url = `http://54.243.192.82/api/Empleados?page=2000&ordered=true`;
-  //   const urlEmpleadoPorApellido = `http://54.243.192.82/api/Empleados?records=10000&filter=${responses?.browser?.inputApellidoNombreBrowser ? responses?.browser?.inputApellidoNombreBrowser : null}&ordered=true`;
-  //   const urlEmpleadoPorLegajo = `http://54.243.192.82/api/Empleados?records=10000&legajo=${responses?.browser?.inpurLegajoBrowser ? responses?.browser?.inpurLegajoBrowser : null}&ordered=true`;
-  //   const urlEmpleadoApYLegajo = `http://54.243.192.82/api/Empleados?records=10000&filter=${responses?.browser?.inputApellidoNombreBrowser ? responses?.browser.inputApellidoNombreBrowser : null}&legajo=${responses?.browser?.inpurLegajoBrowser ? responses?.browser?.inpurLegajoBrowser : null}&ordered=true`;
-  //   const urlApeLegOrdered = `http://54.243.192.82/api/Empleados?records=10000&filter=${responses?.browser?.inputApellidoNombreBrowser ? responses?.browser?.inputApellidoNombreBrowser : null}&legajo=${responses?.browser?.inpurLegajoBrowser ? responses?.browser?.inpurLegajoBrowser : null}&ordered=true`;
-
-  //   async function getEmpleados(){
-  //     if(responses.browser.inputApellidoNombreBrowser){
-  //       await axios({method: 'get',
-  //                     url: urlEmpleadoPorApellido,
-  //                     timeout: 1000}).then((res) => {
-  //         dispatch(getEmployes(res.data.result));
-  //       });
-  //       return;
-  //     }
-  //     else if(responses.browser.inpurLegajoBrowser){
-  //       await axios({method: 'get',
-  //                   url: urlEmpleadoPorLegajo,
-  //                   timeout: 1000}).then((res) => {
-  //         dispatch(getEmployes(res.data.result));
-  //       });
-  //       return;
-  //     }else if(responses.browser.inputApellidoNombreBrowser && responses.browser.inpurLegajoBrowser){
-  //       await axios({method: 'get',
-  //                   url: urlEmpleadoApYLegajo,
-  //                   timeout: 1000}).then((res) => {
-  //           dispatch(getEmployes(res.data.result));
-  //       });
-  //       return;
-  //     }else if(responses.browser.inputApellidoNombreBrowser && responses.browser.inpurLegajoBrowser && responses?.browser.ordered){
-  //       await axios.get({method: 'get',
-  //                       url: urlApeLegOrdered,
-  //                       timeout: 1000}).then((res) => {
-  //         dispatch(getEmployes(res.data.result));
-  //       });
-  //       return;
-  //     }else{
-  //       await axios.get(url).then((res) => {
-
-  //         dispatch(getEmployes(res.data.result));
-
-  //       });
-  //     }
-
-    // }
 
 
 

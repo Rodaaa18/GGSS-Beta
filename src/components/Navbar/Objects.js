@@ -183,7 +183,9 @@ export const objectModosContratacion = [
 export const objectModosLiquidacion = [
   {
     "label": "Modos de liquidación",
-    "placeholder": "Diario"
+    "placeholder": "Diario",
+    "idInput" : "modoLiquidacion",
+    "nameInput" : "modoLiquidacion"
   }
 ]
 
