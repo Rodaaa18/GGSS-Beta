@@ -177,7 +177,7 @@ const Browser = ({ disable, setDisable, setValueEmpl, responses, setResponses, s
               onKeyUp={(e)=> onSelect(e,e.target.value.split(',')[0],Number(e.target.value.split(',')[1]))}
             >
               {empleados &&
-                empleados.map((emp, i) => {
+                empleados?.map((emp, i) => {
                   return (
                     <option
                       key={i}

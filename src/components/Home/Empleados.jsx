@@ -149,7 +149,7 @@ console.log(tokenDef)
   const urlDocumentacion = "http://54.243.192.82/api/Documentacion";
   const urlDatosExtras = `http://54.243.192.82/api/DatosExtras/0,%201`;
   const urlInstrumLegal =
-    "http://54.243.192.82/api/InstrumentosLegales/1?modo=1";
+    "http://54.243.192.82/api/InstrumentosLegales/0?modo=1";
   const urlLicenciaEmpleados = "http://54.243.192.82/api/MostrarDatosLicencias";
   const urlDetalleLicenciasEmpleados =
     "http://54.243.192.82/api/DetalleLicenciasEmpleados";
@@ -206,7 +206,7 @@ console.log(tokenDef)
       await axios
         .get(`${url}/${paramOne},%201`)
         .then((res) => {
-          dispatch(action(res.data));
+          dispatch(action(res.data.result));
         })
         .catch((err) => {
           dispatch({ type: AXIOS_ERROR });
@@ -220,7 +220,7 @@ console.log(tokenDef)
       .get(url)
       .then((res) => {
 
-        dispatch(action(res.data));
+        dispatch(action(res.data.result));
       })
       .catch((err) => {
         dispatch({ type: AXIOS_ERROR });
@@ -249,7 +249,7 @@ useEffect(()=>{
         `http://54.243.192.82/api/MostrarDatosExtrasPorEmpleado/${empleadoUno?.iDempleado}`
       )
       .then((res) => {
-        dispatch(saveDatosExtrasEmpleados(res.data));
+        dispatch(saveDatosExtrasEmpleados(res.data.result));
       });//
 },[empleadoUno, refetch])
 
@@ -291,11 +291,11 @@ useEffect(()=>{
      handleFetch(urlFormasDePago, addFormasPago);
      handleFetch(urlLugaresDePago, addLugaresDePago);
      handleFetch(urlBancos, addBancos);
-     handleFetchComun(urlDirecciones, addDirecciones);
+     handleFetch(urlDirecciones, addDirecciones);
      handleFetch(urlSindicatos, addSindicatos);
      handleFetch(urlEsquemas, addEsquemas);
 
-     handleFetchComun(urlConceptos, addConceptos);
+     handleFetch(urlConceptos, addConceptos);
 
 
      handleFetch(urlDocumentacion, getOneDocumento);
@@ -304,9 +304,9 @@ useEffect(()=>{
 
 
 
-   handleFetchComun(urlSectorDepto, addSectorDepto);
-     handleFetchComun(urlInstrumLegal, addInstrumLegales);
-     handleFetchComun(urlDatosExtras, addDatosExtras);
+   handleFetch(urlSectorDepto, addSectorDepto);
+     handleFetch(urlInstrumLegal, addInstrumLegales);
+     handleFetch(urlDatosExtras, addDatosExtras);
      handleFetch(urlDomicilios, addDomicilios);
 
 
@@ -338,13 +338,13 @@ useEffect(()=>{
 
       )
       .then((res) => {
-        dispatch(addLicEmpleado(res.data));
-        setLicenciaEmpladoDatos(res.data);
+        dispatch(addLicEmpleado(res.data.result));
+        setLicenciaEmpladoDatos(res.data.result);
       });
 
       axios.get(`http://54.243.192.82/api/MostrarDatosFamiliarPorEmpleado/${empleadoUno?.iDempleado}`)
       .then((res)=>{
-        dispatch(getDAtosFamiliaresEmpleado(res.data))
+        dispatch(getDAtosFamiliaresEmpleado(res.data.result))
       })
 
       axios.get(`http://54.243.192.82/api/Documentacion/sp_DocumentacionDatosXIdEmpleado?IdEmpleado=${empleadoUno?.iDempleado}`)
@@ -353,7 +353,7 @@ useEffect(()=>{
       })
       axios.get(`http://54.243.192.82/api/MostrarDatosExtras/0,${empleadoUno?.iDempleado},1,`)
       .then((res)=>{
-        dispatch(addDatosExtraPorEmpleado(res.data))
+        dispatch(addDatosExtraPorEmpleado(res.data.result))
       })
       handleFetch(urlDomicilios, addDomicilios);
       handleFetch(urlDocumentacionEmpleados, addDocumentacionEmpleados);
@@ -366,7 +366,7 @@ useEffect(()=>{
     useEffect(()=>{
       axios.get(`http://54.243.192.82/api/sp_DomiciliosDatosxIdEmpleado?IdEmpleado=${empleadoUno?.iDempleado}`)
       .then((res)=>{
-        console.log(`http://54.243.192.82/api/sp_DomiciliosDatosxIdEmpleado?IdEmpleado=${empleadoUno?.iDempleado}`)
+        
         dispatch(addOneDomicilio(res.data))
       })
     },[empleadoUno?.iDempleado, refetch])
@@ -394,12 +394,13 @@ useEffect(()=>{
     const urlEmpleadoApYLegajo = `http://54.243.192.82/api/Empleados?records=0&page=1&filter=${responses?.browser?.inputApellidoNombreBrowser ? responses?.browser.inputApellidoNombreBrowser : null}&legajo=${responses?.browser?.inpurLegajoBrowser ? responses?.browser?.inpurLegajoBrowser : null}&ordered=true`;
     const urlApeLegOrdered = `http://54.243.192.82/api/Empleados?records=10000&filter=${responses?.browser?.inputApellidoNombreBrowser ? responses?.browser?.inputApellidoNombreBrowser : null}&legajo=${responses?.browser?.inpurLegajoBrowser ? responses?.browser?.inpurLegajoBrowser : null}&ordered=true`;
 
+    console.log(urlEmpleadoPorApellido)
     async function getEmpleados(){
       if(responses.browser.inputApellidoNombreBrowser){
         await axios({method: 'get',
                       url: urlEmpleadoPorApellido,
                       timeout: 2000}).then((res) => {
-          dispatch(getEmployes(res.data));
+          dispatch(getEmployes(res.data.result));
         });
         return;
       }
@@ -407,21 +408,21 @@ useEffect(()=>{
         await axios({method: 'get',
                     url: urlEmpleadoPorLegajo,
                     timeout: 2000}).then((res) => {
-          dispatch(getEmployes(res.data));
+          dispatch(getEmployes(res.data.result));
         });
         return;
       }else if(responses.browser.inputApellidoNombreBrowser && responses.browser.inpurLegajoBrowser){
         await axios({method: 'get',
                     url: urlEmpleadoApYLegajo,
                     timeout: 2000}).then((res) => {
-            dispatch(getEmployes(res.data));
+            dispatch(getEmployes(res.data.result));
         });
         return;
       }else if(responses.browser.inputApellidoNombreBrowser && responses.browser.inpurLegajoBrowser && responses?.browser.ordered){
         await axios.get({method: 'get',
                         url: urlApeLegOrdered,
                         timeout: 2000}).then((res) => {
-          dispatch(getEmployes(res.data));
+          dispatch(getEmployes(res.data.result));
         });
         return;
       }else{
