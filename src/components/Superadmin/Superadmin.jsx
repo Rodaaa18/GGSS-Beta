@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import "./Superadmin.css";
 
 const Superadmin = () => {
+    const [ superadminValues, setSuperadminValues ] = useState({});
     const datosPersonalesState = useSelector((state)=> state.generalState);
     const parSueldos = useSelector((state)=> state.generalState.parSueldos);
     const tiposDocumento = useSelector((state)=> state.generalState.tiposDocumento);
@@ -13,8 +15,23 @@ const Superadmin = () => {
         diasContrato : true,
         imgAdjuntos : true,
         archivos : true
-    })
-    console.log(parSueldos)
+    });
+    function onChangeValues(e, key){
+        let newState = {...superadminValues};
+        newState[key] = e;
+        setSuperadminValues({
+            ...newState
+        })
+    }
+   
+    console.log(superadminValues)
+    async function sendDataSuperadmin(){
+        try{
+
+        }catch(err){
+
+        }
+    }
     //Ahora traigo los datos desde Datos PErsonales pero deberia tal vez hacer un fetch aca en el componente por si luegi
     //se requiere que se inicie directamente de superadmin si es que tiene este permiso.
 
@@ -31,7 +48,7 @@ const Superadmin = () => {
                         <h2>Empleados</h2>
                         <div className='d-flex flex-column justify-content-center align-items-start'>
                             <label htmlFor="estadoAltaEmpleado">Estado Predeterminado Alta de un Empleado:</label>
-                            <select disabled={modificar.empleados} className="formulario-input-Estado form-select ml-0 px-0" defaultValue={parSueldos[0].estadoAltaEmpleado} id="estadoAltaEmpleado" name="estadoAltaEmpleado">
+                            <select onChange={(e)=> onChangeValues(e.target.value, "estadoAltaEmpleado")} disabled={modificar.empleados} className="formulario-input-Estado form-select ml-0 px-0" defaultValue={parSueldos[0].estadoAltaEmpleado} id="estadoAltaEmpleado" name="estadoAltaEmpleado">
                             <option value="">Seleccionar</option> 
                             {
                                 datosPersonalesState.estados && datosPersonalesState.estados.map((item, index)=>{                                  
@@ -46,7 +63,7 @@ const Superadmin = () => {
                         </div>
                         <div className='d-flex flex-column justify-content-center align-items-start'>
                             <label htmlFor="estadoBajaEmpleado">Estado Predeterminado Baja de un Empleado:</label>
-                            <select disabled={modificar.empleados} className="formulario-input-Estado form-select ml-0 px-0" defaultValue={parSueldos[0].estadoBajaEmpleado} id="estadoBajaEmpleado" name="estadoBajaEmpleado">
+                            <select onChange={(e)=> onChangeValues(e.target.value, "estadoBajaEmpleado")} disabled={modificar.empleados} className="formulario-input-Estado form-select ml-0 px-0" defaultValue={parSueldos[0].estadoBajaEmpleado} id="estadoBajaEmpleado" name="estadoBajaEmpleado">
                             <option value="">Seleccionar</option> 
                             {
                                 datosPersonalesState.estados && datosPersonalesState.estados.map((item, index)=>{
@@ -62,7 +79,7 @@ const Superadmin = () => {
                         </div>
                         <div className='d-flex flex-column justify-content-center align-items-start'>
                             <label htmlFor="IdTipoDocumentoPredeterminado">Tipo de Documento Predeterminado:</label>
-                            <select disabled={modificar.empleados} className="formulario-input-Estado form-select ml-0 px-0" defaultValue={parSueldos[0].idTipoDocumentoPredeterminado} id="IdTipoDocumentoPredeterminado" name="IdTipoDocumentoPredeterminado">
+                            <select onChange={(e)=> onChangeValues(e.target.value, "IdTipoDocumentoPredeterminado")}  disabled={modificar.empleados} className="formulario-input-Estado form-select ml-0 px-0" defaultValue={parSueldos[0].idTipoDocumentoPredeterminado} id="IdTipoDocumentoPredeterminado" name="IdTipoDocumentoPredeterminado">
                             <option value="">Seleccionar</option> 
                             {
                                 datosPersonalesState.tiposDocumento && datosPersonalesState.tiposDocumento.map((item,index)=>{
@@ -77,7 +94,7 @@ const Superadmin = () => {
                         </div>
                         <div className='d-flex flex-column justify-content-center align-items-start'>
                             <label htmlFor="IdTipoDocumentoSinDatos">Tipo de Documento "Sin Datos":</label>
-                            <select disabled={modificar.empleados} className="formulario-input-Estado form-select ml-0 px-0" defaultValue={parSueldos[0].idTipoDocumentoSinDatos} id="IdTipoDocumentoSinDatos" name="IdTipoDocumentoSinDatos">
+                            <select onChange={(e)=> onChangeValues(e.target.value, "IdTipoDocumentoSinDatos")}  disabled={modificar.empleados} className="formulario-input-Estado form-select ml-0 px-0" defaultValue={parSueldos[0].idTipoDocumentoSinDatos} id="IdTipoDocumentoSinDatos" name="IdTipoDocumentoSinDatos">
                             <option value="">Seleccionar</option> 
                             <option value="0">(Sin Datos)</option> 
                             {
@@ -93,7 +110,7 @@ const Superadmin = () => {
                         </div>
                         <div className='d-flex flex-column justify-content-center align-items-start'>
                             <label htmlFor="IdPaisPredeterminado">País Predeterminado:</label>
-                            <select disabled={modificar.empleados} className="formulario-input-Estado form-select ml-0 px-0" defaultValue={parSueldos[0].idPaisPredeterminado} id="IdPaisPredeterminado" name="IdPaisPredeterminado">
+                            <select onChange={(e)=> onChangeValues(e.target.value, "IdPaisPredeterminado")}  disabled={modificar.empleados} className="formulario-input-Estado form-select ml-0 px-0" defaultValue={parSueldos[0].idPaisPredeterminado} id="IdPaisPredeterminado" name="IdPaisPredeterminado">
                             <option value="">Seleccionar</option> 
                             {
                                 datosPersonalesState.paises && datosPersonalesState.paises.map((item,index)=>{
@@ -116,9 +133,9 @@ const Superadmin = () => {
                             </legend> 
                             <div className='d-flex flex-row justify-content-start align-items-center'>
                                 <label htmlFor="">Dimensiones Máximas</label>
-                                <input disabled={modificar.fotoEmpleado} value={ modificar.fotoEmpleado ? parSueldos[0].maxAnchoFotoEmpleado : ""} className='inputAnchoAlto' type="text" name="MaxAnchoFotoEmpleado" id="MaxAnchoFotoEmpleado" />
+                                <input onChange={(e)=> onChangeValues(e.target.value, "MaxAnchoFotoEmpleado")} disabled={modificar.fotoEmpleado} value={ modificar.fotoEmpleado ? parSueldos[0].maxAnchoFotoEmpleado : superadminValues?.MaxAnchoFotoEmpleado} className='inputAnchoAlto' type="text" name="MaxAnchoFotoEmpleado" id="MaxAnchoFotoEmpleado" />
                                 <span>X</span>
-                                <input disabled={modificar.fotoEmpleado} value={ modificar.fotoEmpleado ? parSueldos[0].maxAltoFotoEmpleado : ""} className='inputAnchoAlto' type="text" name="MaxAltoFotoEmpleado" id="MaxAltoFotoEmpleado" />
+                                <input onChange={(e)=> onChangeValues(e.target.value, "MaxAltoFotoEmpleado")} disabled={modificar.fotoEmpleado} value={ modificar.fotoEmpleado ? parSueldos[0].maxAltoFotoEmpleado : superadminValues?.MaxAltoFotoEmpleado} className='inputAnchoAlto' type="text" name="MaxAltoFotoEmpleado" id="MaxAltoFotoEmpleado" />
                                 <span>pixels (Ancho x Alto)</span>
                             </div>
                             <div className='d-flex flex-row justify-content-end align-items-start'>
@@ -132,7 +149,7 @@ const Superadmin = () => {
                             </legend> 
                             <div className='d-flex flex-row justify-content-start align-items-center'>
                                 <label className='labelDiasConotrato' htmlFor="DiasFinalizacionContrato">A partir de</label>
-                                <input disabled={modificar.diasContrato} value={ modificar.fotoEmpleado ? parSueldos[0].diasFinalizacionContrato : ""}   className='inputDiasConotrato' type="text" name="DiasFinalizacionContrato" id="DiasFinalizacionContrato" />
+                                <input onChange={(e)=> onChangeValues(e.target.value, "DiasFinalizacionContrato")} disabled={modificar.diasContrato} value={ modificar.fotoEmpleado ? parSueldos[0].diasFinalizacionContrato : superadminValues?.DiasFinalizacionContrato}   className='inputDiasConotrato' type="text" name="DiasFinalizacionContrato" id="DiasFinalizacionContrato" />
                                 <span>días se mostrara un mensaje indicando los dias restantes del contrato.</span>
                             </div>
                             <div className='d-flex flex-row justify-content-end align-items-start'>
@@ -149,14 +166,14 @@ const Superadmin = () => {
                             </legend> 
                             <div className='d-flex flex-row justify-content-start align-items-center'>
                                 <label className='labelAdjuntos' htmlFor="MaxAnchoImagenAdjunto">Dimensiones Máximas</label>
-                                <input disabled={modificar.imgAdjuntos} value={ modificar.fotoEmpleado ? parSueldos[0].maxAnchoImagenAdjunto : ""} className='inputAnchoAlto' type="text" name="MaxAnchoImagenAdjunto" id="MaxAnchoImagenAdjunto" />
+                                <input onChange={(e)=> onChangeValues(e.target.value, "MaxAnchoImagenAdjunto")} disabled={modificar.imgAdjuntos} value={ modificar.fotoEmpleado ? parSueldos[0].maxAnchoImagenAdjunto : superadminValues?.MaxAnchoImagenAdjunto} className='inputAnchoAlto' type="text" name="MaxAnchoImagenAdjunto" id="MaxAnchoImagenAdjunto" />
                                 <span>X</span>
-                                <input disabled={modificar.imgAdjuntos} value={ modificar.fotoEmpleado ? parSueldos[0].maxAltoImagenAdjunto : ""} className='inputAnchoAlto' type="text" name="MaxAltoImagenAdjunto" id="MaxAltoImagenAdjunto" />
+                                <input onChange={(e)=> onChangeValues(e.target.value, "MaxAltoImagenAdjunto")} disabled={modificar.imgAdjuntos} value={ modificar.fotoEmpleado ? parSueldos[0].maxAltoImagenAdjunto : superadminValues?.MaxAltoImagenAdjunto} className='inputAnchoAlto' type="text" name="MaxAltoImagenAdjunto" id="MaxAltoImagenAdjunto" />
                                 <span>pixels (Ancho x Alto)</span>
                             </div>
                             <div className='d-flex flex-row justify-content-start align-items-center'>
                                 <label className='labelAdjuntos' htmlFor="">Resolución Máxima</label>
-                                <input disabled={modificar.imgAdjuntos} value={ modificar.fotoEmpleado ? parSueldos[0].maxResImagenAdjunto : ""}  className='inputAnchoAlto' type="text" name="MaxResImagenAdjunto" id="MaxResImagenAdjunto" />                                
+                                <input onChange={(e)=> onChangeValues(e.target.value, "MaxResImagenAdjunto")} disabled={modificar.imgAdjuntos} value={ modificar.fotoEmpleado ? parSueldos[0].maxResImagenAdjunto : superadminValues?.MaxResImagenAdjunto}  className='inputAnchoAlto' type="text" name="MaxResImagenAdjunto" id="MaxResImagenAdjunto" />                                
                             </div>
                             <div className='d-flex flex-row justify-content-end align-items-start'>
                             <button className='btn btn-outline-danger btn-sm m-1' onClick={()=> setModificar({...modificar, imgAdjuntos : false})}>Modificar</button>
@@ -169,7 +186,7 @@ const Superadmin = () => {
                             </legend> 
                             <div className='d-flex flex-row justify-content-start align-items-center'>
                                 <label className='labelAdjuntos' htmlFor="MaxSizeArchivoAdjunto">Tamaño Máximo</label>
-                                <input disabled={modificar.archivos} value={ modificar.fotoEmpleado ? parSueldos[0].maxSizeArchivoAdjunto : ""} className='inputAnchoAlto' type="text" name="MaxSizeArchivoAdjunto" id="MaxSizeArchivoAdjunto" />  <span>KB</span>                              
+                                <input onChange={(e)=> onChangeValues(e.target.value, "MaxSizeArchivoAdjunto")} disabled={modificar.archivos} value={ modificar.fotoEmpleado ? parSueldos[0].maxSizeArchivoAdjunto : superadminValues?.MaxSizeArchivoAdjunto} className='inputAnchoAlto' type="text" name="MaxSizeArchivoAdjunto" id="MaxSizeArchivoAdjunto" />  <span>KB</span>                              
                             </div>
                             <div className='d-flex flex-row justify-content-end align-items-start'>
                             <button className='btn btn-outline-danger btn-sm m-1' onClick={()=> setModificar({...modificar, archivos : false})}>Modificar</button>
