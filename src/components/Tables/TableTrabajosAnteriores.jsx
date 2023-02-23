@@ -9,7 +9,7 @@ const TableTrabajosAnteriores = ({nameLabel, columns, array, propItemOp, setModi
     <>
         <label htmlFor="">{nameLabel}</label>   
 
-    <div className='d-flex flex-row justify-content-start align-items-start'> 
+    <div className='d-flex flex-row justify-content-start align-items-start overflow-scroll'> 
         <table class="table table-danger ml-2" disabled={disable}>
             <thead>
                 {

@@ -6,6 +6,8 @@ import "./TableBootstrap.css";
 const TableExtras = ({columns, datosExtraEmpleado, descripcion, datosExtras}) => {
     const dispatch = useDispatch();
   return (
+    <>
+    <div className="row mt-5 overflow-scroll rowTAbles">
     <table class="table table-danger contDocumentacion">
         <thead>
             <tr >
@@ -37,6 +39,8 @@ const TableExtras = ({columns, datosExtraEmpleado, descripcion, datosExtras}) =>
             }
         </tbody>
     </table>
+    </div>
+    </>
   )
 }
 

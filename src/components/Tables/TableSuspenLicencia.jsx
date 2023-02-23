@@ -16,6 +16,7 @@ const TableSuspenLicencia = ({ columns }) => {
 
   return (
     <>
+    <div className="row mt-5 overflow-scroll rowTAbles">
       <table class="table table-danger">
         <thead>
           <tr>
@@ -67,6 +68,7 @@ const TableSuspenLicencia = ({ columns }) => {
             })}
         </tbody>
       </table>
+      </div>
     </>
   );
 };
