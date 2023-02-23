@@ -52,6 +52,7 @@ import {
   addTareasDesempeñadas,
   addTiposDocumento,
   disabledInputs,
+  getParSueldos,
   saveDatosExtrasEmpleados,
 } from "../../redux/actions/fetchActions";
 import { AXIOS_ERROR, SET_LOADING } from "../../redux/types/fetchTypes";
@@ -154,6 +155,7 @@ const Empleados = ({tokenDef, setTokenDef, sePerfilesUSuario}) => {
   const urlDetalleLicenciasEmpleados =
     "http://54.243.192.82/api/DetalleLicenciasEmpleados";
   const urlEsquemasConceptos = "http://54.243.192.82/api/ConceptosEsquemas";
+  const urlParSueldos = "http://54.243.192.82/api/ParSueldos";
 
 
   //#endregion
@@ -187,7 +189,7 @@ const Empleados = ({tokenDef, setTokenDef, sePerfilesUSuario}) => {
     setDisable(true);
 
   }
-  // console.log(tabIndex)
+ 
   const handleFetch = async (url, action) => {
     dispatch({ type: SET_LOADING });
     await axios
@@ -213,7 +215,7 @@ useEffect(()=>{
    handleFetch(urlEstudios, addEstudios);
    handleFetch(urlTiposDNI, addTiposDocumento);
    handleFetch(urlDomicilios, addDomicilios);
-
+   handleFetch(urlParSueldos, getParSueldos);
    handleFetch(urlDocumentacionEmpleados, addDocumentacionEmpleados);
 },[refetching, empleadoUno, refetch])
 
