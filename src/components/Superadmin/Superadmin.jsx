@@ -116,9 +116,9 @@ const Superadmin = () => {
                             </legend> 
                             <div className='d-flex flex-row justify-content-start align-items-center'>
                                 <label htmlFor="">Dimensiones Máximas</label>
-                                <input disabled={modificar.fotoEmpleado} className='inputAnchoAlto' type="text" name="MaxAnchoFotoEmpleado" id="MaxAnchoFotoEmpleado" />
+                                <input disabled={modificar.fotoEmpleado} value={ modificar.fotoEmpleado ? parSueldos[0].maxAnchoFotoEmpleado : ""} className='inputAnchoAlto' type="text" name="MaxAnchoFotoEmpleado" id="MaxAnchoFotoEmpleado" />
                                 <span>X</span>
-                                <input disabled={modificar.fotoEmpleado} className='inputAnchoAlto' type="text" name="MaxAltoFotoEmpleado" id="MaxAltoFotoEmpleado" />
+                                <input disabled={modificar.fotoEmpleado} value={ modificar.fotoEmpleado ? parSueldos[0].maxAltoFotoEmpleado : ""} className='inputAnchoAlto' type="text" name="MaxAltoFotoEmpleado" id="MaxAltoFotoEmpleado" />
                                 <span>pixels (Ancho x Alto)</span>
                             </div>
                             <div className='d-flex flex-row justify-content-end align-items-start'>
@@ -132,7 +132,7 @@ const Superadmin = () => {
                             </legend> 
                             <div className='d-flex flex-row justify-content-start align-items-center'>
                                 <label className='labelDiasConotrato' htmlFor="DiasFinalizacionContrato">A partir de</label>
-                                <input disabled={modificar.diasContrato}  className='inputDiasConotrato' type="text" name="DiasFinalizacionContrato" id="DiasFinalizacionContrato" />
+                                <input disabled={modificar.diasContrato} value={ modificar.fotoEmpleado ? parSueldos[0].diasFinalizacionContrato : ""}   className='inputDiasConotrato' type="text" name="DiasFinalizacionContrato" id="DiasFinalizacionContrato" />
                                 <span>días se mostrara un mensaje indicando los dias restantes del contrato.</span>
                             </div>
                             <div className='d-flex flex-row justify-content-end align-items-start'>
@@ -149,14 +149,14 @@ const Superadmin = () => {
                             </legend> 
                             <div className='d-flex flex-row justify-content-start align-items-center'>
                                 <label className='labelAdjuntos' htmlFor="MaxAnchoImagenAdjunto">Dimensiones Máximas</label>
-                                <input disabled={modificar.imgAdjuntos} className='inputAnchoAlto' type="text" name="MaxAnchoImagenAdjunto" id="MaxAnchoImagenAdjunto" />
+                                <input disabled={modificar.imgAdjuntos} value={ modificar.fotoEmpleado ? parSueldos[0].maxAnchoImagenAdjunto : ""} className='inputAnchoAlto' type="text" name="MaxAnchoImagenAdjunto" id="MaxAnchoImagenAdjunto" />
                                 <span>X</span>
-                                <input disabled={modificar.imgAdjuntos} className='inputAnchoAlto' type="text" name="MaxAltoImagenAdjunto" id="MaxAltoImagenAdjunto" />
+                                <input disabled={modificar.imgAdjuntos} value={ modificar.fotoEmpleado ? parSueldos[0].maxAltoImagenAdjunto : ""} className='inputAnchoAlto' type="text" name="MaxAltoImagenAdjunto" id="MaxAltoImagenAdjunto" />
                                 <span>pixels (Ancho x Alto)</span>
                             </div>
                             <div className='d-flex flex-row justify-content-start align-items-center'>
                                 <label className='labelAdjuntos' htmlFor="">Resolución Máxima</label>
-                                <input disabled={modificar.imgAdjuntos} className='inputAnchoAlto' type="text" name="MaxResImagenAdjunto" id="MaxResImagenAdjunto" />                                
+                                <input disabled={modificar.imgAdjuntos} value={ modificar.fotoEmpleado ? parSueldos[0].maxResImagenAdjunto : ""}  className='inputAnchoAlto' type="text" name="MaxResImagenAdjunto" id="MaxResImagenAdjunto" />                                
                             </div>
                             <div className='d-flex flex-row justify-content-end align-items-start'>
                             <button className='btn btn-outline-danger btn-sm m-1' onClick={()=> setModificar({...modificar, imgAdjuntos : false})}>Modificar</button>
@@ -169,7 +169,7 @@ const Superadmin = () => {
                             </legend> 
                             <div className='d-flex flex-row justify-content-start align-items-center'>
                                 <label className='labelAdjuntos' htmlFor="MaxSizeArchivoAdjunto">Tamaño Máximo</label>
-                                <input disabled={modificar.archivos} className='inputAnchoAlto' type="text" name="MaxSizeArchivoAdjunto" id="MaxSizeArchivoAdjunto" />  <span>KB</span>                              
+                                <input disabled={modificar.archivos} value={ modificar.fotoEmpleado ? parSueldos[0].maxSizeArchivoAdjunto : ""} className='inputAnchoAlto' type="text" name="MaxSizeArchivoAdjunto" id="MaxSizeArchivoAdjunto" />  <span>KB</span>                              
                             </div>
                             <div className='d-flex flex-row justify-content-end align-items-start'>
                             <button className='btn btn-outline-danger btn-sm m-1' onClick={()=> setModificar({...modificar, archivos : false})}>Modificar</button>
