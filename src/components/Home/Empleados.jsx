@@ -199,33 +199,7 @@ console.log(tokenDef)
         dispatch({ type: AXIOS_ERROR });
       });
   };
-  const handleFetchParams = async (url, action, paramOne) => {
 
-    dispatch({ type: SET_LOADING });
-    if (paramOne && paramOne) {
-      await axios
-        .get(`${url}/${paramOne},%201`)
-        .then((res) => {
-          dispatch(action(res.data.result));
-        })
-        .catch((err) => {
-          dispatch({ type: AXIOS_ERROR });
-        });
-    }
-    return;
-  };
-  const handleFetchComun = async (url, action) => {
-    dispatch({ type: SET_LOADING });
-    await axios
-      .get(url)
-      .then((res) => {
-
-        dispatch(action(res.data.result));
-      })
-      .catch((err) => {
-        dispatch({ type: AXIOS_ERROR });
-      });
-  };
 const domiciliosEmpleados = useSelector((state)=> state.generalState.domicilios)
 const empleadoDomicilio = useSelector((state)=> state.domiciliosStates.domicilioEmpleado);
 const recharge = useSelector((state)=> state.domiciliosStates.recharge);
@@ -366,7 +340,6 @@ useEffect(()=>{
     useEffect(()=>{
       axios.get(`http://54.243.192.82/api/sp_DomiciliosDatosxIdEmpleado?IdEmpleado=${empleadoUno?.iDempleado}`)
       .then((res)=>{
-        
         dispatch(addOneDomicilio(res.data))
       })
     },[empleadoUno?.iDempleado, refetch])
@@ -394,7 +367,7 @@ useEffect(()=>{
     const urlEmpleadoApYLegajo = `http://54.243.192.82/api/Empleados?records=0&page=1&filter=${responses?.browser?.inputApellidoNombreBrowser ? responses?.browser.inputApellidoNombreBrowser : null}&legajo=${responses?.browser?.inpurLegajoBrowser ? responses?.browser?.inpurLegajoBrowser : null}&ordered=true`;
     const urlApeLegOrdered = `http://54.243.192.82/api/Empleados?records=10000&filter=${responses?.browser?.inputApellidoNombreBrowser ? responses?.browser?.inputApellidoNombreBrowser : null}&legajo=${responses?.browser?.inpurLegajoBrowser ? responses?.browser?.inpurLegajoBrowser : null}&ordered=true`;
 
-    console.log(urlEmpleadoPorApellido)
+    
     async function getEmpleados(){
       if(responses.browser.inputApellidoNombreBrowser){
         await axios({method: 'get',
@@ -452,8 +425,8 @@ useEffect(()=>{
   const urlTRabajoDelete = "http://54.243.192.82/api/TrabajosAnteriores?IdTrabajoAnterior=";
   const urlDocDelte = "http://54.243.192.82/api/EmpleadosDocumentacion/"
   const urlLicDelete = "http://54.243.192.82/api/"
-    const urlEmpleadoGuarda = "http://54.243.192.82/api/Empleados/Guardar"
-    const urlDOmicilioElimina = `http://54.243.192.82/api/sp_DomiciliosElimina/1?IdEmpleador=0`
+  const urlEmpleadoGuarda = "http://54.243.192.82/api/Empleados/Guardar"
+  const urlDOmicilioElimina = `http://54.243.192.82/api/sp_DomiciliosElimina/1?IdEmpleador=0`
   const urlDeleteFAmiliar = "http://54.243.192.82/api/EliminarFamiliarPorId/"
   const urlDatoExtraElimina = "http://54.243.192.82/api/EliminarDatosExtras/"
 
@@ -547,7 +520,7 @@ useEffect(()=>{
       });
     }
   }
-  console.log(responses.formDatosPersonales?.inputImage)
+  
 
   async function deleteItems(objectRequest){
     const { urls, arrays } = objectRequest;
