@@ -426,7 +426,7 @@ useEffect(()=>{
   const urlDocDelte = "http://54.243.192.82/api/EmpleadosDocumentacion/"
   const urlLicDelete = "http://54.243.192.82/api/"
   const urlEmpleadoGuarda = "http://54.243.192.82/api/Empleados/Guardar"
-  const urlDOmicilioElimina = `http://54.243.192.82/api/sp_DomiciliosElimina/1?IdEmpleador=0`
+  const urlDOmicilioElimina = `http://54.243.192.82/api/ActualizaEliminaDomicilio/${empleadoUno?.iDempleado},`
   const urlDeleteFAmiliar = "http://54.243.192.82/api/EliminarFamiliarPorId/"
   const urlDatoExtraElimina = "http://54.243.192.82/api/EliminarDatosExtras/"
 
@@ -451,6 +451,7 @@ useEffect(()=>{
     ]
   }
 
+  console.log(idDomiciliosArray)
 
 
   const { urls, arrays } = objectRequest;
@@ -1099,8 +1100,8 @@ useEffect(()=>{
                   id
                 ]
               }
-
-              await axios.delete(`${urls.urlDOmicilioElimina}`, {data : array, headers : {'Content-Type': 'application/json;'}})
+              console.log(`${urls.urlDOmicilioElimina}${id}`)
+              await axios.delete(`${urls.urlDOmicilioElimina}${id}`, {headers : {'Content-Type': 'application/json;'}})
               .then((res) => {console.log(res);setRefectch(!refetch)})
            });
           }
@@ -1128,7 +1129,7 @@ useEffect(()=>{
           })}
         case urls.urlDOmicilioElimina : {
           arrays.idDomiciliosArray.map(async (id)=>{
-            await axios.delete(`${urls.urlDOmicilioElimina}`)
+            await axios.delete(`${urls.urlDOmicilioElimina}${id}`)
             .then((res) => console.log())
           })}
           case urls.urlDeleteFAmiliar : {
