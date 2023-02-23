@@ -165,7 +165,7 @@ const NavbarMenu = ({setTokenDef, sePerfilesUSuario, perfilesUsuario}) => {
 	const urlEmpleadores = "http://54.243.192.82/api/Empleadores"
 
 
-console.log(modalValues)
+
 //#endregion
 
 	
@@ -380,7 +380,7 @@ console.log(modalValues)
 		"fechaVto": modalValues?.fechaVto
 	}
 	
-	console.log(valueItemModal )
+	
 	
 
 	//Parentescos
@@ -499,7 +499,7 @@ console.log(modalValues)
 	function showSuperadmin(){
 
 		let perfilAdmin = perfilesUsuario && perfilesUsuario.filter((perfil)=> perfil.nombre.toLowerCase() === "administrador");
-		console.log(perfilAdmin)
+		
 		if(perfilAdmin.length > 0){
 			return(<Link class="nav-link" to="/superadmin">Superadmin</Link>)
 		}else{

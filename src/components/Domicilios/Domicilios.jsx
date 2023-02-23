@@ -29,7 +29,6 @@ const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValu
   const localidadSelected = useSelector((state)=> state.domiciliosStates.localidadSelected);
   const domicilioDelEmpleado = useSelector((state)=> state.domiciliosStates.idDomicilioSelected);
 
-  console.log(domicilioDelEmpleado)
 
   const empleadoDomicilio = useSelector((state)=> state.domiciliosStates.domicilioEmpleado);
 

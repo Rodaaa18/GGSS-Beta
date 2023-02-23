@@ -105,7 +105,7 @@ const Empleados = ({tokenDef, setTokenDef, sePerfilesUSuario}) => {
     (state) => state.generalState.conceptosXesquemas
   );
 
-console.log(tokenDef)
+
   //#region URLs
 
   const urlEstados = "http://54.243.192.82/api/Estados";
@@ -451,7 +451,7 @@ useEffect(()=>{
     ]
   }
 
-  console.log(idDomiciliosArray)
+
 
 
   const { urls, arrays } = objectRequest;
@@ -495,7 +495,7 @@ useEffect(()=>{
     try{
       await axios.delete(`http://54.243.192.82/api/Empleados/${id}`)
       .then((res)=>{
-        console.log(res)
+        
         if(res.isSuccess == true || res.status === 200){
           return swal({
             title: "Ok",
@@ -513,7 +513,7 @@ useEffect(()=>{
 
       })
     }catch(err){
-      console.log(err)
+      
       return swal({
         title: "Error",
         text: "Error al eliminar el Empleado, debe eliminar sus relaciones",
@@ -1100,9 +1100,10 @@ useEffect(()=>{
                   id
                 ]
               }
-              console.log(`${urls.urlDOmicilioElimina}${id}`)
               await axios.delete(`${urls.urlDOmicilioElimina}${id}`, {headers : {'Content-Type': 'application/json;'}})
-              .then((res) => {console.log(res);setRefectch(!refetch)})
+              .then((res) => {
+                setRefectch(!refetch)
+              })
            });
           }
     }else{
@@ -1110,7 +1111,7 @@ useEffect(()=>{
         case urls.urlTRabajoDelete : {
             arrays.idsTrabajosAnterioresDelete.map(async (id)=>{
               await axios.delete(`${urls.urlTRabajoDelete}${id}`)
-              .then((res) => console.log())
+              .then((res) => {})
             })
         }
         case urls.urlDocDelte : {
@@ -1125,22 +1126,22 @@ useEffect(()=>{
         case urls.urlLicDelete : {
            arrays.licenciasDelete.map(async (id)=>{
              await axios.delete(`${urls.urlLicDelete}${id}`)
-             .then((res) => console.log())
+             .then((res) => {})
           })}
         case urls.urlDOmicilioElimina : {
           arrays.idDomiciliosArray.map(async (id)=>{
             await axios.delete(`${urls.urlDOmicilioElimina}${id}`)
-            .then((res) => console.log())
+            .then((res) => {})
           })}
           case urls.urlDeleteFAmiliar : {
             arrays.arraysFamiliares.map(async (id)=>{
               await axios.delete(`${urls.urlDeleteFAmiliar}${id}`)
-              .then((res) => console.log())
+              .then((res) => {})
             })}
             case urls.urlDatoExtraElimina : {
               arrays.arrayIdsDatoExtra.map(async (id)=>{
                 await axios.delete(`${urls.urlDatoExtraElimina}${id}`)
-                .then((res) => console.log())
+                .then((res) => {})
               })
       }
         default : {

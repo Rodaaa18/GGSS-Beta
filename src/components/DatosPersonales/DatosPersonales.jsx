@@ -134,7 +134,6 @@ const DatosPersonales = ({ tabIndex ,handleTabChange, responses, setResponses, c
      
   }
 
-  console.log(empleadoUno);
   
   return (
       //#region Menú Principal

@@ -24,7 +24,7 @@ const Superadmin = () => {
                             <option value="">Seleccionar</option> 
                             {
                                 datosPersonalesState.estados && datosPersonalesState.estados.map((item, index)=>{
-                                    console.log(item)
+                                   
                                     return(
                                         <option key={index} value={item.idEstado}>{item.nombreEstado}</option>
                                     )
@@ -38,7 +38,7 @@ const Superadmin = () => {
                             <option value="">Seleccionar</option> 
                             {
                                 datosPersonalesState.estados && datosPersonalesState.estados.map((item, index)=>{
-                                    console.log(item)
+                                   
                                     return(
                                         <option key={index} value={item.idEstado}>{item.nombreEstado}</option>
                                     )

@@ -4,9 +4,6 @@ import { useSelector } from 'react-redux';
 const ErrorPage = ({message, statusCode}) => {
 
 
-  console.log(message)
-  console.log(statusCode)
-
   return (
     <div className="d-flex mt-5 pt-5 container align-text-center justify-content-center text-center ">
       <div className="row align-items-center">

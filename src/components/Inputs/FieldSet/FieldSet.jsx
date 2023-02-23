@@ -357,7 +357,7 @@ const FieldSet = ({
         return null;
     }
   }
-  console.log(licenciuaSelected)
+  
   async function solicitanuevaLic(bodyDetalleLicencia) {
      debugger;
     if (licenciuaSelected.fechaProrroga && licenciuaSelected.fechaProrroga) {
