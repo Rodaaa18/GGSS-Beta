@@ -31,7 +31,8 @@ const FieldSet = ({
   setLicenciaEmpladoDatos,
   setRefectch,
   refetch,
-  disabled
+  disabled,
+  setFormLicencias
 }) => {
   const columns1 = [
     "Seleccionar",
@@ -74,7 +75,7 @@ const FieldSet = ({
   }`;
   const urlDetalleLicenciaEmpleados =
     "http://54.243.192.82/api/DetalleLicenciasEmpleados";
-  const urlDeleteLicencia = "http://54.243.192.82/api/EliminarLicenciaPorId";
+  const urlDeleteLicencia = "http://54.243.192.82/api/";
   const dispatch = useDispatch();
   const urlLicenciaEmpleados = "http://54.243.192.82/api/MostrarDatosLicencias";
   const licenciasDelEmpleado = useSelector((state)=> state.licenciasState.licenciasEmpleado);
@@ -102,6 +103,7 @@ const FieldSet = ({
     fechaProrroga: null,
     nroResolucion: null,
   };
+ 
   let bodyLicenciasUpdateSolicita = {
     idLicenciaEmpleado: licenciuaSelected?.idLicenciaEmpleado,
     idEmpleado: licenciuaSelected?.idEmpleado,
@@ -115,6 +117,7 @@ const FieldSet = ({
     fechaProrroga: null,
     nroResolucion: null,
   };
+  console.log(bodyLicenciasUpdateSolicita)
   let bodyLicenciasUpdateProrroga = {
     idLicenciaEmpleado: licenciuaSelected?.idLicenciaEmpleado,
     idEmpleado: empleadoUno?.iDempleado,
@@ -173,7 +176,7 @@ const FieldSet = ({
       "idDetalleLicenciaEmpleado": detalleSeleccionado.idDetalleLicenciaEmpleado,
       "fechaSuspension": formLicencias?.inputDateSuspLic
     }
-
+    console.log(formLicencias?.inputDateSuspLic)
   async function deleteSuspencion() {
     try {
       axios
@@ -191,15 +194,22 @@ const FieldSet = ({
       });
     }
   }
+    let dateHastas = new Date(detalleSeleccionado.hasta).setHours(0, 0, 0, 0);
+    let dateSusp = new Date(formLicencias?.inputDateSuspLic).setHours(0, 0, 0, 0);
+
+    console.log(dateHastas)
+    console.log(dateSusp)
+    console.log(dateSusp.valueOf() < dateHastas.valueOf() &&
+    !formLicencias?.inputQuitaSusp)
+
+    
+    console.log(formLicencias?.inputQuitaSusp)
+
+
   async function updateDetalle(url) {
     let dateDesde = new Date(detalleSeleccionado.desde).setHours(0, 0, 0, 0);
     let dateHasta = new Date(detalleSeleccionado.hasta).setHours(0, 0, 0, 0);
-    let dateSusp = new Date(formLicencias?.inputDateSuspLic).setHours(
-      0,
-      0,
-      0,
-      0
-    );
+    let dateSusp = new Date(formLicencias?.inputDateSuspLic).setHours(0, 0, 0, 0);
 
     if (detalleSeleccionado) {
       if (
@@ -208,6 +218,8 @@ const FieldSet = ({
       ) {
         try {
           await axios.put(`http://54.243.192.82/api/DetalleLicenciasEmpleados`, bodyCreateSusp).then((res) => {
+            console.log(bodyCreateSusp)
+            console.log(res)
             setRefectch(!refetch);
           });
         } catch (err) {
@@ -450,10 +462,12 @@ const FieldSet = ({
               )}
             {selectedOption && selectedOption === "4 - Suspende Licencia" && (
               <FechaSuspencion
+                setFormLicencias={setFormLicencias}
                 setCheckeds={setChecked}
                 checked={checked}
                 valueForm={valueForm}
                 onChange={onChange}
+                formLicencias = {formLicencias}
               />
             )}
           </div>

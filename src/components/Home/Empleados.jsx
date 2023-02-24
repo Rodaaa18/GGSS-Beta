@@ -426,7 +426,7 @@ useEffect(()=>{
 
   const urlTRabajoDelete = "http://54.243.192.82/api/TrabajosAnteriores?IdTrabajoAnterior=";
   const urlDocDelte = "http://54.243.192.82/api/EmpleadosDocumentacion/"
-  const urlLicDelete = "http://54.243.192.82/api/"
+  const urlLicDelete = "http://54.243.192.82/api/deleteLicencia/"
   const urlEmpleadoGuarda = "http://54.243.192.82/api/Empleados/Guardar"
   const urlDOmicilioElimina = `http://54.243.192.82/api/ActualizaEliminaDomicilio/${empleadoUno?.iDempleado},`
   const urlDeleteFAmiliar = "http://54.243.192.82/api/EliminarFamiliarPorId/"
@@ -1176,7 +1176,7 @@ useEffect(()=>{
             }
 
             try{
-              await axios.delete(`${urls.urlLicDelete}0`, {data : array, headers : {'Content-Type': 'application/json;'}})
+              await axios.delete(`${urls.urlLicDelete}${id}`, {data : array, headers : {'Content-Type': 'application/json;','Access-Control-Allow-Origin' : '*'}})
             .then((res) => {
 
                   if(res.status === 200){

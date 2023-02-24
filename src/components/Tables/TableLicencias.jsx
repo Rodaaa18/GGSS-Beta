@@ -38,6 +38,7 @@ const TableLicencias = ({
         <tbody>
           {licenciaDelEmpleado &&
             licenciaDelEmpleado.map((valor, i) => {
+              console.log(valor)
               return (
                 <tr key={i}>
                   <th scope="row">
@@ -57,14 +58,17 @@ const TableLicencias = ({
                   </th>
                   <td>{valor.año ? valor.año : "-"}</td>
                   <td>
-                    {valor?.diasDisponiblesTotales
-                      ? valor?.diasDisponiblesTotales
-                      : "-"}
+                    {valor?.diasTomados !== 0 ? valor?.diasTomados :  valor?.diasDisponiblesTotales}
                   </td>
-                  <td>{valor?.diasTomados}</td>
                   <td>
-                    {Number(valor?.diasDisponiblesTotales) -
-                      Number(valor?.diasTomados)}
+                  {  valor?.diasTomados !== 0 && valor?.diasTomados !== valor?.diasDisponiblesTotales ?  valor?.diasTomados - valor?.diasDisponiblesTotales : valor?.diasDisponiblesTotales }
+                  
+                  </td>
+                  <td>
+                  { valor?.diasDisponiblesTotales === valor?.diasTomados ? valor?.diasTomados - valor?.diasDisponiblesTotales : valor?.diasDisponiblesTotales}
+                 {/*  {valor?.diasDisponiblesTotales
+                      ? valor?.diasDisponiblesTotales
+                      : "-"} */}
                   </td>
                   <td>
                     {valor.fechaVencimiento && valor.fechaVencimiento
@@ -83,7 +87,10 @@ const TableLicencias = ({
                       : "-"}
                   </td>
                   <td>{valor?.nroResolucion}</td>
-                  <td>{valor?.diasDisponibles}</td>
+                  <td>
+                  
+                     {valor?.diasDisponibles} 
+                  </td>
                 </tr>
               );
             })}
