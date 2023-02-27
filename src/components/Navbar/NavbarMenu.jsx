@@ -19,6 +19,7 @@ import ChildModalOptions from "../Modals/ChildModalOptions";
 import { ModalParentesco } from "../Modals/Modales Complejos/ModalParentesco";
 import { ModalPaises } from "../Modals/Modales Complejos/ModalPaises";
 import { ModalProvinciasDptos } from "../Modals/Modales Complejos/ModalProvinciasDptos";
+import ErrorPage from "../ErrorPage/ErrorPage";
 
 // import { getEstadosCivilesModal } from '../../services/fetchAPI';
 // import { useEffect } from 'react';
@@ -45,6 +46,7 @@ const NavbarMenu = ({setTokenDef, sePerfilesUSuario, perfilesUsuario}) => {
     }
 	function closeSession(){
 		setTokenDef(null);
+		localStorage.removeItem('token');
 		sePerfilesUSuario(null);
 		return navigate("/");
 	}
@@ -494,11 +496,11 @@ const NavbarMenu = ({setTokenDef, sePerfilesUSuario, perfilesUsuario}) => {
 	// 	"tareaDesempeñada": responses.modalDataInputs?.tareaDesempeñada,
 	// 	"obs": responses.modalDataInputs?.obs
 	// }
-
+	
 //#endregion ----------------------------------- Body de Lauty  -----------------------------------
 	function showSuperadmin(){
 
-		let perfilAdmin = perfilesUsuario && perfilesUsuario.filter((perfil)=> perfil.nombre.toLowerCase() === "administrador");
+		let perfilAdmin = perfilesUsuario && perfilesUsuario?.filter((perfil)=> perfil.nombre.toLowerCase() === "administrador");
 		
 		if(perfilAdmin.length > 0){
 			return(<Link class="nav-link" to="/superadmin">Superadmin</Link>)
@@ -510,7 +512,8 @@ const NavbarMenu = ({setTokenDef, sePerfilesUSuario, perfilesUsuario}) => {
 
 
 	return (
-		<nav className="row gy-3 navbar navbar-expand-lg navbar-light bg-light col-sm-12">
+		<div>
+		{ localStorage.getItem('token') ? <nav className="row gy-3 navbar navbar-expand-lg navbar-light bg-light col-sm-12">
 			<div className="container-sm">
 				<button className="navbar-toggler" type="button"
 					data-bs-toggle="collapse"
@@ -1023,7 +1026,9 @@ const NavbarMenu = ({setTokenDef, sePerfilesUSuario, perfilesUsuario}) => {
 			</div> 
 			</div> 
 			</div> 
-			</nav>
+			</nav> : <ErrorPage />
+		}
+		</div>
 )}
 
 export default NavbarMenu;

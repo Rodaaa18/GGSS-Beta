@@ -74,8 +74,9 @@ import { addDatosExtraPorEmpleado, cleanIdDe } from "../../redux/actions/extrasA
 import { setRefetch } from "../../redux/actions/modalesActions";
 import "./Home.css"
 import ErrorPage from "../ErrorPage/ErrorPage";
+import Loader from "../Loader/Loader";
 
-const Empleados = ({tokenDef, setTokenDef, sePerfilesUSuario}) => {
+const Empleados = ({tokenDef, setTokenDef, sePerfilesUSuario, loading}) => {
   const [tabIndex, setTabIndex] = useState(0);
   const [responses, setResponses] = useState({});
   const [disable, setDisable] = useState(true);
@@ -106,7 +107,7 @@ const Empleados = ({tokenDef, setTokenDef, sePerfilesUSuario}) => {
     (state) => state.generalState.conceptosXesquemas
   );
 
-
+    
   //#region URLs
 
   const urlEstados = "http://54.243.192.82/api/Estados";
@@ -1232,9 +1233,11 @@ useEffect(()=>{
         })
     }
 }
+console.log(localStorage.getItem('token'))
   return (
     <>
-    {tokenDef ? <div className="container-fluid">
+    
+    {  localStorage.getItem('token') ? <div className="container-fluid">
       <div className="row">
         <div className="col-xl-3 col-lg-3 col-md-3">
           <Browser modify={modify} setModify={setModify} deleteEmploye={deleteEmploye} setRefectch={setRefectch} refetch={refetch} disable={disable} setDisable={setDisable} setValueEmpl={setValueEmpl} responses={responses} setResponses={setResponses} />
@@ -1340,8 +1343,8 @@ useEffect(()=>{
         </button>
         <button className="btn btn-success btnEmpl" onClick={()=> deleteItems( objectRequest)}>Aceptar</button>
       </div>
-      <Footer setTokenDef={setTokenDef}/>
-    </div> : <ErrorPage/>}
+      <Footer setTokenDef={setTokenDef} tokenDef={tokenDef}/>
+    </div> : <ErrorPage loading={loading}/>}
     </>
   );
 };

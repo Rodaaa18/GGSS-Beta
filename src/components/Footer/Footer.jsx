@@ -6,7 +6,7 @@ import { AXIOS_ERROR, SET_LOADING } from '../../redux/types/fetchTypes'
 import ButtonLarge from '../Buttons/ButtonLarge'
 import "./Footer.css"
 
-const Footer = ({setTokenDef}) => {
+const Footer = ({setTokenDef, tokenDef}) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const empleadoUno = useSelector((state)=> state.employeStates.employe);
@@ -46,7 +46,7 @@ const Footer = ({setTokenDef}) => {
         <div className="col-4 salirExit ">
             <div className="row justify-content-end">
                 <div className="col-md-1">
-                    <Link className="btn btn-danger btn-lg contFooter" to="/" onClick={()=>{setTokenDef(""); navigate("/")}}>Salir</Link>
+                    <Link className="btn btn-danger btn-lg contFooter" to="/" onClick={()=>{navigate(`/?token=${tokenDef}`)}}>Salir</Link>
                 </div>
             </div>
         </div>
