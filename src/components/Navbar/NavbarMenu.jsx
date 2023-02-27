@@ -4,16 +4,64 @@ import { Link } from "react-router-dom";
 import swal from "sweetalert";
 import "./Navbar.css";
 // ------------------------ OBJECTS ------------------------
-import { objectParentescos, objectTareas, objectEstadosCiviles, objectEstudios, objectTipoDocumento, objectEstado, objectFormasDePago, objectCalles, objectPaises, objectModosLiquidacion, objectModosContratacion, objectCargos,objectProvincias } from './Objects'
+import {
+  objectParentescos,
+  objectTareas,
+  objectEstadosCiviles,
+  objectEstudios,
+  objectTipoDocumento,
+  objectEstado,
+  objectFormasDePago,
+  objectCalles,
+  objectPaises,
+  objectModosLiquidacion,
+  objectModosContratacion,
+  objectCargos,
+  objectProvincias,
+} from "./Objects";
 // -----------------------------------------------------------
 
-import { useDispatch, useSelector } from 'react-redux';
-import axios from 'axios';
-import {  actualizaDelete, actualizaDeleteFormasdePago, actualizaCreaFormasdePago, actualizaModificarFormasdePago } from '../../redux/actions/fetchActions';
-import {  setRefetch } from '../../redux/actions/modalesActions';
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import {
+  actualizaDelete,
+  actualizaDeleteFormasdePago,
+  actualizaCreaFormasdePago,
+  actualizaModificarFormasdePago,
+  actualizaModificarCargos,
+  actualizaDeleteCargos,
+  actualizaCreaCargos,
+  actualizaModificarTareas,
+  actualizaCreaTareas,
+  actualizaDeleteTareas,
+  actualizaDeleteModContratacion,
+  actualizaCreaModContratacion,
+  actualizaModificarModContratacion,
+  actualizaDeleteParentesco,
+  actualizaCreaParentesco,
+  actualizaModificarParentesco,
+  actualizaDeletePaises,
+  actualizaCreaPaises,
+  actualizaModificarPaises,
+} from "../../redux/actions/fetchActions";
+import { setRefetch } from "../../redux/actions/modalesActions";
 import ButtonCallModal from "../ButtonCallModal/ButtonCallModal";
 import ChildModal from "../Modals/ChildModal";
-import { propsModal, propsModalCalles, propsModalCargos, propsModalEstado, propsModalEstudios, propsModalFormasdePagos, propsModalModosContratacion, propsModalModosLiquidacion, propsModalPaises, propsModalParentesco, propsModalProvincias, propsModalTareas, propsModalTiposDocumento } from "../Modals/props";
+import {
+  propsModal,
+  propsModalCalles,
+  propsModalCargos,
+  propsModalEstado,
+  propsModalEstudios,
+  propsModalFormasdePagos,
+  propsModalModosContratacion,
+  propsModalModosLiquidacion,
+  propsModalPaises,
+  propsModalParentesco,
+  propsModalProvincias,
+  propsModalTareas,
+  propsModalTiposDocumento,
+} from "../Modals/props";
 import { useNavigate } from "react-router-dom";
 import ChildModalOptions from "../Modals/ChildModalOptions";
 import { ModalParentesco } from "../Modals/Modales Complejos/ModalParentesco";
@@ -25,17 +73,17 @@ import ErrorPage from "../ErrorPage/ErrorPage";
 // import { useEffect } from 'react';
 //#endregion
 
-const NavbarMenu = ({setTokenDef, sePerfilesUSuario, perfilesUsuario}) => {
-	const [ modalValues, setModalValues ] = useState({});
-	const [ nameModal, setNameModal ] = useState({});
-	const [ valueItemModal , setValueItemModal ] = useState({});
-    const [ modify, setModify ] = useState(false);
-    const [ disableModal, setDisableMOdal ] = useState(true);
-	const [ transition, setTransition ] = useState(false);
-	const [ disableModalButtons, setDisableModalButtons ] = useState(false);
-	const dispatch = useDispatch();
-	const refetch = useSelector((state)=> state.modalState.refetch);
-	const navigate = useNavigate();
+const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario }) => {
+  const [modalValues, setModalValues] = useState({});
+  const [nameModal, setNameModal] = useState({});
+  const [valueItemModal, setValueItemModal] = useState({});
+  const [modify, setModify] = useState(false);
+  const [disableModal, setDisableMOdal] = useState(true);
+  const [transition, setTransition] = useState(false);
+  const [disableModalButtons, setDisableModalButtons] = useState(false);
+  const dispatch = useDispatch();
+  const refetch = useSelector((state) => state.modalState.refetch);
+  const navigate = useNavigate();
 
 	const handleClickClose=(nameModalProp)=>{
         let newState = {...nameModal}
@@ -46,7 +94,6 @@ const NavbarMenu = ({setTokenDef, sePerfilesUSuario, perfilesUsuario}) => {
     }
 	function closeSession(){
 		setTokenDef(null);
-		localStorage.removeItem('token');
 		sePerfilesUSuario(null);
 		return navigate("/");
 	}
@@ -62,417 +109,488 @@ const NavbarMenu = ({setTokenDef, sePerfilesUSuario, perfilesUsuario}) => {
                         setDisableMOdal(true)
 						dispatch(actualizaModificarFormasdePago(id))
 
-                        return swal({
-                            title : "Ok",
-                            text : "Item actualizado con éxito",
-                            icon : "success"
-                        });
-                    }
-                    return;
-                })
-            }catch(err){
-                setModify(false);
-                setDisableMOdal(true)
-                return swal({
-                    title : "Error",
-                    text : "Error al actualizar el item" + `${err}`,
-                    icon : "error"
-                });
+            return swal({
+              title: "Ok",
+              text: "Item actualizado con éxito",
+              icon: "success",
+            });
+          }
+          return;
+        });
+      } catch (err) {
+        setModify(false);
+        setDisableMOdal(true);
+        return swal({
+          title: "Error",
+          text: "Error al actualizar el item" + `${err}`,
+          icon: "error",
+        });
+      }
+      return;
+    }
+    try {
+      await axios.post(url, body).then((res) => {
+        if (res.status === 200) {
+          dispatch(setRefetch(!refetch));
+          setDisableMOdal(true);
+          dispatch(actualizaCreaFormasdePago(body));
+          dispatch(actualizaCreaCargos(body));
+          dispatch(actualizaCreaTareas(body));
+
+          return swal({
+            title: "Ok",
+            text: "Item guardado con éxito",
+            icon: "success",
+          });
+        }
+      });
+    } catch (err) {
+      setDisableMOdal(true);
+      return swal({
+        title: "Error",
+        text: "Error al guardar el item" + `${err}`,
+        icon: "error",
+      });
+    }
+  }
+  async function deleteItemModal(
+    url,
+    id,
+    actionActualizaDelete,
+    actionActualizaDeleteFormasdePago,
+    actionActualizaDeleteCargos
+  ) {
+    swal({
+      title: "Desea eliminar el item?",
+      text: "Si confirma el item será borrado de la Base de Datos",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then(async (willDelete) => {
+      if (willDelete) {
+        try {
+          await axios.delete(`${url}/${id}`).then((res) => {
+            if (res.status === 200) {
+              dispatch(setRefetch(!refetch));
+              dispatch(actionActualizaDelete(id));
+
+              setDisableMOdal(true);
+              return swal({
+                title: "Ok",
+                text: "Item eliminado con éxito",
+                icon: "success",
+              });
             }
             return;
+          });
+        } catch (err) {
+          setDisableMOdal(true);
+          return swal({
+            title: "Error",
+            text: "Error al eliminar el item" + `${err}`,
+            icon: "error",
+          });
         }
-        try{
-            await axios
-            .post(url, body)
-            .then((res)=>{
-                if(res.status === 200){
-                    dispatch(setRefetch(!refetch))
-                    setDisableMOdal(true)
-					dispatch(actualizaCreaFormasdePago(body))
+      } else {
+        swal("Puede seguir operando");
+      }
+    });
+  }
+  //#region ----------------------------------- URLS DE LOS MODALES
+  const urlEstadosCiviles = "http://54.243.192.82/api/EstadosCiviles";
+  const urlEstudios = "http://54.243.192.82/api/Estudios";
+  const urlEstado = "http://54.243.192.82/api/Estados";
+  const urlFormasdePago = "http://54.243.192.82/api/FormasdePagos";
+  // const urlMotivosdeEgresos = "http://54.243.192.82/api/MotivosdeEgresos"
+  const urlTiposDocumento = "http://54.243.192.82/api/TiposDocumento";
+  const urlCallesDelete = "http://54.243.192.82/api/Calles";
+  const urlCalles = `http://54.243.192.82/api/Calles/0?calle=${modalValues?.calle}&obs=${modalValues?.obsCalles}&newId=0`;
+  const urlCargos = "http://54.243.192.82/api/Cargos";
+  const urlTareas = "http://54.243.192.82/api/TareasDesempeñadas";
+  const urlModosLiquidacion = "http://54.243.192.82/api/ModosLiquidacion";
+  const urlModosContratacion = "http://54.243.192.82/api/ModosContratacion";
+  const urlParentescos = "http://54.243.192.82/api/Parentescos";
+  const urlPaises = "http://54.243.192.82/api/Paises";
+  const urlProvincias = "http://54.243.192.82/api/Provincias";
+  const urlEmpleadores = "http://54.243.192.82/api/Empleadores";
 
+  //#endregion
 
-                    return swal({
-                        title : "Ok",
-                        text : "Item guardado con éxito",
-                        icon : "success"
-                    });
-                }
-            })
-        }catch(err){
-            setDisableMOdal(true)
-            return swal({
-                title : "Error",
-                text : "Error al guardar el item" + `${err}`,
-                icon : "error"
-            });
-        }
-    }
-    async function deleteItemModal(url, id, actionActualizaDelete){
-        swal({
-              title: "Desea eliminar el item?",
-              text: "Si confirma el item será borrado de la Base de Datos",
-              icon: "warning",
-              buttons: true,
-              dangerMode: true,
-            })
-            .then( async (willDelete) => {
-              if (willDelete) {
-                    try{
-                    await axios
-                        .delete(`${url}/${id}`)
-                        .then((res)=>{
-                            if(res.status === 200){
-                                dispatch(setRefetch(!refetch))
-								dispatch(actionActualizaDelete(id))
+  // estado para recargar cada vez que se ejecute un post/put/delete
+  // ESTADOS QUE GUARDAN EL VALOR DE LOS INPUTS
+  const [responses, setResponses] = useState({});
+  const [modalDataInputs, setModalDataInputs] = useState(
+    responses["modalDataInputs"]
+  );
 
-                                setDisableMOdal(true)
-                                return swal({
-                                    title : "Ok",
-                                    text : "Item eliminado con éxito",
-                                    icon : "success"
-                                });
-                            }
-                            return;
-                        })
-                }catch(err){
-                    setDisableMOdal(true)
-                    return swal({
-                        title : "Error",
-                        text : "Error al eliminar el item" + `${err}`,
-                        icon : "error"
-                    });
-                }
-              } else {
-                swal("Puede seguir operando");
-              }
-            });
-        
-    }
-//#region ----------------------------------- URLS DE LOS MODALES	
-	const urlEstadosCiviles = "http://54.243.192.82/api/EstadosCiviles"
-	const urlEstudios = "http://54.243.192.82/api/Estudios"
-	const urlEstado = "http://54.243.192.82/api/Estados"
-	const urlFormasdePago = "http://54.243.192.82/api/FormasdePagos"
-	// const urlMotivosdeEgresos = "http://54.243.192.82/api/MotivosdeEgresos"
-	const urlTiposDocumento = "http://54.243.192.82/api/TiposDocumento"
-	const urlCallesDelete = "http://54.243.192.82/api/Calles"
-	const urlCalles = `http://54.243.192.82/api/Calles/0?calle=${modalValues?.calle}&obs=${modalValues?.obsCalles}&newId=0`;
-	const urlCargos = "http://54.243.192.82/api/Cargos"
-	const urlTareas = "http://54.243.192.82/api/TareasDesempeñadas";
-	const urlModosLiquidacion = "http://54.243.192.82/api/ModosLiquidacion";
-	const urlModosContratacion = "http://54.243.192.82/api/ModosContratacion";
-	const urlParentescos = "http://54.243.192.82/api/Parentescos"
-	const urlPaises = "http://54.243.192.82/api/Paises"
-	const urlProvincias = "http://54.243.192.82/api/Provincias"
-	const urlEmpleadores = "http://54.243.192.82/api/Empleadores"
-
-
-
-//#endregion
-
-	
-	// estado para recargar cada vez que se ejecute un post/put/delete
-	// ESTADOS QUE GUARDAN EL VALOR DE LOS INPUTS
-	const [responses, setResponses] = useState({});
-	const [modalDataInputs, setModalDataInputs] = useState(responses["modalDataInputs"])
-
-	function onChangeValues(e, key){
-        
-        const newResponse = {...modalValues};
-        newResponse[key] = e;
-        setModalValues({
-          ...newResponse
-        });
-    }
+  function onChangeValues(e, key) {
+    const newResponse = { ...modalValues };
+    newResponse[key] = e;
+    setModalValues({
+      ...newResponse,
+    });
+  }
   useEffect(() => {
     setResponses({
       ...responses,
       modalDataInputs,
     });
   }, [modalDataInputs]);
-	
 
+  //#region ----------------------------------- ESTADOS DECLARADOS de Lauty  -----------------------------------
 
-//#region ----------------------------------- ESTADOS DECLARADOS de Lauty  -----------------------------------
+  //Paises
+  const paisesValue = useSelector((state) => state.generalState.paises);
+  //Calles
+  const calleValue = useSelector((state) => state.generalState.calles);
+  //Departamentos
+  const dptos = useSelector((state) => state.generalState.departamentos);
+  //Provincias
+  const provinciasValue = useSelector((state) => state.generalState.provincias);
+  //Localidades
+  const localidadesValue = useSelector(
+    (state) => state.generalState.localidades
+  );
+  //Barrios
+  const barriosValue = useSelector((state) => state.generalState.barrios);
+  //Cargos
+  const cargosValue = useSelector((state) => state.generalState.cargos);
+  //TareaDesempeñada
+  const tareaValues = useSelector(
+    (state) => state.generalState.tareaDesempeñada
+  );
+  //Formas de Pago
+  const formasDePagoValue = useSelector(
+    (state) => state.generalState.formasDePago
+  );
+  //ModosContratacion
+  const modosContratacionValue = useSelector(
+    (state) => state.generalState.modosContratacion
+  );
+  //Modos Liquidacion
+  const modosLiquidacionValue = useSelector(
+    (state) => state.generalState.modosLiquidacion
+  );
+  //Empleadores
+  const empleadoresValue = useSelector(
+    (state) => state.generalState.empleadores
+  );
+  // ----------------------------------- ID & PETITION  -----------------------------------
+  //Estados Civiles
+  const estadosCivilesValue = useSelector(
+    (state) => state.generalState.estadosCiviles
+  );
+  const estadoCivilSelected = useSelector(
+    (state) => state.modalState.estadoCivilSelected
+  );
+  const inputMascEstadosCiviles = useSelector(
+    (state) => state.modalState.formulario.inputEstadosCivilesModal
+  );
+  const inputFemEstadosCiviles = useSelector(
+    (state) => state.modalState.formulario.inputEstadosCivilesModalFem
+  );
+  const valueIdEstadoCivil = useSelector(
+    (state) => state.generalState.idEstadoCivil
+  );
 
-	//Paises
-	const paisesValue = useSelector((state)=> state.generalState.paises)
-	//Calles
-	const calleValue = useSelector((state)=> state.generalState.calles)
-	//Departamentos
-	const dptos = useSelector((state)=> state.generalState.departamentos)
-	//Provincias
-	const provinciasValue = useSelector((state)=> state.generalState.provincias)
-	//Localidades
-	const localidadesValue = useSelector((state)=> state.generalState.localidades);
-	//Barrios
-	const barriosValue = useSelector((state)=> state.generalState.barrios)
-	//Cargos
-	const cargosValue = useSelector((state)=> state.generalState.cargos);
-	//TareaDesempeñada
-	const tareaValues = useSelector((state)=> state.generalState.tareaDesempeñada);
-	//Formas de Pago
-	const formasDePagoValue = useSelector((state)=> state.generalState.formasDePago)
-	//ModosContratacion
-	const modosContratacionValue = useSelector((state)=> state.generalState.modosContratacion)
-	//Modos Liquidacion
-	const modosLiquidacionValue = useSelector((state)=> state.generalState.modosLiquidacion);
-	//Empleadores
-	const empleadoresValue = useSelector((state)=> state.generalState.empleadores)
-	// ----------------------------------- ID & PETITION  -----------------------------------
-	//Estados Civiles
-	const estadosCivilesValue = useSelector((state) => state.generalState.estadosCiviles);
-	const estadoCivilSelected = useSelector((state) => state.modalState.estadoCivilSelected);
-	const inputMascEstadosCiviles = useSelector((state) => state.modalState.formulario.inputEstadosCivilesModal);
-	const inputFemEstadosCiviles = useSelector((state) => state.modalState.formulario.inputEstadosCivilesModalFem);
-	const valueIdEstadoCivil = useSelector((state) => state.generalState.idEstadoCivil);
-	
+  // Estudios
+  const estudiosValue = useSelector((state) => state.generalState.estudios);
 
-	// Estudios
-	const estudiosValue = useSelector((state) => state.generalState.estudios)
-	
-	// Tipos de documento
-	const tiposDocumentoValue = useSelector((state) => state.generalState.tiposDocumento)
-	
-	// Parentescos
-	const parentescosValue = useSelector((state) => state.generalState.parentescos)
-	const parentescoSelected = useSelector((state) => state.modalState.parentescoSelected)
-	const inputParentesco = useSelector((state) => state.modalState.formulario.inputParentesco)
-	const inputAsignacionParent = useSelector((state) => state.modalState.formulario.inputAsignacionParent)
-	const inputGananciaParent = useSelector((state) => state.modalState.formulario.inputGananciaParent)
-	const inputImporteParent = useSelector((state) => state.modalState.formulario.inputImporteParent)
-	const textAreaParent = useSelector((state) => state.modalState.formulario.textAreaParent)
-	const valueIdParentesco = useSelector((state) => state.generalState.idParentesco)
-	// estados para los empleados
-	const estadosValue = useSelector((state) => state.generalState.estados)
-	// formas de pago
-	const formasPagoValue = useSelector((state) => state.generalState.formasDePago)
-	// tareas desempeñadas
-	const tareasValue = useSelector((state) => state.generalState.tareasDesempeñadas)
-//#endregion ----------------------------------- ESTADOS DECLARADOS de Lauty  -----------------------------------
+  // Tipos de documento
+  const tiposDocumentoValue = useSelector(
+    (state) => state.generalState.tiposDocumento
+  );
 
+  // Parentescos
+  const parentescosValue = useSelector(
+    (state) => state.generalState.parentescos
+  );
+  const parentescoSelected = useSelector(
+    (state) => state.modalState.parentescoSelected
+  );
+  const inputParentesco = useSelector(
+    (state) => state.modalState.formulario.inputParentesco
+  );
+  const inputAsignacionParent = useSelector(
+    (state) => state.modalState.formulario.inputAsignacionParent
+  );
+  const inputGananciaParent = useSelector(
+    (state) => state.modalState.formulario.inputGananciaParent
+  );
+  const inputImporteParent = useSelector(
+    (state) => state.modalState.formulario.inputImporteParent
+  );
+  const textAreaParent = useSelector(
+    (state) => state.modalState.formulario.textAreaParent
+  );
+  const valueIdParentesco = useSelector(
+    (state) => state.generalState.idParentesco
+  );
+  // estados para los empleados
+  const estadosValue = useSelector((state) => state.generalState.estados);
+  // formas de pago
+  const formasPagoValue = useSelector(
+    (state) => state.generalState.formasDePago
+  );
+  // tareas desempeñadas
+  const tareasValue = useSelector(
+    (state) => state.generalState.tareasDesempeñadas
+  );
+  //#endregion ----------------------------------- ESTADOS DECLARADOS de Lauty  -----------------------------------
 
+  //#region ----------------------------------- ID & PETITION REview -----------------------------------
+  //Estados Civiles
+  const idEstadoCivil =
+    (estadosCivilesValue &&
+      estadosCivilesValue[estadosCivilesValue.length - 1] !== undefined &&
+      estadosCivilesValue[estadosCivilesValue.length - 1].idEstadoCivil) + 1;
+  const bodyEstadosCiviles = {
+    idEstadoCivil: idEstadoCivil,
+    masculino: modalValues?.masculino,
+    femenino: modalValues?.femenino,
+  };
+  const bodyUpdateEstadosCiviles = {
+    idEstadoCivil: valueItemModal?.idEstadoCivil,
+    masculino: modalValues?.masculino,
+    femenino: modalValues?.femenino,
+  };
+  //Estudios
+  const bodyEstudios = {
+    iDestudios:
+      (estudiosValue &&
+        estudiosValue[estudiosValue.length - 1] !== undefined &&
+        estudiosValue[estudiosValue.length - 1].iDestudios) + 1,
+    estudiosNivel: modalValues?.estudiosNivel,
+    id: null,
+  };
+  const bodyUpdateEstudios = {
+    iDestudios: valueItemModal?.iDestudios,
+    estudiosNivel: modalValues?.estudiosNivel,
+    id: null,
+  };
 
-//#region ----------------------------------- ID & PETITION REview -----------------------------------
-	//Estados Civiles
-	const idEstadoCivil = ((estadosCivilesValue && estadosCivilesValue[estadosCivilesValue.length -1] !== undefined && (estadosCivilesValue[estadosCivilesValue.length -1].idEstadoCivil))+1)
-	const bodyEstadosCiviles = {
-        idEstadoCivil : idEstadoCivil,
-        masculino : modalValues?.masculino,
-        femenino : modalValues?.femenino
-    }
-    const bodyUpdateEstadosCiviles = {
-        idEstadoCivil : valueItemModal?.idEstadoCivil,
-        masculino : modalValues?.masculino,
-        femenino : modalValues?.femenino
-    }
-	//Estudios
-	const bodyEstudios = {
-		"iDestudios": ((estudiosValue && estudiosValue[estudiosValue.length - 1] !== undefined && (estudiosValue[estudiosValue.length - 1].iDestudios)) + 1),
-		"estudiosNivel": modalValues?.estudiosNivel,
-		"id" : null,
-	}
-	const bodyUpdateEstudios = {
-		"iDestudios": valueItemModal?.iDestudios,
-		"estudiosNivel": modalValues?.estudiosNivel,
-		"id" : null,
-	}
-	
-	//Tipo Documento
-	const bodyTipoDocumento =
-		{
-		"iDtipoDocumento": ((tiposDocumentoValue && tiposDocumentoValue[tiposDocumentoValue.length - 1] !== undefined && (tiposDocumentoValue[tiposDocumentoValue.length - 1].iDtipoDocumento)) + 1),
-		"tipoDocumento": modalValues?.tipoDocumento,
-		"id": null
-		}
-	const bodyUpdateTipoDocumento = {
-		"iDtipoDocumento": valueItemModal?.iDtipoDocumento, 
-		"tipoDocumento": modalValues?.tipoDocumento,
-		"id": null
-	}
+  //Tipo Documento
+  const bodyTipoDocumento = {
+    iDtipoDocumento:
+      (tiposDocumentoValue &&
+        tiposDocumentoValue[tiposDocumentoValue.length - 1] !== undefined &&
+        tiposDocumentoValue[tiposDocumentoValue.length - 1].iDtipoDocumento) +
+      1,
+    tipoDocumento: modalValues?.tipoDocumento,
+    id: null,
+  };
+  const bodyUpdateTipoDocumento = {
+    iDtipoDocumento: valueItemModal?.iDtipoDocumento,
+    tipoDocumento: modalValues?.tipoDocumento,
+    id: null,
+  };
 
-	
-	//Estados
-	const bodyEstado = {
-		"idEstado": ((estadosValue && estadosValue[estadosValue.length - 1] !== undefined && (estadosValue[estadosValue.length - 1].idEstado)) + 1),
-		"nombreEstado": modalValues?.nombreEstado,
-		"observacion": modalValues?.observacion
-	}
-	const bodyUpdateEstado = {
-		"idEstado": valueItemModal?.idEstado,
-		"nombreEstado": modalValues?.nombreEstado,
-		"observacion": modalValues?.observacion
-	}
+  //Estados
+  const bodyEstado = {
+    idEstado:
+      (estadosValue &&
+        estadosValue[estadosValue.length - 1] !== undefined &&
+        estadosValue[estadosValue.length - 1].idEstado) + 1,
+    nombreEstado: modalValues?.nombreEstado,
+    observacion: modalValues?.observacion,
+  };
+  const bodyUpdateEstado = {
+    idEstado: valueItemModal?.idEstado,
+    nombreEstado: modalValues?.nombreEstado,
+    observacion: modalValues?.observacion,
+  };
 
-	//Formas de Pagos
-	const bodyFormasDePago = {
-		"iDformadePago": ((formasPagoValue && formasPagoValue[formasPagoValue.length - 1] !== undefined && (formasPagoValue[formasPagoValue.length - 1].iDformadePago)) + 1),
-		"nombreFormadePago": modalValues?.nombreFormadePago,
-		"obs": modalValues?.observacion
-	}
-	const bodyUpdateFormasDePago = {
-		"iDformadePago": valueItemModal?.iDformadePago,
-		"nombreFormadePago": modalValues?.nombreFormadePago,
-		"obs": modalValues?.observacion
-	}
+  //Formas de Pagos
+  const bodyFormasDePago = {
+    iDformadePago:
+      (formasPagoValue &&
+        formasPagoValue[formasPagoValue.length - 1] !== undefined &&
+        formasPagoValue[formasPagoValue.length - 1].iDformadePago) + 1,
+    nombreFormadePago: modalValues?.nombreFormadePago,
+    obs: modalValues?.observacion,
+  };
+  const bodyUpdateFormasDePago = {
+    iDformadePago: valueItemModal?.iDformadePago,
+    nombreFormadePago: modalValues?.nombreFormadePago,
+    obs: modalValues?.observacion,
+  };
 
-	//Cargos
-	const bodyCargo = {
-		"iDcargo": ((cargosValue && cargosValue[cargosValue.length - 1] !== undefined && (cargosValue[cargosValue.length - 1].iDcargo)) + 1),
-		"nombreCargo": modalValues?.nombreCargo,
-		"observacion": modalValues?.observacion
-	}
-	const bodyUpdateCargo = {
-		"iDcargo": valueItemModal?.iDcargo,
-		"nombreCargo": modalValues?.nombreCargo,
-		"observacion": modalValues?.observacion
-	}
+  //Cargos
+  const bodyCargo = {
+    iDcargo:
+      (cargosValue &&
+        cargosValue[cargosValue.length - 1] !== undefined &&
+        cargosValue[cargosValue.length - 1].iDcargo) + 1,
+    nombreCargo: modalValues?.nombreCargo,
+    observacion: modalValues?.observacion,
+  };
+  const bodyUpdateCargo = {
+    iDcargo: valueItemModal?.iDcargo,
+    nombreCargo: modalValues?.nombreCargo,
+    observacion: modalValues?.observacion,
+  };
 
-	//Tareas Desempeñadas
+  //Tareas Desempeñadas
 
-	const bodyTareas = {
-		"idTareaDesempeñada" : ((tareasValue && tareasValue[tareasValue.length - 1] !== undefined && (tareasValue[tareasValue.length - 1].idTareaDesempeñada)) + 1),
-		"tareaDesempeñada" : modalValues?.tareaDesempeñada,
-		"observacion" : modalValues?.obsTareas
-	}
-	const bodyUpdateTareas = {
-		"idTareaDesempeñada" : valueItemModal?.idTareaDesempeñada,
-		"tareaDesempeñada" : modalValues?.tareaDesempeñada,
-		"observacion" : modalValues?.obsTareas
-	}
+  const bodyTareas = {
+    idTareaDesempeñada:
+      (tareasValue &&
+        tareasValue[tareasValue.length - 1] !== undefined &&
+        tareasValue[tareasValue.length - 1].idTareaDesempeñada) + 1,
+    tareaDesempeñada: modalValues?.tareaDesempeñada,
+    observacion: modalValues?.obsTareas,
+  };
+  const bodyUpdateTareas = {
+    idTareaDesempeñada: valueItemModal?.idTareaDesempeñada,
+    tareaDesempeñada: modalValues?.tareaDesempeñada,
+    observacion: modalValues?.obsTareas,
+  };
 
-	//Modos Liquidación
+  //Modos Liquidación
 
-	const bodyModosLiquidacion = {
-		"iDmodoLiquidacion": ((modosLiquidacionValue && modosLiquidacionValue[modosLiquidacionValue.length - 1] !== undefined && (modosLiquidacionValue[modosLiquidacionValue.length - 1].iDmodoLiquidacion)) + 1),
-		"modoLiquidacion": modalValues?.modoLiquidacion,
-		"observacion": modalValues?.obsModoLiquidacion,
-		"idPlanCuenta" : 0
-	}
-	const bodyUpdateModosLiquidacion = {
-		"iDmodoLiquidacion": valueItemModal?.iDmodoLiquidacion,
-		"modoLiquidacion": modalValues?.modoLiquidacion,
-		"observacion": modalValues?.obsModoLiquidacion
-	}
+  const bodyModosLiquidacion = {
+    iDmodoLiquidacion:
+      (modosLiquidacionValue &&
+        modosLiquidacionValue[modosLiquidacionValue.length - 1] !== undefined &&
+        modosLiquidacionValue[modosLiquidacionValue.length - 1]
+          .iDmodoLiquidacion) + 1,
+    modoLiquidacion: modalValues?.modoLiquidacion,
+    observacion: modalValues?.obsModoLiquidacion,
+    idPlanCuenta: 0,
+  };
+  const bodyUpdateModosLiquidacion = {
+    iDmodoLiquidacion: valueItemModal?.iDmodoLiquidacion,
+    modoLiquidacion: modalValues?.modoLiquidacion,
+    observacion: modalValues?.obsModoLiquidacion,
+  };
 
-	//Calles
-	const bodyCalle = {
-		"idCalle": ((calleValue && calleValue[calleValue.length - 1] !== undefined && (calleValue[calleValue.length - 1].idCalle)) + 1),
-		"calle": modalValues?.calle,
-		"obs": modalValues?.observacion
-	}
-	const bodyUpdateCalle = {
-		"idCalle": valueItemModal?.idCalle,
-		"calle": modalValues?.calle,
-		"obs": modalValues?.observacion
-	}
+  //Calles
+  const bodyCalle = {
+    idCalle:
+      (calleValue &&
+        calleValue[calleValue.length - 1] !== undefined &&
+        calleValue[calleValue.length - 1].idCalle) + 1,
+    calle: modalValues?.calle,
+    obs: modalValues?.observacion,
+  };
+  const bodyUpdateCalle = {
+    idCalle: valueItemModal?.idCalle,
+    calle: modalValues?.calle,
+    obs: modalValues?.observacion,
+  };
 
-	//Modos Contratación
+  //Modos Contratación
 
-	const bodyModosContratacion = {
-		"iDmodoContratacion": ((modosContratacionValue && modosContratacionValue[modosContratacionValue.length - 1] !== undefined && (modosContratacionValue[modosContratacionValue.length - 1].iDmodoContratacion)) + 1),
-		"modoContratacion": modalValues?.modoContratacion,
-		"observacion": modalValues?.observacion,
-		"fechaVto": modalValues?.fechaVto
-	}
-	const bodyUpdateModosContratacion = {
-		"iDmodoContratacion": valueItemModal?.iDmodoContratacion,
-		"modoContratacion": modalValues?.modoContratacion,
-		"observacion": modalValues?.observacion,
-		"fechaVto": modalValues?.fechaVto
-	}
-	
-	
-	
+  const bodyModosContratacion = {
+    iDmodoContratacion:
+      (modosContratacionValue &&
+        modosContratacionValue[modosContratacionValue.length - 1] !==
+          undefined &&
+        modosContratacionValue[modosContratacionValue.length - 1]
+          .iDmodoContratacion) + 1,
+    modoContratacion: modalValues?.modoContratacion,
+    observacion: modalValues?.obsModoContratacion,
+    fechaVto: modalValues?.fechaVto,
+  };
+  const bodyUpdateModosContratacion = {
+    iDmodoContratacion: valueItemModal?.iDmodoContratacion,
+    modoContratacion: modalValues?.modoContratacion,
+    observacion: modalValues?.obsModoContratacion,
+    fechaVto: modalValues?.fechaVto,
+  };
 
-	//Parentescos
-	//falta lógica
-	const bodyParentesco = {
-		"iDparentesco": ((parentescosValue && parentescosValue[parentescosValue.length - 1] !== undefined && (parentescosValue[parentescosValue.length - 1].iDparentesco)) + 1),
-		"nombreParentesco": modalValues?.nombreParentesco,
-		"observacion": modalValues?.observacion
-	}
-	const bodyUpdateParentesco = {
-		"iDparentesco": valueItemModal?.iDparentesco,
-		"nombreParentesco": modalValues?.nombreParentesco,
-		"observacion": modalValues?.observacion
-	}
+  //Parentescos
+  //falta lógica
+  const bodyParentesco = {
+    iDparentesco:
+      (parentescosValue &&
+        parentescosValue[parentescosValue.length - 1] !== undefined &&
+        parentescosValue[parentescosValue.length - 1].iDparentesco) + 1,
+    nombreParentesco: modalValues?.nombreParentesco,
+    observacion: modalValues?.observacion,
+  };
+  const bodyUpdateParentesco = {
+    iDparentesco: valueItemModal?.iDparentesco,
+    nombreParentesco: modalValues?.nombreParentesco,
+    observacion: modalValues?.observacion,
+  };
 
-	//Paises
+  //Paises
 
-	const bodyPaises = {
-		"idPais": ((paisesValue && paisesValue[paisesValue.length - 1] !== undefined && (paisesValue[paisesValue.length - 1].idPais)) + 1),
-		"nombrePais": modalValues?.nombrePais,
-		"observacion": modalValues?.observacion
-	}
-	const bodyUpdatePaises = {
-		"idPais": valueItemModal?.idPais,
-		"nombrePais": modalValues?.nombrePais,
-		"observacion": modalValues?.observacion
-	}
+  const bodyPaises = {
+    idPais:
+      (paisesValue &&
+        paisesValue[paisesValue.length - 1] !== undefined &&
+        paisesValue[paisesValue.length - 1].idPais) + 1,
+    nombrePais: modalValues?.nombrePais,
+    observacion: modalValues?.observacion,
+  };
+  const bodyUpdatePaises = {
+    idPais: valueItemModal?.idPais,
+    nombrePais: modalValues?.nombrePais,
+    observacion: modalValues?.observacion,
+  };
 
-	//Alicuotas
+  //Alicuotas
 
-	//Provincias, Deptos y demás.
-	
-	const bodyProvincias = {
-		"idProvincia": ((provinciasValue && provinciasValue[provinciasValue.length - 1] !== undefined && (provinciasValue[provinciasValue.length - 1].idProvincia)) + 1),
-		"provincia": modalValues?.provincia,
-		"observacion": modalValues?.observacion
-	}
-	const bodyUpdateProvincias = {
-		"idProvincia": valueItemModal?.idProvincia,
-		"provincia": modalValues?.provincia,
-		"observacion": modalValues?.observacion
-	}
-	
-	//Empleadores
-	const bodyEmpleadores = {
-		"iDempleador": ((empleadoresValue && empleadoresValue[empleadoresValue.length - 1] !== undefined && (empleadoresValue[empleadoresValue.length - 1].iDempleador)) + 1),
-		"razonSocial": modalValues?.razonSocial,
-		"cuit": modalValues?.cuit
-	}
-	const bodyUpdateEmpleadores = {
-		"iDempleador": valueItemModal?.iDempleador,
-		"razonSocial": modalValues?.razonSocial,
-		"cuit": modalValues?.cuit
-	}
+  //Provincias, Deptos y demás.
 
+  const bodyProvincias = {
+    idProvincia:
+      (provinciasValue &&
+        provinciasValue[provinciasValue.length - 1] !== undefined &&
+        provinciasValue[provinciasValue.length - 1].idProvincia) + 1,
+    provincia: modalValues?.provincia,
+    observacion: modalValues?.observacion,
+  };
+  const bodyUpdateProvincias = {
+    idProvincia: valueItemModal?.idProvincia,
+    provincia: modalValues?.provincia,
+    observacion: modalValues?.observacion,
+  };
 
-	
-	
-	//Parentesco para después
-	// const bodyParentesco = {
-	// 	"iDparentesco": ((parentescosValue && parentescosValue[parentescosValue.length - 1] !== undefined && (parentescosValue[parentescosValue.length - 1].iDparentesco)) + 1),
-	// 	"parentesco": modalValues?.parentesco,
-	// 	"id": null
-	// }
-	// const bodyUpdateParentesco = {
-	// 	"iDparentesco": valueItemModal?.iDparentesco,
-	// 	"parentesco": modalValues?.parentesco,
-	// 	"id": null
-	// }
+  //Empleadores
+  const bodyEmpleadores = {
+    iDempleador:
+      (empleadoresValue &&
+        empleadoresValue[empleadoresValue.length - 1] !== undefined &&
+        empleadoresValue[empleadoresValue.length - 1].iDempleador) + 1,
+    razonSocial: modalValues?.razonSocial,
+    cuit: modalValues?.cuit,
+  };
+  const bodyUpdateEmpleadores = {
+    iDempleador: valueItemModal?.iDempleador,
+    razonSocial: modalValues?.razonSocial,
+    cuit: modalValues?.cuit,
+  };
 
-	//Motivos de Ingreso se deja para VERSION 2.0
-	// const bodyMotivoIngreso = {
-	// 	"iDmotivoIngreso": ((motivosIngresoValue && motivosIngresoValue[motivosIngresoValue.length - 1] !== undefined && (motivosIngresoValue[motivosIngresoValue.length - 1].iDmotivoIngreso)) + 1),
-	// 	"nombreMotivoIngreso": modalValues?.nombreMotivoIngreso,
-	// 	"observacion": modalValues?.observacion
-	// }
-	// const bodyUpdateMotivoIngreso = {
-	// 	"iDmotivoIngreso": valueItemModal?.iDmotivoIngreso,
-	// 	"nombreMotivoIngreso": modalValues?.nombreMotivoIngreso,
-	// 	"observacion": modalValues?.observacion
-	// }
+  //Parentesco para después
+  // const bodyParentesco = {
+  // 	"iDparentesco": ((parentescosValue && parentescosValue[parentescosValue.length - 1] !== undefined && (parentescosValue[parentescosValue.length - 1].iDparentesco)) + 1),
+  // 	"parentesco": modalValues?.parentesco,
+  // 	"id": null
+  // }
+  // const bodyUpdateParentesco = {
+  // 	"iDparentesco": valueItemModal?.iDparentesco,
+  // 	"parentesco": modalValues?.parentesco,
+  // 	"id": null
+  // }
 
+  //Motivos de Ingreso se deja para VERSION 2.0
+  // const bodyMotivoIngreso = {
+  // 	"iDmotivoIngreso": ((motivosIngresoValue && motivosIngresoValue[motivosIngresoValue.length - 1] !== undefined && (motivosIngresoValue[motivosIngresoValue.length - 1].iDmotivoIngreso)) + 1),
+  // 	"nombreMotivoIngreso": modalValues?.nombreMotivoIngreso,
+  // 	"observacion": modalValues?.observacion
+  // }
+  // const bodyUpdateMotivoIngreso = {
+  // 	"iDmotivoIngreso": valueItemModal?.iDmotivoIngreso,
+  // 	"nombreMotivoIngreso": modalValues?.nombreMotivoIngreso,
+  // 	"observacion": modalValues?.observacion
+  // }
 
+  //#endregion ----------------------------------- ID Review 2023  -----------------------------------
 
-
-
-
-//#endregion ----------------------------------- ID Review 2023  -----------------------------------
-	
-//#region ----------------------------------- Body de Lauty  -----------------------------------
+  //#region ----------------------------------- Body de Lauty  -----------------------------------
 
 	// //Parentescos
 	// const idParentesco = ((parentescosValue && parentescosValue[parentescosValue.length - 1] !== undefined && (parentescosValue[parentescosValue.length - 1].iDparentesco)) + 1)
@@ -496,11 +614,11 @@ const NavbarMenu = ({setTokenDef, sePerfilesUSuario, perfilesUsuario}) => {
 	// 	"tareaDesempeñada": responses.modalDataInputs?.tareaDesempeñada,
 	// 	"obs": responses.modalDataInputs?.obs
 	// }
-	
+
 //#endregion ----------------------------------- Body de Lauty  -----------------------------------
 	function showSuperadmin(){
 
-		let perfilAdmin = perfilesUsuario && perfilesUsuario?.filter((perfil)=> perfil.nombre.toLowerCase() === "administrador");
+		let perfilAdmin = perfilesUsuario && perfilesUsuario.filter((perfil)=> perfil.nombre.toLowerCase() === "administrador");
 		
 		if(perfilAdmin.length > 0){
 			return(<Link class="nav-link" to="/superadmin">Superadmin</Link>)
@@ -512,8 +630,7 @@ const NavbarMenu = ({setTokenDef, sePerfilesUSuario, perfilesUsuario}) => {
 
 
 	return (
-		<div>
-		{ localStorage.getItem('token') ? <nav className="row gy-3 navbar navbar-expand-lg navbar-light bg-light col-sm-12">
+		<nav className="row gy-3 navbar navbar-expand-lg navbar-light bg-light col-sm-12">
 			<div className="container-sm">
 				<button className="navbar-toggler" type="button"
 					data-bs-toggle="collapse"
@@ -1026,9 +1143,7 @@ const NavbarMenu = ({setTokenDef, sePerfilesUSuario, perfilesUsuario}) => {
 			</div> 
 			</div> 
 			</div> 
-			</nav> : <ErrorPage />
-		}
-		</div>
+			</nav>
 )}
 
 export default NavbarMenu;

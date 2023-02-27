@@ -192,7 +192,9 @@ export const objectModosLiquidacion = [
 export const objectProvincias = [
   {
     "label": "Provincia",
-    "placeholder": "Córdoba"
+    "placeholder": "Córdoba",
+    "idInput" : "provincia",
+    "nameInput" : "provincia"
   }
 ]
 
@@ -210,22 +212,30 @@ export const objectDeptos = [
 export const objectLocalidades = [
   {
     "label": "Departamento",
-    "placeholder": "Santa María"
+    "placeholder": "Santa María",
+    "idInput" : "departamento",
+    "nameInput" : "departamento"
   },
   {
     "label": "Localidad",
-    "placeholder": "Alta Gracia"
+    "placeholder": "Alta Gracia",
+    "idInput" : "localidad",
+    "nameInput" : "localidad"
   }
 ]
 
 export const objectBarrios = [
   {
     "label": "Localidad",
-    "placeholder": "Alta Gracia"
+    "placeholder": "Alta Gracia",
+    "idInput" : "localidad",
+    "nameInput" : "localidad"
   },
   {
     "label": "Barrio",
-    "placeholder": "Norte"
+    "placeholder": "Norte",
+    "idInput" : "barrio",
+    "nameInput" : "barrio"
   }
 ]
 

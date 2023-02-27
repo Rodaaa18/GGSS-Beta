@@ -24,8 +24,12 @@ export const ModalPaises = ({
     actionActualizaDelete,
     actualizaCreaFormasdePago,
     actualizaModificarFormasdePago,
+    actualizaDeletePaises,
+    actualizaCreaPaises,
+    actualizaModificarPaises,
     disableModalButtons,
     setDisableModalButtons,
+
 }) => {
   return (
         <section
@@ -98,7 +102,10 @@ export const ModalPaises = ({
                 className="btn btn-dark"
                 disabled={disableModalButtons}
                 onClick={() => {
-                  functionDelete(urlApi, idAModificar, actionActualizaDelete);
+                  functionDelete(urlApi, idAModificar, 
+                    actionActualizaDelete,
+                    actualizaDeletePaises,
+                    );
                   setDisableModalButtons(true);
                 }}
               >
@@ -137,7 +144,9 @@ export const ModalPaises = ({
                     bodyUpdate,
                     idAModificar,
                     actualizaCreaFormasdePago,
-                    actualizaModificarFormasdePago
+                    actualizaModificarFormasdePago,
+                    actualizaCreaPaises,
+                    actualizaModificarPaises,
                   );
                   setDisableModalButtons(false);
                 }}

@@ -28,8 +28,18 @@ const ChildModalOptions = ({
   disableModal,
   setDisableMOdal,
   actionActualizaDelete,
+  actualizaDeleteFormasdePago,
   actualizaCreaFormasdePago,
   actualizaModificarFormasdePago,
+  actualizaDeleteCargos,
+  actualizaCreaCargos,
+  actualizaModificarCargos,
+  actualizaDeleteTareas,
+  actualizaCreaTareas,
+  actualizaModificarTareas,
+  actualizaDeleteModContratacion,
+  actualizaCreaModContratacion,
+  actualizaModificarModContratacion,
   idInputTextArea,
   disableModalButtons,
   setDisableModalButtons,
@@ -107,7 +117,15 @@ const ChildModalOptions = ({
                 className="btn btn-dark"
                 disabled={disableModalButtons}
                 onClick={() => {
-                  functionDelete(urlApi, idAModificar, actionActualizaDelete);
+                  functionDelete(
+                    urlApi,
+                    idAModificar,
+                    actionActualizaDelete,
+                    actualizaDeleteFormasdePago,
+                    actualizaDeleteCargos,
+                    actualizaDeleteTareas,
+                    actualizaDeleteModContratacion,
+                    );
                   setDisableModalButtons(true);
                 }}
               >
@@ -189,7 +207,13 @@ const ChildModalOptions = ({
                     bodyUpdate,
                     idAModificar,
                     actualizaCreaFormasdePago,
-                    actualizaModificarFormasdePago
+                    actualizaModificarFormasdePago,
+                    actualizaCreaCargos,
+                    actualizaModificarCargos,
+                    actualizaCreaTareas,
+                    actualizaModificarTareas,
+                    actualizaCreaModContratacion,
+                    actualizaModificarModContratacion,
                   );
                   setDisableModalButtons(false);
                 }}
