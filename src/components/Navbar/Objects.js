@@ -195,6 +195,24 @@ export const objectProvincias = [
     "placeholder": "Córdoba",
     "idInput" : "provincia",
     "nameInput" : "provincia"
+  },
+  {
+    "label": "Localidad",
+    "placeholder": "Localidad",
+    "idInput" : "localidad",
+    "nameInput" : "localidad"
+  },
+  {
+    "label": "Departamento",
+    "placeholder": "Departamento",
+    "idInput" : "departamento",
+    "nameInput" : "departamento"
+  },
+  {
+    "label": "Barrio",
+    "placeholder": "Barrio",
+    "idInput" : "barrio",
+    "nameInput" : "barrio"
   }
 ]
 

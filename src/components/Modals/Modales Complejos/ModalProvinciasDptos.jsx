@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import InputModal from "../../Inputs/InputModal/InputModal";
 import TextArea from "../../Inputs/TextArea/TextArea";
@@ -44,18 +44,36 @@ export const ModalProvinciasDptos = ({
   setModify,
 }) => {
   const [index, setIndex] = useState(0);
+  const generalStateData = useSelector((state)=> state.generalState)
+  const provinciaSelected = useSelector((state)=> state.modalState.provSelect);
+  const departamentoSelected = useSelector((state)=> state.modalState.dptoSelect);
+  const localidadSelected = useSelector((state)=> state.modalState.localSelect);
+  const [ arrayList, setArrayList ] = useState([]);
+
+  function updateList(array){
+    setArrayList(array)
+  }
+  useEffect(()=>{
+    updateList(arrayDepartamentos);
+    updateList(arrayLocalidades);
+    updateList(arrayBarrios);
+  },[index])
 
 
 
-  const dptos = useSelector((state) => state.generalState.departamentos);
-  //Provincias
-  const provinciasValue = useSelector((state) => state.generalState.provincias);
-  //Localidades
-  const localidadesValue = useSelector(
-    (state) => state.generalState.localidades
-  );
-  //Barrios
-  const barriosValue = useSelector((state) => state.generalState.barrios);
+
+  const arrayDepartamentos = provinciaSelected && generalStateData.departamentos !== undefined && generalStateData.departamentos !== "" ? generalStateData.departamentos.filter((departamento) => departamento.idProvincia === provinciaSelected.idProvincia) : null;
+
+
+  const arrayLocalidades = departamentoSelected && departamentoSelected && generalStateData.localidades !== undefined && generalStateData.localidades !== "" ? generalStateData.localidades.filter((localidad) => localidad.idDepartamento === departamentoSelected.idDepartamento) : null;
+
+
+  const arrayBarrios = localidadSelected  && localidadSelected &&  generalStateData.barrios !== undefined && generalStateData.barrios !== "" ? generalStateData.barrios.filter((barrio) => barrio.idLocalidad === localidadSelected.idLocalidad) : null;
+
+
+    console.log(provinciaSelected)
+    console.log(arrayBarrios)
+
   return (
     <div>
       <section
@@ -66,7 +84,7 @@ export const ModalProvinciasDptos = ({
           <div className="row p-2">
             <div className="d-flex flex-row justify-content-between align-items-center">
               <p className="h3">
-                <ins>{propsModal.nameModal}</ins>
+                <ins>{propsModal[0].nameModal}</ins>
               </p>
               <button
                 className="btn btn-outline-danger text-white fs-6 btn-md buttonModal border border-white"
@@ -97,7 +115,7 @@ export const ModalProvinciasDptos = ({
                 href="#"
                 onClick={() => setIndex(1)}
               >
-                Localidades
+                Departamentos
               </a>
             </li>
             <li class="nav-item">
@@ -107,7 +125,7 @@ export const ModalProvinciasDptos = ({
                 href="#"
                 onClick={() => setIndex(2)}
               >
-                Departamentos
+                Localidades
               </a>
             </li>
             <li class="nav-item">
@@ -124,11 +142,11 @@ export const ModalProvinciasDptos = ({
           <div className="row p-2 selectModal">
             {index === 0 && (
               <ChildProvincias
-              value={
-                formDomicilios?.inputProvinciaDomicilios ? formDomicilios?.inputProvinciaDomicilios : empleadoUno.provincia
-              }
+                /* value={
+                  formDomicilios?.inputProvinciaDomicilios ? formDomicilios?.inputProvinciaDomicilios : empleadoUno.provincia
+                }*/
                 array={generalStateData.provincias !== undefined && generalStateData.provincias !== ""  ? generalStateData.provincias : []}
-                disableModalButtons={disableModalButtons}
+                disableModalButtons={disableModalButtons} 
                 // array={array}
                 propsModal={propsModal}
                 setValueItemModal={setValueItemModal}
@@ -148,12 +166,13 @@ export const ModalProvinciasDptos = ({
             )}
             {index === 1 && (
               <ChildDepartamentos
-              value={
-                formDomicilios?.inputDepartamentosDomicilios ? formDomicilios?.inputDepartamentosDomicilios : empleadoUno.departamento
-              }
-              array={ arrayDepartamentos !== null &&  arrayDepartamentos !== undefined  ? arrayDepartamentos : []}
-              // array={array}
-              disableModalButtons={disableModalButtons}
+               /*  value={
+                  formDomicilios?.inputDepartamentosDomicilios ? formDomicilios?.inputDepartamentosDomicilios : empleadoUno.departamento
+                }
+                array={ arrayDepartamentos !== null &&  arrayDepartamentos !== undefined  ? arrayDepartamentos : []} */
+                // array={array}
+                array={ index === 1 ? arrayDepartamentos : []}
+                disableModalButtons={disableModalButtons}
                 propsModal={propsModal}
                 setValueItemModal={setValueItemModal}
                 setDisableMOdal={setDisableMOdal}
@@ -172,12 +191,13 @@ export const ModalProvinciasDptos = ({
             )}
             {index === 2 && (
               <ChildLocalidades
-              value={
-                formDomicilios?.inputLocalidadesDomicilios ? formDomicilios?.inputLocalidadesDomicilios : empleadoUno.localidad
-              }
-              array={arrayLocalidades !== undefined && arrayLocalidades !== null ? arrayLocalidades : []}
-              // array={array}
-              disableModalButtons={disableModalButtons}
+                /* value={
+                  formDomicilios?.inputLocalidadesDomicilios ? formDomicilios?.inputLocalidadesDomicilios : empleadoUno.localidad
+                }
+                array={arrayLocalidades !== undefined && arrayLocalidades !== null ? arrayLocalidades : []} */
+                // array={array}
+                array={index === 2 ? arrayLocalidades : []}
+                disableModalButtons={disableModalButtons}
                 propsModal={propsModal}
                 setValueItemModal={setValueItemModal}
                 setDisableMOdal={setDisableMOdal}
@@ -196,13 +216,13 @@ export const ModalProvinciasDptos = ({
             )}
             {index === 3 && (
               <ChildBarrios
-              value={
-                formDomicilios?.inputBarriosDomicilios ? formDomicilios?.inputBarriosDomicilios : empleadoUno.barrio
-              }
-              array={arrayBarrios !== undefined && arrayBarrios !== null ? arrayBarrios : []}
-              // array={array}
-              disableModalButtons={disableModalButtons}
-              propsModal={propsModal}
+                /* value={
+                  formDomicilios?.inputBarriosDomicilios ? formDomicilios?.inputBarriosDomicilios : empleadoUno.barrio
+                }
+                array={arrayBarrios !== undefined && arrayBarrios !== null ? arrayBarrios : []} */
+                // array={array}
+                disableModalButtons={disableModalButtons}
+                propsModal={propsModal}
                 setValueItemModal={setValueItemModal}
                 setDisableMOdal={setDisableMOdal}
                 setDisableModalButtons={setDisableModalButtons}
@@ -216,6 +236,7 @@ export const ModalProvinciasDptos = ({
                 idInputTextArea={idInputTextArea}
                 onChangeValues={onChangeValues}
                 modalValues={modalValues}
+                array={ index === 3 ? arrayBarrios : []}
               />
             )}
             <div className="d-flex flex-row-reverse w-100 ">

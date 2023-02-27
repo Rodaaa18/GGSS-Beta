@@ -1,8 +1,15 @@
 import React from 'react'
+import { useDispatch } from 'react-redux';
+import { selectedPro } from '../../../../redux/actions/modalesActions';
 import InputModal from '../../../Inputs/InputModal/InputModal';
 import TextArea from '../../../Inputs/TextArea/TextArea';
 
 const ChildProvincias = ({disableModalButtons,array,propsModal,setValueItemModal, setDisableMOdal,setDisableModalButtons ,setModify,functionDelete, urlApi, idAModificar, actionActualizaDelete, optionsInputs,onChangeValues,modalValues,usaEstados,idInputTextArea }) => {
+  
+  const dispatch = useDispatch();
+  
+  
+  
   return (
     <>
         <div className="col-xl-6 border border-2 p-2 ">
@@ -17,10 +24,10 @@ const ChildProvincias = ({disableModalButtons,array,propsModal,setValueItemModal
                       return (
                         <option
                           key={i}
-                          value={op && op[propsModal.propArrayId]}
-                          onClick={() => setValueItemModal(op)}
+                          value={op && op[propsModal[0].propArrayId]}
+                          onClick={() => {setValueItemModal(op); dispatch(selectedPro(op))}}
                         >
-                          {op && op[propsModal.propArrayOp]}
+                          {op && op[propsModal[0].propArrayOp]}
                         </option>
                       );
                     })}
@@ -60,20 +67,17 @@ const ChildProvincias = ({disableModalButtons,array,propsModal,setValueItemModal
                 </div>
               </div><div className="col-xl-6">
                   <div className="d-flex flex-column justify-content-start align-items-center">
-                    {optionsInputs.map((option, index) => {
-                      return (
+                    
                         <InputModal
                           disableModal={!disableModalButtons}
-                          key={index}
-                          placeholder={option.placeholder}
-                          nameLabel={option.label}
-                          idInput={option.idInput}
+                          placeholder={optionsInputs[0].placeholder}
+                          nameLabel={optionsInputs[0].label}
+                          idInput={optionsInputs[0].idInput}
                           onChangeValues={onChangeValues}
-                          value={option.idInput === "masculino"
+                          value={optionsInputs[0].idInput === "masculino"
                             ? modalValues?.masculino
                             : modalValues?.femenino} />
-                      );
-                    })}
+                      
                   </div>
                   <div
                     className="d-flex flex-column justify-content-center align-items-center"

@@ -1,10 +1,22 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux';
+import { selectedLoc } from '../../../../redux/actions/modalesActions';
 import InputModal from '../../../Inputs/InputModal/InputModal';
 import TextArea from '../../../Inputs/TextArea/TextArea';
 
 const ChildLocalidades = ({
-  disableModalButtons,array,propsModal,setValueItemModal, setDisableMOdal,setDisableModalButtons ,setModify,functionDelete, urlApi, idAModificar, actionActualizaDelete, optionsInputs,onChangeValues,modalValues,usaEstados,idInputTextArea
+  disableModalButtons,array,propsModal,setValueItemModal, setDisableMOdal,setDisableModalButtons ,setModify,functionDelete, urlApi, idAModificar, actionActualizaDelete, optionsInputs,onChangeValues,modalValues,usaEstados,idInputTextArea,index
 }) => {
+  const dispatch = useDispatch();
+  const [ arrayList, setArrayList ] = useState([]);
+
+  function updateList(){
+    setArrayList(array)
+  }
+  useEffect(()=>{
+    updateList();
+  },[index])
+  console.log(arrayList)
   return (
         <>
         <div className="col-xl-6 border border-2 p-2 ">
@@ -14,15 +26,15 @@ const ChildLocalidades = ({
                   aria-label="multiple select example"
                   disabled={disableModalButtons}
                 >
-                  {array &&
-                    array.map((op, i) => {
+                  {arrayList &&
+                    arrayList.map((op, i) => {
                       return (
                         <option
                           key={i}
-                          value={op && op[propsModal.propArrayId]}
-                          onClick={() => setValueItemModal(op)}
+                          value={op && op[propsModal[2].propArrayId]}
+                          onClick={() => {setValueItemModal(op); dispatch(selectedLoc(op))}}
                         >
-                          {op && op[propsModal.propArrayOp]}
+                          {op && op[propsModal[2].propArrayOp]}
                         </option>
                       );
                     })}
@@ -62,20 +74,15 @@ const ChildLocalidades = ({
                 </div>
               </div><div className="col-xl-6">
                   <div className="d-flex flex-column justify-content-start align-items-center">
-                    {optionsInputs.map((option, index) => {
-                      return (
-                        <InputModal
+                  <InputModal
                           disableModal={!disableModalButtons}
-                          key={index}
-                          placeholder={option.placeholder}
-                          nameLabel={option.label}
-                          idInput={option.idInput}
+                          placeholder={optionsInputs[1].placeholder}
+                          nameLabel={optionsInputs[1].label}
+                          idInput={optionsInputs[1].idInput}
                           onChangeValues={onChangeValues}
-                          value={option.idInput === "masculino"
+                          value={optionsInputs[1].idInput === "masculino"
                             ? modalValues?.masculino
                             : modalValues?.femenino} />
-                      );
-                    })}
                   </div>
                   <div
                     className="d-flex flex-column justify-content-center align-items-center"

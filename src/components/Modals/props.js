@@ -59,11 +59,28 @@ export const propsModalPaises = {
     propArrayOp : "nombrePais",
     nameModal : "Paises"
 };
-export const propsModalProvincias = {
-    propArrayId : "idProvincia",
-    propArrayOp : "provincia",
-    nameModal : "Provincias - Localidades - Departamentos - Barrios "
-};
+export const propsModalProvincias = [
+    {
+        propArrayId : "idProvincia",
+        propArrayOp : "provincia",
+        nameModal : "Provincias - Localidades - Departamentos - Barrios "
+    },
+    {
+        propArrayId : "idDepartamento",
+        propArrayOp : "departamento",
+        nameModal : "Provincias - Localidades - Departamentos - Barrios "
+    },
+    {
+        propArrayId : "idLocalidad",
+        propArrayOp : "localidad",
+        nameModal : "Provincias - Localidades - Departamentos - Barrios "
+    },
+    {
+        propArrayId : "idBarrio",
+        propArrayOp : "barrio",
+        nameModal : "Provincias - Localidades - Departamentos - Barrios "
+    }
+];
 export const propsModalEmpleadores = {
     propArrayId : "iDempleador",
     propArrayOp : "razonSocial",
