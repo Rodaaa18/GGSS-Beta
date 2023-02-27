@@ -38,7 +38,9 @@ export const ModalParentesco = ({
   nameInputCheckTwo,
   checked,
   nameLabelValorDeduccion,
-
+  actualizaDeleteParentesco,
+  actualizaCreaParentesco,
+  actualizaModificarParentesco,
 }) => {
   return (
     <section
@@ -111,7 +113,12 @@ export const ModalParentesco = ({
                 className="btn btn-dark"
                 disabled={disableModalButtons}
                 onClick={() => {
-                  functionDelete(urlApi, idAModificar, actionActualizaDelete);
+                  functionDelete(
+                    urlApi,
+                    idAModificar,
+                    actionActualizaDelete,
+                    actualizaDeleteParentesco
+                  );
                   setDisableModalButtons(true);
                 }}
               >
@@ -139,51 +146,52 @@ export const ModalParentesco = ({
                 );
               })}
             </div>
-    <div class="form-check p-0">
-        <label class="form-check-label" for="flexCheckDefault">
-          {nameInputCheck}
-        </label>
-        </div>
-      <div className="d-flex flex-row justify-content-start align-items-center ">
-        <input
-          className="form-check-input "
-          type="checkbox"
-          id="flexCheckChecked"
-          checked={checked}
-          disabled={disabled}
-        />
-        </div>
-        <div class="form-check p-0">
-        <label class="form-check-label" for="flexCheckDefault">
-          {nameInputCheckTwo}
-        </label>
-        </div>
-      <div className="d-flex flex-row justify-content-start align-items-center ">
-        <input
-          className="form-check-input "
-          type="checkbox"
-          id="flexCheckChecked"
-          checked={checked}
-          disabled={disabled}
-        />
-        </div>
-    <div className="">
-
-    <label for="inputPassword3" className="col-sm-4 col-form-label">{nameLabelValorDeduccion}</label>
-    <div className="col-sm-8">
-        <input
-            type="text"
-            className="inputModal"
-            // id={idInputValorDeducciones}
-            // name={idInput}
-            // placeholder={placeholder}
-            // value={value}
-            // onChange={(e) => onChange(e.target.value, inputId)} // ON CHANGE NUEVO PARA LA NUEVA FUNCION (NO ANDA)
-            // onChange={(e) => onChangeValues(e.target.value, idInput)}
-            // disabled={disableModal}
-        />
-    </div>
-        </div>
+            <div class="form-check p-0">
+              <label class="form-check-label" for="flexCheckDefault">
+                {nameInputCheck}
+              </label>
+            </div>
+            <div className="d-flex flex-row justify-content-start align-items-center ">
+              <input
+                className="form-check-input "
+                type="checkbox"
+                id="flexCheckChecked"
+                checked={checked}
+                disabled={disabled}
+              />
+            </div>
+            <div class="form-check p-0">
+              <label class="form-check-label" for="flexCheckDefault">
+                {nameInputCheckTwo}
+              </label>
+            </div>
+            <div className="d-flex flex-row justify-content-start align-items-center ">
+              <input
+                className="form-check-input "
+                type="checkbox"
+                id="flexCheckChecked"
+                checked={checked}
+                disabled={disabled}
+              />
+            </div>
+            <div className="">
+              <label for="inputPassword3" className="col-sm-4 col-form-label">
+                {nameLabelValorDeduccion}
+              </label>
+              <div className="col-sm-8">
+                <input
+                  type="text"
+                  className="inputModal"
+                  // id={idInputValorDeducciones}
+                  // name={idInput}
+                  // placeholder={placeholder}
+                  // value={value}
+                  // onChange={(e) => onChange(e.target.value, inputId)} // ON CHANGE NUEVO PARA LA NUEVA FUNCION (NO ANDA)
+                  // onChange={(e) => onChangeValues(e.target.value, idInput)}
+                  // disabled={disableModal}
+                />
+              </div>
+            </div>
             <div
               className="d-flex flex-column justify-content-center align-items-center"
               disabled={!disableModalButtons}
@@ -208,7 +216,9 @@ export const ModalParentesco = ({
                     bodyUpdate,
                     idAModificar,
                     actualizaCreaFormasdePago,
-                    actualizaModificarFormasdePago
+                    actualizaModificarFormasdePago,
+                    actualizaCreaParentesco,
+                    actualizaModificarParentesco
                   );
                   setDisableModalButtons(false);
                 }}

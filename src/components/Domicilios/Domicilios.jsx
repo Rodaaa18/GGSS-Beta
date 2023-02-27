@@ -239,7 +239,6 @@ const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValu
                   <div className="col-xl-5 col-lg-5 col-md-5 mx-4 gy-4 py-2">
                     
                       <InputCbo
-                      
                       value={
                         formDomicilios?.inputProvinciaDomicilios ? formDomicilios?.inputProvinciaDomicilios : empleadoUno.provincia
                       }
