@@ -41,6 +41,12 @@ export const ModalParentesco = ({
   actualizaDeleteParentesco,
   actualizaCreaParentesco,
   actualizaModificarParentesco,
+  idCheckGenera,
+  idCheckGanancias,
+  idInputImporte,
+  valueInputImporte,
+  actualizaCreate,
+  actualizaUpdate
 }) => {
   return (
     <section
@@ -116,8 +122,7 @@ export const ModalParentesco = ({
                   functionDelete(
                     urlApi,
                     idAModificar,
-                    actionActualizaDelete,
-                    actualizaDeleteParentesco
+                    actionActualizaDelete
                   );
                   setDisableModalButtons(true);
                 }}
@@ -154,8 +159,9 @@ export const ModalParentesco = ({
             <div className="d-flex flex-row justify-content-start align-items-center ">
               <input
                 className="form-check-input "
+                onChange={(e)=> onChangeValues(e.target.checked , idCheckGenera)}
                 type="checkbox"
-                id="flexCheckChecked"
+                id={idCheckGenera}
                 checked={checked}
                 disabled={disabled}
               />
@@ -168,8 +174,9 @@ export const ModalParentesco = ({
             <div className="d-flex flex-row justify-content-start align-items-center ">
               <input
                 className="form-check-input "
+                onChange={(e)=> onChangeValues(e.target.checked , idCheckGanancias)}
                 type="checkbox"
-                id="flexCheckChecked"
+                id={idCheckGanancias}
                 checked={checked}
                 disabled={disabled}
               />
@@ -182,7 +189,9 @@ export const ModalParentesco = ({
                 <input
                   type="text"
                   className="inputModal"
-                  // id={idInputValorDeducciones}
+                  onChange={(e)=> onChangeValues(e.target.value , idInputImporte)}
+                  id={idInputImporte}
+                  value={valueInputImporte}
                   // name={idInput}
                   // placeholder={placeholder}
                   // value={value}
@@ -215,10 +224,8 @@ export const ModalParentesco = ({
                     bodyPetition,
                     bodyUpdate,
                     idAModificar,
-                    actualizaCreaFormasdePago,
-                    actualizaModificarFormasdePago,
-                    actualizaCreaParentesco,
-                    actualizaModificarParentesco
+                    actualizaCreate,
+                    actualizaUpdate
                   );
                   setDisableModalButtons(false);
                 }}

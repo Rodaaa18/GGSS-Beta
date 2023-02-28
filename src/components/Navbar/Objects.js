@@ -159,15 +159,21 @@ export const objectCalles = [
 export const objectPaises = [
   {
     "label": "País",
-    "placeholder": "Argentina"
+    "placeholder": "Argentina",
+    "idInput" : "nombrePais",
+    "nameInput" : "calle"
   },
   {
     "label": "Nacionalidad Masc.",
-    "placeholder": "Argentino"
+    "placeholder": "Argentino",
+    "idInput" : "nacMac",
+    "nameInput" : "nacMac"
   },
   {
     "label": "Nacionalidad Fem.",
-    "placeholder": "Argentina"
+    "placeholder": "Argentina",
+    "idInput" : "nacFem",
+    "nameInput" : "nacFem"
   }
 
 ]
@@ -176,7 +182,9 @@ export const objectPaises = [
 export const objectModosContratacion = [
   {
     "label": "Modos de contratación",
-    "placeholder": "Contratado"
+    "placeholder": "Contratado",
+    "idInput" : "modoContratacion",
+    "nameInput" : "modoContratacion"
   }
 ]
 

@@ -11,11 +11,15 @@ const ChildDepartamentos = ({
 }) => {
   const [ arrayList, setArrayList ] = useState([]);
 
-  function updateList(){
-    setArrayList(array)
+  function updateList(array){
+    if(index === 1){
+      return setArrayList(array)
+    }else{
+      setArrayList([])
+    }
   }
   useEffect(()=>{
-    updateList();
+    updateList(array);
   },[index])
   const dispatch = useDispatch();
   return (

@@ -45,6 +45,9 @@ const ChildModalOptions = ({
   setDisableModalButtons,
   usaEstados,
   usaCheck,
+  actualizaCreate,
+  actualizaUpdate,
+  checked
 }) => {
   return (
     <section
@@ -177,9 +180,10 @@ const ChildModalOptions = ({
               {usaCheck && (
                 <CheckDate
                   disableModal={!disableModalButtons}
-                  idInputCheck={true}
+                  idInputCheck="fechaVto"
                   nameInput="Vencimiento"
                   onChange={onChangeValues}
+                  checked={checked}
                 ></CheckDate>
               )}
             </div>
@@ -206,14 +210,8 @@ const ChildModalOptions = ({
                     bodyPetition,
                     bodyUpdate,
                     idAModificar,
-                    actualizaCreaFormasdePago,
-                    actualizaModificarFormasdePago,
-                    actualizaCreaCargos,
-                    actualizaModificarCargos,
-                    actualizaCreaTareas,
-                    actualizaModificarTareas,
-                    actualizaCreaModContratacion,
-                    actualizaModificarModContratacion,
+                    actualizaCreate, 
+                    actualizaUpdate
                   );
                   setDisableModalButtons(false);
                 }}

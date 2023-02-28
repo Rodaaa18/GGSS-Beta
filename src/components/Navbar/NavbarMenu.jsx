@@ -43,6 +43,23 @@ import {
   actualizaDeletePaises,
   actualizaCreaPaises,
   actualizaModificarPaises,
+  actualizaCreateEstadosCiviles,
+  actualizaUpdateEstadosCiviles,
+  actualizaCreateEstudios,
+  actualizaUpdateEstudios,
+  actualizaDeleteEstudios,
+  actualizaCreateTiposDoc,
+  actualizaUpdateTiposDoc,
+  actualizaDeleteTiposDoc,
+  actualizaCreateEStados,
+  actualizaUpdateEStados,
+  actualizaDeleteEStados,
+  actualizaUpdateCalles,
+  actualizaCreateCalles,
+  actualizaDeleteCalles,
+  actualizaDeleteModLiquidacion,
+  actualizaCreaModLiquidacion,
+  actualizaModificarModLiquidacion,
 } from "../../redux/actions/fetchActions";
 import { setRefetch } from "../../redux/actions/modalesActions";
 import ButtonCallModal from "../ButtonCallModal/ButtonCallModal";
@@ -97,18 +114,17 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario }) => {
 		sePerfilesUSuario(null);
 		return navigate("/");
 	}
-	async function sendModalData(url, body,bodyUpdate, id){
+	async function sendModalData(url, body, bodyUpdate, id, actualizaCreate, actualizaUpdate, valueIdUrl, diferentUrl){
         if(modify){
             try{
                 await axios
-                .put(`${url}/${id}`, bodyUpdate)
+                .put(`${url}/${diferentUrl ? valueIdUrl : id }`, bodyUpdate)
                 .then((res)=>{
                     if(res.status === 200){
-                        dispatch(setRefetch(!refetch))
                         setModify(false);
                         setDisableMOdal(true)
-						dispatch(actualizaModificarFormasdePago(id))
-
+						dispatch(actualizaUpdate(bodyUpdate))
+                        dispatch(setRefetch(!refetch))
             return swal({
               title: "Ok",
               text: "Item actualizado con éxito",
@@ -131,12 +147,9 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario }) => {
     try {
       await axios.post(url, body).then((res) => {
         if (res.status === 200) {
-          dispatch(setRefetch(!refetch));
           setDisableMOdal(true);
-          dispatch(actualizaCreaFormasdePago(body));
-          dispatch(actualizaCreaCargos(body));
-          dispatch(actualizaCreaTareas(body));
-
+          dispatch(actualizaCreate(body));
+          dispatch(setRefetch(!refetch));
           return swal({
             title: "Ok",
             text: "Item guardado con éxito",
@@ -148,7 +161,7 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario }) => {
       setDisableMOdal(true);
       return swal({
         title: "Error",
-        text: "Error al guardar el item" + `${err}`,
+        text: "Error al guardar el item " + `${err}`,
         icon: "error",
       });
     }
@@ -156,9 +169,7 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario }) => {
   async function deleteItemModal(
     url,
     id,
-    actionActualizaDelete,
-    actionActualizaDeleteFormasdePago,
-    actionActualizaDeleteCargos
+    actualizaDelete,
   ) {
     swal({
       title: "Desea eliminar el item?",
@@ -171,9 +182,9 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario }) => {
         try {
           await axios.delete(`${url}/${id}`).then((res) => {
             if (res.status === 200) {
-              dispatch(setRefetch(!refetch));
-              dispatch(actionActualizaDelete(id));
-
+              
+              dispatch(actualizaDelete(id));
+			  dispatch(setRefetch(!refetch));
               setDisableMOdal(true);
               return swal({
                 title: "Ok",
@@ -204,7 +215,7 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario }) => {
   // const urlMotivosdeEgresos = "http://54.243.192.82/api/MotivosdeEgresos"
   const urlTiposDocumento = "http://54.243.192.82/api/TiposDocumento";
   const urlCallesDelete = "http://54.243.192.82/api/Calles";
-  const urlCalles = `http://54.243.192.82/api/Calles/0?calle=${modalValues?.calle}&obs=${modalValues?.obsCalles}&newId=0`;
+  const urlCalles = `http://54.243.192.82/api/Calles`;
   const urlCargos = "http://54.243.192.82/api/Cargos";
   const urlTareas = "http://54.243.192.82/api/TareasDesempeñadas";
   const urlModosLiquidacion = "http://54.243.192.82/api/ModosLiquidacion";
@@ -354,6 +365,7 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario }) => {
     masculino: modalValues?.masculino,
     femenino: modalValues?.femenino,
   };
+  console.log(bodyUpdateEstadosCiviles)
   //Estudios
   const bodyEstudios = {
     iDestudios:
@@ -496,10 +508,11 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario }) => {
     iDmodoContratacion: valueItemModal?.iDmodoContratacion,
     modoContratacion: modalValues?.modoContratacion,
     observacion: modalValues?.obsModoContratacion,
-    fechaVto: modalValues?.fechaVto,
+    fechaVto: modalValues?.flexCheckChecked ? modalValues?.fechaVto : null,
   };
 
   //Parentescos
+
   //falta lógica
   const bodyParentesco = {
     iDparentesco:
@@ -507,12 +520,18 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario }) => {
         parentescosValue[parentescosValue.length - 1] !== undefined &&
         parentescosValue[parentescosValue.length - 1].iDparentesco) + 1,
     nombreParentesco: modalValues?.nombreParentesco,
-    observacion: modalValues?.observacion,
+	"generaAsignacion": modalValues?.generaAsignacion,
+	"obs": modalValues?.obsParentescos,
+	"deduceGanancias": modalValues?.deduceGanancias,
+	"importeDeduce": Number(modalValues?.importe)
   };
   const bodyUpdateParentesco = {
     iDparentesco: valueItemModal?.iDparentesco,
     nombreParentesco: modalValues?.nombreParentesco,
-    observacion: modalValues?.observacion,
+    "generaAsignacion": modalValues?.generaAsignacion,
+	"obs": modalValues?.obsParentescos,
+	"deduceGanancias": modalValues?.deduceGanancias,
+	"importeDeduce": Number(modalValues?.importe)
   };
 
   //Paises
@@ -523,13 +542,16 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario }) => {
         paisesValue[paisesValue.length - 1] !== undefined &&
         paisesValue[paisesValue.length - 1].idPais) + 1,
     nombrePais: modalValues?.nombrePais,
-    observacion: modalValues?.observacion,
+	"nacionalidad_masc": modalValues?.nacMac,
+	"nacionalidad_fem": modalValues?.nacFem
   };
   const bodyUpdatePaises = {
     idPais: valueItemModal?.idPais,
     nombrePais: modalValues?.nombrePais,
-    observacion: modalValues?.observacion,
+    "nacionalidad_masc": modalValues?.nacMac,
+  	"nacionalidad_fem": modalValues?.nacFem
   };
+  console.log(bodyPaises)
 
   //Alicuotas
 
@@ -697,8 +719,8 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario }) => {
 															disableModal={disableModal}
 															setDisableMOdal={setDisableMOdal}
 															actionActualizaDelete={actualizaDelete}
-															
-
+															actualizaCreate={actualizaCreateEstadosCiviles}
+															actualizaUpdate={actualizaUpdateEstadosCiviles}
 															disableModalButtons={disableModalButtons}
 															setDisableModalButtons={setDisableModalButtons}
 															usaEstados={false}
@@ -733,7 +755,9 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario }) => {
 															setDisableMOdal={setDisableMOdal}
 															disableModalButtons={disableModalButtons}
 															setDisableModalButtons={setDisableModalButtons}
-															actionActualizaDelete={actualizaDelete}
+															actionActualizaDelete={actualizaDeleteEstudios}
+															actualizaCreate={actualizaCreateEstudios}
+															actualizaUpdate={actualizaUpdateEstudios}
 															usaEstados={false}
 														/>
 														
@@ -764,9 +788,11 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario }) => {
 															functionDelete={deleteItemModal}
 															disableModal={disableModal}
 															setDisableMOdal={setDisableMOdal}
-															actionActualizaDelete={actualizaDelete}
+															actionActualizaDelete={actualizaDeleteTiposDoc}
 															disableModalButtons={disableModalButtons}
 															setDisableModalButtons={setDisableModalButtons}
+															actualizaCreate={actualizaCreateTiposDoc}
+															actualizaUpdate={actualizaUpdateTiposDoc}
 															usaEstados={false}
 														/>
 														
@@ -799,7 +825,9 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario }) => {
 															setDisableMOdal={setDisableMOdal}
 															disableModalButtons={disableModalButtons}
 															setDisableModalButtons={setDisableModalButtons}
-															actionActualizaDelete={actualizaDelete}
+															actionActualizaDelete={actualizaDeleteEStados}
+															actualizaCreate={actualizaCreateEStados}
+															actualizaUpdate={actualizaUpdateEStados}
 															//props texarea
 															idInputTextArea="observacion"
 															usaEstados={true}
@@ -835,9 +863,8 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario }) => {
 															disableModalButtons={disableModalButtons}
 															setDisableModalButtons={setDisableModalButtons}
 															actionActualizaDelete={actualizaDeleteFormasdePago}
-															actualizaCreaFormasdePago={actualizaCreaFormasdePago}
-															actualizaModificarFormasdePago={
-																actualizaModificarFormasdePago}
+															actualizaCreate={actualizaCreaFormasdePago}
+															actualizaUpdate={actualizaModificarFormasdePago}
 															//props texarea
 															idInputTextArea="observacion"
 															usaEstados={true}
@@ -865,13 +892,15 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario }) => {
 															bodyUpdate={bodyUpdateCalle}
 															modify={modify} 
 															setModify={setModify}
-															idAModificar={ valueItemModal?.idCalle }
+															idAModificar={valueItemModal?.idCalle }
 															functionDelete={deleteItemModal}
 															disableModal={disableModal}
 															setDisableMOdal={setDisableMOdal}
-															actionActualizaDelete={actualizaDelete}
+															actionActualizaDelete={actualizaDeleteCalles}
 															disableModalButtons={disableModalButtons}
 															setDisableModalButtons={setDisableModalButtons}
+															actualizaCreate={actualizaCreateCalles}
+															actualizaUpdate={actualizaUpdateCalles}
 															usaEstados={true}
 															idInputTextArea = "obsCalles"
 															urlDelete = {urlCallesDelete}
@@ -905,7 +934,9 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario }) => {
 															functionDelete={deleteItemModal}
 															disableModal={disableModal}
 															setDisableMOdal={setDisableMOdal}
-															actionActualizaDelete={actualizaDelete}
+															actionActualizaDelete={actualizaDeleteCargos}
+															actualizaCreate={actualizaCreaCargos}
+															actualizaUpdate={actualizaModificarCargos}
 															disableModalButtons={disableModalButtons}
 															setDisableModalButtons={setDisableModalButtons}
 															usaEstados={true}
@@ -939,7 +970,9 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario }) => {
 															functionDelete={deleteItemModal}
 															disableModal={disableModal}
 															setDisableMOdal={setDisableMOdal}
-															actionActualizaDelete={actualizaDelete}
+															actionActualizaDelete={actualizaDeleteTareas}
+															actualizaCreate={actualizaCreaTareas}
+															actualizaUpdate={actualizaModificarTareas}
 															disableModalButtons={disableModalButtons}
 															setDisableModalButtons={setDisableModalButtons}
 															usaEstados={true}
@@ -973,7 +1006,9 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario }) => {
 															functionDelete={deleteItemModal}
 															disableModal={disableModal}
 															setDisableMOdal={setDisableMOdal}
-															actionActualizaDelete={actualizaDelete}
+															actionActualizaDelete={actualizaDeleteModLiquidacion}
+															actualizaCreate={actualizaCreaModLiquidacion}
+															actualizaUpdate={actualizaModificarModLiquidacion}
 															disableModalButtons={disableModalButtons}
 															setDisableModalButtons={setDisableModalButtons}
 															usaEstados={true}
@@ -1005,13 +1040,17 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario }) => {
 															setModify={setModify}
 															idAModificar={ valueItemModal?.iDmodoContratacion }
 															functionDelete={deleteItemModal}
+															actualizaCreate={actualizaCreaModContratacion}
+															actualizaUpdate={actualizaModificarModContratacion}
 															disableModal={disableModal}
 															setDisableMOdal={setDisableMOdal}
-															actionActualizaDelete={actualizaDelete}
+															actionActualizaDelete={actualizaDeleteModContratacion}
 															disableModalButtons={disableModalButtons}
 															setDisableModalButtons={setDisableModalButtons}
 															usaEstados={true}
 															usaCheck={true}
+															checked={modalValues?.flexCheckChecked}
+															idInputTextArea="obsModoContratacion"
 														/>
 													</ButtonCallModal>
 												</li>    
@@ -1040,13 +1079,20 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario }) => {
 															functionDelete={deleteItemModal}
 															disableModal={disableModal}
 															setDisableMOdal={setDisableMOdal}
-															actionActualizaDelete={actualizaDelete}
+															actionActualizaDelete={actualizaDeleteParentesco}
+															actualizaCreate={actualizaCreaParentesco}
+															actualizaUpdate={actualizaModificarParentesco}
 															disableModalButtons={disableModalButtons}
 															setDisableModalButtons={setDisableModalButtons}
 															usaEstados={true}
 															nameInputCheck="Genera Asignación"
+															idCheckGenera="generaAsignacion"
+															idCheckGanancias="deduceGanancias"
+															idInputImporte="importe"
 															nameInputCheckTwo="Deduce Ganancias"
 															nameLabelValorDeduccion="Importe"
+															idInputTextArea="obsParentescos"
+															valueInputImporte={modalValues?.importe}
 															// checked={valueItemModal?.generaAsignacion}
 														/>
 													</ButtonCallModal>
@@ -1076,14 +1122,12 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario }) => {
 															functionDelete={deleteItemModal}
 															disableModal={disableModal}
 															setDisableMOdal={setDisableMOdal}
-															actionActualizaDelete={actualizaDelete}
+															actionActualizaDelete={actualizaDeletePaises}
+															actualizaCreate={actualizaCreaPaises}
+															actualizaUpdate={actualizaModificarPaises}
 															disableModalButtons={disableModalButtons}
 															setDisableModalButtons={setDisableModalButtons}
-															// usaEstados={true}
-															// nameInputCheck="Genera Asignación"
-															// nameInputCheckTwo="Deduce Ganancias"
-															// nameLabelValorDeduccion="Importe"
-															// checked={valueItemModal?.generaAsignacion}
+															
 														/>
 													</ButtonCallModal>
 												</li>    

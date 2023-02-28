@@ -13,7 +13,7 @@
   
   .loader {
     border: 16px solid #111111; /* El spinner consiste en un círculo con un borde gris */
-    border-top: 16px solid rgb(97, 10, 18); /* Agregamos un borde azul al spinner */
+    border-top: 16px solid rgb(97, 10, 18); /* Agregamos un borde bordó al spinner */
     border-radius: 50%; /* Hacemos el borde redondeado para que parezca un círculo */
     width: 120px;
     height: 120px;

@@ -1,7 +1,7 @@
 import InputModal from '../Inputs/InputModal/InputModal';
 import TextArea from '../Inputs/TextArea/TextArea';
 import "./BasicModal.css"
-const ChildModal = ({nameModalProp, disabled, array , propsModal, optionsInputs, transition, setTransition, handleClickClose,functionAdd, functionUpdate, functionDelete, valueItemModal, setValueItemModal, onChangeValues, modalValues, urlApi, bodyPetition, bodyUpdate,setModify, modify, idAModificar, disableModal, setDisableMOdal, actionActualizaDelete, actualizaCreaFormasdePago, actualizaModificarFormasdePago, idInputTextArea, disableModalButtons , setDisableModalButtons, usaEstados, urlDelete, changeUrl}) => {
+const ChildModal = ({nameModalProp, disabled, array , propsModal, optionsInputs, transition, setTransition, handleClickClose,functionAdd, functionUpdate, functionDelete, valueItemModal, setValueItemModal, onChangeValues, modalValues, urlApi, bodyPetition, bodyUpdate,setModify, modify, idAModificar, disableModal, setDisableMOdal, actionActualizaDelete, actualizaCreate, actualizaUpdate, idInputTextArea, disableModalButtons , setDisableModalButtons, usaEstados, urlDelete, changeUrl, valueIdUrl, diferentUrl}) => {
 
   return (
     
@@ -128,7 +128,7 @@ const ChildModal = ({nameModalProp, disabled, array , propsModal, optionsInputs,
                 className="btn btn-dark m-1"
                 disabled={!disableModalButtons}
                 onClick={() =>
-                  {functionAdd(urlApi, bodyPetition, bodyUpdate, idAModificar, actualizaCreaFormasdePago, actualizaModificarFormasdePago );
+                  {functionAdd( urlApi, bodyPetition, bodyUpdate, idAModificar , actualizaCreate, actualizaUpdate, valueIdUrl, diferentUrl );
                   setDisableModalButtons(false);
                 }}
               >

@@ -1,3 +1,4 @@
+import { reject } from "lodash";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import InputModal from "../../Inputs/InputModal/InputModal";
@@ -48,18 +49,25 @@ export const ModalProvinciasDptos = ({
   const provinciaSelected = useSelector((state)=> state.modalState.provSelect);
   const departamentoSelected = useSelector((state)=> state.modalState.dptoSelect);
   const localidadSelected = useSelector((state)=> state.modalState.localSelect);
-  const [ arrayList, setArrayList ] = useState([]);
+  const [ arrayList, setArrayList ] = useState({
+  });
+  
 
-  function updateList(array){
-    setArrayList(array)
+  function updateList(array, tipo){
+    setArrayList({...arrayList,  array})
   }
+
   useEffect(()=>{
-    updateList(arrayDepartamentos);
-    updateList(arrayLocalidades);
-    updateList(arrayBarrios);
+    new Promise((resolve, reject)=>{
+      resolve(updateList(arrayDepartamentos, "departamentos"))
+    }
+    ).then(()=>{
+      new Promise((resolve, reject)=>{
+        resolve(updateList(arrayLocalidades, "localidades"))
+    }).then(()=> updateList(arrayBarrios, "barrios"))})
   },[index])
 
-
+  console.log(arrayList)
 
 
   const arrayDepartamentos = provinciaSelected && generalStateData.departamentos !== undefined && generalStateData.departamentos !== "" ? generalStateData.departamentos.filter((departamento) => departamento.idProvincia === provinciaSelected.idProvincia) : null;

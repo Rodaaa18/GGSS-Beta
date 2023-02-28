@@ -1,4 +1,4 @@
-import { ADD_CARGOS, ADD_ESTADOS, ADD_ESTADOSCIVILES, ADD_ESTUDIOS, ADD_PAISES, ADD_TIPOSDOCUMENTO, AXIOS_ERROR, SET_LOADING, ADD_TAREASDESEMPEÑADAS, ADD_PARENTESCOS, ADD_FORMASPAGO, ADD_MODOSCONTRATACION, ADD_MODOSLIQUIDACION, ADD_EMPLEADORES, ADD_DOMICLIOS, ADD_CALLES, ADD_DEPARTAMENTOS, ADD_LOCALIDADES, ADD_PROVINCIAS, ADD_BARRIOS, ADD_FAMILIARES, ADD_NEW_FAMILIAR, DELETE_ONE_FAMILIAR, ADD_CONVENIOS, ADD_CATEGORIAS, ADD_AGRUPAMIENTOS, ADD_CENTRO_COSTO, ADD_SECTOR_DEPTO, ADD_OBRAS_SOCIALES, ADD_LUGARES_DE_PAGO, ADD_BANCOS, ADD_DIRECCIONES, ADD_SINDICATOS, ADD_ESQUEMAS, ADD_NEW_ESCI, ADD_NEW_ESTUDIO, DELETE_ESCI, GET_ID_ESCI, GET_ID_ESTUDIO, DELETE_ESTUDIO, ADD_NEW_TIPODOC, GET_ID_TIPODOC, DELETE_TIPODOC, PUT_ESCI, PUT_ESTUDIO, PUT_TIPODOC, ADD_NEW_PARENTESCO, GET_ID_PARENTESCO, DELETE_PARENTESCO, PUT_PARENTESCO, ADD_NEW_ESTADO, GET_ID_ESTADO, DELETE_ESTADO, PUT_ESTADO, ADD_NEW_FORMAPAGO, GET_ID_FORMAPAGO, DELETE_FORMAPAGO, PUT_FORMAPAGO, ADD_NEW_CARGO, GET_ID_CARGO, DELETE_CARGO, PUT_CARGO, ADD_NEW_TAREA, GET_ID_TAREA, DELETE_TAREA, PUT_TAREA, ADD_CONCEPTOS, ADD_LICENCIAS_EMPLEADOS, UPDATE_LICENCIA, ADD_NEW_LICENCIA, DELETE_LICENCIA, ADD_INSTRUM_LEGALES, ADD_DATOS_EXTRAS, ADD_DOCU_EMPL, ADD_NUMERADORES, DISABLED_INPUTS, ADD_NEW_DOC, DELETE_DOC, ADD_ADIC_LIQUIDACION, ADD_ONE_DE, DELETE_DOMICILIO, SAVE_DATOS_EXTRAS_EMPLEADOS, DELETE_DATO_EXTRA_EMP, ACTUALIZA_DELETE, SAVE_TOKEN, SAVE_ERROR, SAVE_STATUS_CODE, ACTUALIZA_DELETE_FORMAS_PAGO, ACTUALIZA_CREATE_FORMAS_PAGO, ACTUALIZA_UPDATE_FORMAS_PAGO, GET_PAR_SUELDOS, ACTUALIZA_DELETE_CARGOS, ACTUALIZA_CREATE_CARGOS, ACTUALIZA_UPDATE_CARGOS, ACTUALIZA_DELETE_TAREAS, ACTUALIZA_CREATE_TAREAS, ACTUALIZA_UPDATE_TAREAS, ACTUALIZA_DELETE_MODCONTRATACION, ACTUALIZA_CREATE_MODCONTRATACION, ACTUALIZA_UPDATE_MODCONTRATACION, ACTUALIZA_DELETE_PARENTESCO, ACTUALIZA_CREATE_PARENTESCO, ACTUALIZA_UPDATE_PARENTESCO, ACTUALIZA_DELETE_PAISES, ACTUALIZA_CREATE_PAISES, ACTUALIZA_UPDATE_PAISES} from "../types/fetchTypes";
+import { ADD_CARGOS, ADD_ESTADOS, ADD_ESTADOSCIVILES, ADD_ESTUDIOS, ADD_PAISES, ADD_TIPOSDOCUMENTO, AXIOS_ERROR, SET_LOADING, ADD_TAREASDESEMPEÑADAS, ADD_PARENTESCOS, ADD_FORMASPAGO, ADD_MODOSCONTRATACION, ADD_MODOSLIQUIDACION, ADD_EMPLEADORES, ADD_DOMICLIOS, ADD_CALLES, ADD_DEPARTAMENTOS, ADD_LOCALIDADES, ADD_PROVINCIAS, ADD_BARRIOS, ADD_FAMILIARES, ADD_NEW_FAMILIAR, DELETE_ONE_FAMILIAR, ADD_CONVENIOS, ADD_CATEGORIAS, ADD_AGRUPAMIENTOS, ADD_CENTRO_COSTO, ADD_SECTOR_DEPTO, ADD_OBRAS_SOCIALES, ADD_LUGARES_DE_PAGO, ADD_BANCOS, ADD_DIRECCIONES, ADD_SINDICATOS, ADD_ESQUEMAS, ADD_NEW_ESCI, ADD_NEW_ESTUDIO, DELETE_ESCI, GET_ID_ESCI, GET_ID_ESTUDIO, DELETE_ESTUDIO, ADD_NEW_TIPODOC, GET_ID_TIPODOC, DELETE_TIPODOC, PUT_ESCI, PUT_ESTUDIO, PUT_TIPODOC, ADD_NEW_PARENTESCO, GET_ID_PARENTESCO, DELETE_PARENTESCO, PUT_PARENTESCO, ADD_NEW_ESTADO, GET_ID_ESTADO, DELETE_ESTADO, PUT_ESTADO, ADD_NEW_FORMAPAGO, GET_ID_FORMAPAGO, DELETE_FORMAPAGO, PUT_FORMAPAGO, ADD_NEW_CARGO, GET_ID_CARGO, DELETE_CARGO, PUT_CARGO, ADD_NEW_TAREA, GET_ID_TAREA, DELETE_TAREA, PUT_TAREA, ADD_CONCEPTOS, ADD_LICENCIAS_EMPLEADOS, UPDATE_LICENCIA, ADD_NEW_LICENCIA, DELETE_LICENCIA, ADD_INSTRUM_LEGALES, ADD_DATOS_EXTRAS, ADD_DOCU_EMPL, ADD_NUMERADORES, DISABLED_INPUTS, ADD_NEW_DOC, DELETE_DOC, ADD_ADIC_LIQUIDACION, ADD_ONE_DE, DELETE_DOMICILIO, SAVE_DATOS_EXTRAS_EMPLEADOS, DELETE_DATO_EXTRA_EMP, ACTUALIZA_DELETE, SAVE_TOKEN, SAVE_ERROR, SAVE_STATUS_CODE, ACTUALIZA_DELETE_FORMAS_PAGO, ACTUALIZA_CREATE_FORMAS_PAGO, ACTUALIZA_UPDATE_FORMAS_PAGO, GET_PAR_SUELDOS, ACTUALIZA_DELETE_CARGOS, ACTUALIZA_CREATE_CARGOS, ACTUALIZA_UPDATE_CARGOS, ACTUALIZA_DELETE_TAREAS, ACTUALIZA_CREATE_TAREAS, ACTUALIZA_UPDATE_TAREAS, ACTUALIZA_DELETE_MODCONTRATACION, ACTUALIZA_CREATE_MODCONTRATACION, ACTUALIZA_UPDATE_MODCONTRATACION, ACTUALIZA_DELETE_PARENTESCO, ACTUALIZA_CREATE_PARENTESCO, ACTUALIZA_UPDATE_PARENTESCO, ACTUALIZA_DELETE_PAISES, ACTUALIZA_CREATE_PAISES, ACTUALIZA_UPDATE_PAISES, ACTUALIZA_UPDATE_EC, ACTUALIZA_CREATE_EC, ACTUALIZA_DELETE_ESTUDIOS, ACTUALIZA_CREATE_ESTUDIOS, ACTUALIZA_UPDATE_ESTUDIOS, ACTUALIZA_UPDATE_TIPOSD, ACTUALIZA_CREATE_TIPOSD, ACTUALIZA_DELETE_TIPOSD, ACTUALIZA_DELETE_ESTADOS, ACTUALIZA_CREATE_ESTADOS, ACTUALIZA_UPDATE_ESTADOS, ACTUALIZA_DELETE_CALLES, ACTUALIZA_CREATE_CALLES, ACTUALIZA_UPDATE_CALLES, ACTUALIZA_DELETE_MODLIQUIDACION, ACTUALIZA_CREATE_MODLIQUIDACION, ACTUALIZA_UPDATE_MODLIQUIDACION} from "../types/fetchTypes";
 import { GET_TANTERIORES } from "../types/trabajosAnteriores";
 
 export const initialState = {
@@ -648,33 +648,103 @@ export const fetchReducer = (state = initialState, action) =>{
       return {
         ...state,
         estadosCiviles:
-          state.estadosCiviles &&
-          state.estadosCiviles.filter(
-            (estadoCivil) => estadoCivil.idEstadoCivil !== action.payload
-          ),
+          state.estadosCiviles && state.estadosCiviles.filter((estadoCivil) => estadoCivil.idEstadoCivil !== action.payload),
       };
     }
-    // case ACTUALIZA_MODIFICAR_ESCI: {
-    //     return {
-    //       ...state,
-    //       estadosCiviles:
-    //         state.estadosCiviles &&
-    //         state.estadosCiviles.filter(
-    //           (estadoCivil) => estadoCivil.idEstadoCivil !== action.payload
-    //         ),
-    //     };
-    //   }
+    case ACTUALIZA_CREATE_EC: {
+      return {
+        ...state,
+        estadosCiviles: [...state.estadosCiviles, action.payload]
+      };
+    }
+    case ACTUALIZA_UPDATE_EC: {
+      const index = state.estadosCiviles.findIndex(item => item.idEstadoCivil === action.payload.idEstadoCivil);
+      const updateList = [...state.estadosCiviles];
+      updateList[index] = action.payload;
+      return {
+        ...state,
+        estadosCiviles: updateList
+      }
+    }
 
+    //Estudios
+    case ACTUALIZA_DELETE_ESTUDIOS: {
+      return {
+        ...state,
+        estudios:
+          state.estudios && state.estudios.filter((estudio) => estudio.iDestudios !== action.payload),
+      };
+    }
+    case ACTUALIZA_CREATE_ESTUDIOS: {
+      return {
+        ...state,
+        estudios: [...state.estudios, action.payload]
+      };
+    }
+    case ACTUALIZA_UPDATE_ESTUDIOS: {
+      const index = state.estudios.findIndex(item => item.iDestudios === action.payload.iDestudios);
+      const updateList = [...state.estudios];
+      updateList[index] = action.payload;
+      return {
+        ...state,
+        estudios: updateList
+      }
+    }
+
+    //Estudios
+    case ACTUALIZA_DELETE_TIPOSD: {
+      return {
+        ...state,
+        tiposDocumento:
+          state.estudios && state.tiposDocumento.filter((estudio) => estudio.iDtipoDocumento !== action.payload),
+      };
+    }
+    case ACTUALIZA_CREATE_TIPOSD: {
+      return {
+        ...state,
+        tiposDocumento: [...state.tiposDocumento, action.payload]
+      };
+    }
+    case ACTUALIZA_UPDATE_TIPOSD: {
+      const index = state.tiposDocumento.findIndex(item => item.iDtipoDocumento === action.payload.iDtipoDocumento);
+      const updateList = [...state.tiposDocumento];
+      updateList[index] = action.payload;
+      return {
+        ...state,
+        tiposDocumento: updateList
+      }
+    }
+
+     //Estudios
+     case ACTUALIZA_DELETE_ESTADOS: {
+      return {
+        ...state,
+        estados:
+          state.estados && state.estados.filter((estado) => estado.idEstado !== action.payload),
+      };
+    }
+    case ACTUALIZA_CREATE_ESTADOS: {
+      return {
+        ...state,
+        estados: [...state.estados, action.payload]
+      };
+    }
+    case ACTUALIZA_UPDATE_ESTADOS: {
+      const index = state.estados.findIndex(item => item.idEstado === action.payload.idEstado);
+      const updateList = [...state.estados];
+      updateList[index] = action.payload;
+      return {
+        ...state,
+        estados: updateList
+      }
+    }
     //Formas de Pago
     case ACTUALIZA_DELETE_FORMAS_PAGO: {
-      const id = state.formasDePago.findIndex((item)=> item.iDformadePago === action.payload.iDformadePago)
-        const updateList = [...state.formasDePago]
-        updateList[id] = action.payload
-        return {
-            ...state,
-            formasDePago:   
-                updateList
-        }
+      return {
+        ...state,
+        formasDePago:
+          state.formasDePago && state.formasDePago.filter((formaDePago) => formaDePago.iDformadePago !== action.payload),
+      };
     }
 
     case ACTUALIZA_CREATE_FORMAS_PAGO: {
@@ -685,27 +755,48 @@ export const fetchReducer = (state = initialState, action) =>{
     }
 
     case ACTUALIZA_UPDATE_FORMAS_PAGO: {
-      const id = state.formasDePago.findIndex((item)=> item.iDformadePago === action.payload.iDformadePago)
-        const updateList = [...state.formasDePago]
-        updateList[id] = action.payload
-        return {
-            ...state,
-            formasDePago:   
-                updateList
-        }
+      const index = state.formasDePago.findIndex(item => item.iDformadePago === action.payload.iDformadePago);
+      const updateList = [...state.formasDePago];
+      updateList[index] = action.payload;
+      return {
+        ...state,
+        formasDePago: updateList
+      }
+      }
+      //Calles
+    case ACTUALIZA_DELETE_CALLES: {
+      return {
+        ...state,
+        calles:
+          state.calles && state.calles.filter((calle) => calle.idCalle !== action.payload),
+      };
+    }
+
+    case ACTUALIZA_CREATE_CALLES: {
+      return {
+        ...state,
+        calles: [...state.calles, action.payload],
+      }
+    }
+
+    case ACTUALIZA_UPDATE_CALLES: {
+      const index = state.calles.findIndex(item => item.idCalle === action.payload.idCalle);
+      const updateList = [...state.calles];
+      updateList[index] = action.payload;
+      return {
+        ...state,
+        calles: updateList
+      }
       }
 
 
       //CARGOS
       case ACTUALIZA_DELETE_CARGOS: {
-        const id = state.cargos.findIndex((item)=> item.iDcargo === action.payload.iDcargo)
-          const updateList = [...state.cargos]
-          updateList[id] = action.payload
-          return {
-              ...state,
-              cargos:   
-                  updateList
-          }
+        return {
+          ...state,
+          cargos:
+            state.cargos && state.cargos.filter((cargo) => cargo.iDcargo !== action.payload),
+        };
       }
   
       case ACTUALIZA_CREATE_CARGOS: {
@@ -716,56 +807,73 @@ export const fetchReducer = (state = initialState, action) =>{
       }
   
       case ACTUALIZA_UPDATE_CARGOS: {
-        const id = state.cargos.findIndex((item)=> item.iDcargo === action.payload.iDcargo)
-          const updateList = [...state.cargos]
-          updateList[id] = action.payload
-          return {
-              ...state,
-              cargos:   
-                  updateList
+        const index = state.cargos.findIndex(item => item.iDcargo === action.payload.iDcargo);
+        const updateList = [...state.cargos];
+        updateList[index] = action.payload;
+        return {
+          ...state,
+          cargos: updateList
           }
+        
         }
 
     //TAREAS
       case ACTUALIZA_DELETE_TAREAS: {
-        const id = state.tareas.findIndex((item)=> item.idTareaDesempeñada === action.payload.idTareaDesempeñada)
-          const updateList = [...state.tareas]
-          updateList[id] = action.payload
-          return {
-              ...state,
-              tareas:   
-                  updateList
-          }
+        return {
+          ...state,
+          tareasDesempeñadas:
+            state.tareasDesempeñadas && state.tareasDesempeñadas.filter((tarea) => tarea.idTareaDesempeñada !== action.payload),
+        };
       }
   
       case ACTUALIZA_CREATE_TAREAS: {
         return {
           ...state,
-          tareas: [...state.tareas, action.payload],
+          tareasDesempeñadas: [...state.tareasDesempeñadas, action.payload],
         }
       }
   
       case ACTUALIZA_UPDATE_TAREAS: {
-        const id = state.tareas.findIndex((item)=> item.idTareaDesempeñada === action.payload.idTareaDesempeñada)
-          const updateList = [...state.tareas]
-          updateList[id] = action.payload
+        const index = state.tareasDesempeñadas.findIndex((item)=> item.idTareaDesempeñada === action.payload.idTareaDesempeñada)
+          const updateList = [...state.tareasDesempeñadas]
+          updateList[index] = action.payload
           return {
               ...state,
-              tareas:   
-                  updateList
+              tareasDesempeñadas:updateList
+          }
+        }
+        //Modos de Contratacion
+        case ACTUALIZA_DELETE_MODLIQUIDACION: {
+          return {
+            ...state,
+            modosLiquidacion:
+              state.modosLiquidacion && state.modosLiquidacion.filter((mLiquid) => mLiquid.iDmodoLiquidacion !== action.payload),
+          };
+        }
+
+        case ACTUALIZA_CREATE_MODLIQUIDACION: {
+          return {
+            ...state,
+            modosLiquidacion: [...state.modosLiquidacion, action.payload],
           }
         }
 
+        case ACTUALIZA_UPDATE_MODLIQUIDACION: {
+            const index = state.modosLiquidacion.findIndex((item)=> item.iDmodoLiquidacion === action.payload.iDmodoLiquidacion)
+              const updateList = [...state.modosLiquidacion]
+              updateList[index] = action.payload
+              return {
+                  ...state,
+                  modosLiquidacion:updateList
+              }
+          }
     //Modos de Contratacion
      case ACTUALIZA_DELETE_MODCONTRATACION: {
-      const id = state.modosContratacion.findIndex((item)=> item.iDmodoContratacion === action.payload.iDmodoContratacion)
-        const updateList = [...state.modosContratacion]
-        updateList[id] = action.payload
-        return {
-            ...state,
-            modosContratacion:   
-                updateList
-        }
+      return {
+        ...state,
+        modosContratacion:
+          state.modosContratacion && state.modosContratacion.filter((tarea) => tarea.iDmodoContratacion !== action.payload),
+      };
     }
 
     case ACTUALIZA_CREATE_MODCONTRATACION: {
@@ -776,26 +884,22 @@ export const fetchReducer = (state = initialState, action) =>{
     }
 
     case ACTUALIZA_UPDATE_MODCONTRATACION: {
-      const id = state.modosContratacion.findIndex((item)=> item.iDmodoContratacion === action.payload.iDmodoContratacion)
-        const updateList = [...state.modosContratacion]
-        updateList[id] = action.payload
-        return {
-            ...state,
-            modosContratacion:   
-                updateList
-        }
+        const index = state.modosContratacion.findIndex((item)=> item.iDmodoContratacion === action.payload.iDmodoContratacion)
+          const updateList = [...state.modosContratacion]
+          updateList[index] = action.payload
+          return {
+              ...state,
+              modosContratacion:updateList
+          }
       }
 
       //Parentesco
      case ACTUALIZA_DELETE_PARENTESCO: {
-      const id = state.parentescos.findIndex((item)=> item.iDparentesco === action.payload.iDparentesco)
-        const updateList = [...state.parentescos]
-        updateList[id] = action.payload
-        return {
-            ...state,
-            parentescos:   
-                updateList
-        }
+      return {
+        ...state,
+        parentescos:
+          state.parentescos && state.parentescos.filter((parentesco) => parentesco.iDparentesco !== action.payload),
+      };
     }
 
     case ACTUALIZA_CREATE_PARENTESCO: {
@@ -806,27 +910,23 @@ export const fetchReducer = (state = initialState, action) =>{
     }
 
     case ACTUALIZA_UPDATE_PARENTESCO: {
-      const id = state.parentescos.findIndex((item)=> item.iDparentesco === action.payload.iDparentesco)
-        const updateList = [...state.parentescos]
-        updateList[id] = action.payload
-        return {
-            ...state,
-            parentescos:   
-                updateList
+      const index = state.parentescos.findIndex((item)=> item.iDparentesco === action.payload.iDparentesco)
+          const updateList = [...state.parentescos]
+          updateList[index] = action.payload
+          return {
+              ...state,
+              parentescos:updateList
+          }
         }
-      }
 
 
         //PAISES
      case ACTUALIZA_DELETE_PAISES: {
-      const id = state.paises.findIndex((item)=> item.idPais === action.payload.idPais)
-        const updateList = [...state.paises]
-        updateList[id] = action.payload
-        return {
-            ...state,
-            paises:   
-                updateList
-        }
+      return {
+        ...state,
+        paises:
+          state.paises && state.paises.filter((pais) => pais.idPais !== action.payload),
+      };
     }
 
     case ACTUALIZA_CREATE_PAISES: {
@@ -837,14 +937,14 @@ export const fetchReducer = (state = initialState, action) =>{
     }
 
     case ACTUALIZA_UPDATE_PAISES: {
-      const id = state.paises.findIndex((item)=> item.idPais === action.payload.idPais)
-        const updateList = [...state.paises]
-        updateList[id] = action.payload
-        return {
-            ...state,
-            paises:   
-                updateList
-        }
+          const index = state.paises.findIndex((pais)=> pais.idPais === action.payload.idPais)
+          const updateList = [...state.paises]
+          updateList[index] = action.payload
+          return {
+              ...state,
+              paises:updateList
+          }
+      
       }
 
 

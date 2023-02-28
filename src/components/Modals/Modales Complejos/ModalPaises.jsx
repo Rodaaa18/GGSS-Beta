@@ -29,7 +29,8 @@ export const ModalPaises = ({
     actualizaModificarPaises,
     disableModalButtons,
     setDisableModalButtons,
-
+    actualizaCreate,
+    actualizaUpdate
 }) => {
   return (
         <section
@@ -143,10 +144,8 @@ export const ModalPaises = ({
                     bodyPetition,
                     bodyUpdate,
                     idAModificar,
-                    actualizaCreaFormasdePago,
-                    actualizaModificarFormasdePago,
-                    actualizaCreaPaises,
-                    actualizaModificarPaises,
+                    actualizaCreate,
+                    actualizaUpdate
                   );
                   setDisableModalButtons(false);
                 }}

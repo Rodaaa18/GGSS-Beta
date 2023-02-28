@@ -1,4 +1,5 @@
 import React from 'react'
+import { useState } from 'react'
 
 export const CheckDate = ({
     nameInput,
@@ -8,9 +9,11 @@ export const CheckDate = ({
     disabled,
     idInputCheck,
     onChange,
-    datosPersonalesValue,
+    disableModal,
     }) => 
 {
+  console.log(checked)
+  const [disable, setDisable ] = useState(false)
   return (
     <div className="formulario__grupo__inputs mt-2">
         <div class="form-check p-0">
@@ -24,15 +27,18 @@ export const CheckDate = ({
           type="checkbox"
           id="flexCheckChecked"
           checked={checked}
-          disabled={disabled}
+          onChange={(e) => onChange(e.target.checked, "flexCheckChecked" )}
+          disabled={disableModal}
+          onClick={()=> setDisable(!checked)}
         />
         <input
+
           id={idInputCheck}
           className=" "
           name={idInputCheck}
           type="date"
           value={value}
-          disabled={disabled}
+          disabled={!checked}
           onChange={(e) => onChange(e.target.value, idInputCheck )}
         />
       </div>
