@@ -5,7 +5,7 @@ import { selectedPro } from '../../../../redux/actions/modalesActions';
 import InputModal from '../../../Inputs/InputModal/InputModal';
 import TextArea from '../../../Inputs/TextArea/TextArea';
 
-const ChildProvincias = ({disableModalButtons,array,propsModal,setValueItemModal, setDisableMOdal,setDisableModalButtons ,setModify,functionDelete, urlApi, idAModificar, actionActualizaDelete, optionsInputs,onChangeValues,modalValues,usaEstados,idInputTextArea, functionAdd,bodyPetition, bodyUpdate, sendDataProvincias, handleIndexChange, index }) => {
+const ChildProvincias = ({disableModalButtons,array,propsModal,setValueItemModal, setDisableMOdal,setDisableModalButtons ,setModify,functionDelete, urlApi, idAModificar, actionActualizaDelete, optionsInputs,onChangeValues,modalValues,usaEstados,idInputTextArea, functionAdd,bodyPetition, bodyUpdate, sendDataProvincias }) => {
   
   const dispatch = useDispatch();
   

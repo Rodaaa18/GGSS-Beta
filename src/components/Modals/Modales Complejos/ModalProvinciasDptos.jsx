@@ -11,8 +11,9 @@ import ChildBarrios from "./ChildsModalPDLB/ChildBarrios";
 import ChildDepartamentos from "./ChildsModalPDLB/ChildDepartamentos";
 import ChildLocalidades from "./ChildsModalPDLB/ChildLocalidades";
 import ChildProvincias from "./ChildsModalPDLB/ChildProvincias";
-import './ChildsModalPDLB.css'
-import '../BasicModal.css'
+// import './ChildsModalPDLB.css'
+// import '../BasicModal.css'
+// import '../../Navbar/Navbar.css'
 // import { Link } from 'react-router-dom';
 // import ButtonCallModal from '../../ButtonCallModal/ButtonCallModal';
 // import InputModal from '../../Inputs/InputModal/InputModal';
