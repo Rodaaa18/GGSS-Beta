@@ -1,10 +1,11 @@
 import React from 'react'
 import { useDispatch } from 'react-redux';
+import { actualizaCreaProvincias, actualizaModificarProvincias } from '../../../../redux/actions/fetchActions';
 import { selectedPro } from '../../../../redux/actions/modalesActions';
 import InputModal from '../../../Inputs/InputModal/InputModal';
 import TextArea from '../../../Inputs/TextArea/TextArea';
 
-const ChildProvincias = ({disableModalButtons,array,propsModal,setValueItemModal, setDisableMOdal,setDisableModalButtons ,setModify,functionDelete, urlApi, idAModificar, actionActualizaDelete, optionsInputs,onChangeValues,modalValues,usaEstados,idInputTextArea }) => {
+const ChildProvincias = ({disableModalButtons,array,propsModal,setValueItemModal, setDisableMOdal,setDisableModalButtons ,setModify,functionDelete, urlApi, idAModificar, actionActualizaDelete, optionsInputs,onChangeValues,modalValues,usaEstados,idInputTextArea, functionAdd,bodyPetition, bodyUpdate, sendDataProvincias }) => {
   
   const dispatch = useDispatch();
   
@@ -16,8 +17,10 @@ const ChildProvincias = ({disableModalButtons,array,propsModal,setValueItemModal
                 <select
                   className="form-select selectMenus p-0 m-0"
                   multiple
+                  id='provinciaSelect'
                   aria-label="multiple select example"
                   disabled={disableModalButtons}
+                  onChange={(e)=> onChangeValues(e.target.value, "")}
                 >
                   {array &&
                     array.map((op, i) => {
@@ -92,6 +95,31 @@ const ChildProvincias = ({disableModalButtons,array,propsModal,setValueItemModal
                       ></TextArea>
                     )}
                   </div>
+                  <div className="d-flex flex-row-reverse w-100 ">
+              <button
+                className="btn btn-dark m-1"
+                disabled={!disableModalButtons}
+                onClick={() => {
+                  sendDataProvincias(
+                    idAModificar,
+                    actualizaCreaProvincias,
+                    actualizaModificarProvincias
+                  );
+                  setDisableModalButtons(false);
+                }}
+              >
+                Aceptar
+              </button>
+              <button
+                className="btn btn-dark m-1"
+                disabled={!disableModalButtons}
+                onClick={() => {
+                  setDisableModalButtons(false);
+                }}
+              >
+                Cancelar
+              </button>
+            </div>
                 </div>
     </>
   )

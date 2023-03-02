@@ -5,18 +5,24 @@ import InputModal from '../../../Inputs/InputModal/InputModal';
 import TextArea from '../../../Inputs/TextArea/TextArea';
 
 const ChildLocalidades = ({
-  disableModalButtons,array,propsModal,setValueItemModal, setDisableMOdal,setDisableModalButtons ,setModify,functionDelete, urlApi, idAModificar, actionActualizaDelete, optionsInputs,onChangeValues,modalValues,usaEstados,idInputTextArea,index
+  disableModalButtons,array,propsModal,setValueItemModal, setDisableMOdal,setDisableModalButtons ,setModify,functionDelete, urlApi, idAModificar, actionActualizaDelete, optionsInputs,onChangeValues,modalValues,usaEstados,idInputTextArea,index,provinciaSelected
 }) => {
   const dispatch = useDispatch();
   const [ arrayList, setArrayList ] = useState([]);
 
-  function updateList(){
-    setArrayList(array)
+  function updateList(array){
+    if(index === 2){
+      return setArrayList(array)
+    }else{
+      setArrayList([])
+    }
   }
   useEffect(()=>{
-    updateList();
+    updateList(array);
   },[index])
-  console.log(arrayList)
+
+
+ 
   return (
         <>
         <div className="col-xl-6 border border-2 p-2 ">

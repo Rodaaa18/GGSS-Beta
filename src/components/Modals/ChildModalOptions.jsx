@@ -54,14 +54,14 @@ const ChildModalOptions = ({
       className={transition ? "transitionClassUp" : " transitionClassneDone "}
     >
       <div className="cortina"></div>
-      <div className="modalBodyClass p-2">
-        <div className="row p-2">
+      <div className="modalBodyClass">
+        <div className="row p-2 titleBg">
           <div className="d-flex flex-row justify-content-between align-items-center">
             <p className="h3">
               <ins>{propsModal.nameModal}</ins>
             </p>
             <button
-              className="btn btn-outline-danger text-white fs-6 btn-md buttonModal border border-white"
+              className="btn btn-outline-danger text-white fs-6 btn-md buttonModal border border-dark"
               onClick={() => {
                 handleClickClose(nameModalProp);
                 setTransition(false);

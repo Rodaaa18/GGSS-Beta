@@ -1,6 +1,10 @@
+import axios from "axios";
 import { reject } from "lodash";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import swal from "sweetalert";
+import { actualizaCreaBarrios, actualizaCreaDptos, actualizaCreaLocalidades, actualizaCreaProvincias, actualizaDeleteBarrios, actualizaDeleteDptos, actualizaDeleteLocalidades, actualizaDeleteProvincias, actualizaModificarBarrios, actualizaModificarDptos, actualizaModificarLocalidades, actualizaModificarProvincias } from "../../../redux/actions/fetchActions";
+
 import InputModal from "../../Inputs/InputModal/InputModal";
 import TextArea from "../../Inputs/TextArea/TextArea";
 import ChildBarrios from "./ChildsModalPDLB/ChildBarrios";
@@ -43,44 +47,119 @@ export const ModalProvinciasDptos = ({
   disableModalButtons,
   setDisableMOdal,
   setModify,
+  actualizaCreate,
+  actualizaUpdate,
+  modify
 }) => {
   const [index, setIndex] = useState(0);
+  const [ refetch, setRefetch ] = useState(false);
   const generalStateData = useSelector((state)=> state.generalState)
   const provinciaSelected = useSelector((state)=> state.modalState.provSelect);
   const departamentoSelected = useSelector((state)=> state.modalState.dptoSelect);
   const localidadSelected = useSelector((state)=> state.modalState.localSelect);
   const [ arrayList, setArrayList ] = useState({
   });
-  
+  const provinciasValue = useSelector((state) => state.generalState.provincias);
+  const urlProvinciaCreate = `http://54.243.192.82/api/Provincias?IdProvincia=0&Provincia=${modalValues?.provincia}&Obs=${modalValues?.obsProvincia}`
 
-  function updateList(array, tipo){
-    setArrayList({...arrayList,  array})
+  function getDeptos(){
+    debugger
+    if (provinciaSelected && generalStateData.departamentos) {
+      const arrayDepartamentos = generalStateData.departamentos.filter((departamento) => departamento.idProvincia === provinciaSelected.idProvincia);
+      setArrayList(prevState => ({...prevState, arrayDepartamentos}));
+    }
+  }
+  function getLocalidades(){
+    if (departamentoSelected && generalStateData.localidades) {
+      const arrayLocalidades = generalStateData.localidades.filter((localidad) => localidad.idDepartamento === departamentoSelected.idDepartamento);
+      setArrayList(prevState => ({...prevState, arrayLocalidades}));
+    }
+  }
+  
+  function getBarrios(){
+    if (localidadSelected && generalStateData.barrios) {
+      const arrayBarrios = generalStateData.barrios.filter((barrio) => barrio.idLocalidad === localidadSelected.idLocalidad);
+      setArrayList(prevState => ({...prevState, arrayBarrios}));
+    }
   }
 
   useEffect(()=>{
-    new Promise((resolve, reject)=>{
-      resolve(updateList(arrayDepartamentos, "departamentos"))
+    console.log("Ejecuto Efecto")
+    getDeptos()
+    getLocalidades()
+    getBarrios()
+  },[provinciaSelected,departamentoSelected,localidadSelected, refetch])
+
+  const dispatch = useDispatch();
+  
+
+  console.log(departamentoSelected)
+  console.log(refetch)
+
+
+  async function sendDataProvincias(id, actualizaCreate, actualizaUpdate){
+    if(modify){
+        try{
+            await axios.post(`http://54.243.192.82/api/Provincias?IdProvincia=${id}&Provincia=${modalValues?.provincia}&Obs=${modalValues?.obsProvincia}`).then((res=>{
+              if(res.status === 200){
+                dispatch(actualizaUpdate({
+                  "idProvincia": id,
+                  "provincia": modalValues?.provincia,
+                  "obs": modalValues?.obsProvincia
+                }))
+                setModify(false);
+                setDisableMOdal(true)
+                setRefetch(!refetch)
+                return swal({
+                  title : "Ok",
+                  text : "Provincia actualizada con éxito",
+                  icon : "success"
+                });
+              }
+            }))
+        }catch(err){
+          setModify(false);
+          setDisableMOdal(true);
+            return swal({
+              title : "Error",
+              text : "Error al actualizar la Provincia" + err,
+              icon : "error"
+            });
+        }
+    }else{
+      try{
+        await axios.post(`http://54.243.192.82/api/Provincias?IdProvincia=0&Provincia=${modalValues?.provincia}&Obs=${modalValues?.obsProvincia}`).then((res=>{
+          if(res.status === 200){
+            setDisableMOdal(true);
+            dispatch(actualizaCreate({
+              "idProvincia": (provinciasValue &&
+                provinciasValue[provinciasValue.length - 1] !== undefined &&
+                provinciasValue[provinciasValue.length - 1].idProvincia) + 1,
+              "provincia": modalValues?.provincia,
+              "obs": modalValues?.obsProvincia
+            }));
+            setRefetch(!refetch)
+            return swal({
+              title : "Ok",
+              text : "Provincia creada con éxito",
+              icon : "success"
+            });
+          }
+        }))
+      }catch(err){
+        setDisableMOdal(true);
+        return swal({
+          title : "Error",
+          text : "Error al crear la Provincia" + err,
+          icon : "error"
+        });
+      }
     }
-    ).then(()=>{
-      new Promise((resolve, reject)=>{
-        resolve(updateList(arrayLocalidades, "localidades"))
-    }).then(()=> updateList(arrayBarrios, "barrios"))})
-  },[index])
+    
+  }
 
-  console.log(arrayList)
+  
 
-
-  const arrayDepartamentos = provinciaSelected && generalStateData.departamentos !== undefined && generalStateData.departamentos !== "" ? generalStateData.departamentos.filter((departamento) => departamento.idProvincia === provinciaSelected.idProvincia) : null;
-
-
-  const arrayLocalidades = departamentoSelected && departamentoSelected && generalStateData.localidades !== undefined && generalStateData.localidades !== "" ? generalStateData.localidades.filter((localidad) => localidad.idDepartamento === departamentoSelected.idDepartamento) : null;
-
-
-  const arrayBarrios = localidadSelected  && localidadSelected &&  generalStateData.barrios !== undefined && generalStateData.barrios !== "" ? generalStateData.barrios.filter((barrio) => barrio.idLocalidad === localidadSelected.idLocalidad) : null;
-
-
-    console.log(provinciaSelected)
-    console.log(arrayBarrios)
 
   return (
     <div>
@@ -88,14 +167,14 @@ export const ModalProvinciasDptos = ({
         className={transition ? "transitionClassUp" : " transitionClassneDone "}
       >
         <div className="cortina"></div>
-        <div className="modalBodyClass p-2">
-          <div className="row p-2">
+        <div className="modalBodyClass">
+          <div className="row p-2 titleBg">
             <div className="d-flex flex-row justify-content-between align-items-center">
               <p className="h3">
                 <ins>{propsModal[0].nameModal}</ins>
               </p>
               <button
-                className="btn btn-outline-danger text-white fs-6 btn-md buttonModal border border-white"
+                className="btn btn-outline-danger text-white fs-6 btn-md buttonModal border border-dark"
                 onClick={() => {
                   handleClickClose(nameModalProp);
                   setTransition(false);
@@ -150,12 +229,8 @@ export const ModalProvinciasDptos = ({
           <div className="row p-2 selectModal">
             {index === 0 && (
               <ChildProvincias
-                /* value={
-                  formDomicilios?.inputProvinciaDomicilios ? formDomicilios?.inputProvinciaDomicilios : empleadoUno.provincia
-                }*/
                 array={generalStateData.provincias !== undefined && generalStateData.provincias !== ""  ? generalStateData.provincias : []}
                 disableModalButtons={disableModalButtons} 
-                // array={array}
                 propsModal={propsModal}
                 setValueItemModal={setValueItemModal}
                 setDisableMOdal={setDisableMOdal}
@@ -163,23 +238,21 @@ export const ModalProvinciasDptos = ({
                 setModify={setModify}
                 functionDelete={functionDelete}
                 urlApi={urlApi}
-                idAModificar={idAModificar}
-                actionActualizaDelete={actionActualizaDelete}
+                idAModificar={provinciaSelected?.idProvincia}
                 optionsInputs={optionsInputs}
                 usaEstados={usaEstados}
-                idInputTextArea={idInputTextArea}
+                idInputTextArea="obsProvincia"
                 onChangeValues={onChangeValues}
                 modalValues={modalValues}
+                actionActualizaDelete={actualizaDeleteProvincias}
+                actualizaCreate={actualizaCreaProvincias}
+                actualizaUpdate={actualizaModificarProvincias}
+                sendDataProvincias={sendDataProvincias}
               />
             )}
             {index === 1 && (
               <ChildDepartamentos
-               /*  value={
-                  formDomicilios?.inputDepartamentosDomicilios ? formDomicilios?.inputDepartamentosDomicilios : empleadoUno.departamento
-                }
-                array={ arrayDepartamentos !== null &&  arrayDepartamentos !== undefined  ? arrayDepartamentos : []} */
-                // array={array}
-                array={ index === 1 ? arrayDepartamentos : []}
+                array={ index === 1 ? arrayList?.arrayDepartamentos : []}
                 disableModalButtons={disableModalButtons}
                 propsModal={propsModal}
                 setValueItemModal={setValueItemModal}
@@ -187,24 +260,24 @@ export const ModalProvinciasDptos = ({
                 setDisableModalButtons={setDisableModalButtons}
                 setModify={setModify}
                 functionDelete={functionDelete}
-                urlApi={urlApi}
-                idAModificar={idAModificar}
-                actionActualizaDelete={actionActualizaDelete}
+                urlApi="http://54.243.192.82/api/Departamentos"
+                idAModificar={departamentoSelected?.idDepartamento}
                 optionsInputs={optionsInputs}
                 usaEstados={usaEstados}
-                idInputTextArea={idInputTextArea}
+                idInputTextArea="obsDepartamentos"
                 onChangeValues={onChangeValues}
                 modalValues={modalValues}
+                index={index}
+                actionActualizaDelete={actualizaDeleteDptos}
+                actualizaCreate={actualizaCreaDptos}
+                actualizaUpdate={actualizaModificarDptos}
+                functionAdd={functionAdd}
+                
               />
             )}
             {index === 2 && (
               <ChildLocalidades
-                /* value={
-                  formDomicilios?.inputLocalidadesDomicilios ? formDomicilios?.inputLocalidadesDomicilios : empleadoUno.localidad
-                }
-                array={arrayLocalidades !== undefined && arrayLocalidades !== null ? arrayLocalidades : []} */
-                // array={array}
-                array={index === 2 ? arrayLocalidades : []}
+                array={index === 2 && arrayList?.arrayDepartamentos?.length > 0 ? arrayList?.arrayLocalidades : []}
                 disableModalButtons={disableModalButtons}
                 propsModal={propsModal}
                 setValueItemModal={setValueItemModal}
@@ -214,21 +287,20 @@ export const ModalProvinciasDptos = ({
                 functionDelete={functionDelete}
                 urlApi={urlApi}
                 idAModificar={idAModificar}
-                actionActualizaDelete={actionActualizaDelete}
                 optionsInputs={optionsInputs}
                 usaEstados={usaEstados}
                 idInputTextArea={idInputTextArea}
                 onChangeValues={onChangeValues}
                 modalValues={modalValues}
+                provinciaSelected={provinciaSelected}
+                index={index}
+                actionActualizaDelete={actualizaDeleteLocalidades}
+                actualizaCreate={actualizaCreaLocalidades}
+                actualizaUpdate={actualizaModificarLocalidades}
               />
             )}
             {index === 3 && (
               <ChildBarrios
-                /* value={
-                  formDomicilios?.inputBarriosDomicilios ? formDomicilios?.inputBarriosDomicilios : empleadoUno.barrio
-                }
-                array={arrayBarrios !== undefined && arrayBarrios !== null ? arrayBarrios : []} */
-                // array={array}
                 disableModalButtons={disableModalButtons}
                 propsModal={propsModal}
                 setValueItemModal={setValueItemModal}
@@ -238,43 +310,20 @@ export const ModalProvinciasDptos = ({
                 functionDelete={functionDelete}
                 urlApi={urlApi}
                 idAModificar={idAModificar}
-                actionActualizaDelete={actionActualizaDelete}
                 optionsInputs={optionsInputs}
                 usaEstados={usaEstados}
                 idInputTextArea={idInputTextArea}
                 onChangeValues={onChangeValues}
                 modalValues={modalValues}
-                array={ index === 3 ? arrayBarrios : []}
+                array={ index === 3 && arrayList?.arrayDepartamentos?.length > 0 ? arrayList?.arrayBarrios : []}
+                provinciaSelected={provinciaSelected}
+                index={index}
+                actionActualizaDelete={actualizaDeleteBarrios}
+                actualizaCreate={actualizaCreaBarrios}
+                actualizaUpdate={actualizaModificarBarrios}
               />
             )}
-            <div className="d-flex flex-row-reverse w-100 ">
-              <button
-                className="btn btn-dark m-1"
-                disabled={!disableModalButtons}
-                onClick={() => {
-                  functionAdd(
-                    urlApi,
-                    bodyPetition,
-                    bodyUpdate,
-                    idAModificar,
-                    actualizaCreaFormasdePago,
-                    actualizaModificarFormasdePago
-                  );
-                  setDisableModalButtons(false);
-                }}
-              >
-                Aceptar
-              </button>
-              <button
-                className="btn btn-dark m-1"
-                disabled={!disableModalButtons}
-                onClick={() => {
-                  setDisableModalButtons(false);
-                }}
-              >
-                Cancelar
-              </button>
-            </div>
+           
           </div>
         </div>
       </section>

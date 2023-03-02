@@ -14,26 +14,44 @@
     
 }
 .modalBodyClass{
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: flex-start;
+  align-items: center;
     position : absolute;    
     z-index: 40;
     color: black;
     width: 50vw;
     border-radius: 10px;
-    border: 2px solid rgb(128, 124, 124);
-    background-color: rgb(187, 45, 59, 0.6);
-    color:#fff;
-    /* color : rgb(77, 4, 4); */
-    background-color: rgba(223, 120, 120, 0.911);
+    border: 2px solid black;
+    /* background-image : url("data:image/svg+xml;utf8, %3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23c22031' fill%2Dopacity='1' d='M0,224L30,202.7C60,181,120,139,180,106.7C240,75,300,53,360,80C420,107,480,181,540,208C600,235,660,213,720,192C780,171,840,149,900,149.3C960,149,1020,171,1080,170.7C1140,171,1200,149,1260,138.7C1320,128,1380,128,1410,128L1440,128L1440,320L1410,320C1380,320,1320,320,1260,320C1200,320,1140,320,1080,320C1020,320,960,320,900,320C840,320,780,320,720,320C660,320,600,320,540,320C480,320,420,320,360,320C300,320,240,320,180,320C120,320,60,320,30,320L0,320Z'%3E%3C/path%3E%3C/svg%3E"); */
+    
+    background-color:white;
+    color:black;
     top: 25%;
     left: 25%;
+    margin: 0;
+    padding : 0;
+}
+.titleBg{
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  background-color: brown;
+  width: 100%;
 }
 .transitionClassUp {
   animation: transition 0.3s;
   transition: 0.2s;
 }
-
+.col-form-label{
+  color: black;
+}
+.form__grupo__label__label{
+  color: black;
+}
 .selectModal{
     height: 15rem;
+    width: 100%;
 }
 .selectMenus{
     height: 80%;

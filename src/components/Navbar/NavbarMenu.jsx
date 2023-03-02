@@ -365,7 +365,6 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario }) => {
     masculino: modalValues?.masculino,
     femenino: modalValues?.femenino,
   };
-  console.log(bodyUpdateEstadosCiviles)
   //Estudios
   const bodyEstudios = {
     iDestudios:
@@ -551,7 +550,6 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario }) => {
     "nacionalidad_masc": modalValues?.nacMac,
   	"nacionalidad_fem": modalValues?.nacFem
   };
-  console.log(bodyPaises)
 
   //Alicuotas
 
@@ -648,7 +646,6 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario }) => {
 			return null;
 		}
 	}
-
 
 
 	return (
@@ -1156,10 +1153,14 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario }) => {
 															functionDelete={deleteItemModal}
 															disableModal={disableModal}
 															setDisableMOdal={setDisableMOdal}
-															actionActualizaDelete={actualizaDelete}
 															disableModalButtons={disableModalButtons}
 															setDisableModalButtons={setDisableModalButtons}
 															usaEstados={true}
+															actionActualizaDelete={actualizaDelete}
+															actualizaCreate={actualizaCreaPaises}
+															actualizaUpdate={actualizaModificarPaises}
+															setRefetch={setRefetch}
+															refetch={refetch}
 														/>
 													</ButtonCallModal>
 												</li>  

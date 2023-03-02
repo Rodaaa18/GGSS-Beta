@@ -1,13 +1,14 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectedDep } from '../../../../redux/actions/modalesActions';
 import InputModal from '../../../Inputs/InputModal/InputModal';
 import TextArea from '../../../Inputs/TextArea/TextArea';
 
 
 const ChildDepartamentos = ({
-  disableModalButtons,array,propsModal,setValueItemModal, setDisableMOdal,setDisableModalButtons ,setModify,functionDelete, urlApi, idAModificar, actionActualizaDelete, optionsInputs,onChangeValues,modalValues,usaEstados,idInputTextArea, index
+  disableModalButtons,array,propsModal,setValueItemModal, setDisableMOdal,setDisableModalButtons ,setModify,functionDelete, urlApi, idAModificar, actionActualizaDelete, optionsInputs,onChangeValues,modalValues,usaEstados,idInputTextArea, index, functionAdd, actualizaCreate,
+  actualizaUpdate
 }) => {
   const [ arrayList, setArrayList ] = useState([]);
 
@@ -21,6 +22,28 @@ const ChildDepartamentos = ({
   useEffect(()=>{
     updateList(array);
   },[index])
+
+  
+
+  const provinciaSelected = useSelector((state)=> state.modalState.provSelect);
+  const departamentoSelected = useSelector((state)=> state.modalState.dptoSelect);
+  const dptos = useSelector((state) => state.generalState.departamentos);
+
+ 
+
+  const bodyPetition = {
+    "idDepartamento": 0,
+    "departamento": modalValues?.departamento,
+    "obs": modalValues?.obsDepartamentos,
+    "idProvincia": provinciaSelected?.idProvincia
+  };
+  const bodyUpdate = {
+    "idDepartamento": departamentoSelected?.idDepartamento,
+    "departamento": modalValues?.departamento,
+    "obs": modalValues?.obsDepartamentos,
+    "idProvincia": provinciaSelected?.idProvincia
+  }
+  console.log(bodyPetition)
   const dispatch = useDispatch();
   return (
     <>
@@ -31,8 +54,8 @@ const ChildDepartamentos = ({
                   aria-label="multiple select example"
                   disabled={disableModalButtons}
                 >
-                  {arrayList &&
-                    arrayList.map((op, i) => {
+                  {array &&
+                    array.map((op, i) => {
                       return (
                         <option
                           key={i}
@@ -102,6 +125,34 @@ const ChildDepartamentos = ({
                       ></TextArea>
                     )}
                   </div>
+                  <div className="d-flex flex-row-reverse w-100 ">
+              <button
+                className="btn btn-dark m-1"
+                disabled={!disableModalButtons}
+                onClick={() => {
+                  functionAdd(
+                    urlApi,
+                    bodyPetition, 
+                    bodyUpdate,
+                    idAModificar,
+                    actualizaCreate,
+                    actualizaUpdate
+                  );
+                  setDisableModalButtons(false);
+                }}
+              >
+                Aceptar
+              </button>
+              <button
+                className="btn btn-dark m-1"
+                disabled={!disableModalButtons}
+                onClick={() => {
+                  setDisableModalButtons(false);
+                }}
+              >
+                Cancelar
+              </button>
+            </div>
                 </div>
     </>
   )

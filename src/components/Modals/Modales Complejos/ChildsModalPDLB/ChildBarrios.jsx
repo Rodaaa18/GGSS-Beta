@@ -10,13 +10,18 @@ const ChildBarrios = ({
   const dispatch = useDispatch();
   const [ arrayList, setArrayList ] = useState([]);
 
-  function updateList(){
-    setArrayList(array)
+  function updateList(array){
+    if(index === 3){
+      return setArrayList(array)
+    }else{
+      setArrayList([])
+    }
   }
   useEffect(()=>{
-    updateList();
+    updateList(array);
   },[index])
-
+  console.log(array)
+  console.log(index)
   return (
     <>
      <div className="col-xl-6 border border-2 p-2 ">

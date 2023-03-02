@@ -372,7 +372,7 @@ useEffect(()=>{
 
     
     async function getEmpleados(){
-      if(responses.browser.inputApellidoNombreBrowser){
+      if(responses?.browser.inputApellidoNombreBrowser){
         await axios({method: 'get',
                       url: urlEmpleadoPorApellido,
                       timeout: 2000}).then((res) => {
@@ -380,21 +380,21 @@ useEffect(()=>{
         });
         return;
       }
-      else if(responses.browser.inpurLegajoBrowser){
+      else if(responses?.browser.inpurLegajoBrowser){
         await axios({method: 'get',
                     url: urlEmpleadoPorLegajo,
                     timeout: 2000}).then((res) => {
           dispatch(getEmployes(res.data.result));
         });
         return;
-      }else if(responses.browser.inputApellidoNombreBrowser && responses.browser.inpurLegajoBrowser){
+      }else if(responses?.browser.inputApellidoNombreBrowser && responses?.browser.inpurLegajoBrowser){
         await axios({method: 'get',
                     url: urlEmpleadoApYLegajo,
                     timeout: 2000}).then((res) => {
             dispatch(getEmployes(res.data.result));
         });
         return;
-      }else if(responses.browser.inputApellidoNombreBrowser && responses.browser.inpurLegajoBrowser && responses?.browser.ordered){
+      }else if(responses?.browser.inputApellidoNombreBrowser && responses?.browser.inpurLegajoBrowser && responses?.browser.ordered){
         await axios.get({method: 'get',
                         url: urlApeLegOrdered,
                         timeout: 2000}).then((res) => {
