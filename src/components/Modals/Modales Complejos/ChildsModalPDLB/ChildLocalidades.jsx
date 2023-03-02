@@ -57,7 +57,7 @@ const ChildLocalidades = ({
                     Agregar
                   </button>
                   <button
-                    className="btn btn-sm btn-dark text-light"
+                    className="btn btn-dark text-light"
                     disabled={disableModalButtons}
                     onClick={() => {
                       setModify(true);
@@ -68,7 +68,7 @@ const ChildLocalidades = ({
                     Modificar
                   </button>
                   <button
-                    className="btn btn-sm btn-dark"
+                    className="btn btn-dark"
                     disabled={disableModalButtons}
                     onClick={() => {
                       functionDelete(urlApi, idAModificar, actionActualizaDelete);

@@ -649,7 +649,7 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario }) => {
 
 
 	return (
-		<nav className="row gy-3 navbar navbar-expand-sm  navbar-light bg-light col-sm-12">
+		<nav className="row gy-3 navbar navbar-expand-lg navbar-light bg-light col-sm-12">
 			<div className="container-sm">
 				<button className="navbar-toggler" type="button"
 					data-bs-toggle="collapse"
@@ -685,9 +685,9 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario }) => {
 								<a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 									Tabla de Datos
 								</a>
-								<ul className="dropdown-menu fs-6">
-									<li class="dropdown-submenu fs-6">
-										<a className='dropdown-item fs-6' tabindex="-1" href="#">Para Empleados</a>
+								<ul className="dropdown-menu">
+									<li class="dropdown-submenu">
+										<a className='dropdown-item' tabindex="-1" href="#">Para Empleados</a>
 										<ul class="dropdown-menu">
 											<div className="datosEmpleados" style={{ fontSize: "13px" }}>
 												<li>

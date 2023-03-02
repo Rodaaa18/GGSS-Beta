@@ -17,7 +17,7 @@ const Navbar = ({handleTabChange, tabIndex}) => {
 			</button>
 			<div className="collapse navbar-collapse" id="navbarNav">
 			<ul className="navbar-nav navbarNavSub"  >
-				<li className="nav-item" >
+				<li >
                     <Link className={ tabIndex === 0? "nav-link actived" : "nav-link"} value="1" onClick={(e)=>handleTabChange(0)} >
 						Personales
                     </Link>
