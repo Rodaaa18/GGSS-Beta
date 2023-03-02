@@ -69,7 +69,7 @@ const ChildDepartamentos = ({
                 </select>
                 <div className="d-flex flex-row justify-content-evenly align-items-center mt-1 ">
                   <button
-                    className="btn btn-dark text-light"
+                    className="btn btn-sm btn-dark text-light"
                     disabled={disableModalButtons}
                     onClick={() => {
                       setDisableMOdal(false);
@@ -79,7 +79,7 @@ const ChildDepartamentos = ({
                     Agregar
                   </button>
                   <button
-                    className="btn btn-dark text-light"
+                    className="btn btn-sm btn-dark text-light"
                     disabled={disableModalButtons}
                     onClick={() => {
                       setModify(true);
@@ -90,7 +90,7 @@ const ChildDepartamentos = ({
                     Modificar
                   </button>
                   <button
-                    className="btn btn-dark"
+                    className="btn btn-sm btn-dark"
                     disabled={disableModalButtons}
                     onClick={() => {
                       functionDelete(urlApi, idAModificar, actionActualizaDelete);
@@ -127,7 +127,7 @@ const ChildDepartamentos = ({
                   </div>
                   <div className="d-flex flex-row-reverse w-100 ">
               <button
-                className="btn btn-dark m-1"
+                className="btn btn-sm btn-dark m-1"
                 disabled={!disableModalButtons}
                 onClick={() => {
                   functionAdd(
@@ -144,7 +144,7 @@ const ChildDepartamentos = ({
                 Aceptar
               </button>
               <button
-                className="btn btn-dark m-1"
+                className="btn btn-sm btn-dark m-1"
                 disabled={!disableModalButtons}
                 onClick={() => {
                   setDisableModalButtons(false);

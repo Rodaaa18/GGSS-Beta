@@ -12,7 +12,7 @@ const ChildModal = ({nameModalProp, disabled, array , propsModal, optionsInputs,
           <div className="d-flex flex-row justify-content-between align-items-center ">
           <p className="h3"><ins>{propsModal.nameModal}</ins></p>
             <button
-              className="btn btn-outline-danger text-white fs-6 btn-md buttonModal border border-dark"
+              className="btn btn-outline-danger text-white fs-6 btn-sm buttonModal border border-dark"
               onClick={() => {
                 handleClickClose(nameModalProp);
                 setTransition(false);
@@ -47,7 +47,7 @@ const ChildModal = ({nameModalProp, disabled, array , propsModal, optionsInputs,
             </select>
             <div className="d-flex flex-row justify-content-evenly align-items-center mt-1 ">
               <button
-                className="btn btn-dark text-light"
+                className="btn btn-sm btn-dark text-light"
                 disabled={disableModalButtons}
                 onClick={() => {
                   setDisableMOdal(false);
@@ -59,7 +59,7 @@ const ChildModal = ({nameModalProp, disabled, array , propsModal, optionsInputs,
                 Agregar
               </button>
               <button
-                className="btn btn-dark text-light"
+                className="btn btn-sm btn-dark text-light"
                 disabled={disableModalButtons}
                 onClick={() => {
                   setModify(true);
@@ -70,7 +70,7 @@ const ChildModal = ({nameModalProp, disabled, array , propsModal, optionsInputs,
                 Modificar
               </button>
                 {changeUrl ? <button
-                              className="btn btn-dark"
+                              className="btn btn-sm btn-dark"
                               disabled={disableModalButtons}
                               onClick={() => {
                                 functionDelete(urlDelete, idAModificar, actionActualizaDelete);
@@ -81,7 +81,7 @@ const ChildModal = ({nameModalProp, disabled, array , propsModal, optionsInputs,
                               </button> 
                               : 
                               <button
-                                className="btn btn-dark"
+                                className="bt btn-sm btn-dark"
                                 disabled={disableModalButtons}
                                 onClick={() => {
                                   functionDelete(urlApi, idAModificar, actionActualizaDelete);
@@ -125,7 +125,7 @@ const ChildModal = ({nameModalProp, disabled, array , propsModal, optionsInputs,
             </div>
             <div className="d-flex flex-row-reverse w-100 ">
               <button
-                className="btn btn-dark m-1"
+                className="btn btn-sm btn-dark m-1"
                 disabled={!disableModalButtons}
                 onClick={() =>
                   {functionAdd( urlApi, bodyPetition, bodyUpdate, idAModificar , actualizaCreate, actualizaUpdate, valueIdUrl, diferentUrl );
@@ -134,7 +134,7 @@ const ChildModal = ({nameModalProp, disabled, array , propsModal, optionsInputs,
               >
                 Aceptar
               </button>
-              <button className="btn btn-dark m-1"
+              <button className="btn btn-sm btn-dark m-1"
               disabled={!disableModalButtons}
               onClick={() => {
                 setDisableModalButtons(false);

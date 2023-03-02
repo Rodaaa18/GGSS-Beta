@@ -61,7 +61,7 @@ const ChildModalOptions = ({
               <ins>{propsModal.nameModal}</ins>
             </p>
             <button
-              className="btn btn-outline-danger text-white fs-6 btn-md buttonModal border border-dark"
+              className="btn btn-outline-danger text-white fs-6 btn-sm buttonModal border border-dark"
               onClick={() => {
                 handleClickClose(nameModalProp);
                 setTransition(false);
@@ -96,7 +96,7 @@ const ChildModalOptions = ({
             </select>
             <div className="d-flex flex-row justify-content-evenly align-items-center mt-1 ">
               <button
-                className="btn btn-dark text-light"
+                className="btn btn-sm btn-dark text-light"
                 disabled={disableModalButtons}
                 onClick={() => {
                   setDisableMOdal(false);
@@ -106,7 +106,7 @@ const ChildModalOptions = ({
                 Agregar
               </button>
               <button
-                className="btn btn-dark text-light"
+                className="btn  btn-sm btn-dark text-light"
                 disabled={disableModalButtons}
                 onClick={() => {
                   setModify(true);
@@ -117,7 +117,7 @@ const ChildModalOptions = ({
                 Modificar
               </button>
               <button
-                className="btn btn-dark"
+                className="btn btn-sm btn-dark"
                 disabled={disableModalButtons}
                 onClick={() => {
                   functionDelete(
@@ -202,7 +202,7 @@ const ChildModalOptions = ({
             </div>
             <div className="d-flex flex-row-reverse w-100 ">
               <button
-                className="btn btn-dark m-1"
+                className="btn btn-sm btn-dark m-1"
                 disabled={!disableModalButtons}
                 onClick={() => {
                   functionAdd(
@@ -219,7 +219,7 @@ const ChildModalOptions = ({
                 Aceptar
               </button>
               <button
-                className="btn btn-dark m-1"
+                className="btn btn-sm btn-dark m-1"
                 disabled={!disableModalButtons}
                 onClick={() => {
                   setDisableModalButtons(false);

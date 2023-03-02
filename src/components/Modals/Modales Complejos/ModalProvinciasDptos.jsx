@@ -11,6 +11,8 @@ import ChildBarrios from "./ChildsModalPDLB/ChildBarrios";
 import ChildDepartamentos from "./ChildsModalPDLB/ChildDepartamentos";
 import ChildLocalidades from "./ChildsModalPDLB/ChildLocalidades";
 import ChildProvincias from "./ChildsModalPDLB/ChildProvincias";
+import './ChildsModalPDLB.css'
+import '../BasicModal.css'
 // import { Link } from 'react-router-dom';
 // import ButtonCallModal from '../../ButtonCallModal/ButtonCallModal';
 // import InputModal from '../../Inputs/InputModal/InputModal';
@@ -49,7 +51,10 @@ export const ModalProvinciasDptos = ({
   setModify,
   actualizaCreate,
   actualizaUpdate,
-  modify
+  modify,
+
+ 
+
 }) => {
   const [index, setIndex] = useState(0);
   const [ refetch, setRefetch ] = useState(false);
@@ -62,8 +67,10 @@ export const ModalProvinciasDptos = ({
   const provinciasValue = useSelector((state) => state.generalState.provincias);
   const urlProvinciaCreate = `http://54.243.192.82/api/Provincias?IdProvincia=0&Provincia=${modalValues?.provincia}&Obs=${modalValues?.obsProvincia}`
 
+ 
+
   function getDeptos(){
-    debugger
+       
     if (provinciaSelected && generalStateData.departamentos) {
       const arrayDepartamentos = generalStateData.departamentos.filter((departamento) => departamento.idProvincia === provinciaSelected.idProvincia);
       setArrayList(prevState => ({...prevState, arrayDepartamentos}));
@@ -164,17 +171,17 @@ export const ModalProvinciasDptos = ({
   return (
     <div>
       <section
-        className={transition ? "transitionClassUp" : " transitionClassneDone "}
+        classNameName={transition ? "transitionclassNameUp" : " transitionclassNameneDone "}
       >
-        <div className="cortina"></div>
-        <div className="modalBodyClass">
-          <div className="row p-2 titleBg">
-            <div className="d-flex flex-row justify-content-between align-items-center">
-              <p className="h3">
+        <div classNameName="cortina"></div>
+        <div classNameName="modalBodyclassName">
+          <div classNameName="row p-2 titleBg">
+            <div classNameName="d-flex flex-row justify-content-between align-items-center">
+              <p classNameName="h3">
                 <ins>{propsModal[0].nameModal}</ins>
               </p>
               <button
-                className="btn btn-outline-danger text-white fs-6 btn-md buttonModal border border-dark"
+                classNameName="btn btn-outline-danger text-white fs-6 btn-md buttonModal border border-dark"
                 onClick={() => {
                   handleClickClose(nameModalProp);
                   setTransition(false);
@@ -184,49 +191,45 @@ export const ModalProvinciasDptos = ({
               </button>
             </div>
           </div>
-          <ul class="nav nav-tabs">
-            <li class="nav-item">
+          <ul className="nav nav-tabs">
+            <li className="nav-item   ">
               <a
-                class="nav-link active"
+                   className={index === 0 ? "nav-link-color" : "nav-link-sinColor"}
                 aria-current="page"
-                href="#"
                 onClick={() => setIndex(0)}
               >
                 Provincias
               </a>
             </li>
-            <li class="nav-item">
+            <li className="nav-item ">
               <a
-                class="nav-link active"
+                   className={index === 1 ? "nav-link-color" : "nav-link-sinColor"}
                 aria-current="page"
-                href="#"
                 onClick={() => setIndex(1)}
               >
                 Departamentos
               </a>
             </li>
-            <li class="nav-item">
+            <li className="nav-item">
               <a
-                class="nav-link active"
+                  className={index === 2 ? "nav-link-color" : "nav-link-sinColor"}
                 aria-current="page"
-                href="#"
                 onClick={() => setIndex(2)}
               >
                 Localidades
               </a>
             </li>
-            <li class="nav-item">
+            <li className="nav-item">
               <a
-                class="nav-link active"
+                 className={index === 3 ? "nav-link-color" : "nav-link-sinColor"}
                 aria-current="page"
-                href="#"
                 onClick={() => setIndex(3)}
               >
                 Barrios
               </a>
             </li>
           </ul>
-          <div className="row p-2 selectModal">
+          <div classNameName="row p-2 selectModal">
             {index === 0 && (
               <ChildProvincias
                 array={generalStateData.provincias !== undefined && generalStateData.provincias !== ""  ? generalStateData.provincias : []}
