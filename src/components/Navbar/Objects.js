@@ -221,6 +221,12 @@ export const objectProvincias = [
     "placeholder": "Barrio",
     "idInput" : "barrio",
     "nameInput" : "barrio"
+  },
+  {
+    "label": "C.P",
+    "placeholder": "Código Postal",
+    "idInput" : "codigoPostal",
+    "nameInput" : "codigoPostal"
   }
 ]
 

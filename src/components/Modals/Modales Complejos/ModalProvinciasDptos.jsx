@@ -49,52 +49,26 @@ export const ModalProvinciasDptos = ({
   setModify,
   actualizaCreate,
   actualizaUpdate,
-  modify
+  modify,
+  reload,
+  arrayList, 
+  setArrayList
 }) => {
   const [index, setIndex] = useState(0);
   const [ refetch, setRefetch ] = useState(false);
-  const generalStateData = useSelector((state)=> state.generalState)
   const provinciaSelected = useSelector((state)=> state.modalState.provSelect);
   const departamentoSelected = useSelector((state)=> state.modalState.dptoSelect);
   const localidadSelected = useSelector((state)=> state.modalState.localSelect);
-  const [ arrayList, setArrayList ] = useState({
-  });
+  const barrioSelected = useSelector((state)=> state.modalState.barrioSelect);
+  const generalStateData = useSelector((state)=> state.generalState)
   const provinciasValue = useSelector((state) => state.generalState.provincias);
   const urlProvinciaCreate = `http://54.243.192.82/api/Provincias?IdProvincia=0&Provincia=${modalValues?.provincia}&Obs=${modalValues?.obsProvincia}`
 
-  function getDeptos(){
-    debugger
-    if (provinciaSelected && generalStateData.departamentos) {
-      const arrayDepartamentos = generalStateData.departamentos.filter((departamento) => departamento.idProvincia === provinciaSelected.idProvincia);
-      setArrayList(prevState => ({...prevState, arrayDepartamentos}));
-    }
-  }
-  function getLocalidades(){
-    if (departamentoSelected && generalStateData.localidades) {
-      const arrayLocalidades = generalStateData.localidades.filter((localidad) => localidad.idDepartamento === departamentoSelected.idDepartamento);
-      setArrayList(prevState => ({...prevState, arrayLocalidades}));
-    }
-  }
-  
-  function getBarrios(){
-    if (localidadSelected && generalStateData.barrios) {
-      const arrayBarrios = generalStateData.barrios.filter((barrio) => barrio.idLocalidad === localidadSelected.idLocalidad);
-      setArrayList(prevState => ({...prevState, arrayBarrios}));
-    }
-  }
-
-  useEffect(()=>{
-    console.log("Ejecuto Efecto")
-    getDeptos()
-    getLocalidades()
-    getBarrios()
-  },[provinciaSelected,departamentoSelected,localidadSelected, refetch])
+ 
 
   const dispatch = useDispatch();
   
 
-  console.log(departamentoSelected)
-  console.log(refetch)
 
 
   async function sendDataProvincias(id, actualizaCreate, actualizaUpdate){
@@ -110,6 +84,7 @@ export const ModalProvinciasDptos = ({
                 setModify(false);
                 setDisableMOdal(true)
                 setRefetch(!refetch)
+                
                 return swal({
                   title : "Ok",
                   text : "Provincia actualizada con éxito",
@@ -139,6 +114,7 @@ export const ModalProvinciasDptos = ({
               "obs": modalValues?.obsProvincia
             }));
             setRefetch(!refetch)
+            console.log("actualiza")
             return swal({
               title : "Ok",
               text : "Provincia creada con éxito",
@@ -252,7 +228,7 @@ export const ModalProvinciasDptos = ({
             )}
             {index === 1 && (
               <ChildDepartamentos
-                array={ index === 1 ? arrayList?.arrayDepartamentos : []}
+                array={ index === 1 ? arrayList?.departamentos : []}
                 disableModalButtons={disableModalButtons}
                 propsModal={propsModal}
                 setValueItemModal={setValueItemModal}
@@ -272,12 +248,12 @@ export const ModalProvinciasDptos = ({
                 actualizaCreate={actualizaCreaDptos}
                 actualizaUpdate={actualizaModificarDptos}
                 functionAdd={functionAdd}
-                
+                reload={reload}
               />
             )}
             {index === 2 && (
               <ChildLocalidades
-                array={index === 2 && arrayList?.arrayDepartamentos?.length > 0 ? arrayList?.arrayLocalidades : []}
+                array={index === 2 && arrayList?.departamentos?.length > 0 ? arrayList?.localidades : []}
                 disableModalButtons={disableModalButtons}
                 propsModal={propsModal}
                 setValueItemModal={setValueItemModal}
@@ -285,11 +261,11 @@ export const ModalProvinciasDptos = ({
                 setDisableModalButtons={setDisableModalButtons}
                 setModify={setModify}
                 functionDelete={functionDelete}
-                urlApi={urlApi}
-                idAModificar={idAModificar}
+                urlApi="http://54.243.192.82/api/Localidades"
+                idAModificar={localidadSelected?.idLocalidad}
                 optionsInputs={optionsInputs}
                 usaEstados={usaEstados}
-                idInputTextArea={idInputTextArea}
+                idInputTextArea="obsLocalidad"
                 onChangeValues={onChangeValues}
                 modalValues={modalValues}
                 provinciaSelected={provinciaSelected}
@@ -297,6 +273,8 @@ export const ModalProvinciasDptos = ({
                 actionActualizaDelete={actualizaDeleteLocalidades}
                 actualizaCreate={actualizaCreaLocalidades}
                 actualizaUpdate={actualizaModificarLocalidades}
+                functionAdd={functionAdd}
+                reload={reload}
               />
             )}
             {index === 3 && (
@@ -308,19 +286,22 @@ export const ModalProvinciasDptos = ({
                 setDisableModalButtons={setDisableModalButtons}
                 setModify={setModify}
                 functionDelete={functionDelete}
-                urlApi={urlApi}
-                idAModificar={idAModificar}
+                urlApi="http://54.243.192.82/api/Barrios"
+                idAModificar={barrioSelected?.idBarrio}
                 optionsInputs={optionsInputs}
                 usaEstados={usaEstados}
-                idInputTextArea={idInputTextArea}
+                idInputTextArea="obsBarrio"
                 onChangeValues={onChangeValues}
                 modalValues={modalValues}
-                array={ index === 3 && arrayList?.arrayDepartamentos?.length > 0 ? arrayList?.arrayBarrios : []}
+                array={ index === 3 && arrayList?.departamentos?.length > 0 ? arrayList?.barrios : []}
                 provinciaSelected={provinciaSelected}
                 index={index}
                 actionActualizaDelete={actualizaDeleteBarrios}
                 actualizaCreate={actualizaCreaBarrios}
                 actualizaUpdate={actualizaModificarBarrios}
+                functionAdd={functionAdd}
+                reload={reload}
+                modify={modify}
               />
             )}
            
