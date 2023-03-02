@@ -37,7 +37,7 @@ const ChildProvincias = ({disableModalButtons,array,propsModal,setValueItemModal
                 </select>
                 <div className="d-flex flex-row justify-content-evenly align-items-center mt-1 ">
                   <button
-                    className="btn btn-dark text-light"
+                    className="btn btn-dark   text-light"
                     disabled={disableModalButtons}
                     onClick={() => {
                       setDisableMOdal(false);
@@ -47,7 +47,7 @@ const ChildProvincias = ({disableModalButtons,array,propsModal,setValueItemModal
                     Agregar
                   </button>
                   <button
-                    className="btn btn-dark text-light"
+                    className="btn btn-dark   text-light"
                     disabled={disableModalButtons}
                     onClick={() => {
                       setModify(true);
@@ -58,7 +58,7 @@ const ChildProvincias = ({disableModalButtons,array,propsModal,setValueItemModal
                     Modificar
                   </button>
                   <button
-                    className="btn btn-dark"
+                    className="btn btn-dark  "
                     disabled={disableModalButtons}
                     onClick={() => {
                       functionDelete(urlApi, idAModificar, actionActualizaDelete);

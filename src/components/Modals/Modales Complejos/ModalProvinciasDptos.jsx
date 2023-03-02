@@ -150,7 +150,7 @@ export const ModalProvinciasDptos = ({
                 <ins>{propsModal[0].nameModal}</ins>
               </p>
               <button
-                className="btn btn-outline-danger text-white fs-6 btn-md buttonModal border border-dark"
+                className="btn btn-outline-danger text-white fs-6 btn-md buttonModal border border-ligth"
                 onClick={() => {
                   handleClickClose(nameModalProp);
                   setTransition(false);
@@ -160,10 +160,10 @@ export const ModalProvinciasDptos = ({
               </button>
             </div>
           </div>
-          <ul class="nav nav-tabs">
-            <li class="nav-item">
+          <ul className="nav nav-tabs">
+            <li className="nav-item">
               <a
-                class="nav-link active"
+                className={index === 0 ? "nav-link-color" : "nav-link-sinColor"}
                 aria-current="page"
                 href="#"
                 onClick={() => setIndex(0)}
@@ -173,7 +173,7 @@ export const ModalProvinciasDptos = ({
             </li>
             <li class="nav-item">
               <a
-                class="nav-link active"
+                className={index === 1 ? "nav-link-color" : "nav-link-sinColor"}
                 aria-current="page"
                 href="#"
                 onClick={() => setIndex(1)}
@@ -181,9 +181,9 @@ export const ModalProvinciasDptos = ({
                 Departamentos
               </a>
             </li>
-            <li class="nav-item">
+            <li className="nav-item">
               <a
-                class="nav-link active"
+                className={index === 2 ? "nav-link-color" : "nav-link-sinColor"}
                 aria-current="page"
                 href="#"
                 onClick={() => setIndex(2)}
@@ -191,9 +191,9 @@ export const ModalProvinciasDptos = ({
                 Localidades
               </a>
             </li>
-            <li class="nav-item">
+            <li className="nav-item">
               <a
-                class="nav-link active"
+                className={index === 3 ? "nav-link-color" : "nav-link-sinColor"}
                 aria-current="page"
                 href="#"
                 onClick={() => setIndex(3)}

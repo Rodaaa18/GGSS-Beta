@@ -107,7 +107,7 @@ const ChildBarrios = ({
   
   return (
     <>
-     <div className="col-xl-6 border border-2 p-2 ">
+     <div className="col-xl-6 border border-2 p-2 bodyBarrios">
                 <select
                   className="form-select selectMenus p-0 m-0"
                   multiple
@@ -160,7 +160,7 @@ const ChildBarrios = ({
                     Eliminar
                   </button>
                 </div>
-              </div><div className="col-xl-6">
+              </div><div className="col-xl-6 bodyBarrios">
                   <div className="d-flex flex-column justify-content-start align-items-center">
                   <InputModal
                           disableModal={!disableModalButtons}
