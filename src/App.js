@@ -71,7 +71,23 @@ function App() {
     validationUser();
     validateAdmin();
   },[])
-
+  useEffect(() => {
+    // Obtener el token almacenado en localStorage
+    const token = localStorage.getItem('token');
+    
+    if (token) {
+      // Configurar un tiempo límite de 2 horas (en milisegundos)
+      const tiempoLimite = 2 * 60 * 60 * 1000;
+      
+      // Configurar la eliminación automática del token después del tiempo límite
+      const timeoutId = setTimeout(() => {
+        localStorage.removeItem('token');
+      }, tiempoLimite);
+      
+      // Limpiar el timeout cuando se desmonte el componente
+      return () => clearTimeout(timeoutId);
+    }
+  }, []);
   return (
     <>
       {
