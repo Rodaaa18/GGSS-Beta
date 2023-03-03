@@ -97,7 +97,21 @@
 .bodyBarrios{
   height: 100%;
 }
-
+.form-check-label{
+  color: black;
+  
+}
+.labelModalParentesco{
+  width: 100%;
+  color: black;
+  display: flex;
+  flex-flow: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+.form-check{
+  width: 40%;
+}
 @keyframes transition{
     0%{
         opacity: 0;
