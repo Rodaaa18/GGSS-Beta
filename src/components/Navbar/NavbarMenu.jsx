@@ -627,57 +627,7 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario }) => {
     cuit: modalValues?.cuit,
   };
 
-  //Parentesco para después
-  // const bodyParentesco = {
-  // 	"iDparentesco": ((parentescosValue && parentescosValue[parentescosValue.length - 1] !== undefined && (parentescosValue[parentescosValue.length - 1].iDparentesco)) + 1),
-  // 	"parentesco": modalValues?.parentesco,
-  // 	"id": null
-  // }
-  // const bodyUpdateParentesco = {
-  // 	"iDparentesco": valueItemModal?.iDparentesco,
-  // 	"parentesco": modalValues?.parentesco,
-  // 	"id": null
-  // }
-
-  //Motivos de Ingreso se deja para VERSION 2.0
-  // const bodyMotivoIngreso = {
-  // 	"iDmotivoIngreso": ((motivosIngresoValue && motivosIngresoValue[motivosIngresoValue.length - 1] !== undefined && (motivosIngresoValue[motivosIngresoValue.length - 1].iDmotivoIngreso)) + 1),
-  // 	"nombreMotivoIngreso": modalValues?.nombreMotivoIngreso,
-  // 	"observacion": modalValues?.observacion
-  // }
-  // const bodyUpdateMotivoIngreso = {
-  // 	"iDmotivoIngreso": valueItemModal?.iDmotivoIngreso,
-  // 	"nombreMotivoIngreso": modalValues?.nombreMotivoIngreso,
-  // 	"observacion": modalValues?.observacion
-  // }
-
-  //#endregion ----------------------------------- ID Review 2023  -----------------------------------
-
-  //#region ----------------------------------- Body de Lauty  -----------------------------------
-
-	// //Parentescos
-	// const idParentesco = ((parentescosValue && parentescosValue[parentescosValue.length - 1] !== undefined && (parentescosValue[parentescosValue.length - 1].iDparentesco)) + 1)
-	// const bodyPetParentescos = { "iDparentesco": idParentesco ,
-	// 							"nombreParentesco": responses.modalDataInputs?.nombreParentesco,
-	// 							"generaAsignacion": responses.modalDataInputs?.generaAsignacion,
-	// 							"obs": responses.modalDataInputs?.obs,
-	// 							"deduceGanancias": responses.modalDataInputs?.deduceGanancias,
-	// 							"importeDeduce": responses.modalDataInputs?.importeDeduce }
-	// // cargos
-	// const idCargo = ((cargosValue && cargosValue[cargosValue.length - 1] !== undefined && (cargosValue[cargosValue.length - 1].iDcargo)) + 1)
-	// const bodyPetCargos = {
-	// 						"iDcargo": idCargo,
-	// 						"nombreCargo": responses.modalDataInputs?.nombreCargo,
-	// 						"observacion": responses.modalDataInputs?.observacion
-	// 					}
-	// // tareas desempeñadas
-	// const idTarea = ((tareasValue && tareasValue[tareasValue.length - 1] !== undefined && (tareasValue[tareasValue.length - 1].idTareaDesempeñada)) + 1)
-	// const bodyPetTareas = {
-	// 	"idTareaDesempeñada": idTarea,
-	// 	"tareaDesempeñada": responses.modalDataInputs?.tareaDesempeñada,
-	// 	"obs": responses.modalDataInputs?.obs
-	// }
-
+ 
 //#endregion ----------------------------------- Body de Lauty  -----------------------------------
 	function showSuperadmin(){
 
@@ -715,15 +665,7 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario }) => {
 							
 								</ul>
 							</li>
-							{/* <li className="nav-item">
-								<a className="nav-link" href="/some/valid/uri">Liquidación</a>
-							</li> 
-							<li className="nav-item">
-								<a className="nav-link" href="/some/valid/uri">Esquemas y Conceptos</a>
-							</li>
-							<li className="nav-item">
-								<a className="nav-link" href="/some/valid/uri">Períodos</a>
-							</li>*/}
+							
 							<li className="nav-item dropdown">
 								<a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 									Tabla de Datos

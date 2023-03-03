@@ -72,7 +72,7 @@ const ChildModalOptions = ({
           </div>
         </div>
         <div className="row p-2 selectModal">
-          <div className="col-xl-6 border border-2 p-2 ">
+          <div className="col-xl-6 col-sm-6 border border-2 p-2 ">
             <select
               className="form-select selectMenus p-0 m-0"
               multiple
@@ -136,8 +136,8 @@ const ChildModalOptions = ({
               </button>
             </div>
           </div>
-          <div className="col-xl-6">
-            <div className="d-flex flex-column justify-content-start align-items-center">
+          <div className="col-xl-6 col-sm-6">
+            <div className=" col-sm-9 d-flex flex-column justify-content-start align-items-center">
               {optionsInputs.map((option, index) => {
                 return (
                   <InputModal
@@ -156,7 +156,7 @@ const ChildModalOptions = ({
                 );
               })}
             </div>
-            <div className="col-xl">
+            <div className="col-sm-8 col-xl">
               <div
                 className="d-flex flex-column justify-content-start align-items-center"
                 disabled={!disableModalButtons}
@@ -174,7 +174,7 @@ const ChildModalOptions = ({
               </div>
             </div>
             <div
-              className="d-flex flex-column justify-content-center align-items-center"
+              className="col-sm-8 d-flex flex-column justify-content-start align-items-center"
               disabled={!disableModalButtons}
             >
               {usaCheck && (
@@ -188,7 +188,7 @@ const ChildModalOptions = ({
               )}
             </div>
             <div
-              className="d-flex flex-column justify-content-center align-items-center"
+              className="col-sm-8 d-flex flex-column justify-content-start align-items-center"
               disabled={!disableModalButtons}
             >
               {usaEstados && (
@@ -200,7 +200,7 @@ const ChildModalOptions = ({
                 ></TextArea>
               )}
             </div>
-            <div className="d-flex flex-row-reverse w-100 ">
+            <div className="col-sm-8 d-flex flex-row-reverse w-100 ">
               <button
                 className="btn btn-dark m-1"
                 disabled={!disableModalButtons}

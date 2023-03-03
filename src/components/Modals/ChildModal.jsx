@@ -23,7 +23,7 @@ const ChildModal = ({nameModalProp, disabled, array , propsModal, optionsInputs,
           </div>
         </div>
         <div className="row p-2 selectModal">
-          <div className="col-xl-6 border border-2 p-2 ">
+          <div className="col-xl-6 col-sm-6 border border-2 p-2 ">
             <select
               className="form-select selectMenus p-0 m-0"
               multiple
@@ -93,8 +93,8 @@ const ChildModal = ({nameModalProp, disabled, array , propsModal, optionsInputs,
               }
             </div>
           </div>
-          <div className="col-xl-6">
-            <div className="d-flex flex-column justify-content-start align-items-center">
+          <div className="col-xl-6 col-sm-6">
+            <div className="d-flex flex-column justify-content-start align-items-center col-sm-9">
               {optionsInputs.map((option, index) => {
                 return (
                   <InputModal
@@ -113,7 +113,7 @@ const ChildModal = ({nameModalProp, disabled, array , propsModal, optionsInputs,
                 );
               })}
             </div>
-            <div className="d-flex flex-column justify-content-center align-items-center">
+            <div className="d-flex flex-column justify-content-start align-items-center col-sm-8">
                {usaEstados && ( 
                 <TextArea
                   disableModal={!disableModalButtons}

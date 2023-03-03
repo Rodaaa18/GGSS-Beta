@@ -71,7 +71,7 @@ export const ModalParentesco = ({
           </div>
         </div>
         <div className="row p-2 selectModal">
-          <div className="col-xl-6 border border-2 p-2 ">
+          <div className="col-xl-6 col-sm-6 border border-2 p-2 ">
             <select
               className="form-select selectMenus p-0 m-0"
               multiple
@@ -131,8 +131,8 @@ export const ModalParentesco = ({
               </button>
             </div>
           </div>
-          <div className="col-xl-6">
-            <div className="d-flex flex-column justify-content-start align-items-center">
+          <div className="col-xl-6 col-sm-6">
+            <div className="d-flex flex-column justify-content-start align-items-center col-sm-8">
               {optionsInputs.map((option, index) => {
                 return (
                   <InputModal
@@ -151,39 +151,39 @@ export const ModalParentesco = ({
                 );
               })}
             </div>
-            <div className="d-flex flex-row justify-content-start align-items-center w-100 ">
-              <div class="form-check p-0 d-flex flex-row justify-content-start align-items-center">
+            <div className="d-flex flex-row justify-content-start align-items-center col-sm-8">
+              {/* <div class="form-check p-0 d-flex flex-row justify-content-start align-items-center col-sm-10"> */}
                 <label class=" labelModalParentesco" for="flexCheckDefault">
                   {nameInputCheck}
                 </label>
-              </div>
               <input
-                className="form-check-input "
+                className="form-check-inputParentesco "
                 onChange={(e)=> onChangeValues(e.target.checked , idCheckGenera)}
                 type="checkbox"
                 id={idCheckGenera}
                 checked={checked}
                 disabled={disabled}
               />
+              {/* </div> */}
             </div>
             
-            <div className="d-flex flex-row justify-content-start align-items-center w-100 ">
-            <div class="form-check p-0 d-flex flex-row justify-content-start align-items-center">
+            <div className="d-flex flex-row justify-content-start align-items-center col-sm-8">
+            {/* <div class="form-check p-0 d-flex flex-row justify-content-start align-items-center"> */}
               <label class=" labelModalParentesco" for="flexCheckDefault">
                 {nameInputCheckTwo}
               </label>
-            </div>
               <input
-                className="form-check-input "
+                className="form-check-inputParentesco "
                 onChange={(e)=> onChangeValues(e.target.checked , idCheckGanancias)}
                 type="checkbox"
                 id={idCheckGanancias}
                 checked={checked}
                 disabled={disabled}
               />
+            {/* </div> */}
             </div>
-            <div className="">
-              <label for="inputPassword3" className="col-sm-4 col-form-label">
+            <div className="d-flex flex-row justify-content-start align-items-center col-sm-6">
+              <label for="inputPassword3" className="labelModalParentesco col-sm-4 col-form-label">
                 {nameLabelValorDeduccion}
               </label>
               <div className="col-sm-8">
@@ -203,7 +203,7 @@ export const ModalParentesco = ({
               </div>
             </div>
             <div
-              className="d-flex flex-column justify-content-center align-items-center"
+              className="d-flex flex-column justify-content-start align-items-center col-sm-8"
               disabled={!disableModalButtons}
             >
               {usaEstados && (
@@ -215,7 +215,7 @@ export const ModalParentesco = ({
                 ></TextArea>
               )}
             </div>
-            <div className="d-flex flex-row-reverse w-100 ">
+            <div className="col-sm-8 d-flex flex-row-reverse w-100 ">
               <button
                 className="btn btn-dark m-1"
                 disabled={!disableModalButtons}

@@ -15,15 +15,15 @@ export const CheckDate = ({
   console.log(checked)
   const [disable, setDisable ] = useState(false)
   return (
-    <div className="formulario__grupo__inputs mt-2">
-        <div class="form-check p-0">
+    <div className="col-sm-11 formulario__grupo__inputs mt-2">
+        <div class=" form-check p-0">
         <label class="form-check-label" for="flexCheckDefault">
           {nameInput}
         </label>
         </div>
-      <div className="d-flex flex-row justify-content-start align-items-center ">
+      <div className="col-sm-11 d-flex flex-row justify-content-sm-between align-items-center ">
         <input
-          className="form-check-input "
+          className="col-sm-6 form-check-input "
           type="checkbox"
           id="flexCheckChecked"
           checked={checked}
@@ -34,7 +34,7 @@ export const CheckDate = ({
         <input
 
           id={idInputCheck}
-          className=" "
+          className="col-sm-11 classDate "
           name={idInputCheck}
           type="date"
           value={value}

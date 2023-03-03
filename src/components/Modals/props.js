@@ -26,7 +26,7 @@ export const propsModalCargos = {
 export const propsModalTareas = {
     propArrayId : "idTareaDesempeñada",
     propArrayOp : "tareaDesempeñada",
-    nameModal : "Tareas"
+    nameModal : "Tareas Desempeñadas"
 }
 export const propsModalModosLiquidacion = {
     propArrayId : "iDmodoLiquidacion",

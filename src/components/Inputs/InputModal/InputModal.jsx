@@ -13,7 +13,7 @@ const InputModal = ({
     
     return (
 
-        <div className="inputModalContainer">
+        <div className="inputModalContainer col-sm-11">
 
             <div className="row mb-3 inputLabelContainer">
                 <label for="inputPassword3" className="col-sm-4 col-form-label">{nameLabel}:</label>

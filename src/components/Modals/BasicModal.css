@@ -102,13 +102,25 @@
   
 }
 .labelModalParentesco{
-  width: 100%;
-  color: black;
+  /* width: 100rem; */
+  margin-left: 0.7rem;
+  margin-right: 0.3rem;
   display: flex;
   flex-flow: row;
   justify-content: flex-start;
   align-items: center;
+  color: black;
 }
+.form-check-inputParentesco{
+  display: flex;
+  flex-flow: row;
+  /* justify-content: flex-start;
+  align-items: center; */
+  color: black;
+}
+
+
+
 .form-check{
   width: 40%;
 }

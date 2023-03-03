@@ -119,7 +119,7 @@ export const textAreaCargos = [
 // tareas desempeñadas
 export const objectTareas = [
   {
-    "label": "Tarea",
+    "label": "Tareas Desempeñadas",
     "placeholder": "Tarea 1",
     "idInput": "tareaDesempeñada",
     "nameInput": "tareaDesempeñada"
