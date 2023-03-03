@@ -67,7 +67,7 @@ import {
 } from "../../redux/actions/licenciasActions";
 import swal from "sweetalert";
 import { getEmployeByLegajo, getEmployeByName } from "../../services/fetchAPI";
-import { cleanEmploye, getEmployes } from "../../redux/actions/employeActions";
+import { cleanEmploye, getEmployes, updateEmploye } from "../../redux/actions/employeActions";
 import { cleanIdFam, getDAtosFamiliaresEmpleado } from "../../redux/actions/familiaActions";
 import { addOneDomicilio, cleanIdsDom } from "../../redux/actions/domiciliosActions";
 import { addDatosExtraPorEmpleado, cleanIdDe } from "../../redux/actions/extrasActions";
@@ -864,6 +864,7 @@ useEffect(()=>{
       }else{
           //#region validation Updates
           if(!bodyPetitionEmpleadoUpdate.legajo){
+
             return swal({
               title: "Error",
               text: "Debe escribir el legajo del Empleado",
@@ -947,125 +948,6 @@ useEffect(()=>{
             icon: "error",
           })
         }
-        if(!bodyPetitionEmpleadoUpdate.iDEmpleador){
-          return swal({
-            title: "Error",
-            text: "Debe seleccionar el Empleador del Empleado",
-            icon: "error",
-          })
-        }
-        if(!bodyPetitionEmpleadoUpdate.iDCategoria){
-          return swal({
-            title: "Error",
-            text: "Debe seleccionar la Categoría del Empleado",
-            icon: "error",
-          })
-        }
-        if(!bodyPetitionEmpleadoUpdate.idAgrupamiento){
-          return swal({
-            title: "Error",
-            text: "Debe seleccionar el Agrupamiento del Empleado",
-            icon: "error",
-          })
-        }
-        if(!bodyPetitionEmpleadoUpdate.iDCargo){
-          return swal({
-            title: "Error",
-            text: "Debe seleccionar el Cargo del Empleado",
-            icon: "error",
-          })
-        }
-        if(!bodyPetitionEmpleadoUpdate.iDTareaDesempeñada){
-          return swal({
-            title: "Error",
-            text: "Debe seleccionar la Tarea Desempeñada del Empleado",
-            icon: "error",
-          })
-        }
-        if(!bodyPetitionEmpleadoUpdate.iDModoContratacion){
-          return swal({
-            title: "Error",
-            text: "Debe seleccionar el Modo de Contratación del Empleado",
-            icon: "error",
-          })
-        }
-        if(!bodyPetitionEmpleadoUpdate.iDModoLiquidacion){
-          return swal({
-            title: "Error",
-            text: "Debe seleccionar el Modo de Liquidación del Empleado",
-            icon: "error",
-          })
-        }
-        if(!bodyPetitionEmpleadoUpdate.idCentrodeCosto){
-          return swal({
-            title: "Error",
-            text: "Debe seleccionar el Centro de Costo del Empleado",
-            icon: "error",
-          })
-        }
-        /* if(!bodyPetitionEmpleadoUpdate.iDSectorDpto){
-          return swal({
-            title: "Error",
-            text: "Debe seleccionar el Sector del Empleado",
-            icon: "error",
-          })
-        } */
-        if(!bodyPetitionEmpleadoUpdate.idObraSocial){
-          return swal({
-            title: "Error",
-            text: "Debe seleccionar la Obra Social del Empleado",
-            icon: "error",
-          })
-        }
-        if(!bodyPetitionEmpleadoUpdate.iDFormadePago){
-          return swal({
-            title: "Error",
-            text: "Debe seleccionar la Forma de Pago del Empleado",
-            icon: "error",
-          })
-        }
-        if(!bodyPetitionEmpleadoUpdate.iDLugardePago){
-          return swal({
-            title: "Error",
-            text: "Debe seleccionar el Lugar de Pago del Empleado",
-            icon: "error",
-          })
-        }
-        if(!bodyPetitionEmpleadoUpdate.idBanco){
-          return swal({
-            title: "Error",
-            text: "Debe seleccionar el Banco del Empleado",
-            icon: "error",
-          })
-        }
-        if(!bodyPetitionEmpleadoUpdate.nroCtaBanco){
-          return swal({
-            title: "Error",
-            text: "Debe escribir el N° de Cuenta del Empleado",
-            icon: "error",
-          })
-        }
-        if(!bodyPetitionEmpleadoUpdate.tipoCuenta){
-          return swal({
-            title: "Error",
-            text: "Debe seleccionar el Tipo de Cuenta del Empleado",
-            icon: "error",
-          })
-        }
-        if(!bodyPetitionEmpleadoUpdate.cbu){
-          return swal({
-            title: "Error",
-            text: "Debe escribir el CBU del Empleado",
-            icon: "error",
-          })
-        }
-        if(responses.fomrLiquidacion?.inputCheckAsigna && !bodyPetitionEmpleadoGuarda.iDEsquema){
-          return swal({
-            title: "Error",
-            text: "Debe seleccionar el Esquema del Empleado",
-            icon: "error",
-          })
-        }
           //#endregion
       }
 
@@ -1096,14 +978,18 @@ useEffect(()=>{
           }else{
             await axios.put(urls.urlEmpleadoGuarda, bodyPetitionEmpleadoUpdate)
             .then((res)=>{
-
-              setRefectch(!refetch);
-              setSaveEmpleado(!saveEmpleado)
-               swal({
-                title: "Ok",
-                text: "Empleado Modificado con éxito",
-                icon: "success",
-            })
+              if(res.data.statusCode === 0){     
+                debugger;      
+                dispatch(updateEmploye(bodyPetitionEmpleadoUpdate))
+                dispatch(setRefetch(!refetching))
+                setRefectch(!refetch);
+                 return swal({
+                  title: "Ok",
+                  text: "Empleado Modificado con éxito",
+                  icon: "success",
+              })
+              }
+              
             })
             arrays[3].map(async (id)=>{
 
