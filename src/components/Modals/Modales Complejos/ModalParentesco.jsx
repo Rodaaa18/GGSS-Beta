@@ -1,4 +1,5 @@
 import React from "react";
+import { classesTxtAreaModal } from "../../../classes/classes";
 import InputModal from "../../Inputs/InputModal/InputModal";
 import TextArea from "../../Inputs/TextArea/TextArea";
 
@@ -208,6 +209,7 @@ export const ModalParentesco = ({
             >
               {usaEstados && (
                 <TextArea
+                  clasess={classesTxtAreaModal}
                   disableModal={!disableModalButtons}
                   idInput={idInputTextArea}
                   onChange={onChangeValues}

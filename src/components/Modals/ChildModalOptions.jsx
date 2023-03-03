@@ -1,3 +1,4 @@
+import { classesTxtAreaModal } from "../../classes/classes";
 import InputModal from "../Inputs/InputModal/InputModal";
 import TextArea from "../Inputs/TextArea/TextArea";
 import "./BasicModal.css";
@@ -193,6 +194,7 @@ const ChildModalOptions = ({
             >
               {usaEstados && (
                 <TextArea
+                clasess={classesTxtAreaModal}
                   disableModal={!disableModalButtons}
                   idInput={idInputTextArea}
                   onChange={onChangeValues}

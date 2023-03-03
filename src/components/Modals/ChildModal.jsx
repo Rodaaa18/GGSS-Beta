@@ -1,6 +1,7 @@
 import InputModal from '../Inputs/InputModal/InputModal';
 import TextArea from '../Inputs/TextArea/TextArea';
 import "./BasicModal.css"
+import {classesTxtAreaModal} from '../../classes/classes'
 const ChildModal = ({nameModalProp, disabled, array , propsModal, optionsInputs, transition, setTransition, handleClickClose,functionAdd, functionUpdate, functionDelete, valueItemModal, setValueItemModal, onChangeValues, modalValues, urlApi, bodyPetition, bodyUpdate,setModify, modify, idAModificar, disableModal, setDisableMOdal, actionActualizaDelete, actualizaCreate, actualizaUpdate, idInputTextArea, disableModalButtons , setDisableModalButtons, usaEstados, urlDelete, changeUrl, valueIdUrl, diferentUrl}) => {
 
   return (
@@ -113,9 +114,10 @@ const ChildModal = ({nameModalProp, disabled, array , propsModal, optionsInputs,
                 );
               })}
             </div>
-            <div className="d-flex flex-column justify-content-center align-items-center">
+            <div className="d-flex flex-column justify-content-start align-items-center">
                {usaEstados && ( 
                 <TextArea
+                  clasess={classesTxtAreaModal}
                   disableModal={!disableModalButtons}
                   idInput={idInputTextArea}
                   onChange={onChangeValues}

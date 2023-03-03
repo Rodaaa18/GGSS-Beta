@@ -13,11 +13,11 @@ const InputModal = ({
     
     return (
 
-        <div className="inputModalContainer">
+        <div className="container">
 
-            <div className="row mb-3 inputLabelContainer">
-                <label for="inputPassword3" className="col-sm-4 col-form-label">{nameLabel}:</label>
-                <div className="col-sm-8">
+            <div className="row d-flex flex-row justify-content-center align-items-center">
+                <div className="col colModal">
+                    <label for="inputPassword3" className="col-form-label-modal">{nameLabel}:</label>
                     <input
                         type="text"
                         className="inputModal"

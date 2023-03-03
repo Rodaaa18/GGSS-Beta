@@ -80,6 +80,18 @@
 .col-form-label{
   color: black;
 }
+.col-form-label-modal{
+  padding: 0;
+  margin: 0;
+  width: 40%;
+  font-size: small;
+  color: black;
+}
+.inputModal{
+  padding: 0;
+  margin: 0;
+  width: 60%;
+}
 .form__grupo__label__label{
   color: black;
 }
@@ -100,6 +112,10 @@
 .form-check-label{
   color: black;
   
+}
+.colModal{
+  width: 100%;
+  padding: 0;
 }
 .labelModalParentesco{
   width: 100%;

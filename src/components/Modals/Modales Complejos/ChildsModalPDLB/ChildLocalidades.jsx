@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
+import { classesTxtAreaModal } from '../../../../classes/classes';
 import { selectedLoc } from '../../../../redux/actions/modalesActions';
 import InputModal from '../../../Inputs/InputModal/InputModal';
 import TextArea from '../../../Inputs/TextArea/TextArea';
@@ -111,6 +112,7 @@ const ChildLocalidades = ({
                   >
                     {usaEstados && (
                       <TextArea
+                        clasess={classesTxtAreaModal}
                         disableModal={!disableModalButtons}
                         idInput={idInputTextArea}
                         onChange={onChangeValues}

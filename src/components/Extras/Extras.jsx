@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import swal from 'sweetalert';
-import { inputButtonClasessExtras, inputButtonClasessExtrasAfectaciones, inputButtonClasessExtrasInstrum } from '../../classes/classes'
+import { classesTxtAreaExtras, inputButtonClasessExtras, inputButtonClasessExtrasAfectaciones, inputButtonClasessExtrasInstrum } from '../../classes/classes'
 import { deleteDatoExtraEmpl, saveIdDe } from '../../redux/actions/extrasActions';
 import { addDatosExtras, addInstrumLegales, addOneDatoExtra } from '../../redux/actions/fetchActions';
 import { GET_INPUT_VALUES_EXTRAS } from '../../redux/types/extrasTypes';
@@ -156,7 +156,7 @@ const Extras = ({responses, setResponses, disable, setRefetch, refetch}) => {
                 </div>
                 <div className='row'>
                       <div className='col-xl-12 fs-6 '>
-                          <TextArea onChange={onChangeValues} idInput="inputTextExtras" value={formDatosExtras?.inputTextExtras && formDatosExtras?.inputTextExtras} inputName="Observaciones" action={GET_INPUT_VALUES_EXTRAS} disabled={disable} />
+                          <TextArea clasess={classesTxtAreaExtras}  onChange={onChangeValues} idInput="inputTextExtras" value={formDatosExtras?.inputTextExtras && formDatosExtras?.inputTextExtras} inputName="Observaciones" action={GET_INPUT_VALUES_EXTRAS} disabled={disable} />
                           <ButtonCancelarAceptar cancelar="-" aceptar="+" idElimiar={datoExtraSelected.idEmpleadoDatoExtra} functionDelete={deleteDatoExtra} functionSend={sendData} disabled={disable} />
                           <TableExtras descripcion={datosExtras} disabled={disable} datosExtraEmpleado={datosExtraEmpleado && datosExtraEmpleado} columns={columns} />
                       </div>

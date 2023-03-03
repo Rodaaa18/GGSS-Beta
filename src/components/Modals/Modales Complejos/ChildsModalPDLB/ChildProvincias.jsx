@@ -1,5 +1,6 @@
 import React from 'react'
 import { useDispatch } from 'react-redux';
+import { classesTxtAreaModal } from '../../../../classes/classes';
 import { actualizaCreaProvincias, actualizaModificarProvincias } from '../../../../redux/actions/fetchActions';
 import { selectedPro } from '../../../../redux/actions/modalesActions';
 import InputModal from '../../../Inputs/InputModal/InputModal';
@@ -88,6 +89,7 @@ const ChildProvincias = ({disableModalButtons,array,propsModal,setValueItemModal
                   >
                     {usaEstados && (
                       <TextArea
+                        clasess={classesTxtAreaModal}
                         disableModal={!disableModalButtons}
                         idInput={idInputTextArea}
                         onChange={onChangeValues}
