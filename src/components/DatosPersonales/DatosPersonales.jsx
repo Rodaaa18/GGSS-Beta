@@ -16,7 +16,7 @@ import TextArea from "../Inputs/TextArea/TextArea";
 import { useDispatch, useSelector } from "react-redux";
 import { ADD_DATOS_PERSONALES } from "../../redux/types/datosPersonalesTypes";
 import axios from "axios";
-import {  inputButtonClasessCUIL } from "../../classes/classes";
+import {  classesTxtAreaPersonales, inputButtonClasessCUIL } from "../../classes/classes";
 import { disableFunctions } from "../../redux/actions/employeActions";
 import EmployeData from "../EmployeData/EmployeData";
 import InputButtonCUIL from "../Inputs/InputButtonCUIL/InputButtonCUIL";
@@ -469,7 +469,7 @@ const DatosPersonales = ({ tabIndex ,handleTabChange, responses, setResponses, c
                             idInput="observacionesEstudios"
                             maxLength="255"
                             value={formDatosPersonales?.observacionesEstudios ? formDatosPersonales?.observacionesEstudios : empleadoUno.obsEstudios}
-                    
+                            clasess={classesTxtAreaPersonales}
                             disabled={disable}
                             action={ADD_DATOS_PERSONALES}
                             onChange={onChangeValues} />
