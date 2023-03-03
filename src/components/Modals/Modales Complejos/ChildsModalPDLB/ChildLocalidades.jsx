@@ -40,7 +40,7 @@ const ChildLocalidades = ({
  
   return (
         <>
-        <div className="col-xl-6 border border-2 p-2 ">
+        <div className="col-xl-6 col-sm-6 border border-2 p-2">
                 <select
                   className="form-select selectMenus p-0 m-0"
                   multiple
@@ -93,8 +93,8 @@ const ChildLocalidades = ({
                     Eliminar
                   </button>
                 </div>
-              </div><div className="col-xl-6">
-                  <div className="d-flex flex-column justify-content-start align-items-center">
+              </div><div className="col-xl-6 col-sm-6">
+                  <div className="d-flex flex-column justify-content-start align-items-center col-sm-9">
                   <InputModal
                           disableModal={!disableModalButtons}
                           placeholder={optionsInputs[1].placeholder}
@@ -105,8 +105,7 @@ const ChildLocalidades = ({
                             ? modalValues?.masculino
                             : modalValues?.femenino} />
                   </div>
-                  <div
-                    className="d-flex flex-column justify-content-center align-items-center"
+                  <div className="d-flex flex-column justify-content-start align-items-center col-sm-8"
                     disabled={!disableModalButtons}
                   >
                     {usaEstados && (

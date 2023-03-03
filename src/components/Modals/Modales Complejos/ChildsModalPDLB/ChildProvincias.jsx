@@ -13,7 +13,7 @@ const ChildProvincias = ({disableModalButtons,array,propsModal,setValueItemModal
   
   return (
     <>
-        <div className="col-sm-6 border border-2 p-2 ">
+        <div className="col-xl-6 col-sm-6 border border-2 p-2">
                 <select
                   className="form-select selectMenus p-0 m-0"
                   multiple
@@ -68,8 +68,9 @@ const ChildProvincias = ({disableModalButtons,array,propsModal,setValueItemModal
                     Eliminar
                   </button>
                 </div>
-              </div><div className="col-sm-6">
-                  <div className="d-flex flex-column justify-content-start align-items-center">
+              </div>
+              <div className="col-xl-6 col-sm-6">
+                  <div className="d-flex flex-column justify-content-start align-items-center col-sm-9">
                     
                         <InputModal
                           disableModal={!disableModalButtons}
@@ -82,8 +83,7 @@ const ChildProvincias = ({disableModalButtons,array,propsModal,setValueItemModal
                             : modalValues?.femenino} />
                       
                   </div>
-                  <div
-                    className="d-flex flex-column justify-content-center align-items-center"
+                  <div className="d-flex flex-column justify-content-start align-items-center col-sm-8"
                     disabled={!disableModalButtons}
                   >
                     {usaEstados && (
