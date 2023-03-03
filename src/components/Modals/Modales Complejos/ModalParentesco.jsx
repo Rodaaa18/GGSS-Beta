@@ -151,12 +151,12 @@ export const ModalParentesco = ({
                 );
               })}
             </div>
-            <div class="form-check p-0">
-              <label class="form-check-label" for="flexCheckDefault">
-                {nameInputCheck}
-              </label>
-            </div>
-            <div className="d-flex flex-row justify-content-start align-items-center ">
+            <div className="d-flex flex-row justify-content-start align-items-center w-100 ">
+              <div class="form-check p-0 d-flex flex-row justify-content-start align-items-center">
+                <label class=" labelModalParentesco" for="flexCheckDefault">
+                  {nameInputCheck}
+                </label>
+              </div>
               <input
                 className="form-check-input "
                 onChange={(e)=> onChangeValues(e.target.checked , idCheckGenera)}
@@ -166,12 +166,13 @@ export const ModalParentesco = ({
                 disabled={disabled}
               />
             </div>
-            <div class="form-check p-0">
-              <label class="form-check-label" for="flexCheckDefault">
+            
+            <div className="d-flex flex-row justify-content-start align-items-center w-100 ">
+            <div class="form-check p-0 d-flex flex-row justify-content-start align-items-center">
+              <label class=" labelModalParentesco" for="flexCheckDefault">
                 {nameInputCheckTwo}
               </label>
             </div>
-            <div className="d-flex flex-row justify-content-start align-items-center ">
               <input
                 className="form-check-input "
                 onChange={(e)=> onChangeValues(e.target.checked , idCheckGanancias)}

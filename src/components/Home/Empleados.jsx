@@ -1233,7 +1233,6 @@ useEffect(()=>{
         })
     }
 }
-console.log(localStorage.getItem('token'))
   return (
     <>
     

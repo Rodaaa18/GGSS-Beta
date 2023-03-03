@@ -98,6 +98,12 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario }) => {
   const [disableModal, setDisableMOdal] = useState(true);
   const [transition, setTransition] = useState(false);
   const [disableModalButtons, setDisableModalButtons] = useState(false);
+  const [ reload, setReload ] = useState(false);
+  const [arrayList, setArrayList] = useState({
+	departamentos: [],
+	localidades: [],
+	barrios: [],
+  });
   const dispatch = useDispatch();
   const refetch = useSelector((state) => state.modalState.refetch);
   const navigate = useNavigate();
@@ -124,7 +130,8 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario }) => {
                         setModify(false);
                         setDisableMOdal(true)
 						dispatch(actualizaUpdate(bodyUpdate))
-                        dispatch(setRefetch(!refetch))
+                        dispatch(setRefetch(refetch))
+						setReload(!reload)
             return swal({
               title: "Ok",
               text: "Item actualizado con éxito",
@@ -149,7 +156,8 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario }) => {
         if (res.status === 200) {
           setDisableMOdal(true);
           dispatch(actualizaCreate(body));
-          dispatch(setRefetch(!refetch));
+          dispatch(setRefetch(refetch));
+		  setReload(!reload)
           return swal({
             title: "Ok",
             text: "Item guardado con éxito",
@@ -186,6 +194,7 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario }) => {
               dispatch(actualizaDelete(id));
 			  dispatch(setRefetch(!refetch));
               setDisableMOdal(true);
+			  setReload(!reload)
               return swal({
                 title: "Ok",
                 text: "Item eliminado con éxito",
@@ -207,6 +216,39 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario }) => {
       }
     });
   }
+
+  const generalStateData = useSelector((state)=> state.generalState)
+  const provinciaSelected = useSelector((state)=> state.modalState.provSelect);
+  const departamentoSelected = useSelector((state)=> state.modalState.dptoSelect);
+  const localidadSelected = useSelector((state)=> state.modalState.localSelect);
+
+  
+
+  useEffect(() => {
+	console.log("localidades", generalStateData.localidades);
+	if (provinciaSelected && generalStateData.departamentos) {
+	  const arrayDepartamentos = generalStateData.departamentos.filter(
+		(departamento) => departamento.idProvincia === provinciaSelected.idProvincia
+	  );
+	  setArrayList((prevState) => ({ ...prevState, departamentos: arrayDepartamentos }));
+	}
+	if (departamentoSelected && generalStateData.localidades) {
+		
+	  const arrayLocalidades = generalStateData.localidades.filter(
+		(localidad) => localidad.idDepartamento === departamentoSelected.idDepartamento
+	  );
+	  setArrayList((prevState) => ({ ...prevState, localidades: arrayLocalidades }));
+	}
+	if (localidadSelected && generalStateData.barrios) {
+	  const arrayBarrios = generalStateData.barrios.filter(
+		(barrio) => barrio.idLocalidad === localidadSelected.idLocalidad
+	  );
+	  setArrayList((prevState) => ({ ...prevState, barrios: arrayBarrios }));
+	}
+  }, [provinciaSelected, departamentoSelected, localidadSelected, generalStateData]);
+
+  console.log(arrayList)
+
   //#region ----------------------------------- URLS DE LOS MODALES
   const urlEstadosCiviles = "http://54.243.192.82/api/EstadosCiviles";
   const urlEstudios = "http://54.243.192.82/api/Estudios";
@@ -1161,6 +1203,9 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario }) => {
 															actualizaUpdate={actualizaModificarPaises}
 															setRefetch={setRefetch}
 															refetch={refetch}
+															reload={reload}
+															arrayList={arrayList}
+															setArrayList={setArrayList}
 														/>
 													</ButtonCallModal>
 												</li>  
