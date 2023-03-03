@@ -66,9 +66,11 @@ const Licencias = ({responses, setResponses, licenciaEmpleadoDatos, setLicenciaE
         });      
     },[formLicencias]);
 
-    function sendData(url,  action){
+
+
+    function sendData(url,  action, body){
         try{
-            axios.post(url)
+            axios.post(url, body)
         .then((res)=>{
            
             dispatch(action(res.data));

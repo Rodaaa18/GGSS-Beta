@@ -489,6 +489,8 @@ const DatosPersonales = ({ tabIndex ,handleTabChange, responses, setResponses, c
                             action={ADD_DATOS_PERSONALES} 
                             setRefectch={setRefectch}
                             refetch={refetch}
+                            setResponses={setResponses}
+                            responses={responses}
                             />
                         </div>
                       </div>

@@ -29,16 +29,25 @@ const Extras = ({responses, setResponses, disable, setRefetch, refetch}) => {
     //const datosExtraEmpleado = useSelector((state)=>state.generalState.datosExtrasPorEmpleadosSelect);
     const datosExtraEmpleado = useSelector((state)=> state.extrasState.datosExtrasEmp);
 
+    const bodyPetition = 
+    {
+      "idEmpleadoDatoExtra": 0,
+      "fecha": formDatosExtras?.inputFechaExtras,
+      "idEmpleado": empleadoUno.iDempleado,
+      "idDatoExtra": formDatosExtras?.inputDatosExtrasCbo,
+      "obs": formDatosExtras?.inputTextExtras
+    }
+  
 
     
-    const urlPetition = `http://54.243.192.82/api/GuardarDatosExtras/0?Fecha=${formDatosExtras?.inputFechaExtras}&IdEmpleado=${empleadoUno.iDempleado}&IdDatoExtra=${formDatosExtras?.inputDatosExtrasCbo}&Obs=${formDatosExtras?.inputTextExtras}`
+    const urlPetition = `http://54.243.192.82/api/GuardarDatosExtras`
    
-    const nueva = `http://54.243.192.82/api/GuardarDatosExtras/0?Fecha=${formDatosExtras?.inputFechaExtras}&IdEmpleado=${empleadoUno.iDempleado}&IdDatoExtra=${formDatosExtras?.inputDatosExtrasCbo}&Obs=${formDatosExtras?.inputTextExtras}`
+   
 
     async function sendData(){
       if(empleadoUno){
         try{
-          await axios.post(urlPetition)
+          await axios.post(urlPetition, bodyPetition)
           .then((res)=>{
               if(res.status === 200){
                 setRefetch(!refetch)
@@ -94,13 +103,7 @@ const Extras = ({responses, setResponses, disable, setRefetch, refetch}) => {
         });    
     },[formDatosExtras]);
 
-  function onChange(e, action) {
-    dispatch(
-      {
-        type: action,
-        payload : {name : e.target.name, value : e.target.value}
-      });    
-  }
+  
 
   
 
@@ -157,7 +160,7 @@ const Extras = ({responses, setResponses, disable, setRefetch, refetch}) => {
                 <div className='row'>
                       <div className='col-xl-12 fs-6 '>
                           <TextArea clasess={classesTxtAreaExtras}  onChange={onChangeValues} idInput="inputTextExtras" value={formDatosExtras?.inputTextExtras && formDatosExtras?.inputTextExtras} inputName="Observaciones" action={GET_INPUT_VALUES_EXTRAS} disabled={disable} />
-                          <ButtonCancelarAceptar cancelar="-" aceptar="+" idElimiar={datoExtraSelected.idEmpleadoDatoExtra} functionDelete={deleteDatoExtra} functionSend={sendData} disabled={disable} />
+                          <ButtonCancelarAceptar cancelar="-" aceptar="+" idElimiar={datoExtraSelected.idEmpleadoDatoExtra} functionDelete={deleteDatoExtra} functionSend={sendData}  disabled={disable} />
                           <TableExtras descripcion={datosExtras} disabled={disable} datosExtraEmpleado={datosExtraEmpleado && datosExtraEmpleado} columns={columns} />
                       </div>
                 </div>

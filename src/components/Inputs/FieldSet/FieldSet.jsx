@@ -60,7 +60,13 @@ const FieldSet = ({
   
 
   const url = `http://54.243.192.82/api/ActualizaDisponibles/0?idEmpleado=${empleadoUno.iDempleado}&anio=${formLicencias?.inputCboAñosLicencia}&diasDisponiblesTotales=${formLicencias?.inputCantDiasDispLicencia}&fechaVencimiento=${formLicencias?.inputVencimientoLicencias}&newId=0`
-  const urlCreateLicencia = `http://54.243.192.82/api/ActualizaDisponibles/0?idEmpleado=${empleadoUno.iDempleado}&anio=${formLicencias?.inputCboAñosLicencia}&diasDisponiblesTotales=${formLicencias?.inputCantDiasDispLicencia}&fechaVencimiento=${formLicencias?.inputVencimientoLicencias}&newId=0`;
+
+  const urlCreateLicencia = "http://54.243.192.82/api/InsertarNuevaLicencia"
+  const urlCreateLicencias = `http://54.243.192.82/api/ActualizaDisponibles/0?idEmpleado=${empleadoUno.iDempleado}&anio=${formLicencias?.inputCboAñosLicencia}&diasDisponiblesTotales=${formLicencias?.inputCantDiasDispLicencia}&fechaVencimiento=${formLicencias?.inputVencimientoLicencias}&newId=0`;
+
+
+ 
+
 
   const urlLicencias = "http://54.243.192.82/api/ModificarDatos";
   const detalleSeleccionado = useSelector(
@@ -68,11 +74,7 @@ const FieldSet = ({
   );
   const idSelected = useSelector((state)=> state.licenciasState.idSelected);
 
-  const urlCreateDetalleLicencia = `http://54.243.192.82/api/DetalleLicenciasEmpleados?IdDetalleLicenciaEmpleado=0&IdLicenciaEmpleado=${
-    idSelected
-  }&Desde=${formLicencias?.inputDesdeSolicitaLic}&Hasta=${
-    formLicencias?.inputHastaSolicitaLic
-  }`;
+  const urlCreateDetalleLicencia = `http://54.243.192.82/api/DetalleLicenciasEmpleados`;
   const urlDetalleLicenciaEmpleados =
     "http://54.243.192.82/api/DetalleLicenciasEmpleados";
   const urlDeleteLicencia = "http://54.243.192.82/api/";
@@ -117,7 +119,7 @@ const FieldSet = ({
     fechaProrroga: null,
     nroResolucion: null,
   };
-  console.log(bodyLicenciasUpdateSolicita)
+  
   let bodyLicenciasUpdateProrroga = {
     idLicenciaEmpleado: licenciuaSelected?.idLicenciaEmpleado,
     idEmpleado: empleadoUno?.iDempleado,
@@ -129,8 +131,8 @@ const FieldSet = ({
     fechaProrroga: formLicencias?.inputNuevaFechaLic,
     nroResolucion: formLicencias?.inputNuevaResolucionLic,
   };
-  const arrayIds = useSelector((state)=> state.licenciasState.idsLic);
 
+  const arrayIds = useSelector((state)=> state.licenciasState.idsLic);
 
 
   const bodyDetalleLicencia = {
@@ -138,7 +140,6 @@ const FieldSet = ({
     IdLicenciaEmpleado: licenciuaSelected && licenciuaSelected.idLicenciaEmpleado,
     Desde: formLicencias && formLicencias.inputDesdeSolicitaLic,
     Hasta: formLicencias && formLicencias.inputHastaSolicitaLic,
-    FechaSuspencion: null,
   };
 
   let dateOne = new Date(formLicencias?.inputDesdeSolicitaLic).setHours(
@@ -148,8 +149,6 @@ const FieldSet = ({
     0
   );
   
-
-
 
   let dateTwo = new Date(
     licenciuaSelected?.fechaVencimiento &&
@@ -320,7 +319,16 @@ const FieldSet = ({
     
   }
  
-
+  const bodyPetitionCreate = {
+    "idEmpleado": empleadoUno?.iDempleado,
+    "año": formLicencias?.inputCboAñosLicencia,
+    "diasDisponiblesTotales": formLicencias?.inputCantDiasDispLicencia,
+    "fechaVencimiento": formLicencias?.inputVencimientoLicencias,
+    "desde": null,
+    "hasta": null,
+    "fechaProrroga": null,
+    "nroResolucion": null
+  }
   function deleteWithOptions() {
     switch (selectedOption) {
       case 
@@ -350,10 +358,10 @@ const FieldSet = ({
   function fetchApiWithOptions() {
     switch (selectedOption) {
       case "1 - Disponibles por Periodo":
-        sendData(urlCreateLicencia, addNewLicencia);
+        sendData(urlCreateLicencia, addNewLicencia, bodyPetitionCreate);
         break;
       case "2 - Solicita Nueva Licencia":
-        solicitanuevaLic(bodyDetalleLicencia);
+        solicitanuevaLic(bodyDetalleLicencia, bodyPetitionCreate);
         break;
       case "3 - Prorroga Vencimiento":
         updateData(
@@ -381,7 +389,7 @@ const FieldSet = ({
       );
       
       if (dateOne.valueOf() < dateProrroga.valueOf()) {
-        await axios.post(urlCreateDetalleLicencia).then((res) => {
+        await axios.post(urlCreateDetalleLicencia, bodyDetalleLicencia).then((res) => {
     
           setRefectch(!refetch);
         });
@@ -395,7 +403,7 @@ const FieldSet = ({
       return;
     }
     if (dateOne.valueOf() < dateTwo.valueOf()) {
-      await axios.post(urlCreateDetalleLicencia).then((res) => {
+      await axios.post(urlCreateDetalleLicencia, bodyDetalleLicencia).then((res) => {
     
         setRefectch(!refetch);
       });

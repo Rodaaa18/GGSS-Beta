@@ -498,8 +498,9 @@ useEffect(()=>{
     try{
       await axios.delete(`http://54.243.192.82/api/Empleados/${id}`)
       .then((res)=>{
-        
-        if(res.isSuccess == true || res.status === 200){
+        if(res.data.isSuccess === true || res.data.status === 200){
+          
+          
           return swal({
             title: "Ok",
             text: "Empleado Eliminado con éxito",
@@ -523,9 +524,10 @@ useEffect(()=>{
         icon: "error",
       });
     }
+    cleanIdsGeneral();
   }
   
-
+  console.log((empleadoUno ))
   async function deleteItems(objectRequest){
     const { urls, arrays } = objectRequest;
     let bodyPetitionEmpleadoGuarda = {
@@ -564,7 +566,7 @@ useEffect(()=>{
       "nombres": responses.formDatosPersonales?.nombresInput,
       "idEstado": responses.formDatosPersonales?.estadosEmpleados,
       "idEmpresadeTelefonia": 2,
-      "imagen": (responses.formDatosPersonales?.inputImage)?.substring(22),
+      "imagen": (responses.formDatosPersonales?.inputImage)?.substring(22) ? (responses.formDatosPersonales?.inputImage)?.substring(22) : "",
       "rutaFoto": null,
       "telFijo": responses.formDatosPersonales?.telefonoInput,
       "acuerdo": 0,
@@ -629,7 +631,7 @@ useEffect(()=>{
       "idPaisOrigen": responses.formDatosPersonales?.paisOrigenInput ? responses.formDatosPersonales?.paisOrigenInput  : empleadoUno.idPaisOrigen,
       "mail": responses.formDatosPersonales?.email ? responses.formDatosPersonales?.email  : empleadoUno.mail,
       "telMovil": responses.formDatosPersonales?.movil ? responses.formDatosPersonales?.movil  : empleadoUno.telMovil,
-      "tipoCuenta": responses.formDatosPersonales?.inputRadioAsidePagos ? responses.formDatosPersonales?.inputRadioAsidePagos  : empleadoUno.tipoCuenta,
+      "tipoCuenta": responses.formLiquidacion?.inputRadioAsidePagos ? responses.formLiquidacion?.inputRadioAsidePagos  : empleadoUno.tipoCuenta,
       "totalRemuneracion": responses.formLiquidacion?.inputTotalRemu ? responses.formLiquidacion?.inputTotalRemu  : empleadoUno.totalRemuneracion,
       "totalNeto": responses.formLiquidacion?.inputTotalNeto ? responses.formLiquidacion?.inputTotalNeto   : empleadoUno.totalNeto,
       "tieneEmbargos": responses.formLiquidacion?.inputCheckEmbargo ? responses.formLiquidacion?.inputCheckEmbargo  : empleadoUno.tieneEmbargos,
@@ -637,7 +639,7 @@ useEffect(()=>{
       "tieneLicenciaSinGoceHaberes": responses.formLiquidacion?.inputCheckLicSinGoce ? responses.formLiquidacion?.inputCheckLicSinGoce  : empleadoUno.tieneLicenciaSinGoceHaberes,
       "obsEstudios": responses.formDatosPersonales?.observacionesEstudios ? responses.formDatosPersonales?.observacionesEstudios  : empleadoUno.obsEstudios,
       "obsFechaIngreso": "",
-      "idAgrupamiento": responses.formDatosPersonales?.inputAgrupamiento ?  responses.formDatosPersonales?.inputAgrupamiento : empleadoUno.idAgrupamiento,
+      "idAgrupamiento": responses.formLiquidacion?.inputAgrupamiento ?  responses.formLiquidacion?.inputAgrupamiento : empleadoUno.idAgrupamiento,
       "idDireccion": responses.formLiquidacion?.inputDireccionLiquidacion ? responses.formLiquidacion?.inputDireccionLiquidacion  : empleadoUno.idDireccion,
       "idInstrumentoLegal": 2
     }
@@ -1076,13 +1078,20 @@ useEffect(()=>{
              .then((res)=>{
               setRefectch(!refetch);
               setSaveEmpleado(!saveEmpleado)
-
-               swal({
-                title: "Ok",
-                text: "Empleado Guardado con éxito",
-                icon: "success",
-            })
-
+              if(res.data.statusCode === 200){
+                return swal({
+                 title: "Ok",
+                 text: "Empleado Guardado con éxito",
+                 icon: "success",
+                 })
+              }else{
+                swal({
+                  title: "Error",
+                  text: "Error al guardar el Empleado",
+                  icon: "error",
+                  })
+              }
+              
              })
           }else{
             await axios.put(urls.urlEmpleadoGuarda, bodyPetitionEmpleadoUpdate)
