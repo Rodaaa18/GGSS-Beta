@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectedLoc } from '../../../../redux/actions/modalesActions';
 import InputModal from '../../../Inputs/InputModal/InputModal';
 import TextArea from '../../../Inputs/TextArea/TextArea';
 
 const ChildLocalidades = ({
-  disableModalButtons,array,propsModal,setValueItemModal, setDisableMOdal,setDisableModalButtons ,setModify,functionDelete, urlApi, idAModificar, actionActualizaDelete, optionsInputs,onChangeValues,modalValues,usaEstados,idInputTextArea,index,provinciaSelected, functionAdd
+  disableModalButtons,array,propsModal,setValueItemModal, setDisableMOdal,setDisableModalButtons ,setModify,functionDelete, urlApi, idAModificar, actionActualizaDelete, optionsInputs,onChangeValues,modalValues,usaEstados,idInputTextArea,index,provinciaSelected,functionAdd,  actualizaCreate,
+  actualizaUpdate
 }) => {
   const dispatch = useDispatch();
   const [ arrayList, setArrayList ] = useState([]);
-
+  const localidadSelected = useSelector((state)=> state.modalState.localSelect);
+  const departamentoSelected = useSelector((state)=> state.modalState.dptoSelect);
   function updateList(array){
     if(index === 2){
       return setArrayList(array)
@@ -21,7 +23,20 @@ const ChildLocalidades = ({
     updateList(array);
   },[index])
 
+  
 
+  const bodyPetition = {
+    "idLocalidad": 0,
+    "localidad": modalValues?.localidad,
+    "obs": modalValues?.obsLocalidad,
+    "idDepartamento": departamentoSelected?.idDepartamento
+  }
+  const bodyUpdate = {
+    "idLocalidad": localidadSelected?.idLocalidad,
+    "localidad": modalValues?.localidad,
+    "obs": modalValues?.obsLocalidad,
+    "idDepartamento": departamentoSelected?.idDepartamento
+  }
  
   return (
         <>
@@ -32,8 +47,8 @@ const ChildLocalidades = ({
                   aria-label="multiple select example"
                   disabled={disableModalButtons}
                 >
-                  {arrayList &&
-                    arrayList.map((op, i) => {
+                  {array &&
+                    array.map((op, i) => {
                       return (
                         <option
                           key={i}

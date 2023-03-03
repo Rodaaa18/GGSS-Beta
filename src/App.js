@@ -80,11 +80,12 @@ function App() {
         : 
         <ErrorPage message={error} statusCode={statusCode} loading={loading} /> 
       } 
-      
-      <Switch>
+      {
+      tokenDef && <Switch>
         <Route path="/ficha-empleados" exact element={<Empleados loading={loading} sePerfilesUSuario={sePerfilesUSuario} tokenDef={tokenDef}/>} /> 
         <Route path="/superadmin" exact element={<Superadmin />} />
-      </Switch>        
+      </Switch> 
+      }       
     </>
     
   );

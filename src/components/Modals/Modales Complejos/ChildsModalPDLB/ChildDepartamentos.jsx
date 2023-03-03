@@ -8,7 +8,7 @@ import TextArea from '../../../Inputs/TextArea/TextArea';
 
 const ChildDepartamentos = ({
   disableModalButtons,array,propsModal,setValueItemModal, setDisableMOdal,setDisableModalButtons ,setModify,functionDelete, urlApi, idAModificar, actionActualizaDelete, optionsInputs,onChangeValues,modalValues,usaEstados,idInputTextArea, index, functionAdd, actualizaCreate,
-  actualizaUpdate
+  actualizaUpdate, reload
 }) => {
   const [ arrayList, setArrayList ] = useState([]);
 
@@ -43,7 +43,7 @@ const ChildDepartamentos = ({
     "obs": modalValues?.obsDepartamentos,
     "idProvincia": provinciaSelected?.idProvincia
   }
-  console.log(bodyPetition)
+  
   const dispatch = useDispatch();
   return (
     <>
