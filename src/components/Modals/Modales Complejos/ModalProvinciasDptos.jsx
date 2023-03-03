@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import axios from "axios";
 import { reject } from "lodash";
 import React, { useEffect, useState } from "react";
@@ -11,8 +12,9 @@ import ChildBarrios from "./ChildsModalPDLB/ChildBarrios";
 import ChildDepartamentos from "./ChildsModalPDLB/ChildDepartamentos";
 import ChildLocalidades from "./ChildsModalPDLB/ChildLocalidades";
 import ChildProvincias from "./ChildsModalPDLB/ChildProvincias";
+// import '../BasicModal.css';
+import './../../Navbar/Navbar.css';
 // import './ChildsModalPDLB.css'
-// import '../BasicModal.css'
 // import '../../Navbar/Navbar.css'
 // import { Link } from 'react-router-dom';
 // import ButtonCallModal from '../../ButtonCallModal/ButtonCallModal';
@@ -190,7 +192,7 @@ export const ModalProvinciasDptos = ({
           <ul class="nav nav-tabs">
             <li class="nav-item">
               <a
-                class="nav-link active"
+               className={index === 0 ? "nav-link-color" : "nav-link-sinColor"}
                 aria-current="page"
                 href="#"
                 onClick={() => setIndex(0)}
@@ -200,7 +202,7 @@ export const ModalProvinciasDptos = ({
             </li>
             <li class="nav-item">
               <a
-                class="nav-link active"
+               className={index === 1 ? "nav-link-color" : "nav-link-sinColor"}
                 aria-current="page"
                 href="#"
                 onClick={() => setIndex(1)}
@@ -210,7 +212,7 @@ export const ModalProvinciasDptos = ({
             </li>
             <li class="nav-item">
               <a
-                class="nav-link active"
+                className={index === 2 ? "nav-link-color" : "nav-link-sinColor"}
                 aria-current="page"
                 href="#"
                 onClick={() => setIndex(2)}
@@ -220,7 +222,7 @@ export const ModalProvinciasDptos = ({
             </li>
             <li class="nav-item">
               <a
-                class="nav-link active"
+              className={index === 3 ? "nav-link-color" : "nav-link-sinColor"}
                 aria-current="page"
                 href="#"
                 onClick={() => setIndex(3)}
@@ -326,7 +328,6 @@ export const ModalProvinciasDptos = ({
                 actualizaUpdate={actualizaModificarBarrios}
               />
             )}
-           
           </div>
         </div>
       </section>

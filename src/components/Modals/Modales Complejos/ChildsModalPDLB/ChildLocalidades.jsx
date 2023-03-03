@@ -5,7 +5,7 @@ import InputModal from '../../../Inputs/InputModal/InputModal';
 import TextArea from '../../../Inputs/TextArea/TextArea';
 
 const ChildLocalidades = ({
-  disableModalButtons,array,propsModal,setValueItemModal, setDisableMOdal,setDisableModalButtons ,setModify,functionDelete, urlApi, idAModificar, actionActualizaDelete, optionsInputs,onChangeValues,modalValues,usaEstados,idInputTextArea,index,provinciaSelected
+  disableModalButtons,array,propsModal,setValueItemModal, setDisableMOdal,setDisableModalButtons ,setModify,functionDelete, urlApi, idAModificar, actionActualizaDelete, optionsInputs,onChangeValues,modalValues,usaEstados,idInputTextArea,index,provinciaSelected, functionAdd
 }) => {
   const dispatch = useDispatch();
   const [ arrayList, setArrayList ] = useState([]);
@@ -103,6 +103,34 @@ const ChildLocalidades = ({
                       ></TextArea>
                     )}
                   </div>
+                  <div className="d-flex flex-row-reverse w-100 ">
+              <button
+                className="btn btn-dark m-1"
+                disabled={!disableModalButtons}
+                onClick={() => {
+                  functionAdd(
+                    urlApi,
+                    bodyPetition, 
+                    bodyUpdate,
+                    idAModificar,
+                    actualizaCreate,
+                    actualizaUpdate
+                  );
+                  setDisableModalButtons(false);
+                }}
+              >
+                Aceptar
+              </button>
+              <button
+                className="btn btn-dark m-1"
+                disabled={!disableModalButtons}
+                onClick={() => {
+                  setDisableModalButtons(false);
+                }}
+              >
+                Cancelar
+              </button>
+            </div>
                 </div>
     </>
   )

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import swal from "sweetalert";
 import "./Navbar.css";
+import './../../components/Modals/BasicModal.css'
 // ------------------------ OBJECTS ------------------------
 import {
   objectParentescos,

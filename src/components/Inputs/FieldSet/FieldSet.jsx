@@ -371,7 +371,7 @@ const FieldSet = ({
   }
   
   async function solicitanuevaLic(bodyDetalleLicencia) {
-     debugger;
+      ;
     if (licenciuaSelected.fechaProrroga && licenciuaSelected.fechaProrroga) {
       let dateProrroga = new Date(licenciuaSelected.fechaProrroga).setHours(
         0,
