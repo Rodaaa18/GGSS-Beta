@@ -137,6 +137,7 @@ const Browser = ({ disable, setDisable, setValueEmpl, responses, setResponses, s
               name="inpurLegajoBrowser"
               id="inpurLegajoBrowser"
               placeholder="Ingrese Legajo "
+              disabled={!disable}
             />
 
             <div className="row mt-1 m-0 p-0  w-100">
@@ -148,6 +149,7 @@ const Browser = ({ disable, setDisable, setValueEmpl, responses, setResponses, s
                 name="inputApellidoNombreBrowser"
                 id="inputApellidoNombreBrowser"
                 placeholder="Ingrese Nombre "
+                disabled={!disable}
               />              
             </div>
             {/* <div className="wor mt-1 m-0 p-0 w-100">
@@ -185,6 +187,7 @@ const Browser = ({ disable, setDisable, setValueEmpl, responses, setResponses, s
               <button
                 className={`btn btn-danger btn-sm d-flex justify-content-center m-1 align-items- newClass`}
                 onClick={habilitaEdit}
+                disabled={!disable}
               >
                 Agregar
               </button>
@@ -193,6 +196,7 @@ const Browser = ({ disable, setDisable, setValueEmpl, responses, setResponses, s
               <button
                 className={`btn btn-danger btn-sm d-flex justify-content-center m-1 align-items- newClass`}
                 onClick={(e) => habilitaUpdate(e)}
+                disabled={!disable}
               >
                 Modificar
               </button>
@@ -201,6 +205,7 @@ const Browser = ({ disable, setDisable, setValueEmpl, responses, setResponses, s
               <button
                 className={`btn btn-danger btn-sm d-flex justify-content-center m-1 align-items- newClass`}
                 onClick={() => deleteEmploye(empleadoUno.iDempleado)}
+                disabled={!disable}
               >
                 Eliminar
               </button>
