@@ -1,4 +1,4 @@
-import { CANCEL_MODALS, ADD_SELECTED_EC, GET_ESTADOSCIVILES, ADD_SELECTED_ESTUDIO, GET_ESTUDIOS, ADD_SELECTED_TIPODOC, GET_TIPOSDOC, ADD_SELECTED_PARENTESCO, GET_PARENTESCOS, ADD_SELECTED_ESTADO, GET_ESTADOS, ADD_SELECTED_FORMAPAGO, GET_FORMASPAGO, ADD_SELECTED_CARGO, GET_CARGO, GET_CARGOS, ADD_SELECTED_TAREA, GET_TAREAS, SET_REFETCH } from "../types/modalesTypes"
+import { CANCEL_MODALS, ADD_SELECTED_EC, GET_ESTADOSCIVILES, ADD_SELECTED_ESTUDIO, GET_ESTUDIOS, ADD_SELECTED_TIPODOC, GET_TIPOSDOC, ADD_SELECTED_PARENTESCO, GET_PARENTESCOS, ADD_SELECTED_ESTADO, GET_ESTADOS, ADD_SELECTED_FORMAPAGO, GET_FORMASPAGO, ADD_SELECTED_CARGO, GET_CARGO, GET_CARGOS, ADD_SELECTED_TAREA, GET_TAREAS, SET_REFETCH, ACTUALIZA_DELETE, SELECTED_PROV, SELECTED_LOC, SELECTED_DPTO, SELECTED_BARRIO } from "../types/modalesTypes"
 
 export const addSelectedEstadoCivil = (payload) => {
     return {
@@ -128,3 +128,33 @@ export const cancelModals = (payload) => {
         payload
     };
 }
+
+export const selectedPro = (payload) => {
+    return {
+        type: SELECTED_PROV,
+        payload
+    };
+}
+export const selectedLoc = (payload) => {
+    return {
+        type: SELECTED_LOC,
+        payload
+    };
+}
+export const selectedDep = (payload) => {
+    return {
+        type: SELECTED_DPTO,
+        payload
+    };
+}
+export const selectBarrio = (payload) => {
+    return {
+        type: SELECTED_BARRIO,
+        payload
+    };
+}
+
+
+
+
+

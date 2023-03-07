@@ -13,8 +13,8 @@ const InputNumModal = ({
         <div className="inputModalContainer">
 
             <div className="row mb-3 inputLabelContainer">
-                <label className="col-sm-4 col-form-label">{nameInput}:</label>
-                <div className="col-sm-8 inputsNumModal">
+                <label className="col-form-label-modal">{nameInput}:</label>
+                <div className="col colModal">
                     <input style={{ width: "50px", textAlign: "center", marginRight: "30px"}} type="number" min={"0"} max={"1000"}
                         className='inputModal'
                         id={inputId}

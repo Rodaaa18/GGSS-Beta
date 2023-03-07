@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import './TextArea.css'
 
 
-const TextArea = ({ characterLimit = 255, onChange,idInput, disableModal }) => {
+const TextArea = ({ characterLimit = 255, onChange,idInput, disableModal, clasess }) => {
     const [input, setInput] = useState('');
 
     function handleChange(event) {
@@ -16,7 +16,46 @@ const TextArea = ({ characterLimit = 255, onChange,idInput, disableModal }) => {
    
 return (
     <>
-
+    {clasess ? 
+    <div class={clasess.classFive}>
+        <form>
+          <div class={clasess.classOne}>
+            <div className={clasess.classTwo}>
+              <label
+                className={clasess.classThree}
+                htmlFor="legajo"
+              >
+                Observaciones
+              </label>
+              <div className="input-group">
+                <textarea
+                  disabled={disableModal}
+                  placeholder="Ingrese Observaciones "
+                  maxLength={characterLimit}
+                  id={idInput}
+                  name={idInput}
+                  className={clasess.classFour}
+                  onChange={handleChange}
+                  value={input}
+                  cols="51" 
+                  rows="2"
+                />
+               {/* (caracteres_restantes < 10) ? "Contador de caracteres: " + caracteres_restantes : "" */}
+               
+               
+                <div class="input-msg text-black">
+                  {/* Character Count: {input.length} */}
+                  {/* Characters left: {charactersLeft} */}
+                  </div>
+                {charactersLeft < 15 && (
+                  <p className="text-red">Sólo quedan {charactersLeft} caracteres</p>
+                )}
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+:
 <div class="count-container">
         <form>
           <div class="input-group contTxtArea">
@@ -38,7 +77,7 @@ return (
                   onChange={handleChange}
                   value={input}
                   cols="51" 
-                  rows="6"
+                  rows="2"
                 />
                {/* (caracteres_restantes < 10) ? "Contador de caracteres: " + caracteres_restantes : "" */}
                
@@ -54,7 +93,7 @@ return (
             </div>
           </div>
         </form>
-      </div>
+      </div>}
     </>
 )
 }

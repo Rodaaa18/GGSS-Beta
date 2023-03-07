@@ -29,6 +29,7 @@ const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValu
   const localidadSelected = useSelector((state)=> state.domiciliosStates.localidadSelected);
   const domicilioDelEmpleado = useSelector((state)=> state.domiciliosStates.idDomicilioSelected);
 
+
   const empleadoDomicilio = useSelector((state)=> state.domiciliosStates.domicilioEmpleado);
 
   
@@ -46,7 +47,7 @@ const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValu
   
   const paises = ["Argentina", "Uruguay", "Paraguay", "Bolivia", "Peru"];
   //#region ------------------------------------------------------------------------------REDUX
-  const urlDomicilios = `http://54.243.192.82/api/sp_DomiciliosGuarda?idDomicilio=0&idCalle=${formDatosPersonales?.inputCalleDomicilios}&Numero=${formDatosPersonales?.inputNumCalle}&idBarrio=${formDatosPersonales?.inputBarriosDomicilios}&Dpto=${formDatosPersonales?.inputDepartamentosDomicilios}&Predeterminado=${formDatosPersonales?.inputPredeterminado}&IdEmpleado=${empleadoUno.iDempleado}&IdEmpleador=1&NewId=0`;
+  const urlDomicilios = `http://54.243.192.82/api/InsertarNuevoDomicilio`;
 
 
 
@@ -66,24 +67,23 @@ const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValu
  
 
   
-
+  const bodyCreateDomicilio = {
+    "idDomicilio": 0,
+    "idCalle": formDatosPersonales?.inputCalleDomicilios,
+    "numero": formDatosPersonales?.inputNumCalle,
+    "idBarrio": formDatosPersonales?.inputBarriosDomicilios,
+    "dpto": formDatosPersonales?.inputDepartamentosDomicilios,
+    "predeterminado": formDatosPersonales?.inputPredeterminado,
+    "iDEmpleado": empleadoUno?.iDempleado,
+    "idEmpleador": 0
+  }
  
 
- 
+  
 
   const sendDataDomicilios= async ()=>{
     try{
-    let predeterminadoExiste = empleadoDomicilio && empleadoDomicilio.filter((dom) => dom.predeterminado === true );
-    
-    if(predeterminadoExiste.length > 0 && (formDatosPersonales?.inputPredeterminado === true)){
-      return swal({
-        title: "Error",
-        text: "No puede tener más de un domicilio Predeterminado",
-        icon: "error",
-      }) 
-    }
-
-    await axios.post(urlDomicilios, {
+    await axios.post(urlDomicilios, bodyCreateDomicilio, {
       headers: {
         'Access-Control-Allow-Origin' : '*', 
         'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',
@@ -126,7 +126,6 @@ const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValu
   }
 
 
-
   return (
     
       //#region Menú Principal
@@ -161,8 +160,7 @@ const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValu
                       <input
                         type="checkbox"
                         name="inputPredeterminado"
-                        checked={!checked}
-                        value ={formDomicilios?.inputPredeterminado ? formDomicilios?.inputPredeterminado : false  }
+                        checked={checked}
                         id="inputPredeterminado"
                         onChange={(e)=>handleChangePredeterminado(e, "inputPredeterminado" )}
                       />
@@ -239,7 +237,6 @@ const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValu
                   <div className="col-xl-5 col-lg-5 col-md-5 mx-4 gy-4 py-2">
                     
                       <InputCbo
-                      
                       value={
                         formDomicilios?.inputProvinciaDomicilios ? formDomicilios?.inputProvinciaDomicilios : empleadoUno.provincia
                       }

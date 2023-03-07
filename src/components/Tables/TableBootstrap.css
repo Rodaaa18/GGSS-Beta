@@ -13,7 +13,10 @@ table.table-fit tbody td, table.table-fit tfoot td {
     width: auto !important;
 }
 
-
+.rowTAbles{
+    height: auto;
+    max-height: 10rem;
+}
 .DeCeldas{
     width: 550%;
 
@@ -26,6 +29,7 @@ table.table-fit tbody td, table.table-fit tfoot td {
     width: 10rem;
     
 }
+
 @media screen and (max-width : 1366px){
     .contDocumentacion{
         font-size: small;

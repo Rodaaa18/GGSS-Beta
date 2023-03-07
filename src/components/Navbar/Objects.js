@@ -1,10 +1,4 @@
 
-export const urls = {
-  urlParentescos : "http://54.243.192.82/api/Parentescos",
-  urlEstados : "http://54.243.192.82/api/Estados",
-  urlFormasPago : "http://54.243.192.82/api/FormasdePagos"
-}
-
 // -----  OBJECTS TABLA PARA EMPLEADOS -----
 
 
@@ -106,6 +100,14 @@ export const objectCargos = [
     "nameInput": "nombreCargo"
   }
 ]
+export const objectEmpleadores = [
+  {
+    "label": "Empleadores",
+    "placeholder": "Ninguno",
+    "idInput": "razonSocial",
+    "nameInput": "razonSocial"
+  }
+]
 export const textAreaCargos = [
   {
     "label": "Observaciones",
@@ -121,7 +123,7 @@ export const objectTareas = [
     "placeholder": "Tarea 1",
     "idInput": "tareaDesempeñada",
     "nameInput": "tareaDesempeñada"
-  }
+  } 
 ]
 
 
@@ -147,22 +149,31 @@ export const objectMotivosEgreso = [
 export const objectCalles = [
   {
     "label": "Calle",
-    "placeholder": "Calle falsa 123"
+    "placeholder": "Calle",
+    "idInput" : "calle",
+    "nameInput" : "calle"
+
   }
 ]
 
 export const objectPaises = [
   {
     "label": "País",
-    "placeholder": "Argentina"
+    "placeholder": "Argentina",
+    "idInput" : "nombrePais",
+    "nameInput" : "calle"
   },
   {
     "label": "Nacionalidad Masc.",
-    "placeholder": "Argentino"
+    "placeholder": "Argentino",
+    "idInput" : "nacMac",
+    "nameInput" : "nacMac"
   },
   {
     "label": "Nacionalidad Fem.",
-    "placeholder": "Argentina"
+    "placeholder": "Argentina",
+    "idInput" : "nacFem",
+    "nameInput" : "nacFem"
   }
 
 ]
@@ -170,22 +181,52 @@ export const objectPaises = [
 
 export const objectModosContratacion = [
   {
-    "label": "Modo de contratación",
-    "placeholder": "Contratado"
+    "label": "Modos de contratación",
+    "placeholder": "Contratado",
+    "idInput" : "modoContratacion",
+    "nameInput" : "modoContratacion"
   }
 ]
 
 export const objectModosLiquidacion = [
   {
-    "label": "Modo de liquidación",
-    "placeholder": "Diario"
+    "label": "Modos de liquidación",
+    "placeholder": "Diario",
+    "idInput" : "modoLiquidacion",
+    "nameInput" : "modoLiquidacion"
   }
 ]
 
 export const objectProvincias = [
   {
     "label": "Provincia",
-    "placeholder": "Córdoba"
+    "placeholder": "Córdoba",
+    "idInput" : "provincia",
+    "nameInput" : "provincia"
+  },
+  {
+    "label": "Localidad",
+    "placeholder": "Localidad",
+    "idInput" : "localidad",
+    "nameInput" : "localidad"
+  },
+  {
+    "label": "Departamento",
+    "placeholder": "Departamento",
+    "idInput" : "departamento",
+    "nameInput" : "departamento"
+  },
+  {
+    "label": "Barrio",
+    "placeholder": "Barrio",
+    "idInput" : "barrio",
+    "nameInput" : "barrio"
+  },
+  {
+    "label": "C.P",
+    "placeholder": "Código Postal",
+    "idInput" : "codigoPostal",
+    "nameInput" : "codigoPostal"
   }
 ]
 
@@ -203,22 +244,30 @@ export const objectDeptos = [
 export const objectLocalidades = [
   {
     "label": "Departamento",
-    "placeholder": "Santa María"
+    "placeholder": "Santa María",
+    "idInput" : "departamento",
+    "nameInput" : "departamento"
   },
   {
     "label": "Localidad",
-    "placeholder": "Alta Gracia"
+    "placeholder": "Alta Gracia",
+    "idInput" : "localidad",
+    "nameInput" : "localidad"
   }
 ]
 
 export const objectBarrios = [
   {
     "label": "Localidad",
-    "placeholder": "Alta Gracia"
+    "placeholder": "Alta Gracia",
+    "idInput" : "localidad",
+    "nameInput" : "localidad"
   },
   {
     "label": "Barrio",
-    "placeholder": "Norte"
+    "placeholder": "Norte",
+    "idInput" : "barrio",
+    "nameInput" : "barrio"
   }
 ]
 

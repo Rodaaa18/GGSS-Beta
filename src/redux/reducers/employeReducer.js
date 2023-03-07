@@ -38,11 +38,15 @@ const employeReducer = (state = initialState, action) =>{
             }
         }
         case UPDATE_EMPLOYE :
-            const newEmploye = {...payload};            
+            console.log(state.empleados)
+            const index = state.empleados.findIndex((employe)=> employe.iDempleado === action.payload.iDempleado)
+            const updateList = [...state.empleados]
+            updateList[index] = action.payload
+            console.log(updateList)
             return {
                 ...state,
-                employes: state.employes[0].filter((employe)=> employe.iDempleado === newEmploye.iDempleado),
-            };
+                empleados:updateList
+            } 
         case REMOVE_EMPLOYE:
             return {
                 ...state,

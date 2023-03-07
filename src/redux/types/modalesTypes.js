@@ -23,10 +23,15 @@ export const ADD_SELECTED_TAREA = "ADD_SELECTED_TAREA"
 export const GET_TAREAS = "GET_TAREAS"
 
 
-
-
 export const CANCEL_MODALS = "CANCEL_MODALS";
 
 export const SET_REFETCH = "SET_REFETCH"
 
 
+export const SELECTED_PROV = "SELECTED_PROV"
+
+export const SELECTED_LOC = "SELECTED_LOC"
+
+export const SELECTED_DPTO = "SELECTED_DPTO"
+
+export const SELECTED_BARRIO = "SELECTED_BARRIO"

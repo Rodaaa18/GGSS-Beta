@@ -8,7 +8,7 @@ import {
   updateLicencia,
   deleteLicencia,
 } from "../../../redux/actions/fetchActions";
-import { deleteLicEmpleado, saveIdsLic } from "../../../redux/actions/licenciasActions";
+import { deleteLicEmpleado, licenciaSelected, saveIdsLic } from "../../../redux/actions/licenciasActions";
 import TableLicencias from "../../Tables/TableLicencias";
 import TableSuspenLicencia from "../../Tables/TableSuspenLicencia";
 import FechaSuspencion from "./Childs/FechaSuspencion";
@@ -31,7 +31,8 @@ const FieldSet = ({
   setLicenciaEmpladoDatos,
   setRefectch,
   refetch,
-  disabled
+  disabled,
+  setFormLicencias
 }) => {
   const columns1 = [
     "Seleccionar",
@@ -59,7 +60,13 @@ const FieldSet = ({
   
 
   const url = `http://54.243.192.82/api/ActualizaDisponibles/0?idEmpleado=${empleadoUno.iDempleado}&anio=${formLicencias?.inputCboAñosLicencia}&diasDisponiblesTotales=${formLicencias?.inputCantDiasDispLicencia}&fechaVencimiento=${formLicencias?.inputVencimientoLicencias}&newId=0`
-  const urlCreateLicencia = `http://54.243.192.82/api/ActualizaDisponibles/0?idEmpleado=${empleadoUno.iDempleado}&anio=${formLicencias?.inputCboAñosLicencia}&diasDisponiblesTotales=${formLicencias?.inputCantDiasDispLicencia}&fechaVencimiento=${formLicencias?.inputVencimientoLicencias}&newId=0`;
+
+  const urlCreateLicencia = "http://54.243.192.82/api/InsertarNuevaLicencia"
+  const urlCreateLicencias = `http://54.243.192.82/api/ActualizaDisponibles/0?idEmpleado=${empleadoUno.iDempleado}&anio=${formLicencias?.inputCboAñosLicencia}&diasDisponiblesTotales=${formLicencias?.inputCantDiasDispLicencia}&fechaVencimiento=${formLicencias?.inputVencimientoLicencias}&newId=0`;
+
+
+ 
+
 
   const urlLicencias = "http://54.243.192.82/api/ModificarDatos";
   const detalleSeleccionado = useSelector(
@@ -67,14 +74,10 @@ const FieldSet = ({
   );
   const idSelected = useSelector((state)=> state.licenciasState.idSelected);
 
-  const urlCreateDetalleLicencia = `http://54.243.192.82/api/DetalleLicenciasEmpleados?IdDetalleLicenciaEmpleado=0&IdLicenciaEmpleado=${
-    idSelected
-  }&Desde=${formLicencias?.inputDesdeSolicitaLic}&Hasta=${
-    formLicencias?.inputHastaSolicitaLic
-  }`;
+  const urlCreateDetalleLicencia = `http://54.243.192.82/api/DetalleLicenciasEmpleados`;
   const urlDetalleLicenciaEmpleados =
     "http://54.243.192.82/api/DetalleLicenciasEmpleados";
-  const urlDeleteLicencia = "http://54.243.192.82/api/EliminarLicenciaPorId";
+  const urlDeleteLicencia = "http://54.243.192.82/api/";
   const dispatch = useDispatch();
   const urlLicenciaEmpleados = "http://54.243.192.82/api/MostrarDatosLicencias";
   const licenciasDelEmpleado = useSelector((state)=> state.licenciasState.licenciasEmpleado);
@@ -102,6 +105,7 @@ const FieldSet = ({
     fechaProrroga: null,
     nroResolucion: null,
   };
+ 
   let bodyLicenciasUpdateSolicita = {
     idLicenciaEmpleado: licenciuaSelected?.idLicenciaEmpleado,
     idEmpleado: licenciuaSelected?.idEmpleado,
@@ -115,6 +119,7 @@ const FieldSet = ({
     fechaProrroga: null,
     nroResolucion: null,
   };
+  
   let bodyLicenciasUpdateProrroga = {
     idLicenciaEmpleado: licenciuaSelected?.idLicenciaEmpleado,
     idEmpleado: empleadoUno?.iDempleado,
@@ -126,8 +131,8 @@ const FieldSet = ({
     fechaProrroga: formLicencias?.inputNuevaFechaLic,
     nroResolucion: formLicencias?.inputNuevaResolucionLic,
   };
-  const arrayIds = useSelector((state)=> state.licenciasState.idsLic);
 
+  const arrayIds = useSelector((state)=> state.licenciasState.idsLic);
 
 
   const bodyDetalleLicencia = {
@@ -135,7 +140,6 @@ const FieldSet = ({
     IdLicenciaEmpleado: licenciuaSelected && licenciuaSelected.idLicenciaEmpleado,
     Desde: formLicencias && formLicencias.inputDesdeSolicitaLic,
     Hasta: formLicencias && formLicencias.inputHastaSolicitaLic,
-    FechaSuspencion: null,
   };
 
   let dateOne = new Date(formLicencias?.inputDesdeSolicitaLic).setHours(
@@ -145,8 +149,6 @@ const FieldSet = ({
     0
   );
   
-
-
 
   let dateTwo = new Date(
     licenciuaSelected?.fechaVencimiento &&
@@ -173,7 +175,7 @@ const FieldSet = ({
       "idDetalleLicenciaEmpleado": detalleSeleccionado.idDetalleLicenciaEmpleado,
       "fechaSuspension": formLicencias?.inputDateSuspLic
     }
-
+    console.log(formLicencias?.inputDateSuspLic)
   async function deleteSuspencion() {
     try {
       axios
@@ -191,15 +193,22 @@ const FieldSet = ({
       });
     }
   }
+    let dateHastas = new Date(detalleSeleccionado.hasta).setHours(0, 0, 0, 0);
+    let dateSusp = new Date(formLicencias?.inputDateSuspLic).setHours(0, 0, 0, 0);
+
+    console.log(dateHastas)
+    console.log(dateSusp)
+    console.log(dateSusp.valueOf() < dateHastas.valueOf() &&
+    !formLicencias?.inputQuitaSusp)
+
+    
+    console.log(formLicencias?.inputQuitaSusp)
+
+
   async function updateDetalle(url) {
     let dateDesde = new Date(detalleSeleccionado.desde).setHours(0, 0, 0, 0);
     let dateHasta = new Date(detalleSeleccionado.hasta).setHours(0, 0, 0, 0);
-    let dateSusp = new Date(formLicencias?.inputDateSuspLic).setHours(
-      0,
-      0,
-      0,
-      0
-    );
+    let dateSusp = new Date(formLicencias?.inputDateSuspLic).setHours(0, 0, 0, 0);
 
     if (detalleSeleccionado) {
       if (
@@ -208,6 +217,8 @@ const FieldSet = ({
       ) {
         try {
           await axios.put(`http://54.243.192.82/api/DetalleLicenciasEmpleados`, bodyCreateSusp).then((res) => {
+            console.log(bodyCreateSusp)
+            console.log(res)
             setRefectch(!refetch);
           });
         } catch (err) {
@@ -308,7 +319,16 @@ const FieldSet = ({
     
   }
  
-
+  const bodyPetitionCreate = {
+    "idEmpleado": empleadoUno?.iDempleado,
+    "año": formLicencias?.inputCboAñosLicencia,
+    "diasDisponiblesTotales": formLicencias?.inputCantDiasDispLicencia,
+    "fechaVencimiento": formLicencias?.inputVencimientoLicencias,
+    "desde": null,
+    "hasta": null,
+    "fechaProrroga": null,
+    "nroResolucion": null
+  }
   function deleteWithOptions() {
     switch (selectedOption) {
       case 
@@ -338,10 +358,10 @@ const FieldSet = ({
   function fetchApiWithOptions() {
     switch (selectedOption) {
       case "1 - Disponibles por Periodo":
-        sendData(urlCreateLicencia, addNewLicencia);
+        sendData(urlCreateLicencia, addNewLicencia, bodyPetitionCreate);
         break;
       case "2 - Solicita Nueva Licencia":
-        solicitanuevaLic(bodyDetalleLicencia);
+        solicitanuevaLic(bodyDetalleLicencia, bodyPetitionCreate);
         break;
       case "3 - Prorroga Vencimiento":
         updateData(
@@ -357,9 +377,9 @@ const FieldSet = ({
         return null;
     }
   }
-
+  
   async function solicitanuevaLic(bodyDetalleLicencia) {
-     
+     debugger;
     if (licenciuaSelected.fechaProrroga && licenciuaSelected.fechaProrroga) {
       let dateProrroga = new Date(licenciuaSelected.fechaProrroga).setHours(
         0,
@@ -369,7 +389,7 @@ const FieldSet = ({
       );
       
       if (dateOne.valueOf() < dateProrroga.valueOf()) {
-        await axios.post(urlCreateDetalleLicencia).then((res) => {
+        await axios.post(urlCreateDetalleLicencia, bodyDetalleLicencia).then((res) => {
     
           setRefectch(!refetch);
         });
@@ -383,7 +403,7 @@ const FieldSet = ({
       return;
     }
     if (dateOne.valueOf() < dateTwo.valueOf()) {
-      await axios.post(urlCreateDetalleLicencia).then((res) => {
+      await axios.post(urlCreateDetalleLicencia, bodyDetalleLicencia).then((res) => {
     
         setRefectch(!refetch);
       });
@@ -450,10 +470,12 @@ const FieldSet = ({
               )}
             {selectedOption && selectedOption === "4 - Suspende Licencia" && (
               <FechaSuspencion
+                setFormLicencias={setFormLicencias}
                 setCheckeds={setChecked}
                 checked={checked}
                 valueForm={valueForm}
                 onChange={onChange}
+                formLicencias = {formLicencias}
               />
             )}
           </div>

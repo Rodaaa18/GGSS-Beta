@@ -12,7 +12,7 @@ const NuevaLicencia = ({idInput, nameLAbel, onChange, valueForm, checked, setChe
 
   var diff = fechaFin - fechaInicio;
 
-console.log(typeof(diff/(1000*60*60*24)))
+
   return (
     <div className='container'>
         <div className='row'>

@@ -103,19 +103,6 @@ const Browser = ({ disable, setDisable, setValueEmpl, responses, setResponses, s
     setResponses({
       ...responses,
       formDatosPersonales})
-   /*  Array.from(document.querySelectorAll("input")).forEach(
-      (input) => (input.value = "")
-    );
-    let employeData = { ...empleadoUno };
-
-    const inputsArray = Object.entries(employeData);
-
-    const clearInputs = inputsArray.map(([key]) => [key, ""]);
-
-    const inputsJson = Object.fromEntries(clearInputs);
-
-
-    dispatch(addOneEmploye(inputsJson)); */
     setDisable(false);
 
   }
@@ -141,7 +128,7 @@ const Browser = ({ disable, setDisable, setValueEmpl, responses, setResponses, s
         {/* <InputForm nameInput="Legajo:" messageError="Solo puede contener números." placeHolder="N° Legajo" value={empData.legajo} inputId="legajo" onChange={onInputChange}/>
         <InputForm nameInput="Nombre:" messageError="Solo puede contener letras." placeHolder="Buscar Nombres" value={empData.apellido} inputId="nombreApellido"  onChange={onInputChange}/> */}
         <div className="row mt-1 p-0 m-0 ">
-          <div className="container m-0 p-0">
+          <div className="container m-0 p-2">
             <input
               onChange={(e) => onChangeValues(e.target.value, "inpurLegajoBrowser")}
               value={browser?.inpurLegajoBrowser}
@@ -150,6 +137,7 @@ const Browser = ({ disable, setDisable, setValueEmpl, responses, setResponses, s
               name="inpurLegajoBrowser"
               id="inpurLegajoBrowser"
               placeholder="Ingrese Legajo "
+              disabled={!disable}
             />
 
             <div className="row mt-1 m-0 p-0  w-100">
@@ -161,6 +149,7 @@ const Browser = ({ disable, setDisable, setValueEmpl, responses, setResponses, s
                 name="inputApellidoNombreBrowser"
                 id="inputApellidoNombreBrowser"
                 placeholder="Ingrese Nombre "
+                disabled={!disable}
               />              
             </div>
             {/* <div className="wor mt-1 m-0 p-0 w-100">
@@ -177,7 +166,7 @@ const Browser = ({ disable, setDisable, setValueEmpl, responses, setResponses, s
               onKeyUp={(e)=> onSelect(e,e.target.value.split(',')[0],Number(e.target.value.split(',')[1]))}
             >
               {empleados &&
-                empleados.map((emp, i) => {
+                empleados?.map((emp, i) => {
                   return (
                     <option
                       key={i}
@@ -198,6 +187,7 @@ const Browser = ({ disable, setDisable, setValueEmpl, responses, setResponses, s
               <button
                 className={`btn btn-danger btn-sm d-flex justify-content-center m-1 align-items- newClass`}
                 onClick={habilitaEdit}
+                disabled={!disable}
               >
                 Agregar
               </button>
@@ -206,6 +196,7 @@ const Browser = ({ disable, setDisable, setValueEmpl, responses, setResponses, s
               <button
                 className={`btn btn-danger btn-sm d-flex justify-content-center m-1 align-items- newClass`}
                 onClick={(e) => habilitaUpdate(e)}
+                disabled={!disable}
               >
                 Modificar
               </button>
@@ -214,6 +205,7 @@ const Browser = ({ disable, setDisable, setValueEmpl, responses, setResponses, s
               <button
                 className={`btn btn-danger btn-sm d-flex justify-content-center m-1 align-items- newClass`}
                 onClick={() => deleteEmploye(empleadoUno.iDempleado)}
+                disabled={!disable}
               >
                 Eliminar
               </button>

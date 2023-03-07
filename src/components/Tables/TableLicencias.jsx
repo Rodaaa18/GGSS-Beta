@@ -25,6 +25,7 @@ const TableLicencias = ({
 
   return (
     <>
+    <div className="row mt-5 overflow-scroll rowTAbles">
       <table class="table table-danger">
         <thead>
           <tr>
@@ -37,6 +38,7 @@ const TableLicencias = ({
         <tbody>
           {licenciaDelEmpleado &&
             licenciaDelEmpleado.map((valor, i) => {
+              
               return (
                 <tr key={i}>
                   <th scope="row">
@@ -56,14 +58,16 @@ const TableLicencias = ({
                   </th>
                   <td>{valor.año ? valor.año : "-"}</td>
                   <td>
-                    {valor?.diasDisponiblesTotales
-                      ? valor?.diasDisponiblesTotales
-                      : "-"}
+                  {valor?.diasTomados !== 0 ? valor?.diasTomados :  valor?.diasDisponiblesTotales}            
+
+                  
                   </td>
-                  <td>{valor?.diasTomados}</td>
                   <td>
-                    {Number(valor?.diasDisponiblesTotales) -
-                      Number(valor?.diasTomados)}
+                    {valor?.diasTomados !== 0 && valor?.diasTomados !== valor?.diasDisponiblesTotales ?  valor?.diasTomados - valor?.diasDisponiblesTotales : valor?.diasDisponiblesTotales }
+                  
+                  </td>
+                  <td>
+                  { valor?.diasDisponiblesTotales === valor?.diasTomados ? valor?.diasTomados - valor?.diasDisponiblesTotales : valor?.diasDisponiblesTotales}  
                   </td>
                   <td>
                     {valor.fechaVencimiento && valor.fechaVencimiento
@@ -82,12 +86,16 @@ const TableLicencias = ({
                       : "-"}
                   </td>
                   <td>{valor?.nroResolucion}</td>
-                  <td>{valor?.diasDisponibles}</td>
+                  <td>
+                  
+                     {valor?.diasDisponibles} 
+                  </td>
                 </tr>
               );
             })}
         </tbody>
       </table>
+      </div>
     </>
   );
 };

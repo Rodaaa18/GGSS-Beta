@@ -16,6 +16,7 @@ const TableBasic1 = ({columns, value,documentaciones, setRefetch, refetch, disab
   // console.log(documentaciones);
   return (
     <>
+    <div className="row mt-5 overflow-scroll rowTAbles">
     <table class="table table-danger contDocumentacion" disabled={disabled} >
       <thead>
         <tr>
@@ -46,6 +47,7 @@ const TableBasic1 = ({columns, value,documentaciones, setRefetch, refetch, disab
         }        
       </tbody>
     </table>
+    </div>
     </>
   );
 };

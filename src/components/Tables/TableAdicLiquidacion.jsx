@@ -3,7 +3,7 @@ import React from 'react'
 const TableAdicLiquidacion = ({conceptos}) => {
   return (
     <>
-    <div>    
+    <div className="row mt-5 overflow-scroll rowTAbles">  
         <table class="table ">
             <thead>
                 <tr>

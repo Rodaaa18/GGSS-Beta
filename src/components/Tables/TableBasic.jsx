@@ -18,7 +18,7 @@ const TableBasic = ({
 
   return (
     <>
-      <div className="overflow-scroll ">
+      <div className="row mt-5 overflow-scroll rowTAbles">
         <table className="table table-danger table-fit ">
           <thead>
             <tr>
@@ -74,45 +74,6 @@ const TableBasic = ({
                     </tr>
                   )
                 })
-            /* familiares && familiares.map((col, i) => {
-              
-              return (
-                <tr className="px-5" key={i}>
-                  <th scope="row">
-                    {" "}
-                    <input
-                      type="radio"
-                      checked={inputCheck[`selected${i}`]}
-                      name="imputRadio"
-                      value={col.iDfamiliares}
-                      id={`selected${i}`}
-                      onClick={(e) => dispatch(addNewFamiliar(col.iDfamiliares))}
-                    />
-                  </th>
-                  <td
-                  className=""
-                  key={col.iDfamiliares}>{col.apellidoyNombres}
-                  </td>
-                  <td>{col.iDtipoDocumento && col.iDtipoDocumento.tipoDocumento}</td>
-                  <td>{col && col.nroDocumento}</td>
-                  <td>{col && col.sexo}</td>
-                  <td>{col.iDparentesco && col.iDparentesco.nombreParentesco}</td>
-                  <td>
-                    {col.fechaNacimiento && col.fechaNacimiento.substring(0, col.fechaNacimiento.length - 9)}
-                  </td>
-                  <td>{col.iDpaisOrigen && col.iDpaisOrigen.nombrePais}</td>
-                  <td>{col.iDnacionalidad && col.iDnacionalidad.nacionalidad}</td>
-                  <td>{col.iDestudios && col.iDestudios.estudiosNivel}</td>
-                  <td>{col.fBaja && col.fBaja.substring(
-                      0,
-                      col.fBaja.length - 9
-                    )}</td>
-                  <td>{col.noDeducirGanancias === false ? "No deduce" : "Si deduce"}</td>
-                  <td>{col.inlcuirCuotaAlimentaria === false ? "No incluye" : "Incluye"}</td>
-                  <td>{col.obs}</td>
-                </tr>
-              );
-            }) */
             }
           </tbody>
         </table>

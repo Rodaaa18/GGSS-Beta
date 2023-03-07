@@ -26,11 +26,11 @@ const InputParentescoOpNac = ({
   },[sexo])
   const validateSexo =(sexo, masculinos, femeninos)=>{
     if(sexo === "M"){
-      console.log(masculinos)
+     
       return masculinos;
     }
     if(sexo === "F"){
-      console.log(femeninos)
+      
       return femeninos
     }
   }

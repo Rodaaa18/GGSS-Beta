@@ -1,4 +1,4 @@
-import { ADD_SELECTED_EC, ADD_SELECTED_ESTUDIO, GET_ESTUDIOS, CANCEL_MODALS, GET_ESTADOSCIVILES, ADD_SELECTED_TIPODOC, GET_TIPOSDOC, ADD_SELECTED_PARENTESCO, GET_PARENTESCOS, ADD_SELECTED_ESTADO, GET_ESTADOS, ADD_SELECTED_FORMAPAGO, GET_FORMASPAGO, ADD_SELECTED_CARGO, GET_CARGOS, ADD_SELECTED_TAREA, GET_TAREAS, SET_REFETCH } from "../types/modalesTypes";
+import { ADD_SELECTED_EC, ADD_SELECTED_ESTUDIO, GET_ESTUDIOS, CANCEL_MODALS, GET_ESTADOSCIVILES, ADD_SELECTED_TIPODOC, GET_TIPOSDOC, ADD_SELECTED_PARENTESCO, GET_PARENTESCOS, ADD_SELECTED_ESTADO, GET_ESTADOS, ADD_SELECTED_FORMAPAGO, GET_FORMASPAGO, ADD_SELECTED_CARGO, GET_CARGOS, ADD_SELECTED_TAREA, GET_TAREAS, SET_REFETCH, SELECTED_PROV, SELECTED_LOC, SELECTED_DPTO, SELECTED_BARRIO } from "../types/modalesTypes";
 
 export const initialState = {
     estadoCivilSelected: "",
@@ -36,13 +36,41 @@ export const initialState = {
         inputTarea : "",
         textAreaTarea : "",
         refetch : false
-    }
+    },
+    provSelect : "",
+    localSelect : "",
+    dptoSelect : "",
+    barrioSelect : ""
 }
 
 const modalesReducer = (state = initialState, action) => {
 
     const { type, payload } = action;
     switch (type) {
+        case SELECTED_PROV: {
+            return {
+                ...state,
+                provSelect: payload
+            };
+        }
+        case SELECTED_LOC: {
+            return {
+                ...state,
+                localSelect: payload
+            }
+        }
+        case SELECTED_DPTO: {
+            return {
+                ...state,
+                dptoSelect: payload
+            }
+        }
+        case SELECTED_BARRIO: {
+            return {
+                ...state,
+                barrioSelect: payload
+            }
+        }
         case ADD_SELECTED_EC: {
             return {
                 ...state,

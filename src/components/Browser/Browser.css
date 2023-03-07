@@ -11,6 +11,7 @@
     box-shadow: none;
     border-color: rgba(0,0,0,.125);    
 }
+
 @media screen and (max-width : 1366px){
     .selectMenu{
         height: 32rem;

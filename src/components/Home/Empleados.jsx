@@ -52,6 +52,7 @@ import {
   addTareasDesempeñadas,
   addTiposDocumento,
   disabledInputs,
+  getParSueldos,
   saveDatosExtrasEmpleados,
 } from "../../redux/actions/fetchActions";
 import { AXIOS_ERROR, SET_LOADING } from "../../redux/types/fetchTypes";
@@ -66,16 +67,20 @@ import {
 } from "../../redux/actions/licenciasActions";
 import swal from "sweetalert";
 import { getEmployeByLegajo, getEmployeByName } from "../../services/fetchAPI";
-import { cleanEmploye, getEmployes } from "../../redux/actions/employeActions";
+import { cleanEmploye, getEmployes, updateEmploye } from "../../redux/actions/employeActions";
 import { cleanIdFam, getDAtosFamiliaresEmpleado } from "../../redux/actions/familiaActions";
 import { addOneDomicilio, cleanIdsDom } from "../../redux/actions/domiciliosActions";
 import { addDatosExtraPorEmpleado, cleanIdDe } from "../../redux/actions/extrasActions";
 import { setRefetch } from "../../redux/actions/modalesActions";
 import "./Home.css"
+import ErrorPage from "../ErrorPage/ErrorPage";
+import Loader from "../Loader/Loader";
 
-const Empleados = () => {
+const Empleados = ({tokenDef, setTokenDef, sePerfilesUSuario, loading}) => {
   const [tabIndex, setTabIndex] = useState(0);
+  
   const [responses, setResponses] = useState({});
+
   const [disable, setDisable] = useState(true);
   const [image, setImage] = useState("");
   const [disableEstado, setDisableEstado] = useState(false);
@@ -85,7 +90,8 @@ const Empleados = () => {
   const [ modify, setModify ] = useState(false);
   const [ valueempl, setValueEmpl ] = useState(false);
   const [saveEmpleado , setSaveEmpleado ] = useState(false);
-
+  const token = useSelector((state)=> state.generalState.token);
+  const [ImageSelectedPrevious, setImageSelectedPrevious] = useState(null);
 
   const refetching = useSelector((state)=> state.modalState.refetch);
   const [refetch, setRefectch] = useState(false);
@@ -103,7 +109,7 @@ const Empleados = () => {
     (state) => state.generalState.conceptosXesquemas
   );
 
-
+    
   //#region URLs
 
   const urlEstados = "http://54.243.192.82/api/Estados";
@@ -147,11 +153,14 @@ const Empleados = () => {
   const urlDocumentacion = "http://54.243.192.82/api/Documentacion";
   const urlDatosExtras = `http://54.243.192.82/api/DatosExtras/0,%201`;
   const urlInstrumLegal =
-    "http://54.243.192.82/api/InstrumentosLegales/1?modo=1";
+    "http://54.243.192.82/api/InstrumentosLegales/0?modo=1";
   const urlLicenciaEmpleados = "http://54.243.192.82/api/MostrarDatosLicencias";
   const urlDetalleLicenciasEmpleados =
     "http://54.243.192.82/api/DetalleLicenciasEmpleados";
   const urlEsquemasConceptos = "http://54.243.192.82/api/ConceptosEsquemas";
+  const urlParSueldos = "http://54.243.192.82/api/ParSueldos";
+
+
   //#endregion
 
   function setImageEmpleado() {
@@ -179,11 +188,11 @@ const Empleados = () => {
     setResponses({
       ...responses,
       inputsJson})
-    
+
     setDisable(true);
-    
+
   }
-  // console.log(tabIndex)
+ 
   const handleFetch = async (url, action) => {
     dispatch({ type: SET_LOADING });
     await axios
@@ -195,33 +204,7 @@ const Empleados = () => {
         dispatch({ type: AXIOS_ERROR });
       });
   };
-  const handleFetchParams = async (url, action, paramOne) => {
 
-    dispatch({ type: SET_LOADING });
-    if (paramOne && paramOne) {
-      await axios
-        .get(`${url}/${paramOne},%201`)
-        .then((res) => {
-          dispatch(action(res.data));
-        })
-        .catch((err) => {
-          dispatch({ type: AXIOS_ERROR });
-        });
-    } 
-    return;
-  };
-  const handleFetchComun = async (url, action) => {
-    dispatch({ type: SET_LOADING });
-    await axios
-      .get(url)
-      .then((res) => {
-       
-        dispatch(action(res.data));
-      })
-      .catch((err) => {
-        dispatch({ type: AXIOS_ERROR });
-      });
-  };
 const domiciliosEmpleados = useSelector((state)=> state.generalState.domicilios)
 const empleadoDomicilio = useSelector((state)=> state.domiciliosStates.domicilioEmpleado);
 const recharge = useSelector((state)=> state.domiciliosStates.recharge);
@@ -235,7 +218,7 @@ useEffect(()=>{
    handleFetch(urlEstudios, addEstudios);
    handleFetch(urlTiposDNI, addTiposDocumento);
    handleFetch(urlDomicilios, addDomicilios);
-   
+   handleFetch(urlParSueldos, getParSueldos);
    handleFetch(urlDocumentacionEmpleados, addDocumentacionEmpleados);
 },[refetching, empleadoUno, refetch])
 
@@ -245,7 +228,7 @@ useEffect(()=>{
         `http://54.243.192.82/api/MostrarDatosExtrasPorEmpleado/${empleadoUno?.iDempleado}`
       )
       .then((res) => {
-        dispatch(saveDatosExtrasEmpleados(res.data));
+        dispatch(saveDatosExtrasEmpleados(res.data.result));
       });//
 },[empleadoUno, refetch])
 
@@ -256,7 +239,7 @@ useEffect(()=>{
    handleFetch(urlEstudios, addEstudios);
    handleFetch(urlTiposDNI, addTiposDocumento);
    handleFetch(urlDomicilios, addDomicilios);
-   
+
    handleFetch(urlDocumentacionEmpleados, addDocumentacionEmpleados);
 
      handleFetch(urlEstados, addEstados);
@@ -267,7 +250,7 @@ useEffect(()=>{
      handleFetch(urlTiposDNI, addTiposDocumento);
      handleFetch(urlFamiliares, addFamiliares);
      handleFetch(urlNumeradores, addNumeradores);
-     
+
      handleFetch(urlCalles, addCalles);
      handleFetch(urlDeptos, addDepartamentos);
      handleFetch(urlProvincias, addProvincias);
@@ -287,30 +270,30 @@ useEffect(()=>{
      handleFetch(urlFormasDePago, addFormasPago);
      handleFetch(urlLugaresDePago, addLugaresDePago);
      handleFetch(urlBancos, addBancos);
-     handleFetchComun(urlDirecciones, addDirecciones);
+     handleFetch(urlDirecciones, addDirecciones);
      handleFetch(urlSindicatos, addSindicatos);
      handleFetch(urlEsquemas, addEsquemas);
 
-     handleFetchComun(urlConceptos, addConceptos);
+     handleFetch(urlConceptos, addConceptos);
 
 
      handleFetch(urlDocumentacion, getOneDocumento);
 
-     
- 
-   
 
-   handleFetchComun(urlSectorDepto, addSectorDepto);
-     handleFetchComun(urlInstrumLegal, addInstrumLegales); 
-     handleFetchComun(urlDatosExtras, addDatosExtras);
+
+
+
+   handleFetch(urlSectorDepto, addSectorDepto);
+     handleFetch(urlInstrumLegal, addInstrumLegales);
+     handleFetch(urlDatosExtras, addDatosExtras);
      handleFetch(urlDomicilios, addDomicilios);
 
-     
+
      handleFetch(urlTrabajosAnteriores, getTrabajosAnteriores);
   }, [disable, refetch,refetching]);
 
   useEffect(() => {
-    
+
     handleFetch(urlLicenciaEmpleados, addLicenciaEmpleados);
      handleFetch(urlDetalleLicenciasEmpleados, addDetalleLicencia);
 
@@ -325,31 +308,31 @@ useEffect(()=>{
     setDisableEstado(false);
   }, [responses?.inputSexo]);
 
-  
+
 
   useEffect(() => {
     axios
       .get(
         `http://54.243.192.82/api/MostrarDatosPorEmpleado/${empleadoUno?.iDempleado}`
-        
+
       )
       .then((res) => {
-        dispatch(addLicEmpleado(res.data));
-        setLicenciaEmpladoDatos(res.data);
+        dispatch(addLicEmpleado(res.data.result));
+        setLicenciaEmpladoDatos(res.data.result);
       });
-      
+
       axios.get(`http://54.243.192.82/api/MostrarDatosFamiliarPorEmpleado/${empleadoUno?.iDempleado}`)
       .then((res)=>{
-        dispatch(getDAtosFamiliaresEmpleado(res.data))
-      })        
-      
+        dispatch(getDAtosFamiliaresEmpleado(res.data.result))
+      })
+
       axios.get(`http://54.243.192.82/api/Documentacion/sp_DocumentacionDatosXIdEmpleado?IdEmpleado=${empleadoUno?.iDempleado}`)
       .then((res)=>{
         dispatch(documentacionDelEmpleado(res.data))
       })
       axios.get(`http://54.243.192.82/api/MostrarDatosExtras/0,${empleadoUno?.iDempleado},1,`)
       .then((res)=>{
-        dispatch(addDatosExtraPorEmpleado(res.data))
+        dispatch(addDatosExtraPorEmpleado(res.data.result))
       })
       handleFetch(urlDomicilios, addDomicilios);
       handleFetch(urlDocumentacionEmpleados, addDocumentacionEmpleados);
@@ -362,7 +345,6 @@ useEffect(()=>{
     useEffect(()=>{
       axios.get(`http://54.243.192.82/api/sp_DomiciliosDatosxIdEmpleado?IdEmpleado=${empleadoUno?.iDempleado}`)
       .then((res)=>{
-        console.log(`http://54.243.192.82/api/sp_DomiciliosDatosxIdEmpleado?IdEmpleado=${empleadoUno?.iDempleado}`)
         dispatch(addOneDomicilio(res.data))
       })
     },[empleadoUno?.iDempleado, refetch])
@@ -380,58 +362,63 @@ useEffect(()=>{
   const valueInputApellido = useSelector(
     (state) => state.employeStates.formulario.inputApellidoNombreBrowser
   );
-  const url = `http://54.243.192.82/api/Empleados?page=2000&ordered=true`;
-    const urlEmpleadoPorApellido = `http://54.243.192.82/api/Empleados?records=10000&filter=${responses?.browser?.inputApellidoNombreBrowser ? responses?.browser?.inputApellidoNombreBrowser : null}&ordered=true`;
-    const urlEmpleadoPorLegajo = `http://54.243.192.82/api/Empleados?records=10000&legajo=${responses?.browser?.inpurLegajoBrowser ? responses?.browser?.inpurLegajoBrowser : null}&ordered=true`;
-    const urlEmpleadoApYLegajo = `http://54.243.192.82/api/Empleados?records=10000&filter=${responses?.browser?.inputApellidoNombreBrowser ? responses?.browser.inputApellidoNombreBrowser : null}&legajo=${responses?.browser?.inpurLegajoBrowser ? responses?.browser?.inpurLegajoBrowser : null}&ordered=true`;
+  const urlBasica = `http://54.243.192.82/api/Empleados?page=2000&ordered=true`;
+
+
+
+    const url = `http://54.243.192.82/api/Empleados?page=2000`;
+    const urlEmpleadoPorApellido = `http://54.243.192.82/api/Empleados?records=0&page=1&filter=${responses?.browser?.inputApellidoNombreBrowser ? responses?.browser?.inputApellidoNombreBrowser : null}&ordered=true`;
+    const urlEmpleadoPorLegajo = `http://54.243.192.82/api/Empleados?records=0&page=1&legajo=${responses?.browser?.inpurLegajoBrowser ? responses?.browser?.inpurLegajoBrowser : null}&ordered=true`;
+    const urlEmpleadoApYLegajo = `http://54.243.192.82/api/Empleados?records=0&page=1&filter=${responses?.browser?.inputApellidoNombreBrowser ? responses?.browser.inputApellidoNombreBrowser : null}&legajo=${responses?.browser?.inpurLegajoBrowser ? responses?.browser?.inpurLegajoBrowser : null}&ordered=true`;
     const urlApeLegOrdered = `http://54.243.192.82/api/Empleados?records=10000&filter=${responses?.browser?.inputApellidoNombreBrowser ? responses?.browser?.inputApellidoNombreBrowser : null}&legajo=${responses?.browser?.inpurLegajoBrowser ? responses?.browser?.inpurLegajoBrowser : null}&ordered=true`;
 
+    
     async function getEmpleados(){
-      if(responses.browser.inputApellidoNombreBrowser){
+      if(responses?.browser.inputApellidoNombreBrowser){
         await axios({method: 'get',
                       url: urlEmpleadoPorApellido,
-                      timeout: 1000}).then((res) => {
-          dispatch(getEmployes(res.data.result));    
+                      timeout: 2000}).then((res) => {
+          dispatch(getEmployes(res.data.result));
         });
         return;
       }
-      else if(responses.browser.inpurLegajoBrowser){
+      else if(responses?.browser.inpurLegajoBrowser){
         await axios({method: 'get',
                     url: urlEmpleadoPorLegajo,
-                    timeout: 1000}).then((res) => {
-          dispatch(getEmployes(res.data.result));    
+                    timeout: 2000}).then((res) => {
+          dispatch(getEmployes(res.data.result));
         });
         return;
-      }else if(responses.browser.inputApellidoNombreBrowser && responses.browser.inpurLegajoBrowser){
+      }else if(responses?.browser.inputApellidoNombreBrowser && responses?.browser.inpurLegajoBrowser){
         await axios({method: 'get',
                     url: urlEmpleadoApYLegajo,
-                    timeout: 1000}).then((res) => {
-            dispatch(getEmployes(res.data.result));    
+                    timeout: 2000}).then((res) => {
+            dispatch(getEmployes(res.data.result));
         });
         return;
-      }else if(responses.browser.inputApellidoNombreBrowser && responses.browser.inpurLegajoBrowser && responses?.browser.ordered){
+      }else if(responses?.browser.inputApellidoNombreBrowser && responses?.browser.inpurLegajoBrowser && responses?.browser.ordered){
         await axios.get({method: 'get',
                         url: urlApeLegOrdered,
-                        timeout: 1000}).then((res) => {
-          dispatch(getEmployes(res.data.result));    
+                        timeout: 2000}).then((res) => {
+          dispatch(getEmployes(res.data.result));
         });
         return;
       }else{
         await axios.get(url).then((res) => {
 
-          dispatch(getEmployes(res.data.result));
-    
+          dispatch(getEmployes(null));
         });
       }
-      
     }
 
-  
 
-  useEffect(() => {
+
+
+
+    useEffect(() => {
     getEmpleados();
-    
-  }, [responses?.browser?.inputApellidoNombreBrowser,responses?.browser?.inpurLegajoBrowser,responses?.browser?.ordered, saveEmpleado]);
+  }, [responses?.browser?.inputApellidoNombreBrowser,responses?.browser?.inpurLegajoBrowser,responses?.browser?.ordered, saveEmpleado, refetch]);
+
 
   const idsTrabajosAnterioresDelete = useSelector((state)=> state.trabajosAnteriores.ids);
   const documentacionDelte = useSelector((state)=> state.documentacionState.ids);
@@ -442,9 +429,9 @@ useEffect(()=>{
 
   const urlTRabajoDelete = "http://54.243.192.82/api/TrabajosAnteriores?IdTrabajoAnterior=";
   const urlDocDelte = "http://54.243.192.82/api/EmpleadosDocumentacion/"
-  const urlLicDelete = "http://54.243.192.82/api/"
-    const urlEmpleadoGuarda = "http://54.243.192.82/api/Empleados/Guardar"
-    const urlDOmicilioElimina = `http://54.243.192.82/api/sp_DomiciliosElimina/1?IdEmpleador=0`
+  const urlLicDelete = "http://54.243.192.82/api/deleteLicencia/"
+  const urlEmpleadoGuarda = "http://54.243.192.82/api/Empleados/Guardar"
+  const urlDOmicilioElimina = `http://54.243.192.82/api/ActualizaEliminaDomicilio/${empleadoUno?.iDempleado},`
   const urlDeleteFAmiliar = "http://54.243.192.82/api/EliminarFamiliarPorId/"
   const urlDatoExtraElimina = "http://54.243.192.82/api/EliminarDatosExtras/"
 
@@ -471,14 +458,15 @@ useEffect(()=>{
 
 
 
+
   const { urls, arrays } = objectRequest;
-  
+
 
 
   function cleanIdsGeneral(){
-    
-    
-    
+
+
+    setImageSelectedPrevious(null);
     Array.from(document.querySelectorAll("input[type=text]")).forEach(
       (input) => (input.value = "")
     );
@@ -512,8 +500,9 @@ useEffect(()=>{
     try{
       await axios.delete(`http://54.243.192.82/api/Empleados/${id}`)
       .then((res)=>{
-        console.log(res)
-        if(res.isSuccess == true || res.status === 200){
+        if(res.data.isSuccess === true || res.data.status === 200){
+          
+          
           return swal({
             title: "Ok",
             text: "Empleado Eliminado con éxito",
@@ -527,17 +516,19 @@ useEffect(()=>{
             icon: "error",
           });
         }
-        
+
       })
     }catch(err){
-      console.log(err)
+      
       return swal({
         title: "Error",
         text: "Error al eliminar el Empleado, debe eliminar sus relaciones",
         icon: "error",
       });
     }
+    cleanIdsGeneral();
   }
+  
   async function deleteItems(objectRequest){
     const { urls, arrays } = objectRequest;
     let bodyPetitionEmpleadoGuarda = {
@@ -576,7 +567,7 @@ useEffect(()=>{
       "nombres": responses.formDatosPersonales?.nombresInput,
       "idEstado": responses.formDatosPersonales?.estadosEmpleados,
       "idEmpresadeTelefonia": 2,
-      //"imagen": null,
+      "imagen": (responses.formDatosPersonales?.inputImage)?.substring(22) ? (responses.formDatosPersonales?.inputImage)?.substring(22) : "",
       "rutaFoto": null,
       "telFijo": responses.formDatosPersonales?.telefonoInput,
       "acuerdo": 0,
@@ -591,11 +582,12 @@ useEffect(()=>{
       "tieneSumarioAdministrativo": null,
       "tieneLicenciaSinGoceHaberes": null,
       "obsEstudios": responses.formDatosPersonales?.observacionesEstudios,
-      "obsFechaIngreso": responses.formDatosPersonales?.inputImagen,
+      "obsFechaIngreso": "",
       "idAgrupamiento": 0,
       "idDireccion":0,
       "idInstrumentoLegal": 2
     }
+
     let bodyPetitionEmpleadoUpdate = {
       "iDempleado": empleadoUno.iDempleado && empleadoUno.iDempleado,
       "legajo": responses.formDatosPersonales?.numLegajo ?  responses.formDatosPersonales?.numLegajo : empleadoUno.legajo,
@@ -632,7 +624,7 @@ useEffect(()=>{
       "nombres": responses.formDatosPersonales?.nombresInput ? responses.formDatosPersonales?.nombresInput  : empleadoUno.nombres,
       "idEstado": responses.formDatosPersonales?.estadosEmpleados ? responses.formDatosPersonales?.estadosEmpleados  : empleadoUno.idEstado,
       "idEmpresadeTelefonia": 2,
-      "imagen": responses.formDatosPersonales?.inputImagen ? responses.formDatosPersonales?.inputImagen  : empleadoUno.imagen,
+      "imagen": (responses.formDatosPersonales?.inputImage)?.substring(22) ? (responses.formDatosPersonales?.inputImage)?.substring(22) : empleadoUno?.imagen,
       "rutaFoto": null,
       "telFijo": responses.formDatosPersonales?.telefonoInput ? responses.formDatosPersonales?.telefonoInput  : empleadoUno.telFijo,
       "acuerdo": 0,
@@ -640,24 +632,24 @@ useEffect(()=>{
       "idPaisOrigen": responses.formDatosPersonales?.paisOrigenInput ? responses.formDatosPersonales?.paisOrigenInput  : empleadoUno.idPaisOrigen,
       "mail": responses.formDatosPersonales?.email ? responses.formDatosPersonales?.email  : empleadoUno.mail,
       "telMovil": responses.formDatosPersonales?.movil ? responses.formDatosPersonales?.movil  : empleadoUno.telMovil,
-      "tipoCuenta": responses.formDatosPersonales?.inputRadioAsidePagos ? responses.formDatosPersonales?.inputRadioAsidePagos  : empleadoUno.tipoCuenta,
+      "tipoCuenta": responses.formLiquidacion?.inputRadioAsidePagos ? responses.formLiquidacion?.inputRadioAsidePagos  : empleadoUno.tipoCuenta,
       "totalRemuneracion": responses.formLiquidacion?.inputTotalRemu ? responses.formLiquidacion?.inputTotalRemu  : empleadoUno.totalRemuneracion,
       "totalNeto": responses.formLiquidacion?.inputTotalNeto ? responses.formLiquidacion?.inputTotalNeto   : empleadoUno.totalNeto,
       "tieneEmbargos": responses.formLiquidacion?.inputCheckEmbargo ? responses.formLiquidacion?.inputCheckEmbargo  : empleadoUno.tieneEmbargos,
       "tieneSumarioAdministrativo": responses.formLiquidacion?.inputCheckSumAdministrativo ? responses.formLiquidacion?.inputCheckSumAdministrativo  : empleadoUno.tieneSumarioAdministrativo,
       "tieneLicenciaSinGoceHaberes": responses.formLiquidacion?.inputCheckLicSinGoce ? responses.formLiquidacion?.inputCheckLicSinGoce  : empleadoUno.tieneLicenciaSinGoceHaberes,
       "obsEstudios": responses.formDatosPersonales?.observacionesEstudios ? responses.formDatosPersonales?.observacionesEstudios  : empleadoUno.obsEstudios,
-      "obsFechaIngreso": responses.formDatosPersonales?.inputImage ? responses.formDatosPersonales?.inputImage : empleadoUno.obsFechaIngreso,
-      "idAgrupamiento": responses.formDatosPersonales?.inputAgrupamiento ?  responses.formDatosPersonales?.inputAgrupamiento : empleadoUno.idAgrupamiento,
+      "obsFechaIngreso": "",
+      "idAgrupamiento": responses.formLiquidacion?.inputAgrupamiento ?  responses.formLiquidacion?.inputAgrupamiento : empleadoUno.idAgrupamiento,
       "idDireccion": responses.formLiquidacion?.inputDireccionLiquidacion ? responses.formLiquidacion?.inputDireccionLiquidacion  : empleadoUno.idDireccion,
       "idInstrumentoLegal": 2
     }
     try{
-     
+
     if(tabIndex === 0 || tabIndex === 2 || tabIndex === 8){
       if(empleadoUno.iDempleado === 0 || empleadoUno.iDempleado === undefined){
         //#region Validation alerts
-       
+
           if(!bodyPetitionEmpleadoGuarda.legajo){
               return swal({
                 title: "Error",
@@ -869,10 +861,11 @@ useEffect(()=>{
             })
           } */
         //#endregion
-      
+
       }else{
           //#region validation Updates
           if(!bodyPetitionEmpleadoUpdate.legajo){
+
             return swal({
               title: "Error",
               text: "Debe escribir el legajo del Empleado",
@@ -956,129 +949,10 @@ useEffect(()=>{
             icon: "error",
           })
         }
-        if(!bodyPetitionEmpleadoUpdate.iDEmpleador){
-          return swal({
-            title: "Error",
-            text: "Debe seleccionar el Empleador del Empleado",
-            icon: "error",
-          })
-        }
-        if(!bodyPetitionEmpleadoUpdate.iDCategoria){
-          return swal({
-            title: "Error",
-            text: "Debe seleccionar la Categoría del Empleado",
-            icon: "error",
-          })
-        }
-        if(!bodyPetitionEmpleadoUpdate.idAgrupamiento){
-          return swal({
-            title: "Error",
-            text: "Debe seleccionar el Agrupamiento del Empleado",
-            icon: "error",
-          })
-        }
-        if(!bodyPetitionEmpleadoUpdate.iDCargo){
-          return swal({
-            title: "Error",
-            text: "Debe seleccionar el Cargo del Empleado",
-            icon: "error",
-          })
-        }
-        if(!bodyPetitionEmpleadoUpdate.iDTareaDesempeñada){
-          return swal({
-            title: "Error",
-            text: "Debe seleccionar la Tarea Desempeñada del Empleado",
-            icon: "error",
-          })
-        }
-        if(!bodyPetitionEmpleadoUpdate.iDModoContratacion){
-          return swal({
-            title: "Error",
-            text: "Debe seleccionar el Modo de Contratación del Empleado",
-            icon: "error",
-          })
-        }
-        if(!bodyPetitionEmpleadoUpdate.iDModoLiquidacion){
-          return swal({
-            title: "Error",
-            text: "Debe seleccionar el Modo de Liquidación del Empleado",
-            icon: "error",
-          })
-        }
-        if(!bodyPetitionEmpleadoUpdate.idCentrodeCosto){
-          return swal({
-            title: "Error",
-            text: "Debe seleccionar el Centro de Costo del Empleado",
-            icon: "error",
-          })
-        }
-        /* if(!bodyPetitionEmpleadoUpdate.iDSectorDpto){
-          return swal({
-            title: "Error",
-            text: "Debe seleccionar el Sector del Empleado",
-            icon: "error",
-          })
-        } */
-        if(!bodyPetitionEmpleadoUpdate.idObraSocial){
-          return swal({
-            title: "Error",
-            text: "Debe seleccionar la Obra Social del Empleado",
-            icon: "error",
-          })
-        }
-        if(!bodyPetitionEmpleadoUpdate.iDFormadePago){
-          return swal({
-            title: "Error",
-            text: "Debe seleccionar la Forma de Pago del Empleado",
-            icon: "error",
-          })
-        }
-        if(!bodyPetitionEmpleadoUpdate.iDLugardePago){
-          return swal({
-            title: "Error",
-            text: "Debe seleccionar el Lugar de Pago del Empleado",
-            icon: "error",
-          })
-        }
-        if(!bodyPetitionEmpleadoUpdate.idBanco){
-          return swal({
-            title: "Error",
-            text: "Debe seleccionar el Banco del Empleado",
-            icon: "error",
-          })
-        }
-        if(!bodyPetitionEmpleadoUpdate.nroCtaBanco){
-          return swal({
-            title: "Error",
-            text: "Debe escribir el N° de Cuenta del Empleado",
-            icon: "error",
-          })
-        }
-        if(!bodyPetitionEmpleadoUpdate.tipoCuenta){
-          return swal({
-            title: "Error",
-            text: "Debe seleccionar el Tipo de Cuenta del Empleado",
-            icon: "error",
-          })
-        }
-        if(!bodyPetitionEmpleadoUpdate.cbu){
-          return swal({
-            title: "Error",
-            text: "Debe escribir el CBU del Empleado",
-            icon: "error",
-          })
-        }
-        if(responses.fomrLiquidacion?.inputCheckAsigna && !bodyPetitionEmpleadoGuarda.iDEsquema){
-          return swal({
-            title: "Error",
-            text: "Debe seleccionar el Esquema del Empleado",
-            icon: "error",
-          })
-        }
           //#endregion
       }
-      
-        
+
+
           if(empleadoUno.iDempleado === 0 || empleadoUno.iDempleado === undefined){
              await axios.post(urls.urlEmpleadoGuarda, bodyPetitionEmpleadoGuarda, {
               headers: {
@@ -1087,36 +961,48 @@ useEffect(()=>{
              .then((res)=>{
               setRefectch(!refetch);
               setSaveEmpleado(!saveEmpleado)
-             
-               swal({
-                title: "Ok",
-                text: "Empleado Guardado con éxito",
-                icon: "success",
-            })
-  
+              if(res.data.statusCode === 200){
+                return swal({
+                 title: "Ok",
+                 text: "Empleado Guardado con éxito",
+                 icon: "success",
+                 })
+              }else{
+                swal({
+                  title: "Error",
+                  text: "Error al guardar el Empleado",
+                  icon: "error",
+                  })
+              }
+              
              })
           }else{
             await axios.put(urls.urlEmpleadoGuarda, bodyPetitionEmpleadoUpdate)
             .then((res)=>{
-          
-              setRefectch(!refetch);
-              setSaveEmpleado(!saveEmpleado)
-               swal({
-                title: "Ok",
-                text: "Empleado Modificado con éxito",
-                icon: "success",
-            })
+              if(res.data.statusCode === 0){     
+                debugger;      
+                dispatch(updateEmploye(bodyPetitionEmpleadoUpdate))
+                dispatch(setRefetch(!refetching))
+                setRefectch(!refetch);
+                 return swal({
+                  title: "Ok",
+                  text: "Empleado Modificado con éxito",
+                  icon: "success",
+              })
+              }
+              
             })
             arrays[3].map(async (id)=>{
-               
+
               let array = {
                 "arrayList": [
                   id
                 ]
               }
-             
-              await axios.delete(`${urls.urlDOmicilioElimina}`, {data : array, headers : {'Content-Type': 'application/json;'}})
-              .then((res) => {console.log(res);setRefectch(!refetch)})
+              await axios.delete(`${urls.urlDOmicilioElimina}${id}`, {headers : {'Content-Type': 'application/json;'}})
+              .then((res) => {
+                setRefectch(!refetch)
+              })
            });
           }
     }else{
@@ -1124,7 +1010,7 @@ useEffect(()=>{
         case urls.urlTRabajoDelete : {
             arrays.idsTrabajosAnterioresDelete.map(async (id)=>{
               await axios.delete(`${urls.urlTRabajoDelete}${id}`)
-              .then((res) => console.log())
+              .then((res) => {})
             })
         }
         case urls.urlDocDelte : {
@@ -1139,22 +1025,22 @@ useEffect(()=>{
         case urls.urlLicDelete : {
            arrays.licenciasDelete.map(async (id)=>{
              await axios.delete(`${urls.urlLicDelete}${id}`)
-             .then((res) => console.log())
+             .then((res) => {})
           })}
         case urls.urlDOmicilioElimina : {
           arrays.idDomiciliosArray.map(async (id)=>{
-            await axios.delete(`${urls.urlDOmicilioElimina}`)
-            .then((res) => console.log())
+            await axios.delete(`${urls.urlDOmicilioElimina}${id}`)
+            .then((res) => {})
           })}
           case urls.urlDeleteFAmiliar : {
             arrays.arraysFamiliares.map(async (id)=>{
               await axios.delete(`${urls.urlDeleteFAmiliar}${id}`)
-              .then((res) => console.log())
+              .then((res) => {})
             })}
             case urls.urlDatoExtraElimina : {
               arrays.arrayIdsDatoExtra.map(async (id)=>{
                 await axios.delete(`${urls.urlDatoExtraElimina}${id}`)
-                .then((res) => console.log())
+                .then((res) => {})
               })
       }
         default : {
@@ -1185,19 +1071,19 @@ useEffect(()=>{
                 id
               ]
             }
-           
+
             try{
-              await axios.delete(`${urls.urlLicDelete}0`, {data : array, headers : {'Content-Type': 'application/json;'}})
+              await axios.delete(`${urls.urlLicDelete}${id}`, {data : array, headers : {'Content-Type': 'application/json;','Access-Control-Allow-Origin' : '*'}})
             .then((res) => {
-                  
+
                   if(res.status === 200){
                   return swal({
                     title: "Ok",
                     text: "Licencia eliminada con éxito",
                     icon: "success",
                 })
-                }                
-              }  
+                }
+              }
             )
             }catch(err){
               setRefectch(!refetch);
@@ -1207,9 +1093,9 @@ useEffect(()=>{
                 icon: "error",
             })
             }
-            
+
          });
-            arrays[4].map(async (id)=>{    
+            arrays[4].map(async (id)=>{
               await axios.delete(`${urls.urlDeleteFAmiliar}${id}`)
               .then((res) => {
                 if(res.status === 200){
@@ -1220,7 +1106,7 @@ useEffect(()=>{
               })
               }} )
           });
-            arrays[5].map(async (id)=>{    
+            arrays[5].map(async (id)=>{
               await axios.delete(`${urls.urlDatoExtraElimina}${id}`)
               .then((res) => {if(res.status === 200){
                 swal({
@@ -1233,7 +1119,7 @@ useEffect(()=>{
         }
       }
     }
-       
+
     }catch(err){
         //codigo de error
         swal({
@@ -1244,7 +1130,9 @@ useEffect(()=>{
     }
 }
   return (
-    <div className="container-fluid">
+    <>
+    
+    {  localStorage.getItem('token') ? <div className="container-fluid">
       <div className="row">
         <div className="col-xl-3 col-lg-3 col-md-3">
           <Browser modify={modify} setModify={setModify} deleteEmploye={deleteEmploye} setRefectch={setRefectch} refetch={refetch} disable={disable} setDisable={setDisable} setValueEmpl={setValueEmpl} responses={responses} setResponses={setResponses} />
@@ -1266,6 +1154,8 @@ useEffect(()=>{
               refetch={refetch}
               handleTabChange={handleTabChange}
               tabIndex={tabIndex}
+              ImageSelectedPrevious={ImageSelectedPrevious}
+              setImageSelectedPrevious={setImageSelectedPrevious}
             />
           )}
           {tabIndex === 1 && (
@@ -1348,8 +1238,9 @@ useEffect(()=>{
         </button>
         <button className="btn btn-success btnEmpl" onClick={()=> deleteItems( objectRequest)}>Aceptar</button>
       </div>
-      <Footer />
-    </div>
+      <Footer setTokenDef={setTokenDef} tokenDef={tokenDef}/>
+    </div> : <ErrorPage loading={loading}/>}
+    </>
   );
 };
 export default Empleados;

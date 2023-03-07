@@ -11,9 +11,7 @@ const InputButtonCUIL = ({cancelar, idInput, nameLabel, placeHolder, obligatorio
       setFormDatosPersonales({...formDatosPersonales,inputCuil : valor })
     },[valor])
 
-    useEffect(()=>{
-        setValor(datosPersonalesValue)
-    },[datosPersonalesValue])
+  
     
     useEffect(()=>{
         

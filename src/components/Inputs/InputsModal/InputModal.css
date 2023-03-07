@@ -12,3 +12,8 @@
     display: flex;
     align-items: center;
 }
+.col-form-label-modal{
+    margin-left: 1rem;
+    font-size: small;
+    color: black;
+}
