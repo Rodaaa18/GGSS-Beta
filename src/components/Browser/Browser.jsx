@@ -25,25 +25,36 @@ import {
 import { setRefetch } from "../../redux/actions/modalesActions";
 import { recharge } from "../../redux/actions/domiciliosActions";
 
-const Browser = ({ disable, setDisable, setValueEmpl, responses, setResponses, setRefectch, refetch, deleteEmploye,setModify }) => {
+const Browser = ({
+  disable,
+  setDisable,
+  setValueEmpl,
+  responses,
+  setResponses,
+  setRefectch,
+  refetch,
+  deleteEmploye,
+  setModify,
+  // disableButtons,
+  // setDisableButtons,
+}) => {
   const [checked, setChecked] = useState(false);
-  const [ browser, setBrowser ] = useState(responses["browser"]);
-
-  function onChangeValues(e, key){
-    const newResponse = {...browser};
+  const [browser, setBrowser] = useState(responses["browser"]);
+  function onChangeValues(e, key) {
+    const newResponse = { ...browser };
     newResponse[key] = e;
     setBrowser({
-      ...newResponse
+      ...newResponse,
     });
-};
+  }
+
   
-  useEffect(() => {  
+  useEffect(() => {
     setResponses({
       ...responses,
-      browser
-    });    
-},[browser]);
-
+      browser,
+    });
+  }, [browser]);
 
   const url = "http://54.243.192.82/api/Empleados?records=100";
 
@@ -58,21 +69,16 @@ const Browser = ({ disable, setDisable, setValueEmpl, responses, setResponses, s
   );
   const empleadoUno = useSelector((state) => state.employeStates.employe);
   const deshabilitado = useSelector((state) => state.employeStates.disable);
-  const recharged = useSelector((state)=> state.domiciliosStates.recharge);
-  
-
- 
+  const recharged = useSelector((state) => state.domiciliosStates.recharge);
 
   const detalleSeleccionado = useSelector(
     (state) => state.licenciasState.detalleSelect
   );
   function onSelect(e, name, idEmpleado) {
-    
     //dispatch(deleteDetLic(detalleSeleccionado.idDetalleLicenciaEmpleado));
     //dispatch(clearLicSelect());
-    dispatch(recharge(!recharged))
+    dispatch(recharge(!recharged));
     getEmployeById(empleados, idEmpleado).then((res) => {
-      
       dispatch(addOneEmploye(res[0]));
     });
   }
@@ -85,10 +91,10 @@ const Browser = ({ disable, setDisable, setValueEmpl, responses, setResponses, s
   }
 
   function habilitaEdit() {
-    setValueEmpl(true)
-    setRefectch(!refetch)
-    dispatch(cleanEmploye())
-    
+    setValueEmpl(true);
+    setRefectch(!refetch);
+    dispatch(cleanEmploye());
+
     Array.from(document.querySelectorAll("input")).forEach(
       (input) => (input.value = "")
     );
@@ -102,8 +108,9 @@ const Browser = ({ disable, setDisable, setValueEmpl, responses, setResponses, s
     const formDatosPersonales = Object.fromEntries(formDatosPersonale);
     setResponses({
       ...responses,
-      formDatosPersonales})
-   /*  Array.from(document.querySelectorAll("input")).forEach(
+      formDatosPersonales,
+    });
+    /*  Array.from(document.querySelectorAll("input")).forEach(
       (input) => (input.value = "")
     );
     let employeData = { ...empleadoUno };
@@ -117,14 +124,13 @@ const Browser = ({ disable, setDisable, setValueEmpl, responses, setResponses, s
 
     dispatch(addOneEmploye(inputsJson)); */
     setDisable(false);
-
   }
 
   function habilitaUpdate(e) {
     e.preventDefault();
     setModify(true);
-    setValueEmpl(true)
-    setRefectch(!refetch)
+    setValueEmpl(true);
+    setRefectch(!refetch);
     if (empleadoUno.iDempleado && empleadoUno.iDempleado) {
       return setDisable(false);
     }
@@ -134,7 +140,10 @@ const Browser = ({ disable, setDisable, setValueEmpl, responses, setResponses, s
       icon: "error",
     });
   }
+
   
+
+
   return (
     <>
       <div className="row gy-1 container-flex p-0 m-o ">
@@ -143,7 +152,12 @@ const Browser = ({ disable, setDisable, setValueEmpl, responses, setResponses, s
         <div className="row mt-1 p-0 m-0 ">
           <div className="container m-0 p-0">
             <input
-              onChange={(e) => onChangeValues(e.target.value, "inpurLegajoBrowser")}
+             disabled={
+              !disable
+            }
+              onChange={(e) =>
+                onChangeValues(e.target.value, "inpurLegajoBrowser")
+              }
               value={browser?.inpurLegajoBrowser}
               className="form__grupo__input__browser "
               type="number"
@@ -154,14 +168,21 @@ const Browser = ({ disable, setDisable, setValueEmpl, responses, setResponses, s
 
             <div className="row mt-1 m-0 p-0  w-100">
               <input
-                onChange={(e) => onChangeValues(e.target.value, "inputApellidoNombreBrowser")}
+               disabled={
+                !disable
+              }
+                onChange={(e) =>
+                  {
+                    onChangeValues(e.target.value, "inputApellidoNombreBrowser");
+                  }
+                }
                 value={browser?.inputApellidoNombreBrowser}
                 className="form__grupo__input__browser "
                 type="text"
                 name="inputApellidoNombreBrowser"
                 id="inputApellidoNombreBrowser"
                 placeholder="Ingrese Nombre "
-              />              
+              />
             </div>
             {/* <div className="wor mt-1 m-0 p-0 w-100">
               <label htmlFor="ordered">Ordenar:</label>
@@ -172,9 +193,24 @@ const Browser = ({ disable, setDisable, setValueEmpl, responses, setResponses, s
               className="form-select  mt-1 selectMenu "
               multiple
               aria-label="multiple select example"
-              disabled={!disable}
-              onKeyDown={(e)=> onSelect(e,e.target.value.split(',')[0],Number(e.target.value.split(',')[1]))}
-              onKeyUp={(e)=> onSelect(e,e.target.value.split(',')[0],Number(e.target.value.split(',')[1]))}
+              disabled={
+                !disable
+              }
+
+              onKeyDown={(e) =>
+                onSelect(
+                  e,
+                  e.target.value.split(",")[0],
+                  Number(e.target.value.split(",")[1])
+                )
+              }
+              onKeyUp={(e) =>
+                onSelect(
+                  e,
+                  e.target.value.split(",")[0],
+                  Number(e.target.value.split(",")[1])
+                )
+              }
             >
               {empleados &&
                 empleados?.map((emp, i) => {
@@ -196,6 +232,9 @@ const Browser = ({ disable, setDisable, setValueEmpl, responses, setResponses, s
           <div className="row align-items-start">
             <div className="col">
               <button
+                disabled={
+                  !disable
+                }
                 className={`btn btn-danger btn-sm d-flex justify-content-center m-1 align-items- newClass`}
                 onClick={habilitaEdit}
               >
@@ -204,16 +243,27 @@ const Browser = ({ disable, setDisable, setValueEmpl, responses, setResponses, s
             </div>
             <div className="col">
               <button
+                disabled={
+                  !disable
+                }
                 className={`btn btn-danger btn-sm d-flex justify-content-center m-1 align-items- newClass`}
-                onClick={(e) => habilitaUpdate(e)}
+                onClick={(e) =>{
+                  habilitaUpdate(e)
+                } }
               >
                 Modificar
               </button>
             </div>
             <div className="col">
               <button
+               disabled={
+                !disable
+              }
                 className={`btn btn-danger btn-sm d-flex justify-content-center m-1 align-items- newClass`}
-                onClick={() => deleteEmploye(empleadoUno.iDempleado)}
+                onClick={() => {
+                  deleteEmploye(empleadoUno.iDempleado);
+                  
+                }}
               >
                 Eliminar
               </button>

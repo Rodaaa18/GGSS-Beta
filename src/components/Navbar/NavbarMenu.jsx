@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import swal from "sweetalert";
 import "./Navbar.css";
-import './../../components/Modals/BasicModal.css'
+import "./../../components/Modals/BasicModal.css";
 // ------------------------ OBJECTS ------------------------
 import {
   objectParentescos,
@@ -99,48 +99,57 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario }) => {
   const [disableModal, setDisableMOdal] = useState(true);
   const [transition, setTransition] = useState(false);
   const [disableModalButtons, setDisableModalButtons] = useState(false);
-  const [ reload, setReload ] = useState(false);
+  const [reload, setReload] = useState(false);
   const [arrayList, setArrayList] = useState({
-	departamentos: [],
-	localidades: [],
-	barrios: [],
+    departamentos: [],
+    localidades: [],
+    barrios: [],
   });
   const dispatch = useDispatch();
   const refetch = useSelector((state) => state.modalState.refetch);
   const navigate = useNavigate();
 
-	const handleClickClose=(nameModalProp)=>{
-        let newState = {...nameModal}
-    
-        newState[nameModalProp] = false;
-        setNameModal(newState);
-        setTransition(true);
-    }
-	function closeSession(){
-		setTokenDef(null);
-		sePerfilesUSuario(null);
-		return navigate("/");
-	}
-	async function sendModalData(url, body, bodyUpdate, id, actualizaCreate, actualizaUpdate, valueIdUrl, diferentUrl){
-        if(modify){
-            try{
-                await axios
-                .put(`${url}/${diferentUrl ? valueIdUrl : id }`, bodyUpdate)
-                .then((res)=>{
-                    if(res.status === 200){
-                        setModify(false);
-                        setDisableMOdal(true)
-						dispatch(actualizaUpdate(bodyUpdate))
-                        dispatch(setRefetch(refetch))
-						setReload(!reload)
-            return swal({
-              title: "Ok",
-              text: "Item actualizado con éxito",
-              icon: "success",
-            });
-          }
-          return;
-        });
+  const handleClickClose = (nameModalProp) => {
+    let newState = { ...nameModal };
+
+    newState[nameModalProp] = false;
+    setNameModal(newState);
+    setTransition(true);
+  };
+  function closeSession() {
+    setTokenDef(null);
+    sePerfilesUSuario(null);
+    return navigate("/");
+  }
+  async function sendModalData(
+    url,
+    body,
+    bodyUpdate,
+    id,
+    actualizaCreate,
+    actualizaUpdate,
+    valueIdUrl,
+    diferentUrl
+  ) {
+    if (modify) {
+      try {
+        await axios
+          .put(`${url}/${diferentUrl ? valueIdUrl : id}`, bodyUpdate)
+          .then((res) => {
+            if (res.status === 200) {
+              setModify(false);
+              setDisableMOdal(true);
+              dispatch(actualizaUpdate(bodyUpdate));
+              dispatch(setRefetch(refetch));
+              setReload(!reload);
+              return swal({
+                title: "Ok",
+                text: "Item actualizado con éxito",
+                icon: "success",
+              });
+            }
+            return;
+          });
       } catch (err) {
         setModify(false);
         setDisableMOdal(true);
@@ -158,7 +167,7 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario }) => {
           setDisableMOdal(true);
           dispatch(actualizaCreate(body));
           dispatch(setRefetch(refetch));
-		  setReload(!reload)
+          setReload(!reload);
           return swal({
             title: "Ok",
             text: "Item guardado con éxito",
@@ -175,11 +184,7 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario }) => {
       });
     }
   }
-  async function deleteItemModal(
-    url,
-    id,
-    actualizaDelete,
-  ) {
+  async function deleteItemModal(url, id, actualizaDelete) {
     swal({
       title: "Desea eliminar el item?",
       text: "Si confirma el item será borrado de la Base de Datos",
@@ -191,11 +196,10 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario }) => {
         try {
           await axios.delete(`${url}/${id}`).then((res) => {
             if (res.status === 200) {
-              
               dispatch(actualizaDelete(id));
-			  dispatch(setRefetch(!refetch));
+              dispatch(setRefetch(!refetch));
               setDisableMOdal(true);
-			  setReload(!reload)
+              setReload(!reload);
               return swal({
                 title: "Ok",
                 text: "Item eliminado con éxito",
@@ -218,37 +222,51 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario }) => {
     });
   }
 
-  const generalStateData = useSelector((state)=> state.generalState)
-  const provinciaSelected = useSelector((state)=> state.modalState.provSelect);
-  const departamentoSelected = useSelector((state)=> state.modalState.dptoSelect);
-  const localidadSelected = useSelector((state)=> state.modalState.localSelect);
-
-  
+  const generalStateData = useSelector((state) => state.generalState);
+  const provinciaSelected = useSelector((state) => state.modalState.provSelect);
+  const departamentoSelected = useSelector(
+    (state) => state.modalState.dptoSelect
+  );
+  const localidadSelected = useSelector(
+    (state) => state.modalState.localSelect
+  );
 
   useEffect(() => {
-	console.log("localidades", generalStateData.localidades);
-	if (provinciaSelected && generalStateData.departamentos) {
-	  const arrayDepartamentos = generalStateData.departamentos.filter(
-		(departamento) => departamento.idProvincia === provinciaSelected.idProvincia
-	  );
-	  setArrayList((prevState) => ({ ...prevState, departamentos: arrayDepartamentos }));
-	}
-	if (departamentoSelected && generalStateData.localidades) {
-		
-	  const arrayLocalidades = generalStateData.localidades.filter(
-		(localidad) => localidad.idDepartamento === departamentoSelected.idDepartamento
-	  );
-	  setArrayList((prevState) => ({ ...prevState, localidades: arrayLocalidades }));
-	}
-	if (localidadSelected && generalStateData.barrios) {
-	  const arrayBarrios = generalStateData.barrios.filter(
-		(barrio) => barrio.idLocalidad === localidadSelected.idLocalidad
-	  );
-	  setArrayList((prevState) => ({ ...prevState, barrios: arrayBarrios }));
-	}
-  }, [provinciaSelected, departamentoSelected, localidadSelected, generalStateData]);
+    console.log("localidades", generalStateData.localidades);
+    if (provinciaSelected && generalStateData.departamentos) {
+      const arrayDepartamentos = generalStateData.departamentos.filter(
+        (departamento) =>
+          departamento.idProvincia === provinciaSelected.idProvincia
+      );
+      setArrayList((prevState) => ({
+        ...prevState,
+        departamentos: arrayDepartamentos,
+      }));
+    }
+    if (departamentoSelected && generalStateData.localidades) {
+      const arrayLocalidades = generalStateData.localidades.filter(
+        (localidad) =>
+          localidad.idDepartamento === departamentoSelected.idDepartamento
+      );
+      setArrayList((prevState) => ({
+        ...prevState,
+        localidades: arrayLocalidades,
+      }));
+    }
+    if (localidadSelected && generalStateData.barrios) {
+      const arrayBarrios = generalStateData.barrios.filter(
+        (barrio) => barrio.idLocalidad === localidadSelected.idLocalidad
+      );
+      setArrayList((prevState) => ({ ...prevState, barrios: arrayBarrios }));
+    }
+  }, [
+    provinciaSelected,
+    departamentoSelected,
+    localidadSelected,
+    generalStateData,
+  ]);
 
-  console.log(arrayList)
+  console.log(arrayList);
 
   //#region ----------------------------------- URLS DE LOS MODALES
   const urlEstadosCiviles = "http://54.243.192.82/api/EstadosCiviles";
@@ -562,18 +580,18 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario }) => {
         parentescosValue[parentescosValue.length - 1] !== undefined &&
         parentescosValue[parentescosValue.length - 1].iDparentesco) + 1,
     nombreParentesco: modalValues?.nombreParentesco,
-	"generaAsignacion": modalValues?.generaAsignacion,
-	"obs": modalValues?.obsParentescos,
-	"deduceGanancias": modalValues?.deduceGanancias,
-	"importeDeduce": Number(modalValues?.importe)
+    generaAsignacion: modalValues?.generaAsignacion,
+    obs: modalValues?.obsParentescos,
+    deduceGanancias: modalValues?.deduceGanancias,
+    importeDeduce: Number(modalValues?.importe),
   };
   const bodyUpdateParentesco = {
     iDparentesco: valueItemModal?.iDparentesco,
     nombreParentesco: modalValues?.nombreParentesco,
-    "generaAsignacion": modalValues?.generaAsignacion,
-	"obs": modalValues?.obsParentescos,
-	"deduceGanancias": modalValues?.deduceGanancias,
-	"importeDeduce": Number(modalValues?.importe)
+    generaAsignacion: modalValues?.generaAsignacion,
+    obs: modalValues?.obsParentescos,
+    deduceGanancias: modalValues?.deduceGanancias,
+    importeDeduce: Number(modalValues?.importe),
   };
 
   //Paises
@@ -584,14 +602,14 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario }) => {
         paisesValue[paisesValue.length - 1] !== undefined &&
         paisesValue[paisesValue.length - 1].idPais) + 1,
     nombrePais: modalValues?.nombrePais,
-	"nacionalidad_masc": modalValues?.nacMac,
-	"nacionalidad_fem": modalValues?.nacFem
+    nacionalidad_masc: modalValues?.nacMac,
+    nacionalidad_fem: modalValues?.nacFem,
   };
   const bodyUpdatePaises = {
     idPais: valueItemModal?.idPais,
     nombrePais: modalValues?.nombrePais,
-    "nacionalidad_masc": modalValues?.nacMac,
-  	"nacionalidad_fem": modalValues?.nacFem
+    nacionalidad_masc: modalValues?.nacMac,
+    nacionalidad_fem: modalValues?.nacFem,
   };
 
   //Alicuotas
@@ -627,556 +645,669 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario }) => {
     cuit: modalValues?.cuit,
   };
 
- 
-//#endregion ----------------------------------- Body de Lauty  -----------------------------------
-	function showSuperadmin(){
+  //#endregion ----------------------------------- Body de Lauty  -----------------------------------
+  function showSuperadmin() {
+    let perfilAdmin =
+      perfilesUsuario &&
+      perfilesUsuario.filter(
+        (perfil) => perfil.nombre.toLowerCase() === "administrador"
+      );
 
-		let perfilAdmin = perfilesUsuario && perfilesUsuario.filter((perfil)=> perfil.nombre.toLowerCase() === "administrador");
-		
-		if(perfilAdmin.length > 0){
-			return(<Link class="nav-link" to="/superadmin">Superadmin</Link>)
-		}else{
-			return null;
-		}
-	}
+    if (perfilAdmin.length > 0) {
+      return (
+        <Link class="nav-link" to="/superadmin">
+          Superadmin
+        </Link>
+      );
+    } else {
+      return null;
+    }
+  }
 
+  return (
+    <nav className="row gy-3 navbar navbar-expand-lg navbar-light bg-light col-sm-12">
+      <div className="container-sm">
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
+        <div className="">
+          <div className="collapse navbar-collapse" id="navbarNav">
+            <ul className=" navbar-nav">
+              <li className=" nav-item dropdown">
+                <a
+                  className="  nav-link dropdown-toggle"
+                  href=""
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Empleados
+                </a>
+                <ul className=" dropdown-menu">
+                  <li>
+                    <Link className="dropdown-item" to="/ficha-empleados">
+                      Ficha Empleados
+                    </Link>
+                  </li>
+                </ul>
+              </li>
 
-	return (
-		<nav className="row gy-3 navbar navbar-expand-lg navbar-light bg-light col-sm-12">
-			<div className="container-sm">
-				<button className="navbar-toggler" type="button"
-					data-bs-toggle="collapse"
-					data-bs-target="#navbarNav"
-					aria-controls="navbarNav"
-					aria-expanded="false"
-					aria-label="Toggle navigation">
-					<span className="navbar-toggler-icon"></span>
-				</button>
-				<div className="">
-					<div className="collapse navbar-collapse" id="navbarNav">
-						<ul className=" navbar-nav">
-							<li className=" nav-item dropdown">
-								<a className="  nav-link dropdown-toggle" href="" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-									Empleados
-								</a>
-								<ul className=" dropdown-menu">
-									
-									<li><Link className="dropdown-item" to="/ficha-empleados">Ficha Empleados</Link></li>
-							
-								</ul>
-							</li>
-							
-							<li className="nav-item dropdown">
-								<a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-									Tabla de Datos
-								</a>
-								<ul className="dropdown-menu">
-									<li class="dropdown-submenu">
-										<a className='dropdown-item' tabindex="-1" href="#">Para Empleados</a>
-										<ul class="dropdown-menu">
-											<div className="datosEmpleados" style={{ fontSize: "13px" }}>
-												<li>
-													<ButtonCallModal nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="estadosCiviles"  setTransition={setTransition} nameButton="Estados Civiles">
-														<ChildModal 
-															modalValues={modalValues} 
-															onChangeValues={onChangeValues}  
-															valueItemModal={valueItemModal} 
-															setValueItemModal={setValueItemModal} 
-															nameModalProp="estadosCiviles" 
-															handleClickClose={handleClickClose} 
-															setTransition={setTransition} 
-															array={estadosCivilesValue && estadosCivilesValue}  
-															nameModal="Estados Civiles" 
-															propsModal={propsModal} 
-															optionsInputs={objectEstadosCiviles} 
-															transition={transition}
-															functionAdd={sendModalData}
-															urlApi={urlEstadosCiviles}
-															bodyPetition ={bodyEstadosCiviles}
-															bodyUpdate={bodyUpdateEstadosCiviles}
-															modify={modify} 
-															setModify={setModify}
-															idAModificar={valueItemModal?.idEstadoCivil}
-															functionDelete={deleteItemModal}
-															disableModal={disableModal}
-															setDisableMOdal={setDisableMOdal}
-															actionActualizaDelete={actualizaDelete}
-															actualizaCreate={actualizaCreateEstadosCiviles}
-															actualizaUpdate={actualizaUpdateEstadosCiviles}
-															disableModalButtons={disableModalButtons}
-															setDisableModalButtons={setDisableModalButtons}
-															usaEstados={false}
-														/>
-													</ButtonCallModal>
-												</li>
-												<li>
-													<ButtonCallModal nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="Estudios"  setTransition={setTransition} nameButton="Estudios">
-
-														<ChildModal
-															modalValues={modalValues}
-															onChangeValues={onChangeValues}
-															valueItemModal={valueItemModal}
-															setValueItemModal={setValueItemModal}
-															nameModalProp="Estudios"
-															handleClickClose={handleClickClose}
-															setTransition={setTransition}
-															array={estudiosValue && estudiosValue}
-															nameModal="Estudios"
-															propsModal={ propsModalEstudios }
-															optionsInputs={objectEstudios}
-															transition={transition}
-															functionAdd={sendModalData}
-															urlApi={urlEstudios}
-															bodyPetition ={bodyEstudios}
-															bodyUpdate={bodyUpdateEstudios}
-															modify={modify}
-															setModify={setModify}
-															idAModificar={valueItemModal?.iDestudios}
-															functionDelete={deleteItemModal}
-															disableModal={disableModal}
-															setDisableMOdal={setDisableMOdal}
-															disableModalButtons={disableModalButtons}
-															setDisableModalButtons={setDisableModalButtons}
-															actionActualizaDelete={actualizaDeleteEstudios}
-															actualizaCreate={actualizaCreateEstudios}
-															actualizaUpdate={actualizaUpdateEstudios}
-															usaEstados={false}
-														/>
-														
-													</ButtonCallModal>
-												</li>
-											<li>
-													<ButtonCallModal nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="TipoDocumento"  setTransition={setTransition} nameButton="Tipo de Documento">
-														<ChildModal 
-															modalValues={modalValues} 
-															onChangeValues={onChangeValues}  
-															valueItemModal={valueItemModal} 
-															setValueItemModal={setValueItemModal} 
-															nameModalProp="TipoDocumento" 
-															handleClickClose={handleClickClose} 
-															setTransition={setTransition} 
-															array={ tiposDocumentoValue && tiposDocumentoValue }  
-															nameModal="Tipo de Documento" 
-															propsModal={propsModalTiposDocumento} 
-															optionsInputs={objectTipoDocumento} 
-															transition={transition}
-															functionAdd={sendModalData}
-															urlApi={urlTiposDocumento}
-															bodyPetition ={bodyTipoDocumento}
-															bodyUpdate={bodyUpdateTipoDocumento}
-															modify={modify} 
-															setModify={setModify}
-															idAModificar={ valueItemModal?.iDtipoDocumento }
-															functionDelete={deleteItemModal}
-															disableModal={disableModal}
-															setDisableMOdal={setDisableMOdal}
-															actionActualizaDelete={actualizaDeleteTiposDoc}
-															disableModalButtons={disableModalButtons}
-															setDisableModalButtons={setDisableModalButtons}
-															actualizaCreate={actualizaCreateTiposDoc}
-															actualizaUpdate={actualizaUpdateTiposDoc}
-															usaEstados={false}
-														/>
-														
-													</ButtonCallModal>
-												</li>    
-												<li>
-												<ButtonCallModal nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="Estado"  setTransition={setTransition} nameButton="Estado">
-														<ChildModal 
-															modalValues={modalValues} 
-															onChangeValues={onChangeValues}  
-															valueItemModal={valueItemModal} 
-															setValueItemModal={setValueItemModal} 
-															nameModalProp="Estado" 
-															handleClickClose={handleClickClose} 
-															setTransition={setTransition} 
-															array={ estadosValue && estadosValue }  
-															nameModal="Estado" 
-															propsModal={ propsModalEstado } 
-															optionsInputs={objectEstado} 
-															transition={transition}
-															functionAdd={sendModalData}
-															urlApi={urlEstado}
-															bodyPetition ={bodyEstado}
-															bodyUpdate={ bodyUpdateEstado }
-															modify={modify} 
-															setModify={setModify}
-															idAModificar={ valueItemModal?.idEstado }
-															functionDelete={deleteItemModal}
-															disableModal={disableModal}
-															setDisableMOdal={setDisableMOdal}
-															disableModalButtons={disableModalButtons}
-															setDisableModalButtons={setDisableModalButtons}
-															actionActualizaDelete={actualizaDeleteEStados}
-															actualizaCreate={actualizaCreateEStados}
-															actualizaUpdate={actualizaUpdateEStados}
-															//props texarea
-															idInputTextArea="observacion"
-															usaEstados={true}
-															/>
-														
-													</ButtonCallModal>
-												</li>
-												<li>
-												<ButtonCallModal nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="Formas de Pagos"  setTransition={setTransition} nameButton="Formas de Pagos">
-														<ChildModal 
-															modalValues={modalValues} 
-															onChangeValues={onChangeValues}  
-															valueItemModal={valueItemModal} 
-															setValueItemModal={setValueItemModal} 
-															nameModalProp="Formas de Pagos" 
-															handleClickClose={handleClickClose} 
-															setTransition={setTransition} 
-															array={ formasPagoValue && formasPagoValue }  
-															nameModal="Formas de Pagos" 
-															propsModal={ propsModalFormasdePagos } 
-															optionsInputs={objectFormasDePago} 
-															transition={transition}
-															functionAdd={sendModalData}
-															urlApi={urlFormasdePago}
-															bodyPetition ={bodyFormasDePago}
-															bodyUpdate={ bodyUpdateFormasDePago }
-															modify={modify} 
-															setModify={setModify}
-															idAModificar={ valueItemModal?.iDformadePago }
-															functionDelete={deleteItemModal}
-															disableModal={disableModal}
-															setDisableMOdal={setDisableMOdal}
-															disableModalButtons={disableModalButtons}
-															setDisableModalButtons={setDisableModalButtons}
-															actionActualizaDelete={actualizaDeleteFormasdePago}
-															actualizaCreate={actualizaCreaFormasdePago}
-															actualizaUpdate={actualizaModificarFormasdePago}
-															//props texarea
-															idInputTextArea="observacion"
-															usaEstados={true}
-															/>
-													</ButtonCallModal>
-												</li>
-												<li>
-													<ButtonCallModal nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="Calles"  setTransition={setTransition} nameButton="Calles">
-														<ChildModal 
-															modalValues={modalValues} 
-															onChangeValues={onChangeValues}  
-															valueItemModal={valueItemModal} 
-															setValueItemModal={setValueItemModal} 
-															nameModalProp="Calles" 
-															handleClickClose={handleClickClose} 
-															setTransition={setTransition} 
-															array={ calleValue && calleValue }  
-															nameModal="Calles" 
-															propsModal={propsModalCalles} 
-															optionsInputs={objectCalles} 
-															transition={transition}
-															functionAdd={sendModalData}
-															urlApi={urlCalles}
-															bodyPetition ={bodyCalle}
-															bodyUpdate={bodyUpdateCalle}
-															modify={modify} 
-															setModify={setModify}
-															idAModificar={valueItemModal?.idCalle }
-															functionDelete={deleteItemModal}
-															disableModal={disableModal}
-															setDisableMOdal={setDisableMOdal}
-															actionActualizaDelete={actualizaDeleteCalles}
-															disableModalButtons={disableModalButtons}
-															setDisableModalButtons={setDisableModalButtons}
-															actualizaCreate={actualizaCreateCalles}
-															actualizaUpdate={actualizaUpdateCalles}
-															usaEstados={true}
-															idInputTextArea = "obsCalles"
-															urlDelete = {urlCallesDelete}
-															changeUrl = {true}
-														/>
-														
-													</ButtonCallModal>
-												</li>    
-												<li>
-													<ButtonCallModal nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="Cargos"  setTransition={setTransition} nameButton="Cargos">
-														<ChildModalOptions 
-															modalValues={modalValues} 
-															onChangeValues={onChangeValues}  
-															valueItemModal={valueItemModal} 
-															setValueItemModal={setValueItemModal} 
-															nameModalProp="Cargos" 
-															handleClickClose={handleClickClose} 
-															setTransition={setTransition} 
-															array={ cargosValue && cargosValue }  
-															nameModal="Cargos" 
-															propsModal={propsModalCargos} 
-															optionsInputs={objectCargos} 
-															transition={transition}
-															functionAdd={sendModalData}
-															urlApi={urlCargos}
-															bodyPetition ={bodyCargo}
-															bodyUpdate={bodyUpdateCargo}
-															modify={modify} 
-															setModify={setModify}
-															idAModificar={ valueItemModal?.iDcargo }
-															functionDelete={deleteItemModal}
-															disableModal={disableModal}
-															setDisableMOdal={setDisableMOdal}
-															actionActualizaDelete={actualizaDeleteCargos}
-															actualizaCreate={actualizaCreaCargos}
-															actualizaUpdate={actualizaModificarCargos}
-															disableModalButtons={disableModalButtons}
-															setDisableModalButtons={setDisableModalButtons}
-															usaEstados={true}
-															usaCheck={false}
-															idInputTextArea="observacion"
-														/>
-													</ButtonCallModal>
-												</li>    
-												<li>
-													<ButtonCallModal nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="Tareas Desempeñadas"  setTransition={setTransition} nameButton="Tareas Desempeñadas">
-														<ChildModalOptions 
-															modalValues={modalValues} 
-															onChangeValues={onChangeValues}  
-															valueItemModal={valueItemModal} 
-															setValueItemModal={setValueItemModal} 
-															nameModalProp="Tareas Desempeñadas" 
-															handleClickClose={handleClickClose} 
-															setTransition={setTransition} 
-															array={ tareasValue && tareasValue  }  
-															nameModal="Tareas Desempeñadas" 
-															propsModal={propsModalTareas} 
-															optionsInputs={objectTareas} 
-															transition={transition}
-															functionAdd={sendModalData}
-															urlApi={urlTareas}
-															bodyPetition ={bodyTareas}
-															bodyUpdate={bodyUpdateTareas}
-															modify={modify} 
-															setModify={setModify}
-															idAModificar={ valueItemModal?.idTareaDesempeñada }
-															functionDelete={deleteItemModal}
-															disableModal={disableModal}
-															setDisableMOdal={setDisableMOdal}
-															actionActualizaDelete={actualizaDeleteTareas}
-															actualizaCreate={actualizaCreaTareas}
-															actualizaUpdate={actualizaModificarTareas}
-															disableModalButtons={disableModalButtons}
-															setDisableModalButtons={setDisableModalButtons}
-															usaEstados={true}
-															usaCheck={false}
-															idInputTextArea="obsTareas"
-														/>
-													</ButtonCallModal>
-												</li>    
-												<li>
-													<ButtonCallModal nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="Modos de Liquidacion"  setTransition={setTransition} nameButton="Modos de Liquidacion">
-														<ChildModalOptions 
-															modalValues={modalValues} 
-															onChangeValues={onChangeValues}  
-															valueItemModal={valueItemModal} 
-															setValueItemModal={setValueItemModal} 
-															nameModalProp="Modos de Liquidacion" 
-															handleClickClose={handleClickClose} 
-															setTransition={setTransition} 
-															array={ modosLiquidacionValue && modosLiquidacionValue  }  
-															nameModal="Modos de Liquidacion" 
-															propsModal={propsModalModosLiquidacion} 
-															optionsInputs={objectModosLiquidacion} 
-															transition={transition}
-															functionAdd={sendModalData}
-															urlApi={urlModosLiquidacion}
-															bodyPetition ={bodyModosLiquidacion}
-															bodyUpdate={bodyUpdateModosLiquidacion}
-															modify={modify} 
-															setModify={setModify}
-															idAModificar={ valueItemModal?.iDmodoLiquidacion }
-															functionDelete={deleteItemModal}
-															disableModal={disableModal}
-															setDisableMOdal={setDisableMOdal}
-															actionActualizaDelete={actualizaDeleteModLiquidacion}
-															actualizaCreate={actualizaCreaModLiquidacion}
-															actualizaUpdate={actualizaModificarModLiquidacion}
-															disableModalButtons={disableModalButtons}
-															setDisableModalButtons={setDisableModalButtons}
-															usaEstados={true}
-															usaCheck={false}
-															idInputTextArea="obsModoLiquidacion"
-														/>
-													</ButtonCallModal>
-												</li>    
-												<li>
-													<ButtonCallModal nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="Modos de Contratacion"  setTransition={setTransition} nameButton="Modos de Contratacion">
-														<ChildModalOptions 
-															modalValues={modalValues} 
-															onChangeValues={onChangeValues}  
-															valueItemModal={valueItemModal} 
-															setValueItemModal={setValueItemModal} 
-															nameModalProp="Modos de Contratacion" 
-															handleClickClose={handleClickClose} 
-															setTransition={setTransition} 
-															array={ modosContratacionValue && modosContratacionValue  }  
-															nameModal="Modos de Contratacion" 
-															propsModal={propsModalModosContratacion} 
-															optionsInputs={objectModosContratacion} 
-															transition={transition}
-															functionAdd={sendModalData}
-															urlApi={urlModosContratacion}
-															bodyPetition ={bodyModosContratacion}
-															bodyUpdate={bodyUpdateModosContratacion}
-															modify={modify} 
-															setModify={setModify}
-															idAModificar={ valueItemModal?.iDmodoContratacion }
-															functionDelete={deleteItemModal}
-															actualizaCreate={actualizaCreaModContratacion}
-															actualizaUpdate={actualizaModificarModContratacion}
-															disableModal={disableModal}
-															setDisableMOdal={setDisableMOdal}
-															actionActualizaDelete={actualizaDeleteModContratacion}
-															disableModalButtons={disableModalButtons}
-															setDisableModalButtons={setDisableModalButtons}
-															usaEstados={true}
-															usaCheck={true}
-															checked={modalValues?.flexCheckChecked}
-															idInputTextArea="obsModoContratacion"
-														/>
-													</ButtonCallModal>
-												</li>    
-												<li>
-													<ButtonCallModal nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="Parentescos"  setTransition={setTransition} nameButton="Parentescos">
-														<ModalParentesco 
-															modalValues={modalValues} 
-															onChangeValues={onChangeValues}  
-															valueItemModal={valueItemModal} 
-															setValueItemModal={setValueItemModal} 
-															nameModalProp="Parentescos" 
-															handleClickClose={handleClickClose} 
-															setTransition={setTransition} 
-															array={ parentescosValue && parentescosValue  }  
-															nameModal="Parentescos" 
-															propsModal={propsModalParentesco} 
-															optionsInputs={objectParentescos} 
-															transition={transition}
-															functionAdd={sendModalData}
-															urlApi={urlParentescos}
-															bodyPetition ={bodyParentesco}
-															bodyUpdate={bodyUpdateParentesco}
-															modify={modify} 
-															setModify={setModify}
-															idAModificar={ valueItemModal?.iDparentesco }
-															functionDelete={deleteItemModal}
-															disableModal={disableModal}
-															setDisableMOdal={setDisableMOdal}
-															actionActualizaDelete={actualizaDeleteParentesco}
-															actualizaCreate={actualizaCreaParentesco}
-															actualizaUpdate={actualizaModificarParentesco}
-															disableModalButtons={disableModalButtons}
-															setDisableModalButtons={setDisableModalButtons}
-															usaEstados={true}
-															nameInputCheck="Genera Asignación"
-															idCheckGenera="generaAsignacion"
-															idCheckGanancias="deduceGanancias"
-															idInputImporte="importe"
-															nameInputCheckTwo="Deduce Ganancias"
-															nameLabelValorDeduccion="Importe"
-															idInputTextArea="obsParentescos"
-															valueInputImporte={modalValues?.importe}
-															// checked={valueItemModal?.generaAsignacion}
-														/>
-													</ButtonCallModal>
-												</li>    
-												<li>
-													<ButtonCallModal nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="Paises"  setTransition={setTransition} nameButton="Paises">
-														<ModalPaises 
-															modalValues={modalValues} 
-															onChangeValues={onChangeValues}  
-															valueItemModal={valueItemModal} 
-															setValueItemModal={setValueItemModal} 
-															nameModalProp="Paises" 
-															handleClickClose={handleClickClose} 
-															setTransition={setTransition} 
-															array={ paisesValue && paisesValue }  
-															nameModal="Paises" 
-															propsModal={propsModalPaises} 
-															optionsInputs={objectPaises} 
-															transition={transition}
-															functionAdd={sendModalData}
-															urlApi={urlPaises}
-															bodyPetition ={bodyPaises}
-															bodyUpdate={bodyUpdatePaises}
-															modify={modify} 
-															setModify={setModify}
-															idAModificar={ valueItemModal?.idPais }
-															functionDelete={deleteItemModal}
-															disableModal={disableModal}
-															setDisableMOdal={setDisableMOdal}
-															actionActualizaDelete={actualizaDeletePaises}
-															actualizaCreate={actualizaCreaPaises}
-															actualizaUpdate={actualizaModificarPaises}
-															disableModalButtons={disableModalButtons}
-															setDisableModalButtons={setDisableModalButtons}
-															
-														/>
-													</ButtonCallModal>
-												</li>    
-												<li>
-												<ButtonCallModal nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="Provincias - Localidades - Departamentos - Barrios "  setTransition={setTransition} nameButton="Provincias - Localidades - Departamentos - Barrios ">
-														<ModalProvinciasDptos 
-															modalValues={modalValues} 
-															onChangeValues={onChangeValues}  
-															valueItemModal={valueItemModal} 
-															setValueItemModal={setValueItemModal} 
-															nameModalProp="Provincias - Localidades - Departamentos - Barrios " 
-															handleClickClose={handleClickClose} 
-															setTransition={setTransition} 
-															array={ provinciasValue && provinciasValue }  
-															nameModal="Provincias - Localidades - Departamentos - Barrios " 
-															propsModal={propsModalProvincias} 
-															optionsInputs={objectProvincias} 
-															transition={transition}
-															functionAdd={sendModalData}
-															urlApi={urlProvincias}
-															bodyPetition ={bodyProvincias}
-															bodyUpdate={bodyUpdateProvincias}
-															modify={modify} 
-															setModify={setModify}
-															idAModificar={ valueItemModal?.idProvincia }
-															functionDelete={deleteItemModal}
-															disableModal={disableModal}
-															setDisableMOdal={setDisableMOdal}
-															disableModalButtons={disableModalButtons}
-															setDisableModalButtons={setDisableModalButtons}
-															usaEstados={true}
-															actionActualizaDelete={actualizaDelete}
-															actualizaCreate={actualizaCreaPaises}
-															actualizaUpdate={actualizaModificarPaises}
-															setRefetch={setRefetch}
-															refetch={refetch}
-															reload={reload}
-															arrayList={arrayList}
-															setArrayList={setArrayList}
-														/>
-													</ButtonCallModal>
-												</li>  
-												
-											</div>
-										</ul>
-									</li>
-											<div className="datosLiquidacion" style={{ fontSize: "13px" }}>
-											</div>
-										</ul>
-									</li> 
-									<li class="nav-item">
-										<a class="nav-link" onClick={()=> closeSession()} href="http://www.loginweb.ggmm.com.ar/" target="_blank">Salir</a>
-									</li>
-									{
-										<li class="nav-item">
-											{
-												showSuperadmin()
-											}
-										</li>
-									}									
-								</ul>
-								<ul> 
-								</ul>
-			</div> 
-			</div> 
-			</div> 
-			</nav>
-)}
+              <li className="nav-item dropdown">
+                <a
+                  className="nav-link dropdown-toggle"
+                  href="#"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Tabla de Datos
+                </a>
+                <ul className="dropdown-menu">
+                  <li class="dropdown-submenu">
+                    <a className="dropdown-item" tabindex="-1" href="#">
+                      Para Empleados
+                    </a>
+                    <ul class="dropdown-menu">
+                      <div
+                        className="datosEmpleados"
+                        style={{ fontSize: "13px" }}
+                      >
+                        <li>
+                          <ButtonCallModal
+                            nameModal={nameModal}
+                            setNameModal={setNameModal}
+                            nameModalProp="estadosCiviles"
+                            setTransition={setTransition}
+                            nameButton="Estados Civiles"
+                          >
+                            <ChildModal
+                              modalValues={modalValues}
+                              onChangeValues={onChangeValues}
+                              valueItemModal={valueItemModal}
+                              setValueItemModal={setValueItemModal}
+                              nameModalProp="estadosCiviles"
+                              handleClickClose={handleClickClose}
+                              setTransition={setTransition}
+                              array={estadosCivilesValue && estadosCivilesValue}
+                              nameModal="Estados Civiles"
+                              propsModal={propsModal}
+                              optionsInputs={objectEstadosCiviles}
+                              transition={transition}
+                              functionAdd={sendModalData}
+                              urlApi={urlEstadosCiviles}
+                              bodyPetition={bodyEstadosCiviles}
+                              bodyUpdate={bodyUpdateEstadosCiviles}
+                              modify={modify}
+                              setModify={setModify}
+                              idAModificar={valueItemModal?.idEstadoCivil}
+                              functionDelete={deleteItemModal}
+                              disableModal={disableModal}
+                              setDisableMOdal={setDisableMOdal}
+                              actionActualizaDelete={actualizaDelete}
+                              actualizaCreate={actualizaCreateEstadosCiviles}
+                              actualizaUpdate={actualizaUpdateEstadosCiviles}
+                              disableModalButtons={disableModalButtons}
+                              setDisableModalButtons={setDisableModalButtons}
+                              usaEstados={false}
+                            />
+                          </ButtonCallModal>
+                        </li>
+                        <li>
+                          <ButtonCallModal
+                            nameModal={nameModal}
+                            setNameModal={setNameModal}
+                            nameModalProp="Estudios"
+                            setTransition={setTransition}
+                            nameButton="Estudios"
+                          >
+                            <ChildModal
+                              modalValues={modalValues}
+                              onChangeValues={onChangeValues}
+                              valueItemModal={valueItemModal}
+                              setValueItemModal={setValueItemModal}
+                              nameModalProp="Estudios"
+                              handleClickClose={handleClickClose}
+                              setTransition={setTransition}
+                              array={estudiosValue && estudiosValue}
+                              nameModal="Estudios"
+                              propsModal={propsModalEstudios}
+                              optionsInputs={objectEstudios}
+                              transition={transition}
+                              functionAdd={sendModalData}
+                              urlApi={urlEstudios}
+                              bodyPetition={bodyEstudios}
+                              bodyUpdate={bodyUpdateEstudios}
+                              modify={modify}
+                              setModify={setModify}
+                              idAModificar={valueItemModal?.iDestudios}
+                              functionDelete={deleteItemModal}
+                              disableModal={disableModal}
+                              setDisableMOdal={setDisableMOdal}
+                              disableModalButtons={disableModalButtons}
+                              setDisableModalButtons={setDisableModalButtons}
+                              actionActualizaDelete={actualizaDeleteEstudios}
+                              actualizaCreate={actualizaCreateEstudios}
+                              actualizaUpdate={actualizaUpdateEstudios}
+                              usaEstados={false}
+                            />
+                          </ButtonCallModal>
+                        </li>
+                        <li>
+                          <ButtonCallModal
+                            nameModal={nameModal}
+                            setNameModal={setNameModal}
+                            nameModalProp="TipoDocumento"
+                            setTransition={setTransition}
+                            nameButton="Tipo de Documento"
+                          >
+                            <ChildModal
+                              modalValues={modalValues}
+                              onChangeValues={onChangeValues}
+                              valueItemModal={valueItemModal}
+                              setValueItemModal={setValueItemModal}
+                              nameModalProp="TipoDocumento"
+                              handleClickClose={handleClickClose}
+                              setTransition={setTransition}
+                              array={tiposDocumentoValue && tiposDocumentoValue}
+                              nameModal="Tipo de Documento"
+                              propsModal={propsModalTiposDocumento}
+                              optionsInputs={objectTipoDocumento}
+                              transition={transition}
+                              functionAdd={sendModalData}
+                              urlApi={urlTiposDocumento}
+                              bodyPetition={bodyTipoDocumento}
+                              bodyUpdate={bodyUpdateTipoDocumento}
+                              modify={modify}
+                              setModify={setModify}
+                              idAModificar={valueItemModal?.iDtipoDocumento}
+                              functionDelete={deleteItemModal}
+                              disableModal={disableModal}
+                              setDisableMOdal={setDisableMOdal}
+                              actionActualizaDelete={actualizaDeleteTiposDoc}
+                              disableModalButtons={disableModalButtons}
+                              setDisableModalButtons={setDisableModalButtons}
+                              actualizaCreate={actualizaCreateTiposDoc}
+                              actualizaUpdate={actualizaUpdateTiposDoc}
+                              usaEstados={false}
+                            />
+                          </ButtonCallModal>
+                        </li>
+                        <li>
+                          <ButtonCallModal
+                            nameModal={nameModal}
+                            setNameModal={setNameModal}
+                            nameModalProp="Estado"
+                            setTransition={setTransition}
+                            nameButton="Estado"
+                          >
+                            <ChildModal
+                              modalValues={modalValues}
+                              onChangeValues={onChangeValues}
+                              valueItemModal={valueItemModal}
+                              setValueItemModal={setValueItemModal}
+                              nameModalProp="Estado"
+                              handleClickClose={handleClickClose}
+                              setTransition={setTransition}
+                              array={estadosValue && estadosValue}
+                              nameModal="Estado"
+                              propsModal={propsModalEstado}
+                              optionsInputs={objectEstado}
+                              transition={transition}
+                              functionAdd={sendModalData}
+                              urlApi={urlEstado}
+                              bodyPetition={bodyEstado}
+                              bodyUpdate={bodyUpdateEstado}
+                              modify={modify}
+                              setModify={setModify}
+                              idAModificar={valueItemModal?.idEstado}
+                              functionDelete={deleteItemModal}
+                              disableModal={disableModal}
+                              setDisableMOdal={setDisableMOdal}
+                              disableModalButtons={disableModalButtons}
+                              setDisableModalButtons={setDisableModalButtons}
+                              actionActualizaDelete={actualizaDeleteEStados}
+                              actualizaCreate={actualizaCreateEStados}
+                              actualizaUpdate={actualizaUpdateEStados}
+                              //props texarea
+                              idInputTextArea="observacion"
+                              usaEstados={true}
+                            />
+                          </ButtonCallModal>
+                        </li>
+                        <li>
+                          <ButtonCallModal
+                            nameModal={nameModal}
+                            setNameModal={setNameModal}
+                            nameModalProp="Formas de Pagos"
+                            setTransition={setTransition}
+                            nameButton="Formas de Pagos"
+                          >
+                            <ChildModal
+                              modalValues={modalValues}
+                              onChangeValues={onChangeValues}
+                              valueItemModal={valueItemModal}
+                              setValueItemModal={setValueItemModal}
+                              nameModalProp="Formas de Pagos"
+                              handleClickClose={handleClickClose}
+                              setTransition={setTransition}
+                              array={formasPagoValue && formasPagoValue}
+                              nameModal="Formas de Pagos"
+                              propsModal={propsModalFormasdePagos}
+                              optionsInputs={objectFormasDePago}
+                              transition={transition}
+                              functionAdd={sendModalData}
+                              urlApi={urlFormasdePago}
+                              bodyPetition={bodyFormasDePago}
+                              bodyUpdate={bodyUpdateFormasDePago}
+                              modify={modify}
+                              setModify={setModify}
+                              idAModificar={valueItemModal?.iDformadePago}
+                              functionDelete={deleteItemModal}
+                              disableModal={disableModal}
+                              setDisableMOdal={setDisableMOdal}
+                              disableModalButtons={disableModalButtons}
+                              setDisableModalButtons={setDisableModalButtons}
+                              actionActualizaDelete={
+                                actualizaDeleteFormasdePago
+                              }
+                              actualizaCreate={actualizaCreaFormasdePago}
+                              actualizaUpdate={actualizaModificarFormasdePago}
+                              //props texarea
+                              idInputTextArea="observacion"
+                              usaEstados={true}
+                            />
+                          </ButtonCallModal>
+                        </li>
+                        <li>
+                          <ButtonCallModal
+                            nameModal={nameModal}
+                            setNameModal={setNameModal}
+                            nameModalProp="Calles"
+                            setTransition={setTransition}
+                            nameButton="Calles"
+                          >
+                            <ChildModal
+                              modalValues={modalValues}
+                              onChangeValues={onChangeValues}
+                              valueItemModal={valueItemModal}
+                              setValueItemModal={setValueItemModal}
+                              nameModalProp="Calles"
+                              handleClickClose={handleClickClose}
+                              setTransition={setTransition}
+                              array={calleValue && calleValue}
+                              nameModal="Calles"
+                              propsModal={propsModalCalles}
+                              optionsInputs={objectCalles}
+                              transition={transition}
+                              functionAdd={sendModalData}
+                              urlApi={urlCalles}
+                              bodyPetition={bodyCalle}
+                              bodyUpdate={bodyUpdateCalle}
+                              modify={modify}
+                              setModify={setModify}
+                              idAModificar={valueItemModal?.idCalle}
+                              functionDelete={deleteItemModal}
+                              disableModal={disableModal}
+                              setDisableMOdal={setDisableMOdal}
+                              actionActualizaDelete={actualizaDeleteCalles}
+                              disableModalButtons={disableModalButtons}
+                              setDisableModalButtons={setDisableModalButtons}
+                              actualizaCreate={actualizaCreateCalles}
+                              actualizaUpdate={actualizaUpdateCalles}
+                              usaEstados={true}
+                              idInputTextArea="obsCalles"
+                              urlDelete={urlCallesDelete}
+                              changeUrl={true}
+                            />
+                          </ButtonCallModal>
+                        </li>
+                        <li>
+                          <ButtonCallModal
+                            nameModal={nameModal}
+                            setNameModal={setNameModal}
+                            nameModalProp="Cargos"
+                            setTransition={setTransition}
+                            nameButton="Cargos"
+                          >
+                            <ChildModalOptions
+                              modalValues={modalValues}
+                              onChangeValues={onChangeValues}
+                              valueItemModal={valueItemModal}
+                              setValueItemModal={setValueItemModal}
+                              nameModalProp="Cargos"
+                              handleClickClose={handleClickClose}
+                              setTransition={setTransition}
+                              array={cargosValue && cargosValue}
+                              nameModal="Cargos"
+                              propsModal={propsModalCargos}
+                              optionsInputs={objectCargos}
+                              transition={transition}
+                              functionAdd={sendModalData}
+                              urlApi={urlCargos}
+                              bodyPetition={bodyCargo}
+                              bodyUpdate={bodyUpdateCargo}
+                              modify={modify}
+                              setModify={setModify}
+                              idAModificar={valueItemModal?.iDcargo}
+                              functionDelete={deleteItemModal}
+                              disableModal={disableModal}
+                              setDisableMOdal={setDisableMOdal}
+                              actionActualizaDelete={actualizaDeleteCargos}
+                              actualizaCreate={actualizaCreaCargos}
+                              actualizaUpdate={actualizaModificarCargos}
+                              disableModalButtons={disableModalButtons}
+                              setDisableModalButtons={setDisableModalButtons}
+                              usaEstados={true}
+                              usaCheck={false}
+                              idInputTextArea="observacion"
+                            />
+                          </ButtonCallModal>
+                        </li>
+                        <li>
+                          <ButtonCallModal
+                            nameModal={nameModal}
+                            setNameModal={setNameModal}
+                            nameModalProp="Tareas Desempeñadas"
+                            setTransition={setTransition}
+                            nameButton="Tareas Desempeñadas"
+                          >
+                            <ChildModalOptions
+                              modalValues={modalValues}
+                              onChangeValues={onChangeValues}
+                              valueItemModal={valueItemModal}
+                              setValueItemModal={setValueItemModal}
+                              nameModalProp="Tareas Desempeñadas"
+                              handleClickClose={handleClickClose}
+                              setTransition={setTransition}
+                              array={tareasValue && tareasValue}
+                              nameModal="Tareas Desempeñadas"
+                              propsModal={propsModalTareas}
+                              optionsInputs={objectTareas}
+                              transition={transition}
+                              functionAdd={sendModalData}
+                              urlApi={urlTareas}
+                              bodyPetition={bodyTareas}
+                              bodyUpdate={bodyUpdateTareas}
+                              modify={modify}
+                              setModify={setModify}
+                              idAModificar={valueItemModal?.idTareaDesempeñada}
+                              functionDelete={deleteItemModal}
+                              disableModal={disableModal}
+                              setDisableMOdal={setDisableMOdal}
+                              actionActualizaDelete={actualizaDeleteTareas}
+                              actualizaCreate={actualizaCreaTareas}
+                              actualizaUpdate={actualizaModificarTareas}
+                              disableModalButtons={disableModalButtons}
+                              setDisableModalButtons={setDisableModalButtons}
+                              usaEstados={true}
+                              usaCheck={false}
+                              idInputTextArea="obsTareas"
+                            />
+                          </ButtonCallModal>
+                        </li>
+                        <li>
+                          <ButtonCallModal
+                            nameModal={nameModal}
+                            setNameModal={setNameModal}
+                            nameModalProp="Modos de Liquidacion"
+                            setTransition={setTransition}
+                            nameButton="Modos de Liquidacion"
+                          >
+                            <ChildModalOptions
+                              modalValues={modalValues}
+                              onChangeValues={onChangeValues}
+                              valueItemModal={valueItemModal}
+                              setValueItemModal={setValueItemModal}
+                              nameModalProp="Modos de Liquidacion"
+                              handleClickClose={handleClickClose}
+                              setTransition={setTransition}
+                              array={
+                                modosLiquidacionValue && modosLiquidacionValue
+                              }
+                              nameModal="Modos de Liquidacion"
+                              propsModal={propsModalModosLiquidacion}
+                              optionsInputs={objectModosLiquidacion}
+                              transition={transition}
+                              functionAdd={sendModalData}
+                              urlApi={urlModosLiquidacion}
+                              bodyPetition={bodyModosLiquidacion}
+                              bodyUpdate={bodyUpdateModosLiquidacion}
+                              modify={modify}
+                              setModify={setModify}
+                              idAModificar={valueItemModal?.iDmodoLiquidacion}
+                              functionDelete={deleteItemModal}
+                              disableModal={disableModal}
+                              setDisableMOdal={setDisableMOdal}
+                              actionActualizaDelete={
+                                actualizaDeleteModLiquidacion
+                              }
+                              actualizaCreate={actualizaCreaModLiquidacion}
+                              actualizaUpdate={actualizaModificarModLiquidacion}
+                              disableModalButtons={disableModalButtons}
+                              setDisableModalButtons={setDisableModalButtons}
+                              usaEstados={true}
+                              usaCheck={false}
+                              idInputTextArea="obsModoLiquidacion"
+                            />
+                          </ButtonCallModal>
+                        </li>
+                        <li>
+                          <ButtonCallModal
+                            nameModal={nameModal}
+                            setNameModal={setNameModal}
+                            nameModalProp="Modos de Contratacion"
+                            setTransition={setTransition}
+                            nameButton="Modos de Contratacion"
+                          >
+                            <ChildModalOptions
+                              modalValues={modalValues}
+                              onChangeValues={onChangeValues}
+                              valueItemModal={valueItemModal}
+                              setValueItemModal={setValueItemModal}
+                              nameModalProp="Modos de Contratacion"
+                              handleClickClose={handleClickClose}
+                              setTransition={setTransition}
+                              array={
+                                modosContratacionValue && modosContratacionValue
+                              }
+                              nameModal="Modos de Contratacion"
+                              propsModal={propsModalModosContratacion}
+                              optionsInputs={objectModosContratacion}
+                              transition={transition}
+                              functionAdd={sendModalData}
+                              urlApi={urlModosContratacion}
+                              bodyPetition={bodyModosContratacion}
+                              bodyUpdate={bodyUpdateModosContratacion}
+                              modify={modify}
+                              setModify={setModify}
+                              idAModificar={valueItemModal?.iDmodoContratacion}
+                              functionDelete={deleteItemModal}
+                              actualizaCreate={actualizaCreaModContratacion}
+                              actualizaUpdate={
+                                actualizaModificarModContratacion
+                              }
+                              disableModal={disableModal}
+                              setDisableMOdal={setDisableMOdal}
+                              actionActualizaDelete={
+                                actualizaDeleteModContratacion
+                              }
+                              disableModalButtons={disableModalButtons}
+                              setDisableModalButtons={setDisableModalButtons}
+                              usaEstados={true}
+                              usaCheck={true}
+                              checked={modalValues?.flexCheckChecked}
+                              idInputTextArea="obsModoContratacion"
+                            />
+                          </ButtonCallModal>
+                        </li>
+                        <li>
+                          <ButtonCallModal
+                            nameModal={nameModal}
+                            setNameModal={setNameModal}
+                            nameModalProp="Parentescos"
+                            setTransition={setTransition}
+                            nameButton="Parentescos"
+                          >
+                            <ModalParentesco
+                              modalValues={modalValues}
+                              onChangeValues={onChangeValues}
+                              valueItemModal={valueItemModal}
+                              setValueItemModal={setValueItemModal}
+                              nameModalProp="Parentescos"
+                              handleClickClose={handleClickClose}
+                              setTransition={setTransition}
+                              array={parentescosValue && parentescosValue}
+                              nameModal="Parentescos"
+                              propsModal={propsModalParentesco}
+                              optionsInputs={objectParentescos}
+                              transition={transition}
+                              functionAdd={sendModalData}
+                              urlApi={urlParentescos}
+                              bodyPetition={bodyParentesco}
+                              bodyUpdate={bodyUpdateParentesco}
+                              modify={modify}
+                              setModify={setModify}
+                              idAModificar={valueItemModal?.iDparentesco}
+                              functionDelete={deleteItemModal}
+                              disableModal={disableModal}
+                              setDisableMOdal={setDisableMOdal}
+                              actionActualizaDelete={actualizaDeleteParentesco}
+                              actualizaCreate={actualizaCreaParentesco}
+                              actualizaUpdate={actualizaModificarParentesco}
+                              disableModalButtons={disableModalButtons}
+                              setDisableModalButtons={setDisableModalButtons}
+                              usaEstados={true}
+                              nameInputCheck="Genera Asignación"
+                              idCheckGenera="generaAsignacion"
+                              idCheckGanancias="deduceGanancias"
+                              idInputImporte="importe"
+                              nameInputCheckTwo="Deduce Ganancias"
+                              nameLabelValorDeduccion="Importe"
+                              idInputTextArea="obsParentescos"
+                              valueInputImporte={modalValues?.importe}
+                              // checked={valueItemModal?.generaAsignacion}
+                            />
+                          </ButtonCallModal>
+                        </li>
+                        <li>
+                          <ButtonCallModal
+                            nameModal={nameModal}
+                            setNameModal={setNameModal}
+                            nameModalProp="Paises"
+                            setTransition={setTransition}
+                            nameButton="Paises"
+                          >
+                            <ModalPaises
+                              modalValues={modalValues}
+                              onChangeValues={onChangeValues}
+                              valueItemModal={valueItemModal}
+                              setValueItemModal={setValueItemModal}
+                              nameModalProp="Paises"
+                              handleClickClose={handleClickClose}
+                              setTransition={setTransition}
+                              array={paisesValue && paisesValue}
+                              nameModal="Paises"
+                              propsModal={propsModalPaises}
+                              optionsInputs={objectPaises}
+                              transition={transition}
+                              functionAdd={sendModalData}
+                              urlApi={urlPaises}
+                              bodyPetition={bodyPaises}
+                              bodyUpdate={bodyUpdatePaises}
+                              modify={modify}
+                              setModify={setModify}
+                              idAModificar={valueItemModal?.idPais}
+                              functionDelete={deleteItemModal}
+                              disableModal={disableModal}
+                              setDisableMOdal={setDisableMOdal}
+                              actionActualizaDelete={actualizaDeletePaises}
+                              actualizaCreate={actualizaCreaPaises}
+                              actualizaUpdate={actualizaModificarPaises}
+                              disableModalButtons={disableModalButtons}
+                              setDisableModalButtons={setDisableModalButtons}
+                            />
+                          </ButtonCallModal>
+                        </li>
+                        <li>
+                          <ButtonCallModal
+                            nameModal={nameModal}
+                            setNameModal={setNameModal}
+                            nameModalProp="Provincias - Localidades - Departamentos - Barrios "
+                            setTransition={setTransition}
+                            nameButton="Provincias - Localidades - Departamentos - Barrios "
+                          >
+                            <ModalProvinciasDptos
+                              modalValues={modalValues}
+                              onChangeValues={onChangeValues}
+                              valueItemModal={valueItemModal}
+                              setValueItemModal={setValueItemModal}
+                              nameModalProp="Provincias - Localidades - Departamentos - Barrios "
+                              handleClickClose={handleClickClose}
+                              setTransition={setTransition}
+                              array={provinciasValue && provinciasValue}
+                              nameModal="Provincias - Localidades - Departamentos - Barrios "
+                              propsModal={propsModalProvincias}
+                              optionsInputs={objectProvincias}
+                              transition={transition}
+                              functionAdd={sendModalData}
+                              urlApi={urlProvincias}
+                              bodyPetition={bodyProvincias}
+                              bodyUpdate={bodyUpdateProvincias}
+                              modify={modify}
+                              setModify={setModify}
+                              idAModificar={valueItemModal?.idProvincia}
+                              functionDelete={deleteItemModal}
+                              disableModal={disableModal}
+                              setDisableMOdal={setDisableMOdal}
+                              disableModalButtons={disableModalButtons}
+                              setDisableModalButtons={setDisableModalButtons}
+                              usaEstados={true}
+                              actionActualizaDelete={actualizaDelete}
+                              actualizaCreate={actualizaCreaPaises}
+                              actualizaUpdate={actualizaModificarPaises}
+                              setRefetch={setRefetch}
+                              refetch={refetch}
+                              reload={reload}
+                              arrayList={arrayList}
+                              setArrayList={setArrayList}
+                            />
+                          </ButtonCallModal>
+                        </li>
+                      </div>
+                    </ul>
+                  </li>
+                  <div
+                    className="datosLiquidacion"
+                    style={{ fontSize: "13px" }}
+                  ></div>
+                </ul>
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  onClick={() => closeSession()}
+                  href="http://www.loginweb.ggmm.com.ar/"
+                  target="_blank"
+                >
+                  Salir
+                </a>
+              </li>
+              {<li class="nav-item">{showSuperadmin()}</li>}
+            </ul>
+            <ul></ul>
+          </div>
+        </div>
+      </div>
+    </nav>
+  );
+};
 
 export default NavbarMenu;
