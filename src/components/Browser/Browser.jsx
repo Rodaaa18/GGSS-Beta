@@ -103,19 +103,6 @@ const Browser = ({ disable, setDisable, setValueEmpl, responses, setResponses, s
     setResponses({
       ...responses,
       formDatosPersonales})
-   /*  Array.from(document.querySelectorAll("input")).forEach(
-      (input) => (input.value = "")
-    );
-    let employeData = { ...empleadoUno };
-
-    const inputsArray = Object.entries(employeData);
-
-    const clearInputs = inputsArray.map(([key]) => [key, ""]);
-
-    const inputsJson = Object.fromEntries(clearInputs);
-
-
-    dispatch(addOneEmploye(inputsJson)); */
     setDisable(false);
 
   }

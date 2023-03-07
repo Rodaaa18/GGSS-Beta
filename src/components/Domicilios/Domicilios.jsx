@@ -79,7 +79,7 @@ const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValu
   }
  
 
- 
+  
 
   const sendDataDomicilios= async ()=>{
     try{
@@ -126,7 +126,6 @@ const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValu
   }
 
 
-
   return (
     
       //#region Menú Principal
@@ -161,8 +160,7 @@ const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValu
                       <input
                         type="checkbox"
                         name="inputPredeterminado"
-                        checked={!checked}
-                        value ={formDomicilios?.inputPredeterminado ? formDomicilios?.inputPredeterminado : false  }
+                        checked={checked}
                         id="inputPredeterminado"
                         onChange={(e)=>handleChangePredeterminado(e, "inputPredeterminado" )}
                       />

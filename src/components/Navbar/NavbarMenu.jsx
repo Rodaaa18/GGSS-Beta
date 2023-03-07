@@ -225,7 +225,6 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario }) => {
   
 
   useEffect(() => {
-	console.log("localidades", generalStateData.localidades);
 	if (provinciaSelected && generalStateData.departamentos) {
 	  const arrayDepartamentos = generalStateData.departamentos.filter(
 		(departamento) => departamento.idProvincia === provinciaSelected.idProvincia
@@ -247,7 +246,6 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario }) => {
 	}
   }, [provinciaSelected, departamentoSelected, localidadSelected, generalStateData]);
 
-  console.log(arrayList)
 
   //#region ----------------------------------- URLS DE LOS MODALES
   const urlEstadosCiviles = "http://54.243.192.82/api/EstadosCiviles";

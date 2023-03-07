@@ -527,7 +527,6 @@ useEffect(()=>{
     cleanIdsGeneral();
   }
   
-  console.log((empleadoUno ))
   async function deleteItems(objectRequest){
     const { urls, arrays } = objectRequest;
     let bodyPetitionEmpleadoGuarda = {

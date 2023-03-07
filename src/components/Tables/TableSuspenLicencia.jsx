@@ -29,7 +29,7 @@ const TableSuspenLicencia = ({ columns }) => {
         <tbody>
           {detalleLicencia &&
             detalleLicencia.map((valor) => {
-            
+            console.log(valor)
               return Number(idSelected) ===
                 Number(valor?.idLicenciaEmpleado) ? (
                 <tr>

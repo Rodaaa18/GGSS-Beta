@@ -4,7 +4,6 @@ import Loader from '../Loader/Loader';
 
 const ErrorPage = ({message, statusCode, loading}) => {
 
-console.log(loading)
   return (
     <div className="d-flex mt-5 pt-5 container align-text-center justify-content-center text-center ">
       {

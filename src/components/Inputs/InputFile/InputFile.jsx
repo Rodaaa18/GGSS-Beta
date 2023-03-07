@@ -68,7 +68,6 @@ function InputFile({ disabled, imagen,onChange, idInput,action,ImageSelectedPrev
     setBorrar(false)
     setRefectch(!refetch)
   };
-  console.log(borrar)
   useEffect(() => {
     disableBtn();
   }, [disabled]);
@@ -88,8 +87,6 @@ function InputFile({ disabled, imagen,onChange, idInput,action,ImageSelectedPrev
     setDisplayButton("");
     changeImage(e)
   }
-  console.log(ImageSelectedPrevious)
-  console.log(imagen)
   return (
     <>
       <div>

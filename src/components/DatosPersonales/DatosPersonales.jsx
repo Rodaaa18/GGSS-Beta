@@ -46,7 +46,14 @@ const DatosPersonales = ({ tabIndex ,handleTabChange, responses, setResponses, c
         ...newResponse
       });
   };
-  
+  useEffect(()=>{
+    const newResponse = {...formDatosPersonales};
+    newResponse["inputPredeterminado"] = false;
+    setFormDatosPersonales({
+      ...newResponse
+    });
+},[])
+
 
   useEffect(() => {  
       setResponses({

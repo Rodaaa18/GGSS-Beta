@@ -20,7 +20,6 @@ const ButtonLarge = ({color, align, tamaño, justyfy, nameButton, url, disabled}
     })
   }
 
-  console.log(empleadoUno.iDempleado)
 
   return (
         empleadoUno !== undefined ?
