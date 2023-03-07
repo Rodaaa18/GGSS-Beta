@@ -39,6 +39,7 @@ const DatosPersonales = ({ tabIndex ,handleTabChange, responses, setResponses, c
  
   
   //#endregion
+
   function onChangeValues(e, key){
       const newResponse = {...formDatosPersonales};
       newResponse[key] = e;
@@ -46,13 +47,7 @@ const DatosPersonales = ({ tabIndex ,handleTabChange, responses, setResponses, c
         ...newResponse
       });
   };
-  useEffect(()=>{
-    const newResponse = {...formDatosPersonales};
-    newResponse["inputPredeterminado"] = false;
-    setFormDatosPersonales({
-      ...newResponse
-    });
-},[])
+  
 
 
   useEffect(() => {  
@@ -64,7 +59,13 @@ const DatosPersonales = ({ tabIndex ,handleTabChange, responses, setResponses, c
  
  
 
-
+useEffect(()=>{
+    const newResponse = {...formDatosPersonales};
+    newResponse["inputPredeterminado"] = false;
+    setFormDatosPersonales({
+      ...newResponse
+    });
+},[])
    function getNumeradorId(tabla){
     return numeradores && numeradores.filter((num)=>{
       return (num.tabla === tabla)

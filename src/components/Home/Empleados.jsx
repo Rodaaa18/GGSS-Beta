@@ -78,7 +78,9 @@ import Loader from "../Loader/Loader";
 
 const Empleados = ({tokenDef, setTokenDef, sePerfilesUSuario, loading}) => {
   const [tabIndex, setTabIndex] = useState(0);
+  
   const [responses, setResponses] = useState({});
+
   const [disable, setDisable] = useState(true);
   const [image, setImage] = useState("");
   const [disableEstado, setDisableEstado] = useState(false);

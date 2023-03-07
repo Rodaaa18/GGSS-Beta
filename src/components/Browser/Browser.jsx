@@ -128,7 +128,7 @@ const Browser = ({ disable, setDisable, setValueEmpl, responses, setResponses, s
         {/* <InputForm nameInput="Legajo:" messageError="Solo puede contener números." placeHolder="N° Legajo" value={empData.legajo} inputId="legajo" onChange={onInputChange}/>
         <InputForm nameInput="Nombre:" messageError="Solo puede contener letras." placeHolder="Buscar Nombres" value={empData.apellido} inputId="nombreApellido"  onChange={onInputChange}/> */}
         <div className="row mt-1 p-0 m-0 ">
-          <div className="container m-0 p-0">
+          <div className="container m-0 p-2">
             <input
               onChange={(e) => onChangeValues(e.target.value, "inpurLegajoBrowser")}
               value={browser?.inpurLegajoBrowser}
