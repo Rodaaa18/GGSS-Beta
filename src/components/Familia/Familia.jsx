@@ -23,7 +23,7 @@ import { disableFunctions } from "../../redux/actions/employeActions";
 import { addFamiliar, deleteFam, saveIdFam } from "../../redux/actions/familiaActions";
 import "./Familia.css"
 
-const Familia = ({responses, setResponses,disable, setRefetch, refetch}) => {
+const Familia = ({responses, setResponses,disable, setRefetch, refetch, agregar , setAgregar }) => {
   
   //const { saveEmpl, saveNacionalidad, saveEstudio, parentescos, disable, saveFamSelect } = useContext(employeContext);
 

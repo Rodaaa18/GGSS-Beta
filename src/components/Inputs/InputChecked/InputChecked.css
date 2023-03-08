@@ -13,6 +13,7 @@
 	height: 42px;
 	transition: .3s ease all;
     border-bottom: 1px solid rgb(78, 6, 6);
+	width : 29.5rem;
 }
 
 .FijarNombFlia{
@@ -32,17 +33,17 @@
 }
 @media screen and (max-width : 1366px){
 	.formulario-input-Familia{
-		width: 29rem;
+		width: 29.5rem;
 	}
 }
 @media screen and (max-width : 1280px){
 	.formulario-input-Familia{
-		width: 29rem;
+		width: 29.5rem;
 	}
 }
 @media screen and (max-width : 1200px){
 	.formulario-input-Familia{
-		width: 13rem;
+		width: 13.3rem;
 	}
 }
 @media screen and (max-width : 1024px){

@@ -82,6 +82,7 @@ const Empleados = ({tokenDef, setTokenDef, sePerfilesUSuario, loading}) => {
   const [responses, setResponses] = useState({});
 
   const [disable, setDisable] = useState(true);
+  const [ agregar , setAgregar ] = useState(false);
   const [image, setImage] = useState("");
   const [disableEstado, setDisableEstado] = useState(false);
   const [empleados, setEmpleados] = useState([]);
@@ -484,6 +485,7 @@ useEffect(()=>{
       if(tabIndex !== 8){
         dispatch(cleanEmploye())
       }
+      setAgregar(false)
     setDisable(true);
     dispatch(cleanIds())
     dispatch(cleanIdsDoc())
@@ -528,7 +530,7 @@ useEffect(()=>{
     }
     cleanIdsGeneral();
   }
-  
+  console.log(responses?.formDatosPersonales)
   async function deleteItems(objectRequest){
     const { urls, arrays } = objectRequest;
     let bodyPetitionEmpleadoGuarda = {
@@ -961,6 +963,7 @@ useEffect(()=>{
              .then((res)=>{
               setRefectch(!refetch);
               setSaveEmpleado(!saveEmpleado)
+              setDisable(true)
               if(res.data.statusCode === 200){
                 return swal({
                  title: "Ok",
@@ -984,6 +987,7 @@ useEffect(()=>{
                 dispatch(updateEmploye(bodyPetitionEmpleadoUpdate))
                 dispatch(setRefetch(!refetching))
                 setRefectch(!refetch);
+                setDisable(true)
                  return swal({
                   title: "Ok",
                   text: "Empleado Modificado con éxito",
@@ -1135,7 +1139,7 @@ useEffect(()=>{
     {  localStorage.getItem('token') ? <div className="container-fluid">
       <div className="row">
         <div className="col-xl-3 col-lg-3 col-md-3">
-          <Browser modify={modify} setModify={setModify} deleteEmploye={deleteEmploye} setRefectch={setRefectch} refetch={refetch} disable={disable} setDisable={setDisable} setValueEmpl={setValueEmpl} responses={responses} setResponses={setResponses} />
+          <Browser modify={modify} setModify={setModify} deleteEmploye={deleteEmploye} setRefectch={setRefectch} refetch={refetch} disable={disable} setDisable={setDisable} setValueEmpl={setValueEmpl} responses={responses} setResponses={setResponses} agregar={agregar}  setAgregar={setAgregar}  />
         </div>
         <div className="col-xl-9 col-lg-9 col-md-9 ">
           <Navbar handleTabChange={handleTabChange} tabIndex={tabIndex} />
@@ -1156,6 +1160,8 @@ useEffect(()=>{
               tabIndex={tabIndex}
               ImageSelectedPrevious={ImageSelectedPrevious}
               setImageSelectedPrevious={setImageSelectedPrevious}
+              agregar={agregar}  
+              setAgregar={setAgregar}
             />
           )}
           {tabIndex === 1 && (
@@ -1166,6 +1172,8 @@ useEffect(()=>{
               setResponses={setResponses}
               setRefetch={setRefectch}
               refetch={refetch}
+              agregar={agregar}  
+              setAgregar={setAgregar}
             />
           )}
           {tabIndex === 2 && (
@@ -1175,6 +1183,8 @@ useEffect(()=>{
               responses={responses}
               setResponses={setResponses}
               modify={modify}
+              agregar={agregar}  
+              setAgregar={setAgregar}
             />
           )}
           {tabIndex === 3 && (

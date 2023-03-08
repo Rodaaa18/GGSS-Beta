@@ -78,8 +78,7 @@ const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValu
     "idEmpleador": 0
   }
  
-
-  
+    
 
   const sendDataDomicilios= async ()=>{
     try{
@@ -89,7 +88,8 @@ const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValu
         'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',
         'Access-Control-Allow-Credentials':true
       }})
-          .then((res)=> {            
+          .then((res)=> {     
+            console.log(res)       
             if(res.status === 200){ 
               dispatch(addNewDomicilio(res.data))  
               setRefectch(!refetch)
@@ -160,6 +160,7 @@ const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValu
                       <input
                         type="checkbox"
                         name="inputPredeterminado"
+                        disabled={disabled}
                         checked={checked}
                         id="inputPredeterminado"
                         onChange={(e)=>handleChangePredeterminado(e, "inputPredeterminado" )}
@@ -206,7 +207,7 @@ const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValu
                         placeHolder="N° Calle"
                         nameCheck="Fijar"
                         defaultChecked=""
-                        display={true}
+                        display={false}
                         //value={numCalleSelected !== undefined && numCalleSelected !== null ? numCalleSelected.toString() : domiciliosState.inputNumCalle}
                         disabled={disabled}
                         idInput="inputNumCalle"
@@ -336,6 +337,7 @@ const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValu
                   <ButtonCancelarAceptar idElimiar={domicilioDelEmpleado} refetch={refetch} setRefectch={setRefectch} cancelar="-" aceptar="+"disabled={disabled} functionSend={sendDataDomicilios} functionDelete={deleteDomicilio}/>
                   <TablaDomicilios 
                     columns={columns} 
+                    disabled={disabled}
                     empleadoSelect={empleadoUno && empleadoUno} 
                     value={ empleadoDomicilio && empleadoDomicilio }
                       refetch={refetch}
