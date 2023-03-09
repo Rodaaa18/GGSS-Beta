@@ -26,7 +26,7 @@ const TableTrabajosAnteriores = ({nameLabel, columns, array, propItemOp, setModi
                     array && array.map((item)=>{
                         return( 
                             <tr>
-                                <th scope="row"> <input type="radio" name="selectTrabajoAnt" id="selectTrabajoAnt" value={item.idTrabajoAnterior} onClick={(e)=>  { setModificar(false); dispatch(addTrabajo(item)); dispatch(getIdTrabajoAnterior(e.target.value))}} /> </th>
+                                <th scope="row"> <input disabled={disable} type="radio" name="selectTrabajoAnt" id="selectTrabajoAnt" value={item.idTrabajoAnterior} onClick={(e)=>  { setModificar(false); dispatch(addTrabajo(item)); dispatch(getIdTrabajoAnterior(e.target.value))}} /> </th>
                                 <td>{item.desde && item.desde.substring(
                                                 0,
                                                 item.desde.length - 9

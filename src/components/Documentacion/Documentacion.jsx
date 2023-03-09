@@ -141,7 +141,7 @@ return (
                 />
             </div>
             <div className='col-xl-12'>
-                <TextArea inputName="Observaciones " onChange={onChangeValues} idInput="textAreaDocumentacion" value={formDocumentacion?.textAreaDocumentacion && formDocumentacion?.textAreaDocumentacion} disabled={disable} />
+                <TextArea disableModal={disable} inputName="Observaciones " onChange={onChangeValues} idInput="textAreaDocumentacion" value={formDocumentacion?.textAreaDocumentacion && formDocumentacion?.textAreaDocumentacion} disabled={disable} />
             </div>
             <div className='col-xl-12 contDocumentacion'>
                 <CheckLabel idInput="inputCheckLiquidacion" nameLabel="Se tiene en cuenta en la Liquidación (Sólo si se cumplen las condiciones necesarias)"  onChange={onChangeValues} action={GET_INPUT_VALUE} value={formDocumentacion?.inputCheckLiquidacion && formDocumentacion?.inputCheckLiquidacion} disabled={disable} />
@@ -151,7 +151,7 @@ return (
             </div>
             <div className='col-xl-12 contDocumentacion'>
                 <ButtonCancelarAceptar idElimiar={documentacionSeleccionada.idEmpleadoDocumentacion && documentacionSeleccionada.idEmpleadoDocumentacion} cancelar="-" aceptar="+" functionSend={sendDataDoc} functionDelete={deleteData} disabled={disable} />
-                <TableBasic1 refetch={refetch} setRefetch={setRefectch} columns={columns} value={documentacionDelEmpleado}  documentaciones={documentaciones} disabled={disable} />
+                <TableBasic1  refetch={refetch} setRefetch={setRefectch} columns={columns} value={documentacionDelEmpleado}  documentaciones={documentaciones} disabled={disable} />
             </div>
         </div>
     </div>

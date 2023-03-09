@@ -18,6 +18,7 @@ const TableLicencias = ({
   setChecked,
   setRefectch,
   refetch,
+  disabled
 }) => {
   const dispatch = useDispatch();
 
@@ -44,6 +45,7 @@ const TableLicencias = ({
                   <th scope="row">
                     {" "}
                     <input
+                    disabled={disabled}
                       defaultChecked={false}
                       type="radio"
                       name="seleccionar"

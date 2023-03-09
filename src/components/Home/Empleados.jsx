@@ -76,7 +76,7 @@ import "./Home.css"
 import ErrorPage from "../ErrorPage/ErrorPage";
 import Loader from "../Loader/Loader";
 
-const Empleados = ({tokenDef, setTokenDef, sePerfilesUSuario, loading}) => {
+const Empleados = ({tokenDef, setTokenDef, sePerfilesUSuario, loading, handleClickRef, referencia}) => {
   const [tabIndex, setTabIndex] = useState(0);
   
   const [responses, setResponses] = useState({});
@@ -375,7 +375,15 @@ useEffect(()=>{
 
     
     async function getEmpleados(){
-      if(responses?.browser.inputApellidoNombreBrowser){
+      if(responses?.browser.inputApellidoNombreBrowser && responses?.browser.inpurLegajoBrowser){
+        await axios({method: 'get',
+                    url: urlEmpleadoApYLegajo,
+                    timeout: 2000}).then((res) => {
+            dispatch(getEmployes(res.data.result));
+        });
+        return;
+      }
+      else if(responses?.browser.inputApellidoNombreBrowser){
         await axios({method: 'get',
                       url: urlEmpleadoPorApellido,
                       timeout: 2000}).then((res) => {
@@ -389,14 +397,7 @@ useEffect(()=>{
                     timeout: 2000}).then((res) => {
           dispatch(getEmployes(res.data.result));
         });
-        return;
-      }else if(responses?.browser.inputApellidoNombreBrowser && responses?.browser.inpurLegajoBrowser){
-        await axios({method: 'get',
-                    url: urlEmpleadoApYLegajo,
-                    timeout: 2000}).then((res) => {
-            dispatch(getEmployes(res.data.result));
-        });
-        return;
+        return;      
       }else if(responses?.browser.inputApellidoNombreBrowser && responses?.browser.inpurLegajoBrowser && responses?.browser.ordered){
         await axios.get({method: 'get',
                         url: urlApeLegOrdered,
@@ -530,7 +531,7 @@ useEffect(()=>{
     }
     cleanIdsGeneral();
   }
-  console.log(responses?.formDatosPersonales)
+
   async function deleteItems(objectRequest){
     const { urls, arrays } = objectRequest;
     let bodyPetitionEmpleadoGuarda = {
@@ -1139,7 +1140,7 @@ useEffect(()=>{
     {  localStorage.getItem('token') ? <div className="container-fluid">
       <div className="row">
         <div className="col-xl-3 col-lg-3 col-md-3">
-          <Browser modify={modify} setModify={setModify} deleteEmploye={deleteEmploye} setRefectch={setRefectch} refetch={refetch} disable={disable} setDisable={setDisable} setValueEmpl={setValueEmpl} responses={responses} setResponses={setResponses} agregar={agregar}  setAgregar={setAgregar}  />
+          <Browser getEmpleados={getEmpleados} modify={modify} setModify={setModify} deleteEmploye={deleteEmploye} setRefectch={setRefectch} refetch={refetch} disable={disable} setDisable={setDisable} setValueEmpl={setValueEmpl} responses={responses} setResponses={setResponses} agregar={agregar}  setAgregar={setAgregar}  />
         </div>
         <div className="col-xl-9 col-lg-9 col-md-9 ">
           <Navbar handleTabChange={handleTabChange} tabIndex={tabIndex} />
@@ -1162,6 +1163,8 @@ useEffect(()=>{
               setImageSelectedPrevious={setImageSelectedPrevious}
               agregar={agregar}  
               setAgregar={setAgregar}
+              handleClickRef={handleClickRef}
+              referencia={referencia}
             />
           )}
           {tabIndex === 1 && (
@@ -1174,6 +1177,8 @@ useEffect(()=>{
               refetch={refetch}
               agregar={agregar}  
               setAgregar={setAgregar}
+              handleClickRef={handleClickRef}
+              referencia={referencia}
             />
           )}
           {tabIndex === 2 && (

@@ -16,7 +16,7 @@ import { useEffect } from "react";
 import { setRefetch } from "../../redux/actions/modalesActions";
 
 //#endregion
-const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValues, formDatosPersonales, setFormDatosPersonales, domiciliosEmpleados, setRefectch, refetch}) => {
+const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValues, formDatosPersonales, setFormDatosPersonales, domiciliosEmpleados, setRefectch, refetch, handleClickRef, referencia }) => {
   const empleadoUno = useSelector((state)=> state.employeStates.employe);
 
   const [domicilios, setDomicilios] = useState([]);
@@ -89,7 +89,7 @@ const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValu
         'Access-Control-Allow-Credentials':true
       }})
           .then((res)=> {     
-            console.log(res)       
+                
             if(res.status === 200){ 
               dispatch(addNewDomicilio(res.data))  
               setRefectch(!refetch)
@@ -178,6 +178,9 @@ const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValu
                         value={formDomicilios?.inputCalleDomicilios ? formDomicilios?.inputCalleDomicilios : empleadoUno.calle}
                         action={ADD_DOMICILIOS}
                         sexo=""
+                        handleClickRef={handleClickRef}
+                        referencia= {referencia.callesRef}
+                        modalName="Calles"
                         nameButton="..."
                         nameLabel="Calle"                    
                         array={generalStateData.calles !== null && generalStateData.calles !== "" ? generalStateData.calles : ["calle", "calle"]}
@@ -242,6 +245,9 @@ const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValu
                         formDomicilios?.inputProvinciaDomicilios ? formDomicilios?.inputProvinciaDomicilios : empleadoUno.provincia
                       }
                       action={ADD_DOMICILIOS}
+                      handleClickRef={handleClickRef}
+                      referencia= {referencia.pldbRef}
+                      modalName="Provincias - Localidades - Departamentos - Barrios"
                       sexo=""
                       nameButton="..."
                       nameLabel="Provincia"
@@ -266,6 +272,9 @@ const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValu
                         formDomicilios?.inputDepartamentosDomicilios ? formDomicilios?.inputDepartamentosDomicilios : empleadoUno.departamento
                       }
                       action={ADD_DOMICILIOS}
+                      handleClickRef={handleClickRef}
+                      referencia= {referencia.pldbRef}
+                      modalName="Provincias - Localidades - Departamentos - Barrios"
                       sexo=""
                       nameButton="..."
                       nameLabel="Departamento"
@@ -291,6 +300,9 @@ const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValu
                         formDomicilios?.inputLocalidadesDomicilios ? formDomicilios?.inputLocalidadesDomicilios : empleadoUno.localidad
                       }
                       action={ADD_DOMICILIOS}
+                      handleClickRef={handleClickRef}
+                      referencia= {referencia.pldbRef}
+                      modalName="Provincias - Localidades - Departamentos - Barrios"
                       sexo=""
                       nameButton="..."
                       nameLabel="Localidad"
@@ -315,6 +327,9 @@ const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValu
                         formDomicilios?.inputBarriosDomicilios ? formDomicilios?.inputBarriosDomicilios : empleadoUno.barrio
                       }
                       action={ADD_DOMICILIOS}
+                      handleClickRef={handleClickRef}
+                      referencia= {referencia.pldbRef}
+                      modalName="Provincias - Localidades - Departamentos - Barrios"
                       sexo=""
                       nameButton="..."
                       nameLabel="Barrio"

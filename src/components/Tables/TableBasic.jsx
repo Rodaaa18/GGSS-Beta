@@ -8,6 +8,7 @@ const TableBasic = ({
   array,
   onSelect,
   seleccionado,
+  disabled
 }) => {
   const [inputCheck, setInputCheck] = useState({});
   const dispatch = useDispatch();
@@ -44,6 +45,7 @@ const TableBasic = ({
                         <input
                           type="radio"
                           checked={inputCheck[`selected${i}`]}
+                          disabled={disabled}
                           name="imputRadio"
                           value={item.idFamiliares}
                           id={`selected${i}`}
