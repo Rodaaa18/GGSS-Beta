@@ -113,6 +113,20 @@
   color: black;
   
 }
+.bodyInputs{
+  display: flex;
+  flex-flow: column;
+  justify-content: space-evenly;
+  align-items: start;
+  height: 50%;
+}
+.bodyInputsOptions{
+  display: flex;
+  flex-flow: column;
+  justify-content: space-evenly;
+  align-items: start;
+  height: 20%;
+}
 .colModal{
   width: 100%;
   padding: 0;

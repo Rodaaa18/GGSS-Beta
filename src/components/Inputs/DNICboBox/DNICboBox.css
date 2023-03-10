@@ -79,9 +79,9 @@
     /* outline: none !important; */
 }
 .formulario-input-DNI{
-	width: 7.4rem;
+	width: 7.5rem;
 	text-align: start;
-	margin-left: 4.1rem;
+	
     /* margin-right: 0px; */
 	background: #fff;
 	border: 3px solid transparent;
@@ -90,6 +90,8 @@
 	transition: .3s ease all;
     border-bottom: 1px solid rgb(78, 6, 6);
     height: 42px;
+    margin: 0;
+    padding: 0;
 }
 /* input:focus, select:focus, select, .form-select, input.form-control:focus {
 
@@ -106,24 +108,21 @@
 } */
 @media screen and (max-width : 1366px){
     .formulario-input-DNI{
-        width: 6.4rem;
-        margin-left: 4.6rem;
+        width: 6.5rem;
         height: 35px;
     }
     
 }
 @media screen and (max-width : 1280px){
     .formulario-input-DNI{
-        width: 5.9rem;
-        margin-left: 4.5rem;
+        width: 6rem;
         height: 35px;
     }
     
 }
 @media screen and (max-width : 1024px){
     .formulario-input-DNI{
-        width: 4.9rem;
-        margin-left: 4.5rem;
+        width: 5rem;
         height: 35px;
     }
     

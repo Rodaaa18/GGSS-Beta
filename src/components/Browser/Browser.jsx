@@ -142,7 +142,6 @@ const Browser = ({ getEmpleados, disable, setDisable, setValueEmpl, responses, s
       });
     }
   }
-  console.log(responses?.browser?.inpurLegajoBrowser)
   useEffect(()=>{
     clearLegajo();
   },[browser?.inputApellidoNombreBrowser])

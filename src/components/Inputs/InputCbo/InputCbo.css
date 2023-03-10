@@ -19,7 +19,7 @@
     align-items: center;
 }
 .btnModalDp{
-    z-index: 99999;
+    
 }
 .primero{
     grid-area: primer;

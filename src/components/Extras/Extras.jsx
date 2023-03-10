@@ -142,9 +142,9 @@ const Extras = ({responses, setResponses, disable, setRefetch, refetch}) => {
                 </div>
                 <div className='row'>
                     <div className='col-xl-6'>
-                    <div className="formulario__grupo__inputs ">
-                      <div className="form-check p-0 mt-2">
-                        <label className="form-check-label" htmlFor="flexCheckDefault">
+                    <div className="d-flex flex-row justify-content-start align-items-center ">
+                      <div className="form-check-extras p-0 mt-2">
+                        <label className="form-check-label-extras" htmlFor="flexCheckDefault">
                           Fecha
                         </label>
                       </div>

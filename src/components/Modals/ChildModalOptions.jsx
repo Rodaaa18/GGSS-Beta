@@ -138,7 +138,7 @@ const ChildModalOptions = ({
             </div>
           </div>
           <div className="col-xl-6">
-            <div className="d-flex flex-column justify-content-start align-items-center">
+            <div className="bodyInputsOptions">
               {optionsInputs.map((option, index) => {
                 return (
                   <InputModal

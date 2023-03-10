@@ -42,7 +42,7 @@ const TableTrabajosAnteriores = ({nameLabel, columns, array, propItemOp, setModi
         </table>
     </div>
     <div className='col-xl-3'>
-        <button disabled={disable} className="btn btn-danger btn-sm " onClick={()=> setModificar(true)}>
+        <button disabled={disable} className="btn btn-danger btn-sm mt-2" onClick={()=> setModificar(true)}>
             Modificar Datos
         </button>
     </div>

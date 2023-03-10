@@ -21,6 +21,10 @@
     border-bottom: 1px solid rgb(78, 6, 6);
 
 }
+.form-check-input-flia{
+	width: 20px;
+	font-size: medium;
+}
 .divLabelMultiple{
 	width: 10rem;
 	
@@ -31,7 +35,7 @@
 }
 
 .formulario-input-DNI-input{
-	width: 100%;
+	width: 5.8rem;
 	text-align: start;
     /* margin-right: 0px; */
 	background: #fff;
@@ -57,6 +61,10 @@
 	width: 80px;
 }
 .form-inputs-radioFlia{
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: center;
 	width: 5rem;
 	height: 4rem;
 }
@@ -76,9 +84,7 @@
 .inputsSexo{
 	width: 5.7rem;
 }
-.inputSexo{
-	margin-left: 0.5rem;
-}
+
 .obligatorio{
 	background-color: rgb(253, 237, 216);
 }
@@ -90,9 +96,6 @@
 	.formulario-input-DNI-input{
 		width: 6rem;
 	}
-	.inputSexo{
-		margin-left: 2rem;
-	}
 }
 
 @media screen and (max-width : 1280px){
@@ -102,9 +105,6 @@
 	}
 	.formulario-input-DNI-input{
 		width: 6rem;
-	}
-	.inputSexo{
-		margin-left: 2rem;
 	}
 	
 }
@@ -117,16 +117,10 @@
 		width: 5rem;
 		height: 4rem;
 	}
-	.inputSexo{
-		margin-left: 0.2rem;
-	}
 }
 @media screen and (max-width : 1024px){
 	.formulario-input-DNI-familia{
 		/* margin-left: 2.6rem; */
 		width: 5rem;
-	}
-	.inputSexo{
-		margin-left: 2rem;
 	}
 }

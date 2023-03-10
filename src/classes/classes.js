@@ -118,7 +118,7 @@ export const classesEstadosCiviles = {
     "classOne" : "formulario__grupo__inputs-Button mt-2",
     "classTwo" : 'fomulario__container__button',
     "classThree" : 'formulario__label',
-    "classFour" : 'formulario-input-InpButton form-select ml-0 px-0 obligatorio w-25',
+    "classFour" : 'formulario-input-InpButton-Documentacion form-select ml-0 px-0 obligatorio',
     //luego de la DEMO PASAR EL BTN OUTLINE-WHITE a DANGER
     "classFive" : "btn btn-validacion btn-outline-white btn-sm",
   }
@@ -158,4 +158,10 @@ export const classesEstadosCiviles = {
     "classThree" : 'form__grupo__label__label m-0',
     "classFour" : 'bg-white w-100 form-control text-black fs-6 pt-0 pb-0',
      classFive : "txtAreaModal",
+  }
+ 
+  export const classesDateDocs = {
+    classOne : "formulario__grupo__inputs_docs",
+    classTwo : "form-check-Documentacion p-0",
+    classThree : "check-label-docs"
   }

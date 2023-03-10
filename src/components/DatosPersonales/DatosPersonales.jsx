@@ -238,31 +238,15 @@ useEffect(()=>{
                             onChange={onChangeValues}
                             selectedId="dniSelected"
                             idSelected={formDatosPersonales?.dniSelected && formDatosPersonales?.dniSelected  !== "" ? formDatosPersonales?.dniSelected && formDatosPersonales?.dniSelected : empleadoUno.iDtipoDocumento}
-                         
+                          
+                            handleClickRef={handleClickRef}
+                            referencia= {referencia.tipoDocumentoRef}
+                            modalName="Tipos Documento"
+
+
                             validateNumbersDNI={validateNumbersDNI}
                             obligatorio ={true}
                             />
-                       {/*    <InputButton
-                            value={valueempl ? formDatosPersonales?.inputCuil  : empleadoUno.cuil}
-                            console.log("🚀 ~ file: DatosPersonales.jsx:232 ~ DatosPersonales ~ empleadoUno", empleadoUno)
-                            action={ADD_DATOS_PERSONALES}
-                            id="inputCuil"
-                            clasess={inputButtonClasessCUIL}
-                            nameInput="inputCuil"
-                            nameLabel="C.U.I.L"
-                            nameButton="Generar"
-                            placeholder="##-########-#"
-                            idModal="modalCuil"
-                            disabled={disable}
-                            onChange={onChangeValues}
-                            datosPersonalesValue={formDatosPersonales?.inputCuil && formDatosPersonales?.inputCuil}
-                            funcionCuil={generateCuil}
-                            nroDocumento={formDatosPersonales?.documentoInput && formDatosPersonales?.documentoInput}
-                            genre={formDatosPersonales?.inputSexo && formDatosPersonales?.inputSexo}
-                            usaCuil={true}
-                            swal={swal} 
-                            obligatorio ={true}
-                            /> */}
                             <InputButtonCUIL
                              value={agregar ? formDatosPersonales?.inputCuil  : empleadoUno.cuil}
                        
