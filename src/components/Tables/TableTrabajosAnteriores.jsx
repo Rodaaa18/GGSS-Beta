@@ -9,7 +9,7 @@ const TableTrabajosAnteriores = ({nameLabel, columns, array, propItemOp, setModi
     <>
         <label htmlFor="">{nameLabel}</label>   
 
-    <div className='d-flex flex-row justify-content-start align-items-start'> 
+    <div className='d-flex flex-row justify-content-start align-items-start overflow-scroll'> 
         <table class="table table-danger ml-2" disabled={disable}>
             <thead>
                 {
@@ -26,7 +26,7 @@ const TableTrabajosAnteriores = ({nameLabel, columns, array, propItemOp, setModi
                     array && array.map((item)=>{
                         return( 
                             <tr>
-                                <th scope="row"> <input type="radio" name="selectTrabajoAnt" id="selectTrabajoAnt" value={item.idTrabajoAnterior} onClick={(e)=>  { setModificar(false); dispatch(addTrabajo(item)); dispatch(getIdTrabajoAnterior(e.target.value))}} /> </th>
+                                <th scope="row"> <input disabled={disable} type="radio" name="selectTrabajoAnt" id="selectTrabajoAnt" value={item.idTrabajoAnterior} onClick={(e)=>  { setModificar(false); dispatch(addTrabajo(item)); dispatch(getIdTrabajoAnterior(e.target.value))}} /> </th>
                                 <td>{item.desde && item.desde.substring(
                                                 0,
                                                 item.desde.length - 9
@@ -42,7 +42,7 @@ const TableTrabajosAnteriores = ({nameLabel, columns, array, propItemOp, setModi
         </table>
     </div>
     <div className='col-xl-3'>
-        <button disabled={disable} className="btn btn-danger btn-sm " onClick={()=> setModificar(true)}>
+        <button disabled={disable} className="btn btn-danger btn-sm mt-2" onClick={()=> setModificar(true)}>
             Modificar Datos
         </button>
     </div>

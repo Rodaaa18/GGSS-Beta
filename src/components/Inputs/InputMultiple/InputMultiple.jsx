@@ -90,14 +90,10 @@ const InputMultiple = ({
           </div>
           <div className="form__grupo__error">
           </div>
-          <div className="col-xl-4  form-inputs-radioFlia">
-            <div className="form__grupo__label">
-              <label className="form__grupo__label__label" htmlFor="legajo">
-                {nameInputRadio}
-              </label>
-            </div>
-            <div className="d-flex flex-column justify-content-start align-items-center inputsSexo mt-2">
-              <div className="d-flex flex-row justify-content-start align-items-center inputSexo">
+          <div className="col-xl-4  form-inputs-radioFlia w-100">
+            
+            <div className="d-flex flex-column justify-content-start align-items-center  inputSexo">
+              <div className="d-flex flex-row justify-content-start align-items-center  w-100">
                 <input
                   className={obligatorio ? "form-check-input obligatorio" : "form-check-input"}
                   type="radio"
@@ -113,7 +109,7 @@ const InputMultiple = ({
                   {nameFirst}
                 </label>
               </div>
-              <div className="d-flex flex-row justify-content-center align-items-center">
+              <div className="d-flex flex-row justify-content-start align-items-center w-100">
                 <input
                   className={obligatorio ? "form-check-input obligatorio" : "form-check-input"}
                   type="radio"
@@ -121,7 +117,7 @@ const InputMultiple = ({
                   defaultChecked
                   name={propsRadioButton.idRadioBtn}
                   checked={valorRadioF}
-                  onChange={(e)=>onChange(e.target.value, action)}
+                  onChange={(e)=>onChange(e.target.value, propsRadioButton.idRadioBtn)}
                   value="F"
                   disabled={disable}
                 />

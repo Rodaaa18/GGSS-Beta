@@ -21,7 +21,8 @@ const InputParentesco = ({
   action,
   propArrayOp,
   propIdSelect,
-  obligatorio
+  obligatorio,
+  handleClickRef, referencia,modalName
 }) => {
   const [mostrarComponente, setMostrarComponente] = useState(false);
 
@@ -77,7 +78,9 @@ const InputParentesco = ({
               })}
           </select>
         </div>
-
+        <div className="col d-flex justify-content-end align-items-center btn-modal-miau">
+                    <button disabled={disable} className=" btnModalDp btn btn-outline-danger btn-sm " onClick={(e)=>handleClickRef(e,referencia,modalName)}>...</button>
+            </div>
 
         {/* <div className="col d-flex justify-content-end align-items-center btn-modal-miau">
           <ButtonCallModal
@@ -113,7 +116,6 @@ const InputParentesco = ({
           </label>
         </div>
 </div>
-
 
         
       </div>

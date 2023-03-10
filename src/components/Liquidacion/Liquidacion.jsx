@@ -15,7 +15,7 @@ import DireccionSindicato from "./ChildrenComponents/DireccionSindicato";
 import IngresoContrato from "./ChildrenComponents/IngresoContrato";
 import "./Liquidacion.css"
 
-const Liquidacion = ({responses, setResponses, disable, setDisable, modify}) => {
+const Liquidacion = ({responses, setResponses, disable, setDisable, modify, agregar , setAgregar }) => {
 
   const empleadoUno = useSelector((state)=> state.employeStates.employe);
     const [ formLiquidacion, setFormLiquidacion ] = useState(responses["formLiquidacion"]);

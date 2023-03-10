@@ -39,8 +39,7 @@
 	width: 38%;
 	padding: 0;
 	box-sizing: border-box;
-	font-size: 15px;
-	font-weight: 400;
+
 }
 .form-check-label-pagos{
 	display: flex;
@@ -57,7 +56,7 @@
 	width: 10rem;
 }
 .secondCheckNac{
-	margin-left: 1.8rem;
+	margin-left: 1.5rem;
 	width: 10rem;
 }
 .formulario__grupo__inputs {
@@ -66,6 +65,15 @@
 .inputDate2{
 	text-align: center;
 	width: 13.1rem;
+}
+.form-check-Documentacion{
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: center;
+}
+.check-label-docs{
+	font-size: medium;
 }
 /* .dateTrabajos2{
 	width: 38%;
@@ -87,6 +95,9 @@
 	.formulario__grupo__inputs {
 		height: 35px;
 	}
+	.check-label{
+		font-size: small;
+	}
 }
 @media screen and (max-width: 1280px){
 	.formulario__grupo__inputs {
@@ -94,5 +105,8 @@
 	}
 	.secondCheckNac{
 		margin-left: 2.4rem;
+	}
+	.check-label{
+		font-size: small;
 	}
 }

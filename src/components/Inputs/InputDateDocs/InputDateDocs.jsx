@@ -40,7 +40,7 @@ const InputDateDocs = ({
   }, [display]);
 
   return (
-    <div className="formulario__grupo__inputs mt-2">
+    <div className="formulario__grupo__inputs__docs mt-2">
       <div class="form-check p-0">
         <label class="form-check-label" for="flexCheckDefault">
           {nameInput}:

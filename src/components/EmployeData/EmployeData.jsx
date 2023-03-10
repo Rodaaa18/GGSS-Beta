@@ -7,9 +7,10 @@ import "./EmployeData.css";
 const EmployeData = ({disabled, image, responses}) => {
   const empleadoUno = useSelector((state)=> state.employeStates.employe);
   const estadosCiviles = useSelector((state)=> state.generalState.estadosCiviles);
+  const estados = useSelector((state)=> state.generalState.estados);
 
   const idEstadoSelec = empleadoUno && empleadoUno.idEstado;
-  const estadoSEleccionado = estadosCiviles && estadosCiviles.find(est => est.idEstado === idEstadoSelec); 
+  const estadoSEleccionado = estados && estados.find(est => est.idEstado === idEstadoSelec); 
 
   
 
@@ -60,7 +61,7 @@ const EmployeData = ({disabled, image, responses}) => {
                 <InputEmpData
                   idInput="estadoInfo"
                   inputValue={
-                    estadoSEleccionado !== undefined ? estadoSEleccionado.nombreEstado : "Sin Estado"
+                    estadoSEleccionado !== undefined ? estadoSEleccionado?.nombreEstado : ""
                   }
                   nameLabel="Estado: "
                   disabled={disabled}

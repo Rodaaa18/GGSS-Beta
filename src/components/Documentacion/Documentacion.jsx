@@ -11,8 +11,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AXIOS_ERROR, SET_LOADING } from '../../redux/types/fetchTypes';
 import { addDocumentacionEmpleados, addNewDoc, deleteDocu } from '../../redux/actions/fetchActions';
 import axios from 'axios';
-import { cleanIdsDoc, deleteDocuEmpleado, getArAdjuntos, getInputValue, getOneDocumento, saveIds } from '../../redux/actions/documentacionActions';
-import { inputButtonClasess, inputButtonClasessDocumentacion } from '../../classes/classes';
+import { cleanIdsDoc, deleteDocuEmpleado, getInputValue, getOneDocumento, saveIds } from '../../redux/actions/documentacionActions';
+import { classesDateDocs, inputButtonClasess, inputButtonClasessDocumentacion } from '../../classes/classes';
 import { GET_INPUT_VALUE } from '../../redux/types/documentacionTypes';
 import swal from 'sweetalert';
 import { setRefetch } from '../../redux/actions/modalesActions';
@@ -143,11 +143,11 @@ return (
             <EmployeData />
         </div>
         <div className='row'>
-            <div className='col-xl-12'>
+            <div className='col-xl-12 d-flex flex-row justify-content-start align-items-center'>
                 <InputDateDocs nameInput="Fecha Presentación" idInput="inputDatePresentacion" display={false} onChange={onChangeValues} action={GET_INPUT_VALUE} disabled={disable} value={formDocumentacion?.inputDatePresentacion && formDocumentacion?.inputDatePresentacion} />
             </div>
             <div className='col-xl-12'>
-                <InputDate disabled={disable} nameInput="Fecha Vencimiento" disable={disableI} setDisable={setDisableI} idInput="inputDateVencimiento" display={true}  onChange={onChangeValues} action={GET_INPUT_VALUE} actionReset={getInputValue} value={formDocumentacion?.inputDateVencimiento && formDocumentacion?.inputDateVencimiento} valueCheck={formDocumentacion?.inputCheckDocusDate && formDocumentacion?.inputCheckDocusDate} idInputCheck="inputCheckDocusDate" />
+                <InputDate clasess={classesDateDocs} disabled={disable} nameInput="Fecha Vencimiento:" disable={disableI} setDisable={setDisableI} idInput="inputDateVencimiento" display={true}  onChange={onChangeValues} action={GET_INPUT_VALUE} actionReset={getInputValue} value={formDocumentacion?.inputDateVencimiento && formDocumentacion?.inputDateVencimiento} valueCheck={formDocumentacion?.inputCheckDocusDate && formDocumentacion?.inputCheckDocusDate} idInputCheck="inputCheckDocusDate" />
             </div>
             <div className='col-xl-12'>
                 <InputButtonLiquidacion
@@ -166,7 +166,7 @@ return (
                 />
             </div>
             <div className='col-xl-12'>
-                <TextArea inputName="Observaciones " onChange={onChangeValues} idInput="textAreaDocumentacion" value={formDocumentacion?.textAreaDocumentacion && formDocumentacion?.textAreaDocumentacion} disabled={disable} />
+                <TextArea disableModal={disable} inputName="Observaciones " onChange={onChangeValues} idInput="textAreaDocumentacion" value={formDocumentacion?.textAreaDocumentacion && formDocumentacion?.textAreaDocumentacion} disabled={disable} />
             </div>
             <div className='col-xl-12 contDocumentacion'>
                 <CheckLabel idInput="inputCheckLiquidacion" nameLabel="Se tiene en cuenta en la Liquidación (Sólo si se cumplen las condiciones necesarias)"  onChange={onChangeValues} action={GET_INPUT_VALUE} value={formDocumentacion?.inputCheckLiquidacion && formDocumentacion?.inputCheckLiquidacion} disabled={disable} />
@@ -176,7 +176,7 @@ return (
             </div>
             <div className='col-xl-12 contDocumentacion'>
                 <ButtonCancelarAceptar idElimiar={documentacionSeleccionada.idEmpleadoDocumentacion && documentacionSeleccionada.idEmpleadoDocumentacion} cancelar="-" aceptar="+" functionSend={sendDataDoc} functionDelete={deleteData} disabled={disable} />
-                <TableBasic1 refetch={refetch} setRefetch={setRefectch} columns={columns} value={documentacionDelEmpleado}  documentaciones={documentaciones} disabled={disable} />
+                <TableBasic1  refetch={refetch} setRefetch={setRefectch} columns={columns} value={documentacionDelEmpleado}  documentaciones={documentaciones} disabled={disable} />
             </div>
             <div className='col-xl-12 contDocumentacion'>
                 <ButtonCallModal esBoton={true} nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="archivosAdjuntos" nameButton="Adjuntar Archivos">

@@ -1,19 +1,19 @@
-import React, { useState } from 'react'
 import InputModal from '../Inputs/InputModal/InputModal';
 import TextArea from '../Inputs/TextArea/TextArea';
 import "./BasicModal.css"
-const ChildModal = ({...props}) => {
-  const { modalValues, onChangeValues, valueItemModal, setValueItemModal, nameModalProp, handleClickClose, setTransition, array, nameModal, propsModal, optionsInputs, transition, functionAdd, urlApi, bodyPetition, bodyUpdate, modify, setModify, idAModificar, functionDelete, disableModal, setDisableMOdal, actionActualizaDelete, disableModalButtons, setDisableModalButtons, usaEstados } = props;
+import {classesTxtAreaModal} from '../../classes/classes'
+const ChildModal = ({nameModalProp, disabled, array , propsModal, optionsInputs, transition, setTransition, handleClickClose,functionAdd, functionUpdate, functionDelete, valueItemModal, setValueItemModal, onChangeValues, modalValues, urlApi, bodyPetition, bodyUpdate,setModify, modify, idAModificar, disableModal, setDisableMOdal, actionActualizaDelete, actualizaCreate, actualizaUpdate, idInputTextArea, disableModalButtons , setDisableModalButtons, usaEstados, urlDelete, changeUrl, valueIdUrl, diferentUrl}) => {
+
   return (
     
-    <section className={transition ? 'transitionClassUp' : ' transitionClassneDone '} >
+    <section className={transition ? 'transitionClassUp' : ' transitionClassneDone'} >
         <div className='cortina'></div>
-    <div className='modalBodyClass p-2' >
-        <div className="row p-2">
-          <div className="d-flex flex-row justify-content-between align-items-center">
+    <div className='modalBodyClass ' >
+        <div className="row p-2 titleBg">
+          <div className="d-flex flex-row justify-content-between align-items-center ">
           <p className="h3"><ins>{propsModal.nameModal}</ins></p>
             <button
-              className="btn btn-outline-danger text-white fs-6 btn-md buttonModal border border-white"
+              className="btn btn-outline-danger text-white fs-6 btn-md buttonModal border border-dark"
               onClick={() => {
                 handleClickClose(nameModalProp);
                 setTransition(false);
@@ -54,6 +54,7 @@ const ChildModal = ({...props}) => {
                   setDisableMOdal(false);
                   setDisableModalButtons(true);
 
+
                 }}
               >
                 Agregar
@@ -69,20 +70,32 @@ const ChildModal = ({...props}) => {
               >
                 Modificar
               </button>
-              <button
-                className="btn btn-dark"
-                disabled={disableModalButtons}
-                onClick={() => {
-                  functionDelete(urlApi, idAModificar, actionActualizaDelete);
-                  setDisableModalButtons(true);
-                }}
-                >
-                Eliminar
-              </button>
+                {changeUrl ? <button
+                              className="btn btn-dark"
+                              disabled={disableModalButtons}
+                              onClick={() => {
+                                functionDelete(urlDelete, idAModificar, actionActualizaDelete);
+                                setDisableModalButtons(true);
+                              }}
+                              >
+                                Eliminar
+                              </button> 
+                              : 
+                              <button
+                                className="btn btn-dark"
+                                disabled={disableModalButtons}
+                                onClick={() => {
+                                  functionDelete(urlApi, idAModificar, actionActualizaDelete);
+                                  setDisableModalButtons(true);
+                                }}
+                                >
+                                Eliminar
+                              </button>
+              }
             </div>
           </div>
           <div className="col-xl-6">
-            <div className="d-flex flex-column justify-content-start align-items-center">
+            <div className={usaEstados ? "bodyInputsOptions"  : " bodyInputs"}>
               {optionsInputs.map((option, index) => {
                 return (
                   <InputModal
@@ -101,11 +114,12 @@ const ChildModal = ({...props}) => {
                 );
               })}
             </div>
-            <div className="d-flex flex-column justify-content-center align-items-center">
+            <div className="d-flex flex-column justify-content-start align-items-center ">
                {usaEstados && ( 
                 <TextArea
+                  clasess={classesTxtAreaModal}
                   disableModal={!disableModalButtons}
-                  // idInput={idInputTextArea}
+                  idInput={idInputTextArea}
                   onChange={onChangeValues}
                   characterLimit={255}
                 ></TextArea>
@@ -116,7 +130,7 @@ const ChildModal = ({...props}) => {
                 className="btn btn-dark m-1"
                 disabled={!disableModalButtons}
                 onClick={() =>
-                  {functionAdd(urlApi, bodyPetition, bodyUpdate, idAModificar);
+                  {functionAdd( urlApi, bodyPetition, bodyUpdate, idAModificar , actualizaCreate, actualizaUpdate, valueIdUrl, diferentUrl );
                   setDisableModalButtons(false);
                 }}
               >
@@ -136,5 +150,4 @@ const ChildModal = ({...props}) => {
   );
 };
 
-  
-export default ChildModal
+export default ChildModal;

@@ -1,4 +1,4 @@
-import { ADD_TAREASDESEMPEÑADAS, ADD_CARGOS, ADD_ESTADOS, ADD_ESTADOSCIVILES, ADD_ESTUDIOS, ADD_PAISES, ADD_TIPOSDOCUMENTO, AXIOS_ERROR, AXIOS_SUCCESS, SET_LOADING, ADD_PARENTESCOS, ADD_FORMASPAGO, ADD_MODOSCONTRATACION, ADD_MODOSLIQUIDACION, ADD_EMPLEADORES, ADD_DOMICLIOS, ADD_CALLES, ADD_DEPARTAMENTOS, ADD_BARRIOS, ADD_PROVINCIAS, ADD_LOCALIDADES, ADD_FAMILIARES, ADD_NEW_FAMILIAR, DELETE_ONE_FAMILIAR, ADD_CONVENIOS, ADD_CATEGORIAS, ADD_AGRUPAMIENTOS, ADD_CENTRO_COSTO, ADD_SECTOR_DEPTO, ADD_OBRAS_SOCIALES, ADD_LUGARES_DE_PAGO, ADD_BANCOS, ADD_DIRECCIONES, ADD_SINDICATOS, ADD_ESQUEMAS, ADD_NEW_ESCI, ADD_NEW_ESTUDIO, GET_ID_ESCI, DELETE_ESCI, GET_ID_ESTUDIO, DELETE_ESTUDIO, ADD_NEW_TIPODOC, GET_ID_TIPODOC, DELETE_TIPODOC, PUT_ESCI, PUT_ESTUDIO, PUT_TIPODOC, ADD_NEW_PARENTESCO, GET_ID_PARENTESCO, DELETE_PARENTESCO, PUT_PARENTESCO, ADD_NEW_ESTADO, GET_ID_ESTADO, DELETE_ESTADO, PUT_ESTADO, ADD_NEW_FORMAPAGO, GET_ID_FORMAPAGO, DELETE_FORMAPAGO, PUT_FORMAPAGO, GET_ID_CARGO, DELETE_CARGO, ADD_NEW_CARGO, PUT_CARGO, ADD_NEW_TAREA, GET_ID_TAREA, DELETE_TAREA, PUT_TAREA, ADD_LICENCIAS_EMPLEADOS, UPDATE_LICENCIA, ADD_NEW_LICENCIA, DELETE_LICENCIA, DISABLED_INPUTS, ADD_NUMERADORES, ADD_DOCU_EMPL, ADD_DATOS_EXTRAS, ADD_INSTRUM_LEGALES, ADD_CONCEPTOS, ADD_NEW_DOC, DELETE_DOC, ADD_ADIC_LIQUIDACION, ADD_ONE_DE, DELETE_DOMICILIO, SAVE_DATOS_EXTRAS_EMPLEADOS, ACTUALIZA_DELETE } from "../types/fetchTypes";
+import { ADD_TAREASDESEMPEÑADAS, ADD_CARGOS, ADD_ESTADOS, ADD_ESTADOSCIVILES, ADD_ESTUDIOS, ADD_PAISES, ADD_TIPOSDOCUMENTO, AXIOS_ERROR, AXIOS_SUCCESS, SET_LOADING, ADD_PARENTESCOS, ADD_FORMASPAGO, ADD_MODOSCONTRATACION, ADD_MODOSLIQUIDACION, ADD_EMPLEADORES, ADD_DOMICLIOS, ADD_CALLES, ADD_DEPARTAMENTOS, ADD_BARRIOS, ADD_PROVINCIAS, ADD_LOCALIDADES, ADD_FAMILIARES, ADD_NEW_FAMILIAR, DELETE_ONE_FAMILIAR, ADD_CONVENIOS, ADD_CATEGORIAS, ADD_AGRUPAMIENTOS, ADD_CENTRO_COSTO, ADD_SECTOR_DEPTO, ADD_OBRAS_SOCIALES, ADD_LUGARES_DE_PAGO, ADD_BANCOS, ADD_DIRECCIONES, ADD_SINDICATOS, ADD_ESQUEMAS, ADD_NEW_ESCI, ADD_NEW_ESTUDIO, GET_ID_ESCI, DELETE_ESCI, GET_ID_ESTUDIO, DELETE_ESTUDIO, ADD_NEW_TIPODOC, GET_ID_TIPODOC, DELETE_TIPODOC, PUT_ESCI, PUT_ESTUDIO, PUT_TIPODOC, ADD_NEW_PARENTESCO, GET_ID_PARENTESCO, DELETE_PARENTESCO, PUT_PARENTESCO, ADD_NEW_ESTADO, GET_ID_ESTADO, DELETE_ESTADO, PUT_ESTADO,  GET_ID_FORMAPAGO, DELETE_FORMAPAGO, PUT_FORMAPAGO, GET_ID_CARGO, DELETE_CARGO, ADD_NEW_CARGO, PUT_CARGO, ADD_NEW_TAREA, GET_ID_TAREA, DELETE_TAREA, PUT_TAREA, ADD_LICENCIAS_EMPLEADOS, UPDATE_LICENCIA, ADD_NEW_LICENCIA, DELETE_LICENCIA, DISABLED_INPUTS, ADD_NUMERADORES, ADD_DOCU_EMPL, ADD_DATOS_EXTRAS, ADD_INSTRUM_LEGALES, ADD_CONCEPTOS, ADD_NEW_DOC, DELETE_DOC, ADD_ADIC_LIQUIDACION, ADD_ONE_DE, DELETE_DOMICILIO, SAVE_DATOS_EXTRAS_EMPLEADOS, ACTUALIZA_DELETE,  ACTUALIZA_DELETE_FORMAS_PAGO,  ACTUALIZA_CREATE_FORMAS_PAGO, ACTUALIZA_UPDATE_FORMAS_PAGO, GET_PAR_SUELDOS, ACTUALIZA_DELETE_CARGOS, ACTUALIZA_CREATE_CARGOS, ACTUALIZA_UPDATE_CARGOS, ACTUALIZA_DELETE_TAREAS, ACTUALIZA_CREATE_TAREAS, ACTUALIZA_UPDATE_TAREAS, ACTUALIZA_DELETE_MODCONTRATACION, ACTUALIZA_CREATE_MODCONTRATACION, ACTUALIZA_UPDATE_MODCONTRATACION, ACTUALIZA_DELETE_PARENTESCO, ACTUALIZA_CREATE_PARENTESCO, ACTUALIZA_UPDATE_PARENTESCO, ACTUALIZA_DELETE_PAISES, ACTUALIZA_CREATE_PAISES, ACTUALIZA_UPDATE_PAISES, ACTUALIZA_CREATE_EC, ACTUALIZA_UPDATE_EC, ACTUALIZA_DELETE_ESTUDIOS, ACTUALIZA_CREATE_ESTUDIOS, ACTUALIZA_UPDATE_ESTUDIOS, ACTUALIZA_DELETE_TIPOSD, ACTUALIZA_CREATE_TIPOSD, ACTUALIZA_UPDATE_TIPOSD, ACTUALIZA_DELETE_ESTADOS, ACTUALIZA_CREATE_ESTADOS, ACTUALIZA_UPDATE_ESTADOS, ACTUALIZA_DELETE_CALLES, ACTUALIZA_CREATE_CALLES, ACTUALIZA_UPDATE_CALLES, ACTUALIZA_UPDATE_MODLIQUIDACION, ACTUALIZA_CREATE_MODLIQUIDACION, ACTUALIZA_DELETE_MODLIQUIDACION, ACTUALIZA_DELETE_PROVINCIAS, ACTUALIZA_CREATE_PROVINCIAS, ACTUALIZA_UPDATE_PROVINCIAS, ACTUALIZA_DELETE_DPTOS, ACTUALIZA_CREATE_DPTOS, ACTUALIZA_UPDATE_DPTOS, ACTUALIZA_DELETE_LOCALIDADES, ACTUALIZA_CREATE_LOCALIDADES, ACTUALIZA_UPDATE_LOCALIDADES, ACTUALIZA_DELETE_BARRIOS, ACTUALIZA_CREATE_BARRIOS, ACTUALIZA_UPDATE_BARRIOS } from "../types/fetchTypes";
 
 
 export const setLoading = (payload) =>{
@@ -18,6 +18,12 @@ export const axiosError = (payload) =>{
         type : AXIOS_ERROR,
         payload,
     };
+}
+export const getParSueldos =(payload)=>{
+    return{
+        type :  GET_PAR_SUELDOS,
+        payload
+    }
 }
 // export const actualizaDeleteEstadosCiviles=(payload)=>{
 //     return{
@@ -263,12 +269,12 @@ export const addNewEstado = (payload) => {
     }
 }
 
-export const addNewFormaPago = (payload) => {
-    return {
-        type: ADD_NEW_FORMAPAGO,
-        payload
-    }
-}
+// export const addNewFormaPago = (payload) => {
+//     return {
+//         type: ADD_NEW_FORMAPAGO,
+//         payload
+//     }
+// }
 
 export const addNewCargo = (payload) => {
     return {
@@ -551,3 +557,339 @@ export const actualizaDelete = (payload) => {
         payload
     };
 }
+// export const actualizaModificarESCI = (payload) => {
+//     return {
+//         type: ACTUALIZA_MODIFICAR_ESCI,
+//         payload
+//     };
+// }
+
+//Formas de Pago
+export const actualizaDeleteFormasdePago = (payload) => {
+    return {
+        type: ACTUALIZA_DELETE_FORMAS_PAGO,
+        payload
+    };
+}
+
+export const actualizaCreaFormasdePago = (payload) => {
+    return {
+        type: ACTUALIZA_CREATE_FORMAS_PAGO,
+        payload
+    };
+}
+export const actualizaCreateEstadosCiviles=(payload)=>{
+    return{
+        type: ACTUALIZA_CREATE_EC,
+        payload
+    }
+}
+export const actualizaUpdateEstadosCiviles=(payload)=>{
+    return{
+        type: ACTUALIZA_UPDATE_EC,
+        payload
+    }
+}
+
+
+//Estudios
+export const actualizaCreateEstudios = (payload) => {
+    return {
+        type: ACTUALIZA_CREATE_ESTUDIOS,
+        payload
+    };
+}
+export const actualizaUpdateEstudios=(payload)=>{
+    return{
+        type: ACTUALIZA_UPDATE_ESTUDIOS,
+        payload
+    }
+}
+export const actualizaDeleteEstudios=(payload)=>{
+    return{
+        type: ACTUALIZA_DELETE_ESTUDIOS,
+        payload
+    }
+}
+
+//Estudios
+export const actualizaCreateTiposDoc = (payload) => {
+    return {
+        type: ACTUALIZA_CREATE_TIPOSD,
+        payload
+    };
+}
+export const actualizaUpdateTiposDoc=(payload)=>{
+    return{
+        type: ACTUALIZA_UPDATE_TIPOSD,
+        payload
+    }
+}
+export const actualizaDeleteTiposDoc=(payload)=>{
+    return{
+        type: ACTUALIZA_DELETE_TIPOSD,
+        payload
+    }
+}
+
+//Estados
+export const actualizaCreateEStados = (payload) => {
+    return {
+        type: ACTUALIZA_CREATE_ESTADOS,
+        payload
+    };
+}
+export const actualizaUpdateEStados=(payload)=>{
+    return{
+        type: ACTUALIZA_UPDATE_ESTADOS,
+        payload
+    }
+}
+export const actualizaDeleteEStados=(payload)=>{
+    return{
+        type: ACTUALIZA_DELETE_ESTADOS,
+        payload
+    }
+}
+
+//Calles
+export const actualizaCreateCalles = (payload) => {
+    return {
+        type: ACTUALIZA_CREATE_CALLES,
+        payload
+    };
+}
+export const actualizaUpdateCalles=(payload)=>{
+    return{
+        type: ACTUALIZA_UPDATE_CALLES,
+        payload
+    }
+}
+export const actualizaDeleteCalles=(payload)=>{
+    return{
+        type: ACTUALIZA_DELETE_CALLES,
+        payload
+    }
+}
+
+export const actualizaModificarFormasdePago = (payload) => {
+    return {
+        type: ACTUALIZA_UPDATE_FORMAS_PAGO,
+        payload
+    };
+}
+//Cargos
+export const actualizaDeleteCargos = (payload) => {
+    return {
+        type: ACTUALIZA_DELETE_CARGOS,
+        payload
+    };
+}
+
+export const actualizaCreaCargos = (payload) => {
+    return {
+        type: ACTUALIZA_CREATE_CARGOS,
+        payload
+    };
+}
+
+export const actualizaModificarCargos = (payload) => {
+    return {
+        type: ACTUALIZA_UPDATE_CARGOS,
+        payload
+    };
+}
+//Tareas Desempeñadas
+export const actualizaDeleteTareas = (payload) => {
+    return {
+        type: ACTUALIZA_DELETE_TAREAS,
+        payload
+    };
+}
+
+export const actualizaCreaTareas = (payload) => {
+    return {
+        type: ACTUALIZA_CREATE_TAREAS,
+        payload
+    };
+}
+
+export const actualizaModificarTareas = (payload) => {
+    return {
+        type: ACTUALIZA_UPDATE_TAREAS,
+        payload
+    };
+}
+
+//Modos de Contratacion
+export const actualizaDeleteModContratacion = (payload) => {
+    return {
+        type: ACTUALIZA_DELETE_MODCONTRATACION,
+        payload
+    };
+}
+
+export const actualizaCreaModContratacion = (payload) => {
+    return {
+        type: ACTUALIZA_CREATE_MODCONTRATACION,
+        payload
+    };
+}
+
+export const actualizaModificarModContratacion = (payload) => {
+    return {
+        type: ACTUALIZA_UPDATE_MODCONTRATACION,
+        payload
+    };
+}
+
+//Modos de Liquidacion
+export const actualizaDeleteModLiquidacion = (payload) => {
+    return {
+        type: ACTUALIZA_DELETE_MODLIQUIDACION,
+        payload
+    };
+}
+
+export const actualizaCreaModLiquidacion = (payload) => {
+    return {
+        type: ACTUALIZA_CREATE_MODLIQUIDACION,
+        payload
+    };
+}
+
+export const actualizaModificarModLiquidacion = (payload) => {
+    return {
+        type: ACTUALIZA_UPDATE_MODLIQUIDACION,
+        payload
+    };
+}
+//Parentescos
+export const actualizaDeleteParentesco = (payload) => {
+    return {
+        type: ACTUALIZA_DELETE_PARENTESCO,
+        payload
+    };
+}
+
+export const actualizaCreaParentesco = (payload) => {
+    return {
+        type: ACTUALIZA_CREATE_PARENTESCO,
+        payload
+    };
+}
+
+export const actualizaModificarParentesco = (payload) => {
+    return {
+        type: ACTUALIZA_UPDATE_PARENTESCO,
+        payload
+    };
+}
+
+//Paises
+export const actualizaDeletePaises = (payload) => {
+    return {
+        type: ACTUALIZA_DELETE_PAISES,
+        payload
+    };
+}
+
+export const actualizaCreaPaises = (payload) => {
+    return {
+        type: ACTUALIZA_CREATE_PAISES,
+        payload
+    };
+}
+
+export const actualizaModificarPaises = (payload) => {
+    return {
+        type: ACTUALIZA_UPDATE_PAISES,
+        payload
+    };
+}
+
+//Provincias
+export const actualizaDeleteProvincias = (payload) => {
+    return {
+        type: ACTUALIZA_DELETE_PROVINCIAS,
+        payload
+    };
+}
+
+export const actualizaCreaProvincias = (payload) => {
+    return {
+        type: ACTUALIZA_CREATE_PROVINCIAS,
+        payload
+    };
+}
+
+export const actualizaModificarProvincias = (payload) => {
+    return {
+        type: ACTUALIZA_UPDATE_PROVINCIAS,
+        payload
+    };
+}
+//Dptos
+export const actualizaDeleteDptos = (payload) => {
+    return {
+        type: ACTUALIZA_DELETE_DPTOS,
+        payload
+    };
+}
+
+export const actualizaCreaDptos = (payload) => {
+    return {
+        type: ACTUALIZA_CREATE_DPTOS,
+        payload
+    };
+}
+
+export const actualizaModificarDptos = (payload) => {
+    return {
+        type: ACTUALIZA_UPDATE_DPTOS,
+        payload
+    };
+}
+//Localidades
+export const actualizaDeleteLocalidades = (payload) => {
+    return {
+        type: ACTUALIZA_DELETE_LOCALIDADES,
+        payload
+    };
+}
+
+export const actualizaCreaLocalidades = (payload) => {
+    return {
+        type: ACTUALIZA_CREATE_LOCALIDADES,
+        payload
+    };
+}
+
+export const actualizaModificarLocalidades = (payload) => {
+    return {
+        type: ACTUALIZA_UPDATE_LOCALIDADES,
+        payload
+    };
+}
+//Barrios
+export const actualizaDeleteBarrios = (payload) => {
+    return {
+        type: ACTUALIZA_DELETE_BARRIOS,
+        payload
+    };
+}
+
+export const actualizaCreaBarrios = (payload) => {
+    return {
+        type: ACTUALIZA_CREATE_BARRIOS,
+        payload
+    };
+}
+
+export const actualizaModificarBarrios = (payload) => {
+    return {
+        type: ACTUALIZA_UPDATE_BARRIOS,
+        payload
+    };
+}
+

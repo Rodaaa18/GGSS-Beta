@@ -49,7 +49,7 @@ export const classesEstadosCiviles = {
     "classOne" : "formulario__grupo__inputs-Button mt-2",
     "classTwo" : 'fomulario__container__button_extras',
     "classThree" : 'formulario__label_Extras',
-    "classFour" : 'formulario-input-InpButton-Extras form-select ml-0 px-0 obligatorio',
+    "classFour" : 'formulario-input-InpButton-Extras form-select ml-0 px-0 obligatorio w-25',
     "classFive" : "btn btn-validacion btn-outline-danger btn-sm",
   }
   export const inputButtonClasessExtrasInstrum= {
@@ -118,7 +118,7 @@ export const classesEstadosCiviles = {
     "classOne" : "formulario__grupo__inputs-Button mt-2",
     "classTwo" : 'fomulario__container__button',
     "classThree" : 'formulario__label',
-    "classFour" : 'formulario-input-InpButton form-select ml-0 px-0 obligatorio',
+    "classFour" : 'formulario-input-InpButton-Documentacion form-select ml-0 px-0 obligatorio',
     //luego de la DEMO PASAR EL BTN OUTLINE-WHITE a DANGER
     "classFive" : "btn btn-validacion btn-outline-white btn-sm",
   }
@@ -137,4 +137,31 @@ export const classesEstadosCiviles = {
     classFour :  "formulario__label mt-2 mb-0",
     classFive : "segundo",
     classSix : "formulario-input-Estado-Calle form-select ml-0 px-0 obligatorio",
+  }
+  export const classesTxtAreaPersonales = {
+    "classOne" : "input-group contTxtArea",
+    "classTwo" : 'form__grupo__label pl-1 mt-3',
+    "classThree" : 'form__grupo__label__label m-0',
+    "classFour" : 'bg-white w-100 form-control text-black fs-6 pt-0 pb-0',
+     classFive : "txtAreaPersonales",
+  }
+  export const classesTxtAreaExtras= {
+    "classOne" : "input-group contTxtArea",
+    "classTwo" : 'form__grupo__label pl-1 mt-3',
+    "classThree" : 'form__grupo__label__label m-0',
+    "classFour" : 'bg-white w-100 form-control text-black fs-6 pt-0 pb-0',
+     classFive : "txtAreaExtras",
+  }
+  export const classesTxtAreaModal= {
+    "classOne" : "input-group contTxtArea",
+    "classTwo" : 'form__grupo__label__modal pl-1 mt-3',
+    "classThree" : 'form__grupo__label__label m-0',
+    "classFour" : 'bg-white w-100 form-control text-black fs-6 pt-0 pb-0',
+     classFive : "txtAreaModal",
+  }
+ 
+  export const classesDateDocs = {
+    classOne : "formulario__grupo__inputs_docs",
+    classTwo : "form-check-Documentacion p-0",
+    classThree : "check-label-docs"
   }

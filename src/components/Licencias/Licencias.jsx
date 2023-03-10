@@ -66,9 +66,11 @@ const Licencias = ({responses, setResponses, licenciaEmpleadoDatos, setLicenciaE
         });      
     },[formLicencias]);
 
-    function sendData(url,  action){
+
+
+    function sendData(url,  action, body){
         try{
-            axios.post(url)
+            axios.post(url, body)
         .then((res)=>{
            
             dispatch(action(res.data));
@@ -114,10 +116,11 @@ return (
                 provinciaAction={selectedOption} 
                 action={OPTIONS_FORMULARIO} 
                 idSelected = {formLicencias?.inputOpcionsLicencias && formLicencias?.inputOpcionsLicencias}
-                disabled={disable} />
+                disabled={disable}
+                 />
             </div>
             <div className='col-xl-12 mt-2'>
-                <FieldSet refetch={refetch} setRefectch={setRefectch} setLicenciaEmpladoDatos={setLicenciaEmpladoDatos} formLicencias={formLicencias} sendData={sendData} detalleLicencia={detalleLicencia} licenciaDelEmpleado={licenciaEmpleadoDatos} array={newAños} valueId="año" propArrayOpFem="año" opciones={opciones} selectedOption={formLicencias?.inputOpcionsLicencias && formLicencias?.inputOpcionsLicencias} onChange={onChangeValues} valueForm={formLicencias && formLicencias} disabled={disable} />
+                <FieldSet refetch={refetch} setRefectch={setRefectch} setFormLicencias={setFormLicencias} setLicenciaEmpladoDatos={setLicenciaEmpladoDatos} formLicencias={formLicencias} sendData={sendData} detalleLicencia={detalleLicencia} licenciaDelEmpleado={licenciaEmpleadoDatos} array={newAños} valueId="año" propArrayOpFem="año" opciones={opciones} selectedOption={formLicencias?.inputOpcionsLicencias && formLicencias?.inputOpcionsLicencias} onChange={onChangeValues} valueForm={formLicencias && formLicencias} disabled={disable} />
             </div>            
         </div>
     </div>

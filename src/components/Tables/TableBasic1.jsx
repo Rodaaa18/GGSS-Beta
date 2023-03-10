@@ -16,6 +16,7 @@ const TableBasic1 = ({columns, value,documentaciones, setRefetch, refetch, disab
   // console.log(documentaciones);
   return (
     <>
+    <div className="row mt-5 overflow-scroll rowTAbles">
     <table class="table table-danger contDocumentacion" disabled={disabled} >
       <thead>
         <tr>
@@ -33,7 +34,7 @@ const TableBasic1 = ({columns, value,documentaciones, setRefetch, refetch, disab
           value && value.map((valor)=>{
             return(
               <tr>
-                <th scope="row"> <input type="radio" name="seleccionar" id="seleccionar" onClick={()=>{  dispatch(getDocSelect(valor))}} /> </th>
+                <th scope="row"> <input disabled={disabled} type="radio" name="seleccionar" id="seleccionar" onClick={()=>{  dispatch(getDocSelect(valor))}} /> </th>
                 <td>{valor.fecha ? valor.fecha.substring(0, valor.fecha.length -9) : "-"}</td>
                 <td>{valor.fechaVencimiento ? valor.fechaVencimiento : "-"}</td>
                 <td>{getDocumentacion(documentaciones, valor.idDocumentacion).documentacion1}</td>
@@ -46,6 +47,7 @@ const TableBasic1 = ({columns, value,documentaciones, setRefetch, refetch, disab
         }        
       </tbody>
     </table>
+    </div>
     </>
   );
 };

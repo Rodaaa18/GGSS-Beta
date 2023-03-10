@@ -17,6 +17,7 @@ const PaisOrigenFlia = ({
   idSelected,
   nameInput,
   obligatorio,
+  handleClickRef, referencia,modalName
 }) => {
   const [mostrarComponente, setMostrarComponente] = useState(true);
 
@@ -57,21 +58,9 @@ const PaisOrigenFlia = ({
             })}
         </select>
       </div>
-      <div className="ml-0 d-flex justify-content-cener align-items-center btn-modal-nacio">
-        {/* <ButtonCallModal
-        idModal={idModal}
-        className={
-          mostrarComponente
-            ? "tercero btn btn-validacion btn-outline-danger btn-sm ml-2"
-            : "none"
-        }
-        nameButton={nameButton}
-        useNavbar={false}
-        disableButton={true}
-        useButton={false}
-        disabled={disable}
-        /> */}
-      </div>
+        <div className="col d-flex justify-content-start align-items-center btn-modal-miau">
+                    <button disabled={disable} className=" btnModalDp btn btn-outline-danger btn-sm " onClick={(e)=>handleClickRef(e,referencia,modalName)}>...</button>
+          </div>
       <div
         className={
           mostrarComponente

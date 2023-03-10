@@ -84,6 +84,7 @@
 	height: 42px;
 	transition: .3s ease all;
     border-bottom: 1px solid rgb(78, 6, 6);
+	margin-right: 0.2rem;
 }
 
 .btn-modal-estu{
@@ -98,25 +99,25 @@
 .selectFormNacioFlia{
 	margin-left: 2.95%;
 	width: 53%;
-	margin-right: 0px;
+	margin-right: 1rem;
 }
 
 .btn-modal-nacio{
 	margin-top: 0.2rem;
-	margin-left: 1%;
+	margin-left: 0%;
 }
 
 .SelectedFlia{
 	display: flex;
 	width: 28%;
-	margin-right: 0px;
+	margin-right: 0.7rem;
 	margin-left: 1.9%;
 }
 
 .SelectedFliaPais{
 	display: flex;
 	width: 28%;
-	margin-right: 0px;
+	margin-right:0.7rem;
 	margin-left: 0.3%;
 }
 .inputCheckEstudio{
@@ -143,7 +144,21 @@
     border-bottom: 1px solid rgb(78, 6, 6);
 	/* margin-top: -5px; */
 }
+@media screen and (max-width : 1574px){
+	.SelectedFlia{
+		margin-right: 1.9rem;
+	}
+	.SelectedFliaPais{
+		margin-right: 1.9rem;
+	}
+}
 @media screen and (max-width:1366px){
+	.SelectedFlia{
+		margin-right: 1.7rem;
+	}
+	.SelectedFliaPais{
+		margin-right: 1.7rem;
+	}
 	.selectFormFlia{
 		height: 35px;
 		margin-left: 6.4rem;
@@ -152,7 +167,21 @@
 		height: 35px;
 	}
 }
+@media screen and (max-width : 1189px){
+	.SelectedFlia{
+		margin-right: 2.5rem;
+	}
+	.SelectedFliaPais{
+		margin-right: 2.4rem;
+	}
+}
 @media screen and (max-width : 1024px){
+	.SelectedFlia{
+		margin-right: 3rem;
+	}
+	.SelectedFliaPais{
+		margin-right: 3rem;
+	}
 	.selectFormFlia{
 		height: 35px;
 		margin-left: 4.4rem;

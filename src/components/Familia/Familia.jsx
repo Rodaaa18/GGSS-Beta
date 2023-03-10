@@ -23,7 +23,7 @@ import { disableFunctions } from "../../redux/actions/employeActions";
 import { addFamiliar, deleteFam, saveIdFam } from "../../redux/actions/familiaActions";
 import "./Familia.css"
 
-const Familia = ({responses, setResponses,disable, setRefetch, refetch}) => {
+const Familia = ({responses, setResponses,disable, setRefetch, refetch, agregar , setAgregar, handleClickRef, referencia }) => {
   
   //const { saveEmpl, saveNacionalidad, saveEstudio, parentescos, disable, saveFamSelect } = useContext(employeContext);
 
@@ -205,6 +205,12 @@ const urlCreateFamiliar = "http://54.243.192.82/api/InsertarNuevoFamiliar"
               <InputParentesco
                 nameInput="Parentesco"
                 array={parentescosValue &&  parentescosValue }
+
+                handleClickRef={handleClickRef}
+                referencia= {referencia.parentRef}
+                modalName="Parentescos"
+
+
                 propArrayOp="nombreParentesco"
                 propIdSelect="iDparentesco"
                 placeHolder="Parentesco"
@@ -237,6 +243,10 @@ const urlCreateFamiliar = "http://54.243.192.82/api/InsertarNuevoFamiliar"
                 
               />
                 <EstudioFlia
+                  handleClickRef={handleClickRef}
+                  referencia= {referencia.estudiosRef}
+                  modalName="Estudios"
+
                   nameInput="Estudios"
                   array={estudiosValue && estudiosValue}                
                   namePropOp="estudiosNivel"
@@ -260,6 +270,9 @@ const urlCreateFamiliar = "http://54.243.192.82/api/InsertarNuevoFamiliar"
             <div className="col-xl-5 col-lg-5 col-md-5 ml-5">
 
               <PaisOrigenFlia
+                handleClickRef={handleClickRef}
+                referencia= {referencia.paisesRef}
+                modalName="Paises"
                 nameLabel="Pais de Origen"
                 array={paisesValue && paisesValue}
                 namePropValue="nombrePais"
@@ -279,6 +292,9 @@ const urlCreateFamiliar = "http://54.243.192.82/api/InsertarNuevoFamiliar"
                 obligatorio ={true}
               />
               <NacionalidadFlia
+                handleClickRef={handleClickRef}
+                referencia= {referencia.paisesRef}
+                modalName="Paises"
                 nameInput="Nacionalidad"
                 array={paisesValue && paisesValue}
                 namePropOp="nacionalidad_masc"
@@ -314,7 +330,7 @@ const urlCreateFamiliar = "http://54.243.192.82/api/InsertarNuevoFamiliar"
                 valueGeneral={formFamilia?.inputDateBaja && formFamilia?.inputDateBaja }
                 onChange={onChangeValues}
               />
-              <TextArea inputName="Observaciones" maxLength="255" disabled={disable} onChange={onChangeValues} idInput="textAreaObservacionesFamilia"  value={formFamilia?.textAreaObservacionesFamilia && formFamilia?.textAreaObservacionesFamilia} />
+              <TextArea disableModal={disable} inputName="Observaciones" maxLength="255" disabled={disable} onChange={onChangeValues} idInput="textAreaObservacionesFamilia"  value={formFamilia?.textAreaObservacionesFamilia && formFamilia?.textAreaObservacionesFamilia} />
             </div>
           </div>
         </div>

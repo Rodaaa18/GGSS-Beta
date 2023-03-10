@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addSelectDetalle, idSelect } from "../../redux/actions/licenciasActions";
 import "./TableBootstrap.css";
 
-const TableSuspenLicencia = ({ columns }) => {
+const TableSuspenLicencia = ({ columns, disabled }) => {
   const dispatch = useDispatch();
 
   const detalleLicencia = useSelector(
@@ -16,6 +16,7 @@ const TableSuspenLicencia = ({ columns }) => {
 
   return (
     <>
+    <div className="row mt-5 overflow-scroll rowTAbles">
       <table class="table table-danger">
         <thead>
           <tr>
@@ -35,6 +36,7 @@ const TableSuspenLicencia = ({ columns }) => {
                   <th scope="row">
                     {" "}
                     <input
+                    disabled={disabled}
                       type="radio"
                       name="inpurSelectDetalleLiq"
                       id="inpurSelectDetalleLiq"
@@ -67,6 +69,7 @@ const TableSuspenLicencia = ({ columns }) => {
             })}
         </tbody>
       </table>
+      </div>
     </>
   );
 };

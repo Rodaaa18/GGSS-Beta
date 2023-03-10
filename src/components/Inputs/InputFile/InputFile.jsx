@@ -4,9 +4,10 @@ import "./InputFile.css";
 import imagenAlt from "./cambieImagen.png";
 import { useDispatch } from "react-redux";
 
-function InputFile({ disabled, imagen,onChange, idInput,action,ImageSelectedPrevious, setImageSelectedPrevious, setRefectch, refetch }) {
+function InputFile({ disabled, imagen,onChange, idInput,action,ImageSelectedPrevious, setImageSelectedPrevious, setRefectch, refetch,setResponses, responses }) {
   
   const [displayButton, setDisplayButton] = useState("");
+  const [ borrar, setBorrar ] = useState(false);
   const dispatch = useDispatch();
   
   
@@ -27,31 +28,46 @@ function InputFile({ disabled, imagen,onChange, idInput,action,ImageSelectedPrev
     }
   }; */
   const changeImage = (event) => {
-    const imageFile = event.target.files[0];
-    const blob = new Blob([imageFile], { type: imageFile.type });
-    
-    const reader = new FileReader();
-    reader.readAsDataURL(blob);
-    reader.onloadend = () => {
-      const imageDataURL = reader.result;
-      const canvas = document.createElement('canvas');
-      const ctx = canvas.getContext('2d');
-      const image = new Image();
-      image.src = imageDataURL;
-      image.onload = () => {
-        canvas.width = image.width;
-        canvas.height = image.height;
-        ctx.drawImage(image, 0, 0);
-        const pngImageDataURL = canvas.toDataURL('image/png');
-        // Usar pngImageDataURL aquí
-        onChange(pngImageDataURL, idInput)
-        setImageSelectedPrevious(pngImageDataURL);
-        setDisplayButton("none");
+    if(event.target.files){
+      const imageFile = event.target.files[0];
+      const blob = new Blob([imageFile], { type: imageFile.type });
+      
+      const reader = new FileReader();
+      reader.readAsDataURL(blob);
+      reader.onloadend = () => {
+        const imageDataURL = reader.result;
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        const image = new Image();
+        image.src = imageDataURL;
+        image.onload = () => {
+          canvas.width = image.width;
+          canvas.height = image.height;
+          ctx.drawImage(image, 0, 0);
+          const pngImageDataURL = canvas.toDataURL('image/png');
+          // Usar pngImageDataURL aquí
+          if(borrar){
+            onChange(null, idInput)
+            setImageSelectedPrevious(null);
+            setResponses({...responses?.formDatosPersonales, inputImage : null})
+            setDisplayButton("none");
+            setBorrar(false)
+          }else{
+            onChange(pngImageDataURL, idInput)
+            setImageSelectedPrevious(pngImageDataURL);
+            setDisplayButton("none");
+            setBorrar(false)
+          }
+        };
       };
-    };
+    }
+    onChange(null, idInput)
+    setImageSelectedPrevious(null);
+    setResponses({...responses?.formDatosPersonales, inputImage : null})
+    setDisplayButton("none");
+    setBorrar(false)
     setRefectch(!refetch)
   };
-
   useEffect(() => {
     disableBtn();
   }, [disabled]);
@@ -65,8 +81,11 @@ function InputFile({ disabled, imagen,onChange, idInput,action,ImageSelectedPrev
   }
   function acivatedInput(e) {
     e.preventDefault();
+    setBorrar(true)
     setImageSelectedPrevious(null);
+    setResponses({...responses?.formDatosPersonales, inputImage : null})
     setDisplayButton("");
+    changeImage(e)
   }
   return (
     <>
@@ -99,7 +118,7 @@ function InputFile({ disabled, imagen,onChange, idInput,action,ImageSelectedPrev
                 src={
                   ImageSelectedPrevious === null ||
                   ImageSelectedPrevious === undefined
-                    ? `data:image/png;base64,${imagen}` : ImageSelectedPrevious
+                    ? `data:image/png;base64,${imagen ? imagen : null}` : ImageSelectedPrevious
                 }
                 
                 alt=""

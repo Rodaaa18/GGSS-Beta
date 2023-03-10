@@ -11,7 +11,7 @@ const AsidePago = ({formasPAgo, lugaresDePago, bancos, onChange, formLiquidacion
 
   const dispatch = useDispatch();
   const empleadoUno = useSelector((state)=> state.employeStates.employe);
-  console.log(modify)
+  
   return (
   <>
       <div className="border border-3 p-2 col mt-2">

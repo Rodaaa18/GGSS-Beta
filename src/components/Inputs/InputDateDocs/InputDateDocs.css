@@ -19,10 +19,24 @@
 	transition: .3s ease all;
     /* border-bottom: 1px solid rgb(78, 6, 6); */
 }
+.check-label{
+	
+}
+.formulario__grupo__inputs__docs{
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: center;
+	margin-bottom: 1%;
+}
+.form-check-label{
+	width: 15rem;
+	
+}
 .secondCheck2{
 	margin-left: 2%;
-	width: 32%;
-
+	width: 8.2rem;
+	
 }
 .secondCheck{
 	/* margin-left: 14.8%; */
@@ -30,12 +44,13 @@
 	box-sizing: border-box;
 	margin-left: 15%;
 	padding: 0%;
-	font-size: 15px;
+	
 
 }
 
 .secondCheckDocs{
 	margin-left: 6.5%;
+	width: 8.5rem;
 }
 @media screen and (max-width:1366px){
 	.contenedorInputDoc{
@@ -43,6 +58,6 @@
 	}
 	.secondCheck2{
 		font-size: small;
-		width: 7rem;
+		width: 7.9rem;
 	}
 }
