@@ -178,7 +178,7 @@ return (
                 <ButtonCancelarAceptar idElimiar={documentacionSeleccionada.idEmpleadoDocumentacion && documentacionSeleccionada.idEmpleadoDocumentacion} cancelar="-" aceptar="+" functionSend={sendDataDoc} functionDelete={deleteData} disabled={disable} />
                 <TableBasic1  refetch={refetch} setRefetch={setRefectch} columns={columns} value={documentacionDelEmpleado}  documentaciones={documentaciones} disabled={disable} />
             </div>
-            <div className='col-xl-12 contDocumentacion'>
+            <div className='col-xl-12 contDocumentacion mt-2'>
                 <ButtonCallModal esBoton={true} nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="archivosAdjuntos" nameButton="Adjuntar Archivos">
                     <ArchivosAdjuntos 
                     handleClickClose={handleClickClose}

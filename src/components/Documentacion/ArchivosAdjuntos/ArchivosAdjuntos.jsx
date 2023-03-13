@@ -301,7 +301,7 @@ const ArchivosAdjuntos = ({handleClickClose,disabled, nameModalProp, transition,
             <div className='col-xl-12 col-lg-12 col-md-12 overflow-scroll rowTAbles'>
                 {
                     
-                    <table className="table table-dark  w-100">
+                    <table className="table table-danger  w-100">
                         <thead>
                             <tr>
                                 <th>
