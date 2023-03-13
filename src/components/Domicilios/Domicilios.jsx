@@ -16,7 +16,7 @@ import { useEffect } from "react";
 import { setRefetch } from "../../redux/actions/modalesActions";
 
 //#endregion
-const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValues, formDatosPersonales, setFormDatosPersonales, domiciliosEmpleados, setRefectch, refetch}) => {
+const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValues, formDatosPersonales, setFormDatosPersonales, domiciliosEmpleados, setRefectch, refetch, handleClickRef, referencia }) => {
   const empleadoUno = useSelector((state)=> state.employeStates.employe);
 
   const [domicilios, setDomicilios] = useState([]);
@@ -78,8 +78,7 @@ const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValu
     "idEmpleador": 0
   }
  
-
-  
+    
 
   const sendDataDomicilios= async ()=>{
     try{
@@ -89,7 +88,8 @@ const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValu
         'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',
         'Access-Control-Allow-Credentials':true
       }})
-          .then((res)=> {            
+          .then((res)=> {     
+                
             if(res.status === 200){ 
               dispatch(addNewDomicilio(res.data))  
               setRefectch(!refetch)
@@ -130,7 +130,7 @@ const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValu
     
       //#region Menú Principal
     
-    <div to="/domicilios" className="accordion-item" onClick={handleTabChange(8)} >
+    <div to="/domicilios" className="accordion-item" onClick={handleTabChange(0)} >
       <h2 className="accordion-header" id="headingTwo">
             <button
               className="accordion-button collapsed"
@@ -146,7 +146,7 @@ const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValu
           </h2>
           
           {
-            tabIndex === 8 && <div
+            tabIndex === 0 && <div
             id="collapseTwo"
             className="accordion-collapse collapse"
             aria-labelledby="headingTwo"
@@ -160,6 +160,7 @@ const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValu
                       <input
                         type="checkbox"
                         name="inputPredeterminado"
+                        disabled={disabled}
                         checked={checked}
                         id="inputPredeterminado"
                         onChange={(e)=>handleChangePredeterminado(e, "inputPredeterminado" )}
@@ -177,6 +178,9 @@ const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValu
                         value={formDomicilios?.inputCalleDomicilios ? formDomicilios?.inputCalleDomicilios : empleadoUno.calle}
                         action={ADD_DOMICILIOS}
                         sexo=""
+                        handleClickRef={handleClickRef}
+                        referencia= {referencia.callesRef}
+                        modalName="Calles"
                         nameButton="..."
                         nameLabel="Calle"                    
                         array={generalStateData.calles !== null && generalStateData.calles !== "" ? generalStateData.calles : ["calle", "calle"]}
@@ -194,9 +198,10 @@ const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValu
                         onChange={onChangeValues}
                         valueId="idCalle"
                         obligatorio ={true}
+                        esCalle = {true}
                       />
                     </div>
-                    <div className="col-xl-6 col-lg-6 col-md-6">
+                    <div className="col-xl-6 col-lg-6 col-md-6 colTapaModal">
                       <InputNumero
                         nameInput="inputNumCalle"
                         action={ADD_DOMICILIOS}
@@ -206,7 +211,7 @@ const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValu
                         placeHolder="N° Calle"
                         nameCheck="Fijar"
                         defaultChecked=""
-                        display={true}
+                        display={false}
                         //value={numCalleSelected !== undefined && numCalleSelected !== null ? numCalleSelected.toString() : domiciliosState.inputNumCalle}
                         disabled={disabled}
                         idInput="inputNumCalle"
@@ -241,6 +246,9 @@ const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValu
                         formDomicilios?.inputProvinciaDomicilios ? formDomicilios?.inputProvinciaDomicilios : empleadoUno.provincia
                       }
                       action={ADD_DOMICILIOS}
+                      handleClickRef={handleClickRef}
+                      referencia= {referencia.pldbRef}
+                      modalName="Provincias - Localidades - Departamentos - Barrios"
                       sexo=""
                       nameButton="..."
                       nameLabel="Provincia"
@@ -265,6 +273,9 @@ const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValu
                         formDomicilios?.inputDepartamentosDomicilios ? formDomicilios?.inputDepartamentosDomicilios : empleadoUno.departamento
                       }
                       action={ADD_DOMICILIOS}
+                      handleClickRef={handleClickRef}
+                      referencia= {referencia.pldbRef}
+                      modalName="Provincias - Localidades - Departamentos - Barrios"
                       sexo=""
                       nameButton="..."
                       nameLabel="Departamento"
@@ -290,6 +301,9 @@ const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValu
                         formDomicilios?.inputLocalidadesDomicilios ? formDomicilios?.inputLocalidadesDomicilios : empleadoUno.localidad
                       }
                       action={ADD_DOMICILIOS}
+                      handleClickRef={handleClickRef}
+                      referencia= {referencia.pldbRef}
+                      modalName="Provincias - Localidades - Departamentos - Barrios"
                       sexo=""
                       nameButton="..."
                       nameLabel="Localidad"
@@ -314,6 +328,9 @@ const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValu
                         formDomicilios?.inputBarriosDomicilios ? formDomicilios?.inputBarriosDomicilios : empleadoUno.barrio
                       }
                       action={ADD_DOMICILIOS}
+                      handleClickRef={handleClickRef}
+                      referencia= {referencia.pldbRef}
+                      modalName="Provincias - Localidades - Departamentos - Barrios"
                       sexo=""
                       nameButton="..."
                       nameLabel="Barrio"
@@ -336,6 +353,7 @@ const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValu
                   <ButtonCancelarAceptar idElimiar={domicilioDelEmpleado} refetch={refetch} setRefectch={setRefectch} cancelar="-" aceptar="+"disabled={disabled} functionSend={sendDataDomicilios} functionDelete={deleteDomicilio}/>
                   <TablaDomicilios 
                     columns={columns} 
+                    disabled={disabled}
                     empleadoSelect={empleadoUno && empleadoUno} 
                     value={ empleadoDomicilio && empleadoDomicilio }
                       refetch={refetch}

@@ -52,13 +52,14 @@ import {
   addTareasDesempeñadas,
   addTiposDocumento,
   disabledInputs,
+  getArchivosAdjuntos,
   getParSueldos,
   saveDatosExtrasEmpleados,
 } from "../../redux/actions/fetchActions";
 import { AXIOS_ERROR, SET_LOADING } from "../../redux/types/fetchTypes";
 import axios from "axios";
 import { cleanIds, getTrabajosAnteriores, reloadItem } from "../../redux/actions/trabajosAnterioresActions";
-import { cleanIdsDoc, documentacionDelEmpleado, getOneDocumento } from "../../redux/actions/documentacionActions";
+import { cleanIdsDoc, documentacionDelEmpleado, getArAdjuntos, getOneDocumento } from "../../redux/actions/documentacionActions";
 import {
   addDetalleLicencia,
   addLicEmpleado,
@@ -76,12 +77,13 @@ import "./Home.css"
 import ErrorPage from "../ErrorPage/ErrorPage";
 import Loader from "../Loader/Loader";
 
-const Empleados = ({tokenDef, setTokenDef, sePerfilesUSuario, loading}) => {
+const Empleados = ({tokenDef, setTokenDef, sePerfilesUSuario, loading, handleClickRef, referencia}) => {
   const [tabIndex, setTabIndex] = useState(0);
   
   const [responses, setResponses] = useState({});
 
   const [disable, setDisable] = useState(true);
+  const [ agregar , setAgregar ] = useState(false);
   const [image, setImage] = useState("");
   const [disableEstado, setDisableEstado] = useState(false);
   const [empleados, setEmpleados] = useState([]);
@@ -159,7 +161,7 @@ const Empleados = ({tokenDef, setTokenDef, sePerfilesUSuario, loading}) => {
     "http://54.243.192.82/api/DetalleLicenciasEmpleados";
   const urlEsquemasConceptos = "http://54.243.192.82/api/ConceptosEsquemas";
   const urlParSueldos = "http://54.243.192.82/api/ParSueldos";
-
+ const urlArchivosAdjuntos = "http://54.243.192.82/api/ArchivosDocumentacionEmpleados/sp_ArchivosDocumentacionEmpleadosDatos"
 
   //#endregion
 
@@ -208,7 +210,12 @@ const Empleados = ({tokenDef, setTokenDef, sePerfilesUSuario, loading}) => {
 const domiciliosEmpleados = useSelector((state)=> state.generalState.domicilios)
 const empleadoDomicilio = useSelector((state)=> state.domiciliosStates.domicilioEmpleado);
 const recharge = useSelector((state)=> state.domiciliosStates.recharge);
-
+const bodyArchivosDocs = {
+  "idArchivoDocumentacionEmpleado": 0,
+  "idEmpleadoDocumentacion": 0,
+  "modo": 0,
+  "idEmpleado": 0
+}
 
 //#region useEffect handleFetch
 useEffect(()=>{
@@ -220,6 +227,13 @@ useEffect(()=>{
    handleFetch(urlDomicilios, addDomicilios);
    handleFetch(urlParSueldos, getParSueldos);
    handleFetch(urlDocumentacionEmpleados, addDocumentacionEmpleados);
+   axios.post(urlArchivosAdjuntos, bodyArchivosDocs).then((res)=>{
+    console.log(res)
+    if(res.status === 200){
+      dispatch(getArchivosAdjuntos(res.data.result))
+    }
+   })
+   //handleFetch(urlArchivosAdjuntos, getArAdjuntos);
 },[refetching, empleadoUno, refetch])
 
 useEffect(()=>{
@@ -231,6 +245,56 @@ useEffect(()=>{
         dispatch(saveDatosExtrasEmpleados(res.data.result));
       });//
 },[empleadoUno, refetch])
+
+
+
+
+
+/* const fetchData = async (url, action) => {
+  dispatch({ type: SET_LOADING });
+  try {
+    const res = await axios.get(url);
+    dispatch(action(res.data.result));
+  } catch (err) {
+    dispatch({ type: AXIOS_ERROR });
+  }
+}; */
+
+/* const urls = [  
+  { url: urlEstados, action: addEstados },  
+  { url: urlEstadosCiviles, action: addEstadosCiviles }, 
+  { url: urlSindicatos, action: addSindicatos },  
+  { url: urlEsquemas, action: addEsquemas },  
+  { url: urlConceptos, action: addConceptos }
+];
+
+useEffect(() => {
+  urls.forEach((item) => {
+    fetchData(item.url, item.action);
+  });
+}, []); */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   useEffect(() => {
     handleFetch(urlEstados, addEstados);
@@ -374,7 +438,15 @@ useEffect(()=>{
 
     
     async function getEmpleados(){
-      if(responses?.browser.inputApellidoNombreBrowser){
+      if(responses?.browser.inputApellidoNombreBrowser && responses?.browser.inpurLegajoBrowser){
+        await axios({method: 'get',
+                    url: urlEmpleadoApYLegajo,
+                    timeout: 2000}).then((res) => {
+            dispatch(getEmployes(res.data.result));
+        });
+        return;
+      }
+      else if(responses?.browser.inputApellidoNombreBrowser){
         await axios({method: 'get',
                       url: urlEmpleadoPorApellido,
                       timeout: 2000}).then((res) => {
@@ -388,14 +460,7 @@ useEffect(()=>{
                     timeout: 2000}).then((res) => {
           dispatch(getEmployes(res.data.result));
         });
-        return;
-      }else if(responses?.browser.inputApellidoNombreBrowser && responses?.browser.inpurLegajoBrowser){
-        await axios({method: 'get',
-                    url: urlEmpleadoApYLegajo,
-                    timeout: 2000}).then((res) => {
-            dispatch(getEmployes(res.data.result));
-        });
-        return;
+        return;      
       }else if(responses?.browser.inputApellidoNombreBrowser && responses?.browser.inpurLegajoBrowser && responses?.browser.ordered){
         await axios.get({method: 'get',
                         url: urlApeLegOrdered,
@@ -484,6 +549,7 @@ useEffect(()=>{
       if(tabIndex !== 8){
         dispatch(cleanEmploye())
       }
+      setAgregar(false)
     setDisable(true);
     dispatch(cleanIds())
     dispatch(cleanIdsDoc())
@@ -528,7 +594,7 @@ useEffect(()=>{
     }
     cleanIdsGeneral();
   }
-  
+
   async function deleteItems(objectRequest){
     const { urls, arrays } = objectRequest;
     let bodyPetitionEmpleadoGuarda = {
@@ -961,6 +1027,7 @@ useEffect(()=>{
              .then((res)=>{
               setRefectch(!refetch);
               setSaveEmpleado(!saveEmpleado)
+              setDisable(true)
               if(res.data.statusCode === 200){
                 return swal({
                  title: "Ok",
@@ -984,6 +1051,7 @@ useEffect(()=>{
                 dispatch(updateEmploye(bodyPetitionEmpleadoUpdate))
                 dispatch(setRefetch(!refetching))
                 setRefectch(!refetch);
+                setDisable(true)
                  return swal({
                   title: "Ok",
                   text: "Empleado Modificado con éxito",
@@ -1129,13 +1197,119 @@ useEffect(()=>{
         })
     }
 }
+const getTabComponent = (tabIndex) => {
+  switch (tabIndex) {
+    case 0:
+      return (
+        <DatosPersonales
+          empleados={empleados}
+          disableEstado={disableEstado}
+          image={image}
+          disable={disable}
+          setDisable={setDisable}
+          responses={responses}
+          setResponses={setResponses}
+          valueempl={valueempl}
+          domiciliosEmpleados={domiciliosEmpleados}
+          setRefectch={setRefectch}
+          refetch={refetch}
+          handleTabChange={handleTabChange}
+          tabIndex={tabIndex}
+          ImageSelectedPrevious={ImageSelectedPrevious}
+          setImageSelectedPrevious={setImageSelectedPrevious}
+        />
+      );
+    case 1:
+      return (
+        <Familia
+          disable={disable}
+          setDisable={setDisable}
+          responses={responses}
+          setResponses={setResponses}
+          setRefetch={setRefectch}
+          refetch={refetch}
+        />
+      )
+    case 2 :
+      return(
+        <Liquidacion
+            disable={disable}
+            setDisable={setDisable}
+            responses={responses}
+            setResponses={setResponses}
+            modify={modify}
+          />
+      )
+    case 3 :
+      return(
+        <AdicLiquidacion
+          disable={disable}
+          setDisable={setDisable}
+          responses={responses}
+          setResponses={setResponses}
+          modify={modify}
+        />
+      )
+    case 4 :
+      return(
+        <TrabajosAnteriores
+        setRefetch={setRefectch}
+        refetch={refetch}
+        disable={disable}
+        setDisable={setDisable}
+        responses={responses}
+        setResponses={setResponses}
+      />
+      )
+    case 5 :
+      return(
+        <Documentacion
+          setRefectch={setRefectch}
+          refetch={refetch}
+          disable={disable}
+          setDisable={setDisable}
+          responses={responses}
+          setResponses={setResponses}
+        />
+      )
+      case 6 :
+        return(
+          <Licencias
+            setRefectch={setRefectch}
+            refetch={refetch}
+            setLicenciaEmpladoDatos={setLicenciaEmpladoDatos}
+            licenciaEmpleadoDatos={licenciaEmpleadoDatos}
+            disable={disable}
+            setDisable={setDisable}
+            responses={responses}
+            setResponses={setResponses}
+          />
+        )
+      case 7 :
+        return(
+          <Extras
+            setDatosExtraEmpleado={setDatosExtraEmpleado}
+            datosExtraEmpleado={datosExtraEmpleado}
+            disable={disable}
+            setDisable={setDisable}
+            responses={responses}
+            setResponses={setResponses}
+            refetch={refetch}
+            setRefetch={setRefectch}
+          />
+        )
+      ;default:
+      return null;
+  }
+};
+console.log(tabIndex)
   return (
     <>
     
     {  localStorage.getItem('token') ? <div className="container-fluid">
       <div className="row">
         <div className="col-xl-3 col-lg-3 col-md-3">
-          <Browser modify={modify} setModify={setModify} deleteEmploye={deleteEmploye} setRefectch={setRefectch} refetch={refetch} disable={disable} setDisable={setDisable} setValueEmpl={setValueEmpl} responses={responses} setResponses={setResponses} />
+          <Browser getEmpleados={getEmpleados} modify={modify} setModify={setModify} deleteEmploye={deleteEmploye} setRefectch={setRefectch} refetch={refetch} disable={disable} setDisable={setDisable} setValueEmpl={setValueEmpl} responses={responses} setResponses={setResponses} agregar={agregar}  setAgregar={setAgregar}  />
         </div>
         <div className="col-xl-9 col-lg-9 col-md-9 ">
           <Navbar handleTabChange={handleTabChange} tabIndex={tabIndex} />
@@ -1156,6 +1330,10 @@ useEffect(()=>{
               tabIndex={tabIndex}
               ImageSelectedPrevious={ImageSelectedPrevious}
               setImageSelectedPrevious={setImageSelectedPrevious}
+              agregar={agregar}  
+              setAgregar={setAgregar}
+              handleClickRef={handleClickRef}
+              referencia={referencia}
             />
           )}
           {tabIndex === 1 && (
@@ -1166,6 +1344,10 @@ useEffect(()=>{
               setResponses={setResponses}
               setRefetch={setRefectch}
               refetch={refetch}
+              agregar={agregar}  
+              setAgregar={setAgregar}
+              handleClickRef={handleClickRef}
+              referencia={referencia}
             />
           )}
           {tabIndex === 2 && (
@@ -1175,6 +1357,8 @@ useEffect(()=>{
               responses={responses}
               setResponses={setResponses}
               modify={modify}
+              agregar={agregar}  
+              setAgregar={setAgregar}
             />
           )}
           {tabIndex === 3 && (

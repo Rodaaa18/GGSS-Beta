@@ -6,7 +6,7 @@ import { Routes as Switch,  Route, useParams, useLocation,
 } from "react-router-dom";
 import Empleados from './components/Home/Empleados';
 import Superadmin from './components/Superadmin/Superadmin';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import swal from 'sweetalert';
 import { useDispatch } from 'react-redux';
@@ -26,8 +26,40 @@ function App() {
   const queryParams = new URLSearchParams(window.location.search);
   const token = queryParams.get('token');
   const dispatch = useDispatch();
+  const estadoCivilRef = useRef();
+  const estudiosRef = useRef();
+  const tipoDocumentoRef = useRef();
+  const estadoRef = useRef();
+  const formasPagoRef = useRef();
+  const callesRef = useRef();
+  const cargosRef = useRef();
+  const tDesempeñadasRef = useRef();
+  const mLiquidRef = useRef();
+  const mContratRef = useRef();
+  const parentRef = useRef();
+  const paisesRef = useRef();
+  const pldbRef = useRef();
 
+  function handleClickRef(e, referencia, modalName) {
+    e.preventDefault();
+    referencia.current.click(modalName);
+  }
 
+    const referencias = {
+      estadoCivilRef : estadoCivilRef,
+      estudiosRef: estudiosRef,
+      tipoDocumentoRef : tipoDocumentoRef,
+      estadoRef : estadoRef,
+      formasPagoRef : formasPagoRef,
+      callesRef : callesRef,
+      cargosRef : cargosRef,
+      tDesempeñadasRef : tDesempeñadasRef,
+      mLiquidRef : mLiquidRef,
+      mContratRef : mContratRef,
+      parentRef : parentRef,
+      paisesRef : paisesRef,
+      pldbRef : pldbRef
+    }
   async function validationUser(){
     setLoading(true)
     try{
@@ -92,13 +124,13 @@ function App() {
     <>
       {
         tokenDef ? 
-        <NavbarMenu perfilesUsuario={perfilesUsuario} setTokenDef={setTokenDef} sePerfilesUSuario={sePerfilesUSuario} /> 
+        <NavbarMenu perfilesUsuario={perfilesUsuario} referencias={referencias} setTokenDef={setTokenDef} sePerfilesUSuario={sePerfilesUSuario} /> 
         : 
         <ErrorPage message={error} statusCode={statusCode} loading={loading} /> 
       } 
       {
       tokenDef && <Switch>
-        <Route path="/ficha-empleados" exact element={<Empleados loading={loading} sePerfilesUSuario={sePerfilesUSuario} tokenDef={tokenDef}/>} /> 
+        <Route path="/ficha-empleados" exact element={<Empleados handleClickRef={handleClickRef} referencia={referencias} loading={loading} sePerfilesUSuario={sePerfilesUSuario} tokenDef={tokenDef}/>} /> 
         <Route path="/superadmin" exact element={<Superadmin />} />
       </Switch> 
       }       

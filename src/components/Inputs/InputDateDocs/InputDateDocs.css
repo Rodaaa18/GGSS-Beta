@@ -22,7 +22,15 @@
 .check-label{
 	
 }
+.formulario__grupo__inputs__docs{
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: center;
+	margin-bottom: 1%;
+}
 .form-check-label{
+	width: 15rem;
 	
 }
 .secondCheck2{
@@ -36,13 +44,13 @@
 	box-sizing: border-box;
 	margin-left: 15%;
 	padding: 0%;
-	font-size: 15px;
+	
 
 }
 
 .secondCheckDocs{
 	margin-left: 6.5%;
-	width: 8rem;
+	width: 8.5rem;
 }
 @media screen and (max-width:1366px){
 	.contenedorInputDoc{

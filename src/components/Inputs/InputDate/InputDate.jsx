@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux';
 import "./InputDate.css";
 
-const InputDate = ({ nameInput,display, value, disabled,idInput, onChange, action, setDisable, disable, idInputCheck, valueCheck }) => {
+const InputDate = ({ nameInput,display, value, disabled,idInput, onChange, action, setDisable, disable, idInputCheck, valueCheck, clasess }) => {
   
   const [mostrarComponente, setMostrarComponente] = useState(true);
   const [mostrarComponente2, setMostrarComponente2] = useState(true);
@@ -48,6 +48,23 @@ const InputDate = ({ nameInput,display, value, disabled,idInput, onChange, actio
   
 
   return (
+    clasess ? 
+    <div className={clasess.classOne}>
+        <div className={clasess.classTwo}>
+          <label className={clasess.classThree} htmlFor="flexCheckDefault">
+            {nameInput}
+
+          </label>
+          <input className={mostrarComponente ? "select-date-DatosPerson" : "none"} type="checkbox"  id="flexCheckChecked"  checked={checked} disabled={disabled} />
+          <div className="d-flex flex-row justify-content-start align-items-center">
+            <input className={mostrarComponente2 ? "form-check-input " : "none"}type="checkbox" id={idInputCheck} name={idInputCheck} onChange={(e)=>{setDisable(!disable); setChecked(!checked); onChange(e.target.checked, idInputCheck)}}  checked={checked} disabled={disabled} />
+            <input id={idInput} className={mostrarComponente2 ? "secondCheck2" : "secondCheckNac"} name={idInput} type="date" value={value} disabled={disabled ? disabled : disable} onChange={(e)=>onChange(e.target.value, idInput)} />
+            
+        </div>
+        </div>
+        
+    </div>
+    :
     <div className="formulario__grupo__inputs ">
         <div className="form-check p-0">
           <label className="check-label" htmlFor="flexCheckDefault">

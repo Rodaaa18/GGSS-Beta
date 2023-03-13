@@ -95,7 +95,7 @@ const ChildModal = ({nameModalProp, disabled, array , propsModal, optionsInputs,
             </div>
           </div>
           <div className="col-xl-6">
-            <div className="d-flex flex-column justify-content-start align-items-center">
+            <div className={usaEstados ? "bodyInputsOptions"  : " bodyInputs"}>
               {optionsInputs.map((option, index) => {
                 return (
                   <InputModal
@@ -114,7 +114,7 @@ const ChildModal = ({nameModalProp, disabled, array , propsModal, optionsInputs,
                 );
               })}
             </div>
-            <div className="d-flex flex-column justify-content-start align-items-center">
+            <div className="d-flex flex-column justify-content-start align-items-center ">
                {usaEstados && ( 
                 <TextArea
                   clasess={classesTxtAreaModal}

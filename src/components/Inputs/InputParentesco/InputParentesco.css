@@ -27,8 +27,8 @@
 .form-input-ParentsFlia{
     margin-bottom: 3px;
 	width: 13rem;
-	margin-left: 5rem;
-    margin-right: 0px;
+	margin-left: 4.3rem;
+    margin-right: 0.2rem;
 	background: #fff;
 	border: 3px solid transparent;
 	border-radius: 3px;
@@ -44,8 +44,7 @@
 }
 
 .btn-modal-miau{
-	position: absolute;
-	margin-left: 17.3rem;
+	
 }
 .label_FijarParents{
 	position: relative;
@@ -73,10 +72,29 @@
 	}
 	
 }
+@media screen and (min-width : 1813px){
+	.form-input-ParentsFlia{
+		margin-left: 4.4rem;
+		height: 42px;
+	}
+}
+@media screen and (max-width : 1766px){
+	.form-input-ParentsFlia{
+		margin-left: 5rem;
+		height: 42px;
+	}
+}
+@media screen and (max-width : 1566px){
+	.form-input-ParentsFlia{
+		margin-left: 5rem;
+		height: 42px;
+		height: 42px;
+	}
+}
 @media screen and (max-width : 1366px){
 	.form-input-ParentsFlia{
 		margin-left: 6rem;
-		height: 35px;
+		height: 42px;
 	}
 }
 @media screen and (max-width : 1024px){

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import "./InputCbo.css";
 
-const InputCbo = ({nameLabel, array, value, display, nameButton, idSelected, sexo, idModal, disabled, idInput,onChange, datosPersonalesValue, action, propArrayOp,propArrayOpFem,provinciaAction,valueId, clasess, obligatorio, licencia, defaultChecked, nameCheck,
+const InputCbo = ({nameLabel, array, value, display, nameButton, idSelected, sexo, idModal, disabled, idInput,onChange, datosPersonalesValue, action, propArrayOp,propArrayOpFem,provinciaAction,valueId, clasess, obligatorio, licencia, defaultChecked, nameCheck,handleClickRef, referencia,modalName, esCalle
 }) => {
   
     const [mostrarComponente, setMostrarComponente] = useState(true);
@@ -60,8 +60,11 @@ const InputCbo = ({nameLabel, array, value, display, nameButton, idSelected, sex
                     }
                 </select>
             </div>
-
-        
+            {
+              esCalle && <div className="tercero">
+                    <button disabled={disabled} className=" btnModalDp btn btn-outline-danger btn-sm " onClick={(e)=>handleClickRef(e,referencia,modalName)}>...</button>
+            </div>
+            }
             
         </div>
       </div>
@@ -100,6 +103,9 @@ const InputCbo = ({nameLabel, array, value, display, nameButton, idSelected, sex
                         })
                     }
                 </select>
+            </div>
+            <div className="tercero">
+                    <button disabled={disabled} className=" btnModalDp btn btn-outline-danger btn-sm " onClick={(e)=>handleClickRef(e,referencia,modalName)}>...</button>
             </div>
        
         </div>

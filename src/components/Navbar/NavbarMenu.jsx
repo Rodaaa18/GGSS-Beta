@@ -1,5 +1,5 @@
 //#region -----------------------------------------------------------------------IMPORTS
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import swal from "sweetalert";
 import "./Navbar.css";
@@ -90,7 +90,7 @@ import ErrorPage from "../ErrorPage/ErrorPage";
 // import { useEffect } from 'react';
 //#endregion
 
-const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario }) => {
+const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario, referencias }) => {
   const [modalValues, setModalValues] = useState({});
   const [nameModal, setNameModal] = useState({});
   const [valueItemModal, setValueItemModal] = useState({});
@@ -107,6 +107,11 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario }) => {
   const dispatch = useDispatch();
   const refetch = useSelector((state) => state.modalState.refetch);
   const navigate = useNavigate();
+
+ const estadoCivilRef = useRef();
+
+
+
 
 	const handleClickClose=(nameModalProp)=>{
         let newState = {...nameModal}
@@ -686,7 +691,7 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario }) => {
 			return null;
 		}
 	}
-
+	
 
 	return (
 		<nav className="row gy-3 navbar navbar-expand-lg navbar-light bg-light col-sm-12">
@@ -731,7 +736,7 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario }) => {
 										<ul class="dropdown-menu">
 											<div className="datosEmpleados" style={{ fontSize: "13px" }}>
 												<li>
-													<ButtonCallModal nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="estadosCiviles"  setTransition={setTransition} nameButton="Estados Civiles">
+													<ButtonCallModal parameterRef={referencias.estadoCivilRef} nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="estadosCiviles"  setTransition={setTransition} nameButton="Estados Civiles">
 														<ChildModal 
 															modalValues={modalValues} 
 															onChangeValues={onChangeValues}  
@@ -765,7 +770,7 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario }) => {
 													</ButtonCallModal>
 												</li>
 												<li>
-													<ButtonCallModal nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="Estudios"  setTransition={setTransition} nameButton="Estudios">
+													<ButtonCallModal parameterRef={referencias.estudiosRef} nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="Estudios"  setTransition={setTransition} nameButton="Estudios">
 
 														<ChildModal
 															modalValues={modalValues}
@@ -801,7 +806,7 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario }) => {
 													</ButtonCallModal>
 												</li>
 											<li>
-													<ButtonCallModal nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="TipoDocumento"  setTransition={setTransition} nameButton="Tipo de Documento">
+													<ButtonCallModal parameterRef={referencias.tipoDocumentoRef}  nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="TipoDocumento"  setTransition={setTransition} nameButton="Tipo de Documento">
 														<ChildModal 
 															modalValues={modalValues} 
 															onChangeValues={onChangeValues}  
@@ -836,7 +841,7 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario }) => {
 													</ButtonCallModal>
 												</li>    
 												<li>
-												<ButtonCallModal nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="Estado"  setTransition={setTransition} nameButton="Estado">
+												<ButtonCallModal parameterRef={referencias.estadoRef}  nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="Estado"  setTransition={setTransition} nameButton="Estado">
 														<ChildModal 
 															modalValues={modalValues} 
 															onChangeValues={onChangeValues}  
@@ -873,7 +878,7 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario }) => {
 													</ButtonCallModal>
 												</li>
 												<li>
-												<ButtonCallModal nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="Formas de Pagos"  setTransition={setTransition} nameButton="Formas de Pagos">
+												<ButtonCallModal parameterRef={referencias.formasPagoRef}  nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="Formas de Pagos"  setTransition={setTransition} nameButton="Formas de Pagos">
 														<ChildModal 
 															modalValues={modalValues} 
 															onChangeValues={onChangeValues}  
@@ -909,7 +914,7 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario }) => {
 													</ButtonCallModal>
 												</li>
 												<li>
-													<ButtonCallModal nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="Calles"  setTransition={setTransition} nameButton="Calles">
+													<ButtonCallModal parameterRef={referencias.callesRef}  nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="Calles"  setTransition={setTransition} nameButton="Calles">
 														<ChildModal 
 															modalValues={modalValues} 
 															onChangeValues={onChangeValues}  
@@ -947,7 +952,7 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario }) => {
 													</ButtonCallModal>
 												</li>    
 												<li>
-													<ButtonCallModal nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="Cargos"  setTransition={setTransition} nameButton="Cargos">
+													<ButtonCallModal parameterRef={referencias.cargosRef}  nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="Cargos"  setTransition={setTransition} nameButton="Cargos">
 														<ChildModalOptions 
 															modalValues={modalValues} 
 															onChangeValues={onChangeValues}  
@@ -983,7 +988,7 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario }) => {
 													</ButtonCallModal>
 												</li>    
 												<li>
-													<ButtonCallModal nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="Tareas Desempeñadas"  setTransition={setTransition} nameButton="Tareas Desempeñadas">
+													<ButtonCallModal parameterRef={referencias.tDesempeñadasRef}  nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="Tareas Desempeñadas"  setTransition={setTransition} nameButton="Tareas Desempeñadas">
 														<ChildModalOptions 
 															modalValues={modalValues} 
 															onChangeValues={onChangeValues}  
@@ -1019,7 +1024,7 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario }) => {
 													</ButtonCallModal>
 												</li>    
 												<li>
-													<ButtonCallModal nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="Modos de Liquidacion"  setTransition={setTransition} nameButton="Modos de Liquidacion">
+													<ButtonCallModal parameterRef={referencias.mLiquidRef}  nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="Modos de Liquidacion"  setTransition={setTransition} nameButton="Modos de Liquidacion">
 														<ChildModalOptions 
 															modalValues={modalValues} 
 															onChangeValues={onChangeValues}  
@@ -1055,7 +1060,7 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario }) => {
 													</ButtonCallModal>
 												</li>    
 												<li>
-													<ButtonCallModal nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="Modos de Contratacion"  setTransition={setTransition} nameButton="Modos de Contratacion">
+													<ButtonCallModal parameterRef={referencias.mContratRef}  nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="Modos de Contratacion"  setTransition={setTransition} nameButton="Modos de Contratacion">
 														<ChildModalOptions 
 															modalValues={modalValues} 
 															onChangeValues={onChangeValues}  
@@ -1092,7 +1097,7 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario }) => {
 													</ButtonCallModal>
 												</li>    
 												<li>
-													<ButtonCallModal nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="Parentescos"  setTransition={setTransition} nameButton="Parentescos">
+													<ButtonCallModal parameterRef={referencias.parentRef}  nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="Parentescos"  setTransition={setTransition} nameButton="Parentescos">
 														<ModalParentesco 
 															modalValues={modalValues} 
 															onChangeValues={onChangeValues}  
@@ -1135,7 +1140,7 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario }) => {
 													</ButtonCallModal>
 												</li>    
 												<li>
-													<ButtonCallModal nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="Paises"  setTransition={setTransition} nameButton="Paises">
+													<ButtonCallModal parameterRef={referencias.paisesRef}  nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="Paises"  setTransition={setTransition} nameButton="Paises">
 														<ModalPaises 
 															modalValues={modalValues} 
 															onChangeValues={onChangeValues}  
@@ -1169,17 +1174,17 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario }) => {
 													</ButtonCallModal>
 												</li>    
 												<li>
-												<ButtonCallModal nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="Provincias - Localidades - Departamentos - Barrios "  setTransition={setTransition} nameButton="Provincias - Localidades - Departamentos - Barrios ">
+												<ButtonCallModal parameterRef={referencias.pldbRef}  nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="Provincias - Localidades - Departamentos - Barrios"  setTransition={setTransition} nameButton="Provincias - Localidades - Departamentos - Barrios">
 														<ModalProvinciasDptos 
 															modalValues={modalValues} 
 															onChangeValues={onChangeValues}  
 															valueItemModal={valueItemModal} 
 															setValueItemModal={setValueItemModal} 
-															nameModalProp="Provincias - Localidades - Departamentos - Barrios " 
+															nameModalProp="Provincias - Localidades - Departamentos - Barrios" 
 															handleClickClose={handleClickClose} 
 															setTransition={setTransition} 
 															array={ provinciasValue && provinciasValue }  
-															nameModal="Provincias - Localidades - Departamentos - Barrios " 
+															nameModal="Provincias - Localidades - Departamentos - Barrios" 
 															propsModal={propsModalProvincias} 
 															optionsInputs={objectProvincias} 
 															transition={transition}

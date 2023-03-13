@@ -1,3 +1,12 @@
 .accordion-button::after{
     margin-left: 92%;
 }
+.colTapaModal{
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    align-items: start;
+    width: 38rem;
+    height: 0;
+}

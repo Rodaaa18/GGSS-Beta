@@ -7,3 +7,5 @@ export const SAVE_IDS = "SAVE_IDS"
 export const CLEAN_IDS_DOC = "CLEAN_IDS_DOC"
 export const DOCU_DEL_EMPLEADO = "DOCU_DEL_EMPLEADO"
 export const DELETE_DOC_EMPLEADO = "DELETE_DOC_EMPLEADO"
+
+export const GET_AR_AD = "GET_AR_AD"

@@ -504,6 +504,7 @@ const FieldSet = ({
           licenciaDelEmpleado={licenciasDelEmpleado}
           columns={columns1}
           value={[]}
+          disabled={disabled}
         />
         <div className="col-xl-12 d-flex flex-row-reverse mt-2">
           <button
@@ -525,6 +526,7 @@ const FieldSet = ({
           detalleLicencia={detalleLicencia}
           columns={columns2}
           value={[]}
+          disabled={disabled}
         />
       </div>
     </>

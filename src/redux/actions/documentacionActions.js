@@ -1,4 +1,4 @@
-import { ADD_NEW_DOC, CLEAN_IDS_DOC, DELETE_DOC_EMPLEADO, DOCU_DEL_EMPLEADO, GET_DOC_EMPL, GET_DOC_SELECT, GET_INPUT_VALUE, RESET_VALUE, SAVE_IDS } from "../types/documentacionTypes"
+import { ADD_NEW_DOC, CLEAN_IDS_DOC, DELETE_DOC_EMPLEADO, DOCU_DEL_EMPLEADO, GET_AR_AD, GET_DOC_EMPL, GET_DOC_SELECT, GET_INPUT_VALUE, RESET_VALUE, SAVE_IDS } from "../types/documentacionTypes"
 
 export const getInputValue=(payload)=>{
     return {
@@ -45,6 +45,12 @@ export const documentacionDelEmpleado=(payload)=>{
 export const deleteDocuEmpleado=(payload)=>{
     return{
         type : DELETE_DOC_EMPLEADO,
+        payload
+    }
+}
+export const getArAdjuntos=(payload)=>{
+    return{
+        type: GET_AR_AD,
         payload
     }
 }

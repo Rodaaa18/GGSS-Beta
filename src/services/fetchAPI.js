@@ -14,13 +14,13 @@ export function getEmpleado(empleados, idEmpleado){
 
 export function getEmployeByLegajo(empleados, legajo){
   return new Promise((resolve)=>{
-    setTimeout(()=> resolve(empleados.filter(e=> e.legajo.includes(legajo))),0);
+    setTimeout(()=> resolve(empleados.filter(e=> e.legajo.startsWith(legajo))),0);
 }); 
 }
 
 export function getEmployeByName(empleados, name){
   return new Promise((resolve)=>{
-    setTimeout(()=> resolve(empleados.filter(e=> e.apellido.includes(name) || e.nombres.includes(name))),0);
+    setTimeout(()=> resolve(empleados.filter(e=> e.apellido.startsWith(name) || e.nombres.includes(name))),0);
 }); 
 }
 

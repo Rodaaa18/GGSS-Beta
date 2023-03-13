@@ -19,7 +19,8 @@ const EstudioFlia = ({
   action,
   namePropOp,
   idSelect,
-  obligatorio
+  obligatorio,
+  handleClickRef, referencia,modalName
 }) => {
   const [mostrarComponente, setMostrarComponente] = useState(true);
 
@@ -63,21 +64,9 @@ const EstudioFlia = ({
             })}
           </select>
         </div>
-        <div className="col-xl-3 d-flex justify-content-end align-items-center btn-modal-estu">
-          {/* <ButtonCallModal
-            idModal={idModal}
-            className={
-              mostrarComponente
-                ? "tercero btn btn-validacion btn-outline-danger btn-sm ml-2"
-                : "none"
-            }
-            nameButton={nameButton}
-            useNavbar={false}
-            disableButton={true}
-            useButton={true}
-            disabled={disable}
-          /> */}
-        </div>
+        <div className="col d-flex justify-content-end align-items-center btn-modal-miau">
+                    <button disabled={disable} className=" btnModalDp btn btn-outline-danger btn-sm " onClick={(e)=>handleClickRef(e,referencia,modalName)}>...</button>
+            </div>
         <div className="col-xl-2 radio-Fijar-estu mt-2">
         <div
           className={

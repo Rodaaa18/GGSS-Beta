@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import './TextArea.css'
 
 
-const TextArea = ({ characterLimit = 255, onChange,idInput, disableModal, clasess }) => {
+const TextArea = ({ characterLimit = 255, onChange,idInput, disableModal, clasess, disable }) => {
     const [input, setInput] = useState('');
 
     function handleChange(event) {

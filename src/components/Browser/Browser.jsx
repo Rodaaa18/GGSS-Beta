@@ -25,7 +25,7 @@ import {
 import { setRefetch } from "../../redux/actions/modalesActions";
 import { recharge } from "../../redux/actions/domiciliosActions";
 
-const Browser = ({ disable, setDisable, setValueEmpl, responses, setResponses, setRefectch, refetch, deleteEmploye,setModify }) => {
+const Browser = ({ getEmpleados, disable, setDisable, setValueEmpl, responses, setResponses, setRefectch, refetch, deleteEmploye,setModify, agregar , setAgregar  }) => {
   const [checked, setChecked] = useState(false);
   const [ browser, setBrowser ] = useState(responses["browser"]);
 
@@ -66,28 +66,33 @@ const Browser = ({ disable, setDisable, setValueEmpl, responses, setResponses, s
   const detalleSeleccionado = useSelector(
     (state) => state.licenciasState.detalleSelect
   );
+
   function onSelect(e, name, idEmpleado) {
-    
-    //dispatch(deleteDetLic(detalleSeleccionado.idDetalleLicenciaEmpleado));
-    //dispatch(clearLicSelect());
     dispatch(recharge(!recharged))
     getEmployeById(empleados, idEmpleado).then((res) => {
       
       dispatch(addOneEmploye(res[0]));
     });
   }
-
-  function onChange(e, action) {
-    dispatch({
-      type: action,
-      payload: { name: e.target.name, value: e.target.value },
-    });
+  function onEnter(name, esLegajo, legajo){
+    dispatch(recharge(!recharged))
+    if(!esLegajo){
+      getEmpleados()
+    }else{
+      getEmployeByLegajo(empleados, legajo).then((res) => {
+      
+        dispatch(addOneEmploye(res[0]));
+      });
+    }
+    
   }
+  
 
   function habilitaEdit() {
     setValueEmpl(true)
     setRefectch(!refetch)
     dispatch(cleanEmploye())
+    setAgregar(true);
     
     Array.from(document.querySelectorAll("input")).forEach(
       (input) => (input.value = "")
@@ -121,6 +126,25 @@ const Browser = ({ disable, setDisable, setValueEmpl, responses, setResponses, s
       icon: "error",
     });
   }
+  function clearLegajo(){
+    if(browser?.inputApellidoNombreBrowser)
+    {
+      const newResponse = {...browser};
+      newResponse["inpurLegajoBrowser"] = "";
+      let inputValue = document.querySelector("#inpurLegajoBrowser");
+      inputValue.value = "";
+      setBrowser({
+        ...newResponse
+      });
+      setResponses({
+        ...responses,
+        browser
+      });
+    }
+  }
+  useEffect(()=>{
+    clearLegajo();
+  },[browser?.inputApellidoNombreBrowser])
   
   return (
     <>
@@ -138,6 +162,13 @@ const Browser = ({ disable, setDisable, setValueEmpl, responses, setResponses, s
               id="inpurLegajoBrowser"
               placeholder="Ingrese Legajo "
               disabled={!disable}
+              onKeyDown={(e)=>{
+                if(e.key === 'Enter'){
+                  const legajo = e.target.value;
+                  onEnter(null, true, legajo)
+                }
+              }}
+              
             />
 
             <div className="row mt-1 m-0 p-0  w-100">
@@ -150,6 +181,13 @@ const Browser = ({ disable, setDisable, setValueEmpl, responses, setResponses, s
                 id="inputApellidoNombreBrowser"
                 placeholder="Ingrese Nombre "
                 disabled={!disable}
+                onKeyDown={(e)=>{
+                  if(e.key === 'Enter'){
+                    const name = e.target.value;
+                    onEnter(name, false, null)
+                  }
+                }}
+                
               />              
             </div>
             {/* <div className="wor mt-1 m-0 p-0 w-100">

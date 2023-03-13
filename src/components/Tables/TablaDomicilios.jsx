@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectedIdDomicilio } from "../../redux/actions/domiciliosActions";
 
-const TablaDomicilios = ({ columns , refetch, setRefectch, departamentos, localidades, provincias, barrios, calles}) => {
+const TablaDomicilios = ({ columns , disabled, setRefectch, departamentos, localidades, provincias, barrios, calles}) => {
   
   //const [dataTable, setDataTable] = useState([]);
  
@@ -16,10 +16,10 @@ const dispatch = useDispatch();
   return (
     <>
       <div className="row mt-5 overflow-scroll rowTAbles">
-        <table className="table table-danger">
+        <table disabled={disabled} className="table table-danger">
           <thead>
             <tr>
-              <th>Seleccionar</th>
+              <th >Seleccionar</th>
               {columns.map((col, i) => {
                 return (
                   <th key={i} scope="col" className="px-2">
@@ -35,7 +35,7 @@ const dispatch = useDispatch();
                 return(
                   <tr>
                     <th>
-                      <input type="radio" name="seleccionar" id="seleccionar" value={item.idDomicilio} onClick={(e)=> dispatch(selectedIdDomicilio(e.target.value))} />
+                      <input type="radio" disabled={disabled} name="seleccionar" id="seleccionar" value={item.idDomicilio} onClick={(e)=> dispatch(selectedIdDomicilio(e.target.value))} />
                     </th>
                     <th>
                       <input  type="checkbox" disabled="disabled" className="border-0 px-2" id="capitulo"  value={item.predeterminado} checked={item.predeterminado === null ? false : item.predeterminado}/>

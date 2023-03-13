@@ -12,10 +12,12 @@ import { AXIOS_ERROR, SET_LOADING } from '../../redux/types/fetchTypes';
 import { addDocumentacionEmpleados, addNewDoc, deleteDocu } from '../../redux/actions/fetchActions';
 import axios from 'axios';
 import { cleanIdsDoc, deleteDocuEmpleado, getInputValue, getOneDocumento, saveIds } from '../../redux/actions/documentacionActions';
-import { inputButtonClasess, inputButtonClasessDocumentacion } from '../../classes/classes';
+import { classesDateDocs, inputButtonClasess, inputButtonClasessDocumentacion } from '../../classes/classes';
 import { GET_INPUT_VALUE } from '../../redux/types/documentacionTypes';
 import swal from 'sweetalert';
 import { setRefetch } from '../../redux/actions/modalesActions';
+import ButtonCallModal from '../ButtonCallModal/ButtonCallModal';
+import ArchivosAdjuntos from './ArchivosAdjuntos/ArchivosAdjuntos';
 
 const Documentacion = ({responses, setResponses, disable, setRefectch, refetch}) => {
     const empleadoUno = useSelector((state)=> state.employeStates.employe);
@@ -25,10 +27,16 @@ const Documentacion = ({responses, setResponses, disable, setRefectch, refetch})
     const [ disableI, setDisableI] = useState(true);
     const [ formDocumentacion, setFormDocumentacion ] = useState(responses["formDocumentacion"]);
     const [ body , setBody ] = useState(0);
+    const [ nameModal, setNameModal ] = useState({});
 
     const urlDocPost= `http://54.243.192.82/api/EmpleadosDocumentacion?id=${empleadoUno.iDempleado}`;
     const urlPost = "http://54.243.192.82/api/EmpleadosDocumentacion"
     const documentacionSeleccionada = useSelector((state)=> state.documentacionState.documentacionSeleccionada);
+    const urlArchivosAdjuntos = `http://54.243.192.82/api/ArchivosDocumentacionEmpleados/${empleadoUno?.iDempleado}`
+
+    const archivosAdjuntosEmpleado = useSelector((state)=> state.documentacionState.archivosAdjuntosEmpleado);
+
+        console.log(archivosAdjuntosEmpleado)
 
     function onChangeValues(e, key){
         const newResponse = {...formDocumentacion};
@@ -43,9 +51,20 @@ const Documentacion = ({responses, setResponses, disable, setRefectch, refetch})
           formDocumentacion
         });      
     },[formDocumentacion]);
-    
+    const handleFetchComun = async (url, action) => {
+        dispatch({ type: SET_LOADING });
+        await axios
+          .get(url)
+          .then((res) => {
+           console.log(res)
+            dispatch(action(res.data));
+          })
+          .catch((err) => {
+            dispatch({ type: AXIOS_ERROR });
+          });
+      };
     useEffect(()=>{
-        
+        //handleFetchComun(urlArchivosAdjuntos, getArAdjuntos);
     },[])
     
     const documentacionEmpleados = useSelector((state)=> state.generalState.documentacionEmpleados);
@@ -111,6 +130,12 @@ const Documentacion = ({responses, setResponses, disable, setRefectch, refetch})
         dispatch(deleteDocuEmpleado(id))
         dispatch(saveIds(id))
     }
+    const handleClickClose=(nameModalProp)=>{
+        let newState = {...nameModal}
+    
+        newState[nameModalProp] = false;
+        setNameModal(newState);
+    }
     
 return (
     <div className='container'>
@@ -118,11 +143,11 @@ return (
             <EmployeData />
         </div>
         <div className='row'>
-            <div className='col-xl-12'>
+            <div className='col-xl-12 d-flex flex-row justify-content-start align-items-center'>
                 <InputDateDocs nameInput="Fecha Presentación" idInput="inputDatePresentacion" display={false} onChange={onChangeValues} action={GET_INPUT_VALUE} disabled={disable} value={formDocumentacion?.inputDatePresentacion && formDocumentacion?.inputDatePresentacion} />
             </div>
             <div className='col-xl-12'>
-                <InputDate disabled={disable} nameInput="Fecha Vencimiento" disable={disableI} setDisable={setDisableI} idInput="inputDateVencimiento" display={true}  onChange={onChangeValues} action={GET_INPUT_VALUE} actionReset={getInputValue} value={formDocumentacion?.inputDateVencimiento && formDocumentacion?.inputDateVencimiento} valueCheck={formDocumentacion?.inputCheckDocusDate && formDocumentacion?.inputCheckDocusDate} idInputCheck="inputCheckDocusDate" />
+                <InputDate clasess={classesDateDocs} disabled={disable} nameInput="Fecha Vencimiento:" disable={disableI} setDisable={setDisableI} idInput="inputDateVencimiento" display={true}  onChange={onChangeValues} action={GET_INPUT_VALUE} actionReset={getInputValue} value={formDocumentacion?.inputDateVencimiento && formDocumentacion?.inputDateVencimiento} valueCheck={formDocumentacion?.inputCheckDocusDate && formDocumentacion?.inputCheckDocusDate} idInputCheck="inputCheckDocusDate" />
             </div>
             <div className='col-xl-12'>
                 <InputButtonLiquidacion
@@ -141,7 +166,7 @@ return (
                 />
             </div>
             <div className='col-xl-12'>
-                <TextArea inputName="Observaciones " onChange={onChangeValues} idInput="textAreaDocumentacion" value={formDocumentacion?.textAreaDocumentacion && formDocumentacion?.textAreaDocumentacion} disabled={disable} />
+                <TextArea disableModal={disable} inputName="Observaciones " onChange={onChangeValues} idInput="textAreaDocumentacion" value={formDocumentacion?.textAreaDocumentacion && formDocumentacion?.textAreaDocumentacion} disabled={disable} />
             </div>
             <div className='col-xl-12 contDocumentacion'>
                 <CheckLabel idInput="inputCheckLiquidacion" nameLabel="Se tiene en cuenta en la Liquidación (Sólo si se cumplen las condiciones necesarias)"  onChange={onChangeValues} action={GET_INPUT_VALUE} value={formDocumentacion?.inputCheckLiquidacion && formDocumentacion?.inputCheckLiquidacion} disabled={disable} />
@@ -151,7 +176,20 @@ return (
             </div>
             <div className='col-xl-12 contDocumentacion'>
                 <ButtonCancelarAceptar idElimiar={documentacionSeleccionada.idEmpleadoDocumentacion && documentacionSeleccionada.idEmpleadoDocumentacion} cancelar="-" aceptar="+" functionSend={sendDataDoc} functionDelete={deleteData} disabled={disable} />
-                <TableBasic1 refetch={refetch} setRefetch={setRefectch} columns={columns} value={documentacionDelEmpleado}  documentaciones={documentaciones} disabled={disable} />
+                <TableBasic1  refetch={refetch} setRefetch={setRefectch} columns={columns} value={documentacionDelEmpleado}  documentaciones={documentaciones} disabled={disable} />
+            </div>
+            <div className='col-xl-12 contDocumentacion mt-2'>
+                <ButtonCallModal esBoton={true} nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="archivosAdjuntos" nameButton="Adjuntar Archivos">
+                    <ArchivosAdjuntos 
+                    handleClickClose={handleClickClose}
+                    nameModal = "Archivos Adjuntos"
+                    nameModalProp="archivosAdjuntos"
+                    onChangeValues={onChangeValues}
+                    formDocumentacion={formDocumentacion}
+                    refetch={refetch} 
+                    setRefetch={setRefectch}
+                    />
+                </ButtonCallModal>
             </div>
         </div>
     </div>
