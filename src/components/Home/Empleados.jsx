@@ -52,6 +52,7 @@ import {
   addTareasDesempeñadas,
   addTiposDocumento,
   disabledInputs,
+  getArchivosAdjuntos,
   getParSueldos,
   saveDatosExtrasEmpleados,
 } from "../../redux/actions/fetchActions";
@@ -160,7 +161,7 @@ const Empleados = ({tokenDef, setTokenDef, sePerfilesUSuario, loading, handleCli
     "http://54.243.192.82/api/DetalleLicenciasEmpleados";
   const urlEsquemasConceptos = "http://54.243.192.82/api/ConceptosEsquemas";
   const urlParSueldos = "http://54.243.192.82/api/ParSueldos";
-
+ const urlArchivosAdjuntos = "http://54.243.192.82/api/ArchivosDocumentacionEmpleados/sp_ArchivosDocumentacionEmpleadosDatos"
 
   //#endregion
 
@@ -209,7 +210,12 @@ const Empleados = ({tokenDef, setTokenDef, sePerfilesUSuario, loading, handleCli
 const domiciliosEmpleados = useSelector((state)=> state.generalState.domicilios)
 const empleadoDomicilio = useSelector((state)=> state.domiciliosStates.domicilioEmpleado);
 const recharge = useSelector((state)=> state.domiciliosStates.recharge);
-
+const bodyArchivosDocs = {
+  "idArchivoDocumentacionEmpleado": 0,
+  "idEmpleadoDocumentacion": 0,
+  "modo": 0,
+  "idEmpleado": 0
+}
 
 //#region useEffect handleFetch
 useEffect(()=>{
@@ -221,8 +227,13 @@ useEffect(()=>{
    handleFetch(urlDomicilios, addDomicilios);
    handleFetch(urlParSueldos, getParSueldos);
    handleFetch(urlDocumentacionEmpleados, addDocumentacionEmpleados);
-
-   handleFetch(urlArchivosAdjuntos, getArAdjuntos);
+   axios.post(urlArchivosAdjuntos, bodyArchivosDocs).then((res)=>{
+    console.log(res)
+    if(res.status === 200){
+      dispatch(getArchivosAdjuntos(res.data.result))
+    }
+   })
+   //handleFetch(urlArchivosAdjuntos, getArAdjuntos);
 },[refetching, empleadoUno, refetch])
 
 useEffect(()=>{

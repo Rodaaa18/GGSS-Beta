@@ -1,7 +1,7 @@
 import React, { forwardRef, useImperativeHandle } from 'react'
 import BasicModal from '../Modals/BasicModal'
 
-const ButtonCallModal = forwardRef(({setNameModal, nameModal, closeModal, nameButton, children, setTransition, nameModalProp, parameterRef}, ref) => {
+const ButtonCallModal = forwardRef(({setNameModal, nameModal, closeModal, nameButton, children, setTransition, nameModalProp, parameterRef, esBoton}, ref) => {
     
     
     const handleClick=(nameModal)=>{
@@ -16,7 +16,7 @@ const ButtonCallModal = forwardRef(({setNameModal, nameModal, closeModal, nameBu
     
   return (
     <div>
-        <button ref={parameterRef} onClick={()=>{handleClick(nameModal)}} className="dropdown-item colorFont">
+        <button ref={parameterRef} onClick={()=>{handleClick(nameModal)}} className={esBoton ? "btn btn-outline-danger btn-sm" : "dropdown-item colorFont"}>
             {nameButton}
         </button>
         <BasicModal title="Modal Prueba" isOpen={nameModal[nameModalProp]}  setTransition={setTransition}>

@@ -64,7 +64,7 @@ const Documentacion = ({responses, setResponses, disable, setRefectch, refetch})
           });
       };
     useEffect(()=>{
-        handleFetchComun(urlArchivosAdjuntos, getArAdjuntos);
+        //handleFetchComun(urlArchivosAdjuntos, getArAdjuntos);
     },[])
     
     const documentacionEmpleados = useSelector((state)=> state.generalState.documentacionEmpleados);
@@ -184,6 +184,10 @@ return (
                     handleClickClose={handleClickClose}
                     nameModal = "Archivos Adjuntos"
                     nameModalProp="archivosAdjuntos"
+                    onChangeValues={onChangeValues}
+                    formDocumentacion={formDocumentacion}
+                    refetch={refetch} 
+                    setRefetch={setRefectch}
                     />
                 </ButtonCallModal>
             </div>
