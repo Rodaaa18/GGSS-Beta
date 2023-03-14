@@ -39,6 +39,30 @@ const Documentacion = ({responses, setResponses, disable, setRefectch, refetch})
 
     function onChangeValues(e, key){
         const newResponse = {...formDocumentacion};
+        if(key === "inputDatePresentacion"){
+            const inputDate = new Date(e);
+            if (inputDate.getFullYear() > 2050) {
+              const maxDate = new Date("2050-12-31");
+              const formattedMaxDate = maxDate.toISOString().slice(0, 10);
+              newResponse.inputDatePresentacion = formattedMaxDate;
+              setFormDocumentacion({
+                ...newResponse
+              });
+              return;
+            }
+          }
+          if(key === "inputDateVencimiento"){
+            const inputDate = new Date(e);
+            if (inputDate.getFullYear() > 2050) {
+              const maxDate = new Date("2050-12-31");
+              const formattedMaxDate = maxDate.toISOString().slice(0, 10);
+              newResponse.inputDateVencimiento = formattedMaxDate;
+              setFormDocumentacion({
+                ...newResponse
+              });
+              return;
+            }
+          }
         newResponse[key] = e;
         setFormDocumentacion({
             ...newResponse

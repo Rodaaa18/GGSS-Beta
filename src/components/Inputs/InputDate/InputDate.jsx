@@ -58,7 +58,7 @@ const InputDate = ({ nameInput,display, value, disabled,idInput, onChange, actio
           <input className={mostrarComponente ? "select-date-DatosPerson" : "none"} type="checkbox"  id="flexCheckChecked"  checked={checked} disabled={disabled} />
           <div className="d-flex flex-row justify-content-start align-items-center">
             <input className={mostrarComponente2 ? "form-check-input " : "none"}type="checkbox" id={idInputCheck} name={idInputCheck} onChange={(e)=>{setDisable(!disable); setChecked(!checked); onChange(e.target.checked, idInputCheck)}}  checked={checked} disabled={disabled} />
-            <input id={idInput} className={mostrarComponente2 ? "secondCheck2" : "secondCheckNac"} name={idInput} type="date" value={value} disabled={disabled ? disabled : disable} onChange={(e)=>onChange(e.target.value, idInput)} />
+            <input id={idInput} className={mostrarComponente2 ? "secondCheck2" : "secondCheckNac"} name={idInput} max="2050-12-31" type="date" value={value} disabled={disabled ? disabled : disable} onChange={(e)=>onChange(e.target.value, idInput)} />
             
         </div>
         </div>
@@ -75,7 +75,7 @@ const InputDate = ({ nameInput,display, value, disabled,idInput, onChange, actio
         </div>
         <div className="d-flex flex-row justify-content-start align-items-center">
             <input className={mostrarComponente2 ? "form-check-input " : "none"}type="checkbox" id={idInputCheck} name={idInputCheck} onChange={(e)=>{setDisable(!disable); setChecked(!checked); onChange(e.target.checked, idInputCheck)}}  checked={checked} disabled={disabled} />
-            <input id={idInput} className={mostrarComponente2 ? "secondCheck2" : "secondCheckNac"} name={idInput} type="date" value={value} disabled={disabled ? disabled : disable} onChange={(e)=>onChange(e.target.value, idInput)} />
+            <input id={idInput} className={mostrarComponente2 ? "secondCheck2" : "secondCheckNac"} name={idInput} max="2050-12-31" type="date" value={value} disabled={disabled ? disabled : disable} onChange={(e)=>onChange(e.target.value, idInput)} />
             
         </div>
     </div>

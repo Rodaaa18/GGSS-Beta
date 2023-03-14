@@ -228,7 +228,6 @@ useEffect(()=>{
    handleFetch(urlParSueldos, getParSueldos);
    handleFetch(urlDocumentacionEmpleados, addDocumentacionEmpleados);
    axios.post(urlArchivosAdjuntos, bodyArchivosDocs).then((res)=>{
-    console.log(res)
     if(res.status === 200){
       dispatch(getArchivosAdjuntos(res.data.result))
     }
@@ -431,10 +430,10 @@ useEffect(() => {
 
 
     const url = `http://54.243.192.82/api/Empleados?page=2000`;
-    const urlEmpleadoPorApellido = `http://54.243.192.82/api/Empleados?records=0&page=1&filter=${responses?.browser?.inputApellidoNombreBrowser ? responses?.browser?.inputApellidoNombreBrowser : null}&ordered=true`;
-    const urlEmpleadoPorLegajo = `http://54.243.192.82/api/Empleados?records=0&page=1&legajo=${responses?.browser?.inpurLegajoBrowser ? responses?.browser?.inpurLegajoBrowser : null}&ordered=true`;
-    const urlEmpleadoApYLegajo = `http://54.243.192.82/api/Empleados?records=0&page=1&filter=${responses?.browser?.inputApellidoNombreBrowser ? responses?.browser.inputApellidoNombreBrowser : null}&legajo=${responses?.browser?.inpurLegajoBrowser ? responses?.browser?.inpurLegajoBrowser : null}&ordered=true`;
-    const urlApeLegOrdered = `http://54.243.192.82/api/Empleados?records=10000&filter=${responses?.browser?.inputApellidoNombreBrowser ? responses?.browser?.inputApellidoNombreBrowser : null}&legajo=${responses?.browser?.inpurLegajoBrowser ? responses?.browser?.inpurLegajoBrowser : null}&ordered=true`;
+    const urlEmpleadoPorApellido = `http://54.243.192.82/api/Empleados?filter=${responses?.browser?.inputApellidoNombreBrowser ? responses?.browser?.inputApellidoNombreBrowser : null}&ordered=true`;
+    const urlEmpleadoPorLegajo = `http://54.243.192.82/api/Empleados?legajo=${responses?.browser?.inpurLegajoBrowser ? responses?.browser?.inpurLegajoBrowser : null}&ordered=true`;
+    const urlEmpleadoApYLegajo = `http://54.243.192.82/api/Empleados?filter=${responses?.browser?.inputApellidoNombreBrowser ? responses?.browser.inputApellidoNombreBrowser : null}&legajo=${responses?.browser?.inpurLegajoBrowser ? responses?.browser?.inpurLegajoBrowser : null}&ordered=true`;
+    const urlApeLegOrdered = `http://54.243.192.82/api/Empleados?filter=${responses?.browser?.inputApellidoNombreBrowser ? responses?.browser?.inputApellidoNombreBrowser : null}&legajo=${responses?.browser?.inpurLegajoBrowser ? responses?.browser?.inpurLegajoBrowser : null}&ordered=true`;
 
     
     async function getEmpleados(){
@@ -546,9 +545,7 @@ useEffect(() => {
     setResponses({
       ...responses,
       formDatosPersonales})
-      if(tabIndex !== 8){
-        dispatch(cleanEmploye())
-      }
+     
       setAgregar(false)
     setDisable(true);
     dispatch(cleanIds())
@@ -1302,7 +1299,6 @@ const getTabComponent = (tabIndex) => {
       return null;
   }
 };
-console.log(tabIndex)
   return (
     <>
     
@@ -1334,6 +1330,7 @@ console.log(tabIndex)
               setAgregar={setAgregar}
               handleClickRef={handleClickRef}
               referencia={referencia}
+              modify={modify}
             />
           )}
           {tabIndex === 1 && (

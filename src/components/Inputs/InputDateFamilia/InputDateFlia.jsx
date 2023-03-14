@@ -29,8 +29,9 @@ const InputDateFlia = ({nameInput,display, checked, value, idInput, disable, val
               name={idInput}
               onChange={(e)=> onChange(e.target.value, idInput)}
               type="date" 
-              value={fecha} 
+              value={valueGeneral? valueGeneral : fecha} 
               disabled={disable}
+              max="2050-12-31"
               />
           
           <input 

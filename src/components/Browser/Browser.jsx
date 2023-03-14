@@ -31,6 +31,17 @@ const Browser = ({ getEmpleados, disable, setDisable, setValueEmpl, responses, s
 
   function onChangeValues(e, key){
     const newResponse = {...browser};
+    if(key === 'inpurLegajoBrowser'){
+      if(browser?.inputApellidoNombreBrowser !== "" && e !== ""){
+        newResponse.inputApellidoNombreBrowser = "";
+      }
+      newResponse.inpurLegajoBrowser = e;
+    } else if(key === "inputApellidoNombreBrowser"){
+      if(browser?.inpurLegajoBrowser !== "" && e !== ""){
+        newResponse.inpurLegajoBrowser = "";
+      }
+      newResponse.inputApellidoNombreBrowser = e;
+    }
     newResponse[key] = e;
     setBrowser({
       ...newResponse
@@ -126,25 +137,10 @@ const Browser = ({ getEmpleados, disable, setDisable, setValueEmpl, responses, s
       icon: "error",
     });
   }
-  function clearLegajo(){
-    if(browser?.inputApellidoNombreBrowser)
-    {
-      const newResponse = {...browser};
-      newResponse["inpurLegajoBrowser"] = "";
-      let inputValue = document.querySelector("#inpurLegajoBrowser");
-      inputValue.value = "";
-      setBrowser({
-        ...newResponse
-      });
-      setResponses({
-        ...responses,
-        browser
-      });
-    }
-  }
-  useEffect(()=>{
+
+  /* useEffect(()=>{
     clearLegajo();
-  },[browser?.inputApellidoNombreBrowser])
+  },[browser?.inputApellidoNombreBrowser, browser?.inpurLegajoBrowser]) */
   
   return (
     <>

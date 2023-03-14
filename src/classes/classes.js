@@ -142,7 +142,7 @@ export const classesEstadosCiviles = {
     "classOne" : "input-group contTxtArea",
     "classTwo" : 'form__grupo__label pl-1 mt-3',
     "classThree" : 'form__grupo__label__label m-0',
-    "classFour" : 'bg-white w-100 form-control text-black fs-6 pt-0 pb-0',
+    "classFour" : 'bg-white w-100 form-control text-black fs-6 pt-0 pb-0 ',
      classFive : "txtAreaPersonales",
   }
   export const classesTxtAreaExtras= {
@@ -156,7 +156,7 @@ export const classesEstadosCiviles = {
     "classOne" : "input-group contTxtArea",
     "classTwo" : 'form__grupo__label__modal pl-1 mt-3',
     "classThree" : 'form__grupo__label__label m-0',
-    "classFour" : 'bg-white w-100 form-control text-black fs-6 pt-0 pb-0',
+    "classFour" : 'bg-white w-100 form-control text-black fs-6 pt-0 pb-0 ',
      classFive : "txtAreaModal",
   }
  

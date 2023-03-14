@@ -23,6 +23,7 @@ const InputCbo = ({nameLabel, array, value, display, nameButton, idSelected, sex
     const onClickOption=(value)=>{
       dispatch(provinciaAction(value))
     }
+    
   return (
         clasess ? <div className={`${clasess.classOne}`}>
         <div className={`${clasess.classTwo}`}>
@@ -34,7 +35,7 @@ const InputCbo = ({nameLabel, array, value, display, nameButton, idSelected, sex
                 <option value="">Seleccionar</option> 
                   
                     {
-                    sexo  && sexo  && sexo.length > 0  && sexo === "M" ? array !== undefined && array.map((op, index)=>{
+                    sexo && sexo.length > 0  && sexo === "M" ? array !== undefined && array.map((op, index)=>{
                         return(
                       ( Number(idSelected) === op[valueId]) ? <option className="options" key={index}  onClick={(e)=>onClickOption(op)} selected value={op[valueId]}>
                         {op[propArrayOp]} 
@@ -80,7 +81,7 @@ const InputCbo = ({nameLabel, array, value, display, nameButton, idSelected, sex
                 <select className={obligatorio ? "formulario-input-Estado form-select ml-0 px-0 obligatorio" : "formulario-input-Estado form-select ml-0 px-0"} onChange={(e)=>onChange(e.target.value, idInput)} value={datosPersonalesValue} id={idInput} disabled={disabled} name={idInput}>
                 <option selected value="">Seleccionar</option>                     
                     {
-                       sexo !== null && sexo !== undefined && sexo.length > 0  && sexo === "M" ? array !== undefined && array.map((op, index)=>{
+                       sexo && sexo.length > 0  && sexo === "M" ? array !== undefined && array.map((op, index)=>{
                         return(
                          ( Number(idSelected) === op[valueId]) ? <option key={index}  onClick={(e)=>onClickOption(op)} selected value={op[valueId]}>
                                                             {op[propArrayOp]} 

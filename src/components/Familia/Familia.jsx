@@ -35,9 +35,33 @@ const Familia = ({responses, setResponses,disable, setRefetch, refetch, agregar 
   //#region ------------------------------------------------------------------------------CONSTANTES DE DATOS
   const urlFamiliares = "http://54.243.192.82/api/EliminarFamiliarPorId";
 const urlCreateFamiliar = "http://54.243.192.82/api/InsertarNuevoFamiliar"
-  
+
   function onChangeValues(e, key){
     let newResponse = {...formFamilia};
+    if(key === "inputDateNac"){
+      const inputDate = new Date(e);
+      if (inputDate.getFullYear() > 2050) {
+        const maxDate = new Date("2050-12-31");
+        const formattedMaxDate = maxDate.toISOString().slice(0, 10);
+        newResponse.inputDateNac = formattedMaxDate;
+        setFormFamilia({
+          ...newResponse
+        });
+        return;
+      }
+    }
+    if(key === "inputDateBaja"){
+      const inputDate = new Date(e);
+      if (inputDate.getFullYear() > 2050) {
+        const maxDate = new Date("2050-12-31");
+        const formattedMaxDate = maxDate.toISOString().slice(0, 10);
+        newResponse.inputDateBaja = formattedMaxDate;
+        setFormFamilia({
+          ...newResponse
+        });
+        return;
+      }
+    }
     newResponse[key] = e;
     setFormFamilia({
       ...newResponse
@@ -158,7 +182,7 @@ const urlCreateFamiliar = "http://54.243.192.82/api/InsertarNuevoFamiliar"
     }
     dispatch(disableFunctions(false));
   }
-  
+  console.log(formFamilia)
   return (
     <>
       <div className="container-fluid contFamilia">
@@ -193,7 +217,7 @@ const urlCreateFamiliar = "http://54.243.192.82/api/InsertarNuevoFamiliar"
                 nameFirst="Masculino"
                 nameSecond="Femenino"
                 nameInputRadio=""
-                placeholder="17654987"
+                placeholder="Documento"
                 disable={disable}
                 propsRadioButton={propsRadioButton}
                 onChange={onChangeValues}
