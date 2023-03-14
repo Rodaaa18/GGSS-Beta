@@ -58,8 +58,6 @@ const ArchivosAdjuntos = ({handleClickClose,disabled, nameModalProp, transition,
         archivosAdjuntos[archivosAdjuntos.length - 1].idArchivoDocumentacionEmpleado) + 1) };
         
       
-
-
  /*    (archivoDocumentacionEmpleado &&
         archivoDocumentacionEmpleado[archivoDocumentacionEmpleado.length - 1] !== undefined &&
         archivoDocumentacionEmpleado[archivoDocumentacionEmpleado.length - 1].idArchivoDocumentacionEmpleado) + 1 */
@@ -179,7 +177,6 @@ const ArchivosAdjuntos = ({handleClickClose,disabled, nameModalProp, transition,
             
         }
     }
-    console.log(archivoSelected )
 
     async function getArchivosDocumentacionEmpleado(){
         if(documentacionSeleccionada && empleadoUno){
@@ -195,13 +192,10 @@ const ArchivosAdjuntos = ({handleClickClose,disabled, nameModalProp, transition,
             }
         }
     }
-    function obtenerRutaImagen() {
-        return `C:\\inetpub\\wwwroot\\APILegajoDigital\\Archivos\\${archivoSelected?.nombreOriginal}`;
-      }
+   
     
         useEffect(()=>{
             getArchivosDocumentacionEmpleado();
-            setNombreArchivo(archivoSelected?.nombreOriginal)
         },[empleadoUno?.iDempleado, reload])
 
       const handleLoade = (e) => {
@@ -229,12 +223,10 @@ const ArchivosAdjuntos = ({handleClickClose,disabled, nameModalProp, transition,
       
       function handleLoad(e) {
         setFile(e.target.files[0]);
-        const fileName = e.target.files[0].name;
-        inputRef.current.value = fileName;
         const file = e.target.files[0];
         getBase64(file).then((base64) => {
         setFileBase64(base64);
-    });
+        });
       }
      
       //aca tomamos el valor en KB del tamaño del archivo, hay que hacer una validacion para que cuando sea mayor al valor otorgado por
@@ -270,7 +262,6 @@ const ArchivosAdjuntos = ({handleClickClose,disabled, nameModalProp, transition,
       function handleTableRowClick(e) {
         const fileName = e.currentTarget.querySelectorAll('td')[0].innerText;
         const inputFile = document.getElementById('inputFile');
-        console.log(inputFile.value)
         inputFile.value = fileName;
       }
       const inputRef = useRef(null);
@@ -376,7 +367,7 @@ const ArchivosAdjuntos = ({handleClickClose,disabled, nameModalProp, transition,
         </div>
         <div className='row border border-3 m-2 p-1 rowModalDocu'>
             <div className='col-xl-12'>
-                <input disabled={disableButtons} onChange={handleLoad} type="file" className='inputFile' name="inputFile" id="inputFile" ref={inputRef} />
+                <input disabled={disableButtons} onChange={(e)=>handleLoad(e)} type="file" className='inputFile' name="inputFile" id="inputFile" ref={inputRef} />
                 <label className='labelforinput' htmlFor="inputFile">{archivoSelected ? archivoSelected?.nombreOriginal : file?.name}</label>
             </div>
             <div className='col-xl-12'>

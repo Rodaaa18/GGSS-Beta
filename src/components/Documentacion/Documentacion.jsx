@@ -36,7 +36,6 @@ const Documentacion = ({responses, setResponses, disable, setRefectch, refetch})
 
     const archivosAdjuntosEmpleado = useSelector((state)=> state.documentacionState.archivosAdjuntosEmpleado);
 
-        console.log(archivosAdjuntosEmpleado)
 
     function onChangeValues(e, key){
         const newResponse = {...formDocumentacion};
@@ -56,7 +55,6 @@ const Documentacion = ({responses, setResponses, disable, setRefectch, refetch})
         await axios
           .get(url)
           .then((res) => {
-           console.log(res)
             dispatch(action(res.data));
           })
           .catch((err) => {
@@ -179,7 +177,7 @@ return (
                 <TableBasic1  refetch={refetch} setRefetch={setRefectch} columns={columns} value={documentacionDelEmpleado}  documentaciones={documentaciones} disabled={disable} />
             </div>
             <div className='col-xl-12 contDocumentacion mt-2'>
-                <ButtonCallModal esBoton={true} nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="archivosAdjuntos" nameButton="Adjuntar Archivos">
+                <ButtonCallModal disable={disable} esBoton={true} nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="archivosAdjuntos" nameButton="Adjuntar Archivos">
                     <ArchivosAdjuntos 
                     handleClickClose={handleClickClose}
                     nameModal = "Archivos Adjuntos"
@@ -188,6 +186,7 @@ return (
                     formDocumentacion={formDocumentacion}
                     refetch={refetch} 
                     setRefetch={setRefectch}
+                    
                     />
                 </ButtonCallModal>
             </div>

@@ -108,7 +108,8 @@ const Extras = ({responses, setResponses, disable, setRefetch, refetch}) => {
   
 
   return (
-    <section className='sectionExtras'><div className='container'>
+    <section className='sectionExtras'>
+      <div className='container'>
           <div className='row'>
               <EmployeData />
           </div>
