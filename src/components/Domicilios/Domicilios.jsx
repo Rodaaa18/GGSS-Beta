@@ -200,7 +200,6 @@ const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValu
       });
   }
 
- console.log(formDatosPersonales)
   return (
     
       //#region Menú Principal
@@ -251,7 +250,7 @@ const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValu
                     <div className="col-xl-6 col-lg-6 col-md-6">
                       <InputCbo
                         clasess={inputClassCalleDomicilios}
-                        value={formDatosPersonales?.inputCalleDomicilios ? formDatosPersonales?.inputCalleDomicilios : empleadoUno.calle}
+                        value={formDatosPersonales?.inputCalleDomicilios ? formDatosPersonales?.inputCalleDomicilios : empleadoUno?.calle}
                         action={ADD_DOMICILIOS}
                         sexo=""
                         handleClickRef={handleClickRef}
@@ -263,7 +262,7 @@ const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValu
                         propArrayOp="calle"
                         propArrayOpFem="calle"
                         propArray={empleadoDomicilio ? empleadoDomicilio : (empleadoDomicilio !== undefined && empleadoDomicilio !== null ? empleadoDomicilio.idCalle : null)}
-                        idSelected={formDatosPersonales?.inputCalleDomicilios ? formDatosPersonales?.inputCalleDomicilios : empleadoUno.calle}
+                        idSelected={formDatosPersonales?.inputCalleDomicilios ? formDatosPersonales?.inputCalleDomicilios : domicilioSelected?.idCalle}
                         masculinos=""
                         femeninos=""
                         display={false}
@@ -275,12 +274,13 @@ const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValu
                         valueId="idCalle"
                         obligatorio ={true}
                         esCalle = {true}
+                        usaNumero={true}
+                        dptoOpcion={true}
                       />
                     </div>
-                    <div className="col-xl-6 col-lg-6 col-md-6 colTapaModal">
+                    <div className="col-xl-6 col-lg-6 col-md-6 ">
                       <InputNumero
                         nameInput="inputNumCalle"
-                        action={ADD_DOMICILIOS}
                         array={paises !== null ? paises : []}
                         generalState = {domicilios}
                         setGeneralState = {setDomicilios}
@@ -331,7 +331,7 @@ const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValu
                       propArrayOpFem="provincia"
                       masculinos=""
                       femeninos=""
-                      idSelected={formDatosPersonales?.inputProvinciaDomicilios ? formDatosPersonales?.inputProvinciaDomicilios : empleadoUno.provincia}
+                      idSelected={formDatosPersonales?.inputProvinciaDomicilios ? formDatosPersonales?.inputProvinciaDomicilios : domicilioSelected?.provincia}
                       display={false}
                       idModal="pdlb"
                       disabled={disabled}
@@ -359,7 +359,7 @@ const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValu
                       //propArray={provinciaDepartamento !== undefined && provinciaDepartamento !== null ? provinciaDepartamento.toString() : null}
                       masculinos=""
                       femeninos=""
-                      idSelected={formDatosPersonales?.inputDepartamentosDomicilios ? formDatosPersonales?.inputDepartamentosDomicilios : empleadoUno.departamento}
+                      idSelected={formDatosPersonales?.inputDepartamentosDomicilios ? formDatosPersonales?.inputDepartamentosDomicilios : domicilioSelected?.departamento}
                       display={false}
                       idModal="pdlb"
                       disabled={disabled}
@@ -387,7 +387,7 @@ const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValu
                       propArrayOpFem="localidad"
                       masculinos=""
                       femeninos=""
-                      idSelected={formDatosPersonales?.inputLocalidadesDomicilios ? formDatosPersonales?.inputLocalidadesDomicilios : empleadoUno.localidad}
+                      idSelected={formDatosPersonales?.inputLocalidadesDomicilios ? formDatosPersonales?.inputLocalidadesDomicilios : domicilioSelected?.idLocalidad}
                       display={false}
                       idModal="pdlb"
                       disabled={disabled}
@@ -415,7 +415,7 @@ const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValu
                       propArrayOpFem="barrio"
                       masculinos=""
                       femeninos=""
-                      idSelected={formDatosPersonales?.inputBarriosDomicilios ? formDatosPersonales?.inputBarriosDomicilios : empleadoUno.barrio}
+                      idSelected={formDatosPersonales?.inputBarriosDomicilios ? formDatosPersonales?.inputBarriosDomicilios : domicilioSelected?.barrio}
                       display={false}
                       idModal="pdlb"
                       disabled={disabled}

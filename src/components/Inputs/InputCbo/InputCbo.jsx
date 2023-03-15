@@ -31,7 +31,7 @@ const InputCbo = ({nameLabel, array, value, display, nameButton, idSelected, sex
                 <label className={`${clasess.classFour}`} htmlFor="legajo">{nameLabel}</label>
             </div>
             <div className={`${clasess.classFive}`}>
-                <select className={`${clasess.classSix}`} defaultValue="" onChange={(e)=>onChange(e.target.value, idInput)} value={datosPersonalesValue} id={idInput} disabled={disabled} name={idInput}>
+                <select className={`${clasess.classSix}`} defaultValue={array ? 0 : "(Sin Definir)"} onChange={(e)=>onChange(e.target.value, idInput)} value={datosPersonalesValue} id={idInput} disabled={disabled} name={idInput}>
                   {
                     dptoOpcion && <option value={0}>(Sin Definir)</option>
                   }
