@@ -48,6 +48,7 @@
 }
 .txtAreaPersonales{
 	width: 21.4rem;
+	
 }
 .txtAreaExtras{
 	width: 23rem;
@@ -63,6 +64,10 @@
 .formulario-input-TextArea:focus{
     /* background-image: linear-gradient(to bottom, transparent, rgb(189, 103, 103, 0.3));
     outline: none; */
+}
+textarea{
+	resize: none;
+	overflow-y: auto;
 }
 @media screen and (max-width:1366px){
 	.formulario-input-TextArea{

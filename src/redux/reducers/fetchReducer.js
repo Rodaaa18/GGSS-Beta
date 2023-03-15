@@ -62,7 +62,7 @@ export const initialState = {
     statusCode : "",
     parSueldos : "",
     archivosAdjuntos : "",
-    archivosDocEmpleado : "",
+    archivosDocEmpleado : [],
     archivoDocSelected : ""
 }
 
@@ -92,11 +92,14 @@ export const fetchReducer = (state = initialState, action) =>{
           archivoDocSelected : action.payload
         }
       }
-      case ADD_NEW_ARCHIVO : {
-        return{
+      case ADD_NEW_ARCHIVO: {
+        return {
           ...state,
-          archivosDocEmpleado : [...state.archivosDocEmpleado, action.payload]
-        }
+          archivosDocEmpleado: [
+            ...(state?.archivosDocEmpleado ?? []),
+            action.payload,
+          ],
+        };
       }
       case ARCHIVOS_DOC_EMPLEADO :{
         return{

@@ -35,6 +35,30 @@ const TrabajosAnteriores = ({responses, setResponses, setRefetch, refetch,disabl
     
     function onChangeValues(e, key){
         const newResponse = {...formTrabajosAnteriores};
+        if(key === "idDateDesde"){
+            const inputDate = new Date(e);
+            if (inputDate.getFullYear() > 2050) {
+              const maxDate = new Date("2050-12-31");
+              const formattedMaxDate = maxDate.toISOString().slice(0, 10);
+              newResponse.idDateDesde = formattedMaxDate;
+              setFormTrabajosAnteriores({
+                ...newResponse
+              });
+              return;
+            }
+          }
+          if(key === "idDateHasta"){
+            const inputDate = new Date(e);
+            if (inputDate.getFullYear() > 2050) {
+              const maxDate = new Date("2050-12-31");
+              const formattedMaxDate = maxDate.toISOString().slice(0, 10);
+              newResponse.idDateHasta = formattedMaxDate;
+              setFormTrabajosAnteriores({
+                ...newResponse
+              });
+              return;
+            }
+          }
         newResponse[key] = e;
         setFormTrabajosAnteriores({
             ...newResponse
@@ -151,7 +175,7 @@ const TrabajosAnteriores = ({responses, setResponses, setRefetch, refetch,disabl
             <div className='col-xl-4 cont-Desde'>
                 <div className='d-flex flex-row justify-content-start align-items-center mt-2 '>
                     <label htmlFor="idDateDesde">Desde:</label>
-                    <input type="date" disabled={disable} onChange={(e)=> onChangeValues(e.target.value, "idDateDesde")} value={ modificar ? (formTrabajosAnteriores?.idDateDesde ? formTrabajosAnteriores?.idDateDesde : trabajoAnterior?.desde.substring(0, trabajoAnterior?.desde.length - 9)) : formTrabajosAnteriores?.idDateDesde && formTrabajosAnteriores?.idDateDesde} name="idDateDesde" id="idDateDesde" className='dateTrabajos '/>
+                    <input type="date" max="2050-12-31" disabled={disable} onChange={(e)=> onChangeValues(e.target.value, "idDateDesde")} value={ modificar ? (formTrabajosAnteriores?.idDateDesde ? formTrabajosAnteriores?.idDateDesde : trabajoAnterior?.desde.substring(0, trabajoAnterior?.desde.length - 9)) : formTrabajosAnteriores?.idDateDesde && formTrabajosAnteriores?.idDateDesde} name="idDateDesde" id="idDateDesde" className='dateTrabajos '/>
                 </div>
             </div>        
         </div>
@@ -159,7 +183,7 @@ const TrabajosAnteriores = ({responses, setResponses, setRefetch, refetch,disabl
             <div className='col-xl-4'>
                 <div className='d-flex flex-row justify-content-start align-items-center mt-2 '>
                     <label htmlFor="idDateDesde">Hasta:</label>
-                    <input type="date"  onChange={(e)=> onChangeValues(e.target.value, "idDateHasta")} disabled={disable ? disable : disabled} value={modificar ? (checked ? null : formTrabajosAnteriores?.idDateHasta ? formTrabajosAnteriores?.idDateHasta : trabajoAnterior?.hasta.substring(0, trabajoAnterior?.desde.length - 9)) : formTrabajosAnteriores?.idDateHasta && formTrabajosAnteriores?.idDateHasta} name="idDateHasta" id="idDateHasta" className='dateTrabajos2 '/>
+                    <input type="date" max="2050-12-31" onChange={(e)=> onChangeValues(e.target.value, "idDateHasta")} disabled={disable ? disable : disabled} value={modificar ? (checked ? null : formTrabajosAnteriores?.idDateHasta ? formTrabajosAnteriores?.idDateHasta : trabajoAnterior?.hasta.substring(0, trabajoAnterior?.desde.length - 9)) : formTrabajosAnteriores?.idDateHasta && formTrabajosAnteriores?.idDateHasta} name="idDateHasta" id="idDateHasta" className='dateTrabajos2 '/>
                     <input type="checkbox" disabled={disable} checked={modificar ? (checked ? checked : trabajoAnterior?.actualidad) : checked && checked} name="idCheckTrabajos" id="idCheckTrabajos" className='checkTrabajos' onChange={(e)=>{ setChecked(!checked); onCheckActualidad(e.target.checked , "idCheckTrabajos", "idDateHasta")}} />
                     <label htmlFor="idDateDesde" className='labelTrabajos'>Hasta la Actualidad:</label>
                 </div>

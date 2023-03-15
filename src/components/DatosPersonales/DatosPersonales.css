@@ -79,12 +79,24 @@
 .select option[selected]{
     background-color: #bb2929;
 }
+.Lateral-Derecho{
+}
 
+.accordion-body{
+    
+    height: 29.8rem;
+    max-height: 29.8rem;
+    overflow: auto;
 
+}
 
 @media screen and (max-width : 1366px){
     .colImagen{
         margin-left: 2rem;
+    }
+    .accordion-body{
+        height: 22.8rem;
+        max-height: 22.8rem;
     }
     .accordion{
         font-size: small;

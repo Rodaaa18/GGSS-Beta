@@ -88,6 +88,18 @@ const Extras = ({responses, setResponses, disable, setRefetch, refetch}) => {
 
     function onChangeValues(e, key){
         const newResponse = {...formDatosExtras};
+        if(key === "inputFechaExtras"){
+          const inputDate = new Date(e);
+          if (inputDate.getFullYear() > 2050) {
+            const maxDate = new Date("2050-12-31");
+            const formattedMaxDate = maxDate.toISOString().slice(0, 10);
+            newResponse.inputFechaExtras = formattedMaxDate;
+            setFormDatosExtras({
+              ...newResponse
+            });
+            return;
+          }
+        }
         newResponse[key] = e;
         setFormDatosExtras({
           ...newResponse

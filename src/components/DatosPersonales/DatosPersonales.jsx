@@ -23,7 +23,7 @@ import InputButtonCUIL from "../Inputs/InputButtonCUIL/InputButtonCUIL";
 
 //#endregion
 
-const DatosPersonales = ({ tabIndex ,handleTabChange, responses, setResponses, cancelar, image, disableEstado, disable, empleados, valueempl, domiciliosEmpleados, setRefectch, refetch,ImageSelectedPrevious, setImageSelectedPrevious, agregar , setAgregar, handleClickRef, referencia }) => {
+const DatosPersonales = ({ modify,tabIndex ,handleTabChange, responses, setResponses, cancelar, image, disableEstado, disable, empleados, valueempl, domiciliosEmpleados, setRefectch, refetch,ImageSelectedPrevious, setImageSelectedPrevious, agregar , setAgregar, handleClickRef, referencia }) => {
   //#region ---------------------------------------------------------ONCHANGE-HANDLER
 
   const [ formDatosPersonales, setFormDatosPersonales ] = useState(responses["formDatosPersonales"]);
@@ -42,6 +42,18 @@ const DatosPersonales = ({ tabIndex ,handleTabChange, responses, setResponses, c
 
   function onChangeValues(e, key){
       const newResponse = {...formDatosPersonales};
+      if(key === "inputDateNac"){
+        const inputDate = new Date(e);
+        if (inputDate.getFullYear() > 2050) {
+          const maxDate = new Date("2050-12-31");
+          const formattedMaxDate = maxDate.toISOString().slice(0, 10);
+          newResponse.inputDateNac = formattedMaxDate;
+          setFormDatosPersonales({
+            ...newResponse
+          });
+          return;
+        }
+      }
       newResponse[key] = e;
       setFormDatosPersonales({
         ...newResponse
@@ -89,7 +101,7 @@ useEffect(()=>{
   //#region ------------------------------------------------------------------------------VALIDACIONES
 
   const validateNumbers = (e) => {
-    if (!/[0-9]/.test(e.key)) {
+    if (!/[-+\/0-9]/.test(e.key)) {
       swal({
         title: "Error",
         text: "Debe ingresar sólo números",
@@ -149,13 +161,13 @@ useEffect(()=>{
      
   }
 
-
   
   return (
       //#region Menú Principal
 
     <>
-      <EmployeData responses={responses} image={image} /><div className="Lateral-Derecho">
+      <EmployeData responses={responses} image={image} />
+      <div className="Lateral-Derecho">
         <div className="accordion" id="accordionExample" onClick={handleTabChange(0)}>
           <div className="accordion-item">
             <h4 className="accordion-header" id="headingOne">
@@ -185,7 +197,7 @@ useEffect(()=>{
                             //#endregion
                           }
                           <InputForm
-                            value={agregar ? formDatosPersonales?.numLegajo : empleadoUno.legajo}
+                            value={agregar || modify ? formDatosPersonales?.numLegajo : empleadoUno.legajo}
                           
                             idInput="numLegajo"
                             messageError="Solo puede contener números."
@@ -199,7 +211,7 @@ useEffect(()=>{
                             obligatorio ={true}
                             />
                           <InputForm
-                            value={agregar ? formDatosPersonales?.apellidoInput  : empleadoUno.apellido}
+                            value={agregar || modify ? formDatosPersonales?.apellidoInput  : empleadoUno.apellido}
                            
                             idInput="apellidoInput"
                             messageError="Solo puede contener letras."
@@ -212,7 +224,7 @@ useEffect(()=>{
                             obligatorio ={true}
                             />
                           <InputForm
-                            value={valueempl ? formDatosPersonales?.nombresInput  : empleadoUno.nombres}
+                            value={agregar || modify ? formDatosPersonales?.nombresInput  : empleadoUno.nombres}
                            
                             action={ADD_DATOS_PERSONALES}
                             idInput="nombresInput"
@@ -226,10 +238,10 @@ useEffect(()=>{
                             obligatorio ={true}
                             />
                           <DNICboBox
-                            value={agregar ? formDatosPersonales?.documentoInput  : empleadoUno.nroDocumento}                          
+                            value={agregar || modify ? formDatosPersonales?.documentoInput  : empleadoUno.nroDocumento}                          
                             idInput="documentoInput"
                             messageError="Solo puede contener números, sin puntos."
-                            placeHolder="23456789"
+                            placeHolder="Documento"
                             array={datosPersonalesState.tiposDocumento && datosPersonalesState.tiposDocumento !== "" ? datosPersonalesState.tiposDocumento : ["no entro"]}
                             propArrayOp="tipoDocumento"
                             propArrayId="iDtipoDocumento"
@@ -248,7 +260,7 @@ useEffect(()=>{
                             obligatorio ={true}
                             />
                             <InputButtonCUIL
-                             value={agregar ? formDatosPersonales?.inputCuil  : empleadoUno.cuil}
+                             value={agregar || modify ? formDatosPersonales?.inputCuil  : empleadoUno.cuil}
                        
                              action={ADD_DATOS_PERSONALES}
                              idInput="inputCuil"
@@ -271,13 +283,13 @@ useEffect(()=>{
                              setFormDatosPersonales={setFormDatosPersonales}
                             />
                           <InputForm
-                            value={agregar ? formDatosPersonales?.telefonoInput  : empleadoUno.telFijo}
+                            value={agregar || modify ? formDatosPersonales?.telefonoInput  : empleadoUno.telFijo}
                            
                             action={ADD_DATOS_PERSONALES}
                             nameInput="telefonoInput"
                             idInput="telefonoInput"
                             messageError="Solo puede contener números."
-                            placeHolder="11352458965"
+                            placeHolder="Telefono"
                             disabled={disable}
                             onChange={onChangeValues}
                             nameLabel="Telefono"
@@ -287,10 +299,10 @@ useEffect(()=>{
                            
                             />
                           <InputCbo
-                            value={ agregar ? formDatosPersonales?.estadoCivilInput: empleadoUno?.iDestadoCivil}
+                            value={ agregar || modify ? formDatosPersonales?.estadoCivilInput: empleadoUno?.iDestadoCivil}
                            
                             action={ADD_DATOS_PERSONALES}
-                            sexo={empleadoUno && empleadoUno ? empleadoUno.sexo : formDatosPersonales?.inputSexo && formDatosPersonales?.inputSexo}
+                            sexo={agregar || modify ? formDatosPersonales?.inputSexo : empleadoUno?.sexo}
 
                             handleClickRef={handleClickRef}
                             referencia= {referencia.estadoCivilRef}
@@ -314,10 +326,10 @@ useEffect(()=>{
                             obligatorio ={true}
                             />
                           <InputCbo
-                            value={agregar  ? formDatosPersonales?.nacionalidadesInput :  empleadoUno.idNacionalidad }
+                            value={agregar || modify  ? formDatosPersonales?.nacionalidadesInput :  empleadoUno.idNacionalidad }
                               
                             action={ADD_DATOS_PERSONALES}
-                            sexo={empleadoUno && empleadoUno ? empleadoUno.sexo : formDatosPersonales?.inputSexo && formDatosPersonales?.inputSexo}
+                            sexo={agregar || modify ? formDatosPersonales?.inputSexo : empleadoUno?.sexo}
 
                             handleClickRef={handleClickRef}
                             referencia= {referencia.paisesRef}
@@ -342,7 +354,7 @@ useEffect(()=>{
                         </div>
                         <div className="tercera_columna col-xl-4 col-lg-4 col-md-4">
                           <InputCbo
-                            value={agregar ? formDatosPersonales?.estadosEmpleados :  empleadoUno.idEstado }
+                            value={agregar || modify ? formDatosPersonales?.estadosEmpleados :  empleadoUno.idEstado }
                             handleClickRef={handleClickRef}
                             referencia= {referencia.estadoRef}
                             modalName="Estado"
@@ -366,7 +378,7 @@ useEffect(()=>{
                             obligatorio ={true}
                             />
                           <InputRadio
-                            value={agregar ? formDatosPersonales?.inputSexo : empleadoUno.sexo}
+                            value={agregar || modify ? formDatosPersonales?.inputSexo : empleadoUno.sexo}
                       
                             action={ADD_DATOS_PERSONALES}
                             nameFirst="Masculino"
@@ -389,7 +401,7 @@ useEffect(()=>{
                             idInput="inputDateNac"
                             onChange={onChangeValues} />
                           <InputForm
-                            value={agregar ? formDatosPersonales?.movil : empleadoUno.movil}
+                            value={agregar  || modify ? formDatosPersonales?.movil : empleadoUno.movil}
                   
                             action={ADD_DATOS_PERSONALES}
                             nameInput="movil"
@@ -402,7 +414,7 @@ useEffect(()=>{
                             validateNumbers={validateNumbers}
                             numbers={true} />
                           <InputForm
-                            value={agregar ? formDatosPersonales?.email : empleadoUno.email}
+                            value={agregar || modify ? formDatosPersonales?.email : empleadoUno.email}
                  
                             action={ADD_DATOS_PERSONALES}
                             nameInput="email"
@@ -416,7 +428,7 @@ useEffect(()=>{
                             numbers={false}
                             email={true} />
                           <InputCbo
-                            value={agregar ? formDatosPersonales?.paisOrigenInput : empleadoUno.idPaisdeOrigen}
+                            value={agregar || modify ? formDatosPersonales?.paisOrigenInput : empleadoUno.idPaisdeOrigen}
                   
                             action={ADD_DATOS_PERSONALES}
                             sexo=""
@@ -440,7 +452,7 @@ useEffect(()=>{
                             obligatorio ={true}
                             />
                           <InputCbo
-                            value={agregar ? formDatosPersonales?.estudiosInput : empleadoUno.idEstudios}
+                            value={agregar || modify ? formDatosPersonales?.estudiosInput : empleadoUno.idEstudios}
                             handleClickRef={handleClickRef}
                             referencia= {referencia.estudiosRef}
                             modalName="Estudios"
