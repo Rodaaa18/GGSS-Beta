@@ -32,7 +32,8 @@ const FieldSet = ({
   setRefectch,
   refetch,
   disabled,
-  setFormLicencias
+  setFormLicencias,
+  type, cancelar, aceptar,
 }) => {
   const columns1 = [
     "Seleccionar",
@@ -57,6 +58,8 @@ const FieldSet = ({
   );
     const licenciaDelEmpleado = useSelector((state)=> state.licenciasState.licenciasEmpleado);
  
+  const icon = type === "add" ? "./icons/add.svg" : "./icons/delete.svg";
+
   
 
   const url = `http://54.243.192.82/api/ActualizaDisponibles/0?idEmpleado=${empleadoUno.iDempleado}&anio=${formLicencias?.inputCboAñosLicencia}&diasDisponiblesTotales=${formLicencias?.inputCantDiasDispLicencia}&fechaVencimiento=${formLicencias?.inputVencimientoLicencias}&newId=0`
@@ -480,20 +483,33 @@ const FieldSet = ({
             )}
           </div>
         </fieldset>
-        <div className="col-xl-12 d-flex flex-row-reverse mt-2">
+        <div className="col-xl-12 d-flex flex-row-reverse mt-2 w-100 gap-1">
           <button
-            className="btn btn-outline-danger btnAgregar"
+            className="btn border border-danger btnAgregar "
             onClick={deleteWithOptions}
             disabled={disabled}
           >
-            -
-          </button>
+  {
+            cancelar
+              ? 
+              <img src={icon} 
+             alt={type}
+              />
+            : aceptar
+            }          </button>
           <button
-            className="btn btn-outline-success btnAgregar"
+            className="btn border border-success btnAgregar "
             onClick={fetchApiWithOptions}
             disabled={disabled}
           >
-            +
+               {
+            aceptar
+              ? 
+              <img src={"./icons/add.svg"} 
+              alt={type}
+              />
+            : cancelar
+            }
           </button>
         </div>
         <TableLicencias
@@ -508,7 +524,7 @@ const FieldSet = ({
         />
         <div className="col-xl-12 d-flex flex-row-reverse mt-2">
           <button
-            className="btn btn-outline-danger btnAgregar"
+            className="btn border border-danger btnAgregar"
             disabled={disabled}
             onClick={() =>
               deleteDetalleLicencia(
@@ -517,7 +533,14 @@ const FieldSet = ({
               )
             }
           >
-            -
+           {
+            cancelar
+              ? 
+              <img src={icon} 
+             alt={type}
+              />
+            : aceptar
+            }       
           </button>
         </div>
         <TableSuspenLicencia

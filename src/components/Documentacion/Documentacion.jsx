@@ -18,6 +18,7 @@ import swal from 'sweetalert';
 import { setRefetch } from '../../redux/actions/modalesActions';
 import ButtonCallModal from '../ButtonCallModal/ButtonCallModal';
 import ArchivosAdjuntos from './ArchivosAdjuntos/ArchivosAdjuntos';
+import Buttons from '../Buttons/Buttons';
 
 const Documentacion = ({responses, setResponses, disable, setRefectch, refetch}) => {
     const empleadoUno = useSelector((state)=> state.employeStates.employe);
@@ -197,7 +198,7 @@ return (
                 <CheckLabel idInput="inputIncluirCuotaAlim" nameLabel="Incluir en cuota Alimentaria"  onChange={onChangeValues} action={GET_INPUT_VALUE} value={formDocumentacion?.inputIncluirCuotaAlim && formDocumentacion?.inputIncluirCuotaAlim} disabled={disable} />
             </div>
             <div className='col-xl-12 contDocumentacion'>
-                <ButtonCancelarAceptar idElimiar={documentacionSeleccionada.idEmpleadoDocumentacion && documentacionSeleccionada.idEmpleadoDocumentacion} cancelar="-" aceptar="+" functionSend={sendDataDoc} functionDelete={deleteData} disabled={disable} />
+                <Buttons cancelar="cancelar" aceptar="aceptar" idElimiar={documentacionSeleccionada.idEmpleadoDocumentacion && documentacionSeleccionada.idEmpleadoDocumentacion} functionSend={sendDataDoc} functionDelete={deleteData} disabled={disable} />
                 <TableBasic1  refetch={refetch} setRefetch={setRefectch} columns={columns} value={documentacionDelEmpleado}  documentaciones={documentaciones} disabled={disable} />
             </div>
             <div className='col-xl-12 contDocumentacion mt-2'>

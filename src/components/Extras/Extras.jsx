@@ -8,6 +8,7 @@ import { addDatosExtras, addInstrumLegales, addOneDatoExtra } from '../../redux/
 import { GET_INPUT_VALUES_EXTRAS } from '../../redux/types/extrasTypes';
 import { AXIOS_ERROR, SET_LOADING } from '../../redux/types/fetchTypes';
 import ButtonCancelarAceptar from '../Buttons/ButtonCancelarAceptar';
+import Buttons from '../Buttons/Buttons';
 import EmployeData from '../EmployeData/EmployeData'
 import CheckLabel from '../Inputs/CheckLabel/CheckLabel';
 import InputButtonLiquidacion from '../Inputs/InputButton/InputButtonLiquidacion'
@@ -173,7 +174,7 @@ const Extras = ({responses, setResponses, disable, setRefetch, refetch}) => {
                 <div className='row'>
                       <div className='col-xl-12 fs-6 '>
                           <TextArea  clasess={classesTxtAreaExtras}  onChange={onChangeValues} idInput="inputTextExtras" value={formDatosExtras?.inputTextExtras && formDatosExtras?.inputTextExtras} inputName="Observaciones" action={GET_INPUT_VALUES_EXTRAS} disableModal={disable} />
-                          <ButtonCancelarAceptar cancelar="-" aceptar="+" idElimiar={datoExtraSelected.idEmpleadoDatoExtra} functionDelete={deleteDatoExtra} functionSend={sendData}  disabled={disable} />
+                          <Buttons cancelar="cancelar" aceptar="aceptar" idElimiar={datoExtraSelected.idEmpleadoDatoExtra} functionDelete={deleteDatoExtra} functionSend={sendData}  disabled={disable} />
                           <TableExtras descripcion={datosExtras} disabled={disable} datosExtraEmpleado={datosExtraEmpleado && datosExtraEmpleado} columns={columns} />
                       </div>
                 </div>

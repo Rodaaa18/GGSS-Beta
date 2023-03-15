@@ -22,6 +22,7 @@ import { addNewFamiliar, deleteOneFamiliar } from "../../redux/actions/fetchActi
 import { disableFunctions } from "../../redux/actions/employeActions";
 import { addFamiliar, deleteFam, saveIdFam } from "../../redux/actions/familiaActions";
 import "./Familia.css"
+import Buttons from "../Buttons/Buttons";
 
 const Familia = ({responses, setResponses,disable, setRefetch, refetch, agregar , setAgregar, handleClickRef, referencia }) => {
   
@@ -358,7 +359,7 @@ const urlCreateFamiliar = "http://54.243.192.82/api/InsertarNuevoFamiliar"
             </div>
           </div>
         </div>
-        <ButtonCancelarAceptar cancelar="-" aceptar="+" disabled={disable} functionSend={sendData} functionDelete={deleteFamiliar} idElimiar={idFamiliarSelected}/>
+        <Buttons cancelar="cancelar" aceptar="acpetar" disabled={disable} functionSend={sendData} functionDelete={deleteFamiliar} idElimiar={idFamiliarSelected}/>
         <div className="d-flex flex-row align-items-center">
           
           <TableBasic 
