@@ -70,7 +70,7 @@ import swal from "sweetalert";
 import { getEmployeByLegajo, getEmployeByName } from "../../services/fetchAPI";
 import { cleanEmploye, getEmployes, updateEmploye } from "../../redux/actions/employeActions";
 import { cleanIdFam, getDAtosFamiliaresEmpleado } from "../../redux/actions/familiaActions";
-import { addOneDomicilio, cleanIdsDom } from "../../redux/actions/domiciliosActions";
+import { addOneDomicilio, cleanIdsDom, deleteOneDomicilioSelect } from "../../redux/actions/domiciliosActions";
 import { addDatosExtraPorEmpleado, cleanIdDe } from "../../redux/actions/extrasActions";
 import { setRefetch } from "../../redux/actions/modalesActions";
 import "./Home.css"
@@ -101,7 +101,7 @@ const Empleados = ({tokenDef, setTokenDef, sePerfilesUSuario, loading, handleCli
   const detalleSeleccionado = useSelector(
     (state) => state.licenciasState.detalleSelect
   );
-
+  const domicilioSelected = useSelector((state)=> state.domiciliosStates.domicilioSelected);
   const licenciaEmpleado = useSelector(
     (state) => state.licenciasState.licenciaEmpleado
   );
@@ -111,6 +111,7 @@ const Empleados = ({tokenDef, setTokenDef, sePerfilesUSuario, loading, handleCli
     (state) => state.generalState.conceptosXesquemas
   );
 
+   
     
   //#region URLs
 
@@ -429,7 +430,7 @@ useEffect(() => {
 
 
 
-    const url = `http://54.243.192.82/api/Empleados?page=2000`;
+    const url = `http://54.243.192.82/api/Empleados?filter=12121212121`;
     const urlEmpleadoPorApellido = `http://54.243.192.82/api/Empleados?filter=${responses?.browser?.inputApellidoNombreBrowser ? responses?.browser?.inputApellidoNombreBrowser : null}&ordered=true`;
     const urlEmpleadoPorLegajo = `http://54.243.192.82/api/Empleados?legajo=${responses?.browser?.inpurLegajoBrowser ? responses?.browser?.inpurLegajoBrowser : null}&ordered=true`;
     const urlEmpleadoApYLegajo = `http://54.243.192.82/api/Empleados?filter=${responses?.browser?.inputApellidoNombreBrowser ? responses?.browser.inputApellidoNombreBrowser : null}&legajo=${responses?.browser?.inpurLegajoBrowser ? responses?.browser?.inpurLegajoBrowser : null}&ordered=true`;
@@ -468,10 +469,9 @@ useEffect(() => {
         });
         return;
       }else{
-        await axios.get(url).then((res) => {
-
+       
           dispatch(getEmployes(null));
-        });
+      
       }
     }
 
@@ -520,7 +520,7 @@ useEffect(() => {
     ]
   }
 
-
+ 
 
 
   const { urls, arrays } = objectRequest;
@@ -804,125 +804,7 @@ useEffect(() => {
               icon: "error",
             })
           }
-          /* if(!bodyPetitionEmpleadoGuarda.iDEmpleador){
-            return swal({
-              title: "Error",
-              text: "Debe seleccionar el Empleador del Empleado",
-              icon: "error",
-            })
-          }
-          if(!bodyPetitionEmpleadoGuarda.iDCategoria){
-            return swal({
-              title: "Error",
-              text: "Debe seleccionar la Categoría del Empleado",
-              icon: "error",
-            })
-          }
-          if(!bodyPetitionEmpleadoGuarda.idAgrupamiento){
-            return swal({
-              title: "Error",
-              text: "Debe seleccionar el Agrupamiento del Empleado",
-              icon: "error",
-            })
-          }
-          if(!bodyPetitionEmpleadoGuarda.iDCargo){
-            return swal({
-              title: "Error",
-              text: "Debe seleccionar el Cargo del Empleado",
-              icon: "error",
-            })
-          }
-          if(!bodyPetitionEmpleadoGuarda.iDTareaDesempeñada){
-            return swal({
-              title: "Error",
-              text: "Debe seleccionar la Tarea Desempeñada del Empleado",
-              icon: "error",
-            })
-          }
-          if(!bodyPetitionEmpleadoGuarda.iDModoContratacion){
-            return swal({
-              title: "Error",
-              text: "Debe seleccionar el Modo de Contratación del Empleado",
-              icon: "error",
-            })
-          }
-          if(!bodyPetitionEmpleadoGuarda.iDModoLiquidacion){
-            return swal({
-              title: "Error",
-              text: "Debe seleccionar el Modo de Liquidación del Empleado",
-              icon: "error",
-            })
-          }
-          if(!bodyPetitionEmpleadoGuarda.idCentrodeCosto){
-            return swal({
-              title: "Error",
-              text: "Debe seleccionar el Centro de Costo del Empleado",
-              icon: "error",
-            })
-          } */
-          /* if(!bodyPetitionEmpleadoGuarda.iDSectorDpto){
-            return swal({
-              title: "Error",
-              text: "Debe seleccionar el Sector del Empleado",
-              icon: "error",
-            })
-          } */
-          /* if(!bodyPetitionEmpleadoGuarda.idObraSocial){
-            return swal({
-              title: "Error",
-              text: "Debe seleccionar la Obra Social del Empleado",
-              icon: "error",
-            })
-          }
-          if(!bodyPetitionEmpleadoGuarda.iDFormadePago){
-            return swal({
-              title: "Error",
-              text: "Debe seleccionar la Forma de Pago del Empleado",
-              icon: "error",
-            })
-          }
-          if(!bodyPetitionEmpleadoGuarda.iDLugardePago){
-            return swal({
-              title: "Error",
-              text: "Debe seleccionar el Lugar de Pago del Empleado",
-              icon: "error",
-            })
-          }
-          if(!bodyPetitionEmpleadoGuarda.idBanco){
-            return swal({
-              title: "Error",
-              text: "Debe seleccionar el Banco del Empleado",
-              icon: "error",
-            })
-          }
-          if(!bodyPetitionEmpleadoGuarda.nroCtaBanco){
-            return swal({
-              title: "Error",
-              text: "Debe escribir el N° de Cuenta del Empleado",
-              icon: "error",
-            })
-          }
-          if(!bodyPetitionEmpleadoGuarda.tipoCuenta){
-            return swal({
-              title: "Error",
-              text: "Debe seleccionar el Tipo de Cuenta del Empleado",
-              icon: "error",
-            })
-          }
-          if(!bodyPetitionEmpleadoGuarda.cbu){
-            return swal({
-              title: "Error",
-              text: "Debe escribir el CBU del Empleado",
-              icon: "error",
-            })
-          }
-          if(responses.fomrLiquidacion?.inputCheckAsigna && !bodyPetitionEmpleadoGuarda.iDEsquema){
-            return swal({
-              title: "Error",
-              text: "Debe seleccionar el Esquema del Empleado",
-              icon: "error",
-            })
-          } */
+          
         //#endregion
 
       }else{
@@ -1043,9 +925,9 @@ useEffect(() => {
           }else{
             await axios.put(urls.urlEmpleadoGuarda, bodyPetitionEmpleadoUpdate)
             .then((res)=>{
-              if(res.data.statusCode === 0){     
-                debugger;      
-                dispatch(updateEmploye(bodyPetitionEmpleadoUpdate))
+              if(res.status === 200){     
+                 
+                dispatch(updateEmploye(res.data.result))
                 dispatch(setRefetch(!refetching))
                 setRefectch(!refetch);
                 setDisable(true)
@@ -1055,10 +937,9 @@ useEffect(() => {
                   icon: "success",
               })
               }
-              
             })
             arrays[3].map(async (id)=>{
-
+        
               let array = {
                 "arrayList": [
                   id
@@ -1066,6 +947,36 @@ useEffect(() => {
               }
               await axios.delete(`${urls.urlDOmicilioElimina}${id}`, {headers : {'Content-Type': 'application/json;'}})
               .then((res) => {
+                
+                if(res.data.statusCode === 200){
+                  dispatch(setRefetch(!refetching))
+                  setDisable(true)
+                  setRefectch(!refetch)
+                  dispatch(deleteOneDomicilioSelect(id))
+                  const newResponse = {...responses.formDatosPersonales};
+                  newResponse["inputPredeterminado"] = false;
+                  newResponse["inputCalleDomicilios"] = 0;
+                  newResponse["inputNumCalle"] = "";
+                  newResponse["inputPisoCalle"] = "";
+                  newResponse["inputProvinciaDomicilios"] = 0;
+                  newResponse["inputDepartamentosDomicilios"] = 0;
+                  newResponse["inputLocalidadesDomicilios"] = 0;
+                  newResponse["inputBarriosDomicilios"] = 0;
+                  setResponses({
+                    ...newResponse
+                  });  
+                  return swal({
+                    title : "Ok",
+                    text : "Domicilio eliminado con éxito",
+                    icon : "success"
+                  })
+                }else{
+                  return swal({
+                    title : "Error",
+                    text : "Error al eliminar el Domicilio",
+                    icon : "error"
+                  })
+                }
                 setRefectch(!refetch)
               })
            });
@@ -1094,8 +1005,11 @@ useEffect(() => {
           })}
         case urls.urlDOmicilioElimina : {
           arrays.idDomiciliosArray.map(async (id)=>{
+
             await axios.delete(`${urls.urlDOmicilioElimina}${id}`)
-            .then((res) => {})
+            .then((res) => {
+           
+            })
           })}
           case urls.urlDeleteFAmiliar : {
             arrays.arraysFamiliares.map(async (id)=>{
@@ -1214,6 +1128,8 @@ const getTabComponent = (tabIndex) => {
           tabIndex={tabIndex}
           ImageSelectedPrevious={ImageSelectedPrevious}
           setImageSelectedPrevious={setImageSelectedPrevious}
+          modify={modify}
+          agregar = {agregar}
         />
       );
     case 1:
@@ -1225,6 +1141,8 @@ const getTabComponent = (tabIndex) => {
           setResponses={setResponses}
           setRefetch={setRefectch}
           refetch={refetch}
+          modify={modify}
+          agregar = {agregar}
         />
       )
     case 2 :
@@ -1235,6 +1153,7 @@ const getTabComponent = (tabIndex) => {
             responses={responses}
             setResponses={setResponses}
             modify={modify}
+            agregar = {agregar}
           />
       )
     case 3 :
@@ -1245,6 +1164,7 @@ const getTabComponent = (tabIndex) => {
           responses={responses}
           setResponses={setResponses}
           modify={modify}
+          agregar = {agregar}
         />
       )
     case 4 :
@@ -1256,6 +1176,8 @@ const getTabComponent = (tabIndex) => {
         setDisable={setDisable}
         responses={responses}
         setResponses={setResponses}
+        modify={modify}
+          agregar = {agregar}
       />
       )
     case 5 :
@@ -1267,6 +1189,8 @@ const getTabComponent = (tabIndex) => {
           setDisable={setDisable}
           responses={responses}
           setResponses={setResponses}
+          modify={modify}
+          agregar = {agregar}
         />
       )
       case 6 :
@@ -1280,6 +1204,8 @@ const getTabComponent = (tabIndex) => {
             setDisable={setDisable}
             responses={responses}
             setResponses={setResponses}
+            modify={modify}
+          agregar = {agregar}
           />
         )
       case 7 :
@@ -1293,6 +1219,8 @@ const getTabComponent = (tabIndex) => {
             setResponses={setResponses}
             refetch={refetch}
             setRefetch={setRefectch}
+            modify={modify}
+          agregar = {agregar}
           />
         )
       ;default:

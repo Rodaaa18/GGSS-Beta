@@ -23,7 +23,7 @@ import {
   deleteDetLic,
 } from "../../redux/actions/licenciasActions";
 import { setRefetch } from "../../redux/actions/modalesActions";
-import { recharge } from "../../redux/actions/domiciliosActions";
+import { domicilioSelected, recharge } from "../../redux/actions/domiciliosActions";
 
 const Browser = ({ getEmpleados, disable, setDisable, setValueEmpl, responses, setResponses, setRefectch, refetch, deleteEmploye,setModify, agregar , setAgregar  }) => {
   const [checked, setChecked] = useState(false);
@@ -125,6 +125,7 @@ const Browser = ({ getEmpleados, disable, setDisable, setValueEmpl, responses, s
 
   function habilitaUpdate(e) {
     e.preventDefault();
+    dispatch(domicilioSelected(""))
     setModify(true);
     setValueEmpl(true)
     setRefectch(!refetch)

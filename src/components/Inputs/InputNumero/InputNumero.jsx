@@ -25,7 +25,7 @@ const InputNumero = ({
 
   return (
     <div className="formulario__grupo__numero">
-      <div className="w-100 d-flex flex-row justify-content-end align-items-center">
+      <div className="w-100 d-flex flex-row justify-content-start align-items-center">
         <label className="label_numeros">{nameLabel}</label>
         <div className="d-flex flex-row justify-content-flex-start align-items-center">
           <input type="text" 

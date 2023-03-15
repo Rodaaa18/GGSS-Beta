@@ -29,7 +29,6 @@ const InputButtonLiquidacion = ({nameButton, placeholder, nameLabel, maxLeght, v
        className={obligatorio ? `${clasess.classFour}` : `${clasess.classFour}`} 
        onChange={(e)=>onChange(e.target.value, idInput)} 
        value={value && value} >
-        <option value="">Seleccionar</option> 
         {
             array && array.map((valor,index)=>{
                 return(

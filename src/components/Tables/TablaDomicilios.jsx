@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectedIdDomicilio } from "../../redux/actions/domiciliosActions";
+import { domicilioSelected, selectedIdDomicilio } from "../../redux/actions/domiciliosActions";
 
 const TablaDomicilios = ({ columns , disabled, setRefectch, departamentos, localidades, provincias, barrios, calles}) => {
   
@@ -35,12 +35,13 @@ const dispatch = useDispatch();
                 return(
                   <tr>
                     <th>
-                      <input type="radio" disabled={disabled} name="seleccionar" id="seleccionar" value={item.idDomicilio} onClick={(e)=> dispatch(selectedIdDomicilio(e.target.value))} />
+                      <input type="radio" disabled={disabled} name="seleccionar" id="seleccionar" value={item.idDomicilio} onClick={(e)=> {dispatch(selectedIdDomicilio(e.target.value)); dispatch(domicilioSelected(item))}} />
                     </th>
                     <th>
                       <input  type="checkbox" disabled="disabled" className="border-0 px-2" id="capitulo"  value={item.predeterminado} checked={item.predeterminado === null ? false : item.predeterminado}/>
                     </th>
                     <td>{item &&  item.calle}</td>
+                    <td>{item && item.numero}</td>
                     <td>{item &&  item.barrio}</td>
                     <td>{item &&  item.localidad}</td>
                     <td>{item &&  item.departamento }</td>

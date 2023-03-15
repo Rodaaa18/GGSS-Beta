@@ -32,7 +32,6 @@ const InputCbo = ({nameLabel, array, value, display, nameButton, idSelected, sex
             </div>
             <div className={`${clasess.classFive}`}>
                 <select className={`${clasess.classSix}`} defaultValue="" onChange={(e)=>onChange(e.target.value, idInput)} value={datosPersonalesValue} id={idInput} disabled={disabled} name={idInput}>
-                <option value="">Seleccionar</option> 
                   
                     {
                     sexo && sexo.length > 0  && sexo === "M" ? array !== undefined && array.map((op, index)=>{
@@ -79,7 +78,6 @@ const InputCbo = ({nameLabel, array, value, display, nameButton, idSelected, sex
             </div>
             <div className='segundo'>
                 <select className={obligatorio ? "formulario-input-Estado form-select ml-0 px-0 obligatorio" : "formulario-input-Estado form-select ml-0 px-0"} onChange={(e)=>onChange(e.target.value, idInput)} value={datosPersonalesValue} id={idInput} disabled={disabled} name={idInput}>
-                <option selected value="">Seleccionar</option>                     
                     {
                        sexo && sexo.length > 0  && sexo === "M" ? array !== undefined && array.map((op, index)=>{
                         return(

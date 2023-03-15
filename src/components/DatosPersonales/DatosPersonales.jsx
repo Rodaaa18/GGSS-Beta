@@ -59,6 +59,7 @@ const DatosPersonales = ({ modify,tabIndex ,handleTabChange, responses, setRespo
         ...newResponse
       });
   };
+  const domicilioSelected = useSelector((state)=> state.domiciliosStates.domicilioSelected);
   
 
 
@@ -78,6 +79,23 @@ useEffect(()=>{
       ...newResponse
     });
 },[])
+
+console.log(domicilioSelected !== "" ? domicilioSelected?.idDepartamento : ( modify || agregar ? formDatosPersonales?.inputDepartamentosDomicilios : 0))
+
+useEffect(()=>{
+  const newResponse = {...formDatosPersonales};
+  newResponse["inputPredeterminado"] = domicilioSelected !== "" ? domicilioSelected?.predeterminado : ( modify || agregar ? formDatosPersonales?.inputPredeterminado : false);
+  newResponse["inputCalleDomicilios"] = domicilioSelected !== "" ? domicilioSelected?.idCalle : (modify || agregar ? formDatosPersonales?.inputCalleDomicilios : 0);
+  newResponse["inputNumCalle"] = domicilioSelected !== "" ? domicilioSelected?.numero : ( modify || agregar ? formDatosPersonales?.inputNumCalle : "");
+  newResponse["inputPisoCalle"] = domicilioSelected !== "" ? domicilioSelected?.dpto : ( modify || agregar ? formDatosPersonales?.inputPisoCalle : "");
+  newResponse["inputProvinciaDomicilios"] = domicilioSelected !== "" ? domicilioSelected?.idProvincia : ( modify || agregar ? formDatosPersonales?.inputProvinciaDomicilios : 0);
+  newResponse["inputDepartamentosDomicilios"] = domicilioSelected !== "" ? domicilioSelected?.idDepartamento : ( modify || agregar ? formDatosPersonales?.inputDepartamentosDomicilios : 0);
+  newResponse["inputLocalidadesDomicilios"] = domicilioSelected !== "" ? domicilioSelected?.idLocalidades : ( modify || agregar ? formDatosPersonales?.inputLocalidadesDomicilios : 0);
+  newResponse["inputBarriosDomicilios"] = domicilioSelected !== "" ? domicilioSelected?.idBarrio : ( modify || agregar ? formDatosPersonales?.inputBarriosDomicilios : 0);
+  setFormDatosPersonales({
+    ...newResponse
+  });
+},[domicilioSelected])
 useEffect(()=>{
   const newResponse = {...formDatosPersonales};
   newResponse["inputSexo"] = "F";
@@ -511,7 +529,7 @@ useEffect(()=>{
               </div>
             </div>
           </div>
-          <Domicilios referencia={referencia} handleClickRef={handleClickRef} tabIndex={tabIndex} handleTabChange={handleTabChange} setRefectch={setRefectch} refetch={refetch} domiciliosEmpleados={domiciliosEmpleados} onChangeValues={onChangeValues} formDatosPersonales={formDatosPersonales} setFormDatosPersonales={setFormDatosPersonales} disabled={disable} deshabilitar={disable} responses={responses} setResponses={setResponses} />
+          <Domicilios referencia={referencia} handleClickRef={handleClickRef} tabIndex={tabIndex} handleTabChange={handleTabChange} setRefectch={setRefectch} refetch={refetch} domiciliosEmpleados={domiciliosEmpleados} onChangeValues={onChangeValues} formDatosPersonales={formDatosPersonales} setFormDatosPersonales={setFormDatosPersonales} disabled={disable} deshabilitar={disable} responses={responses} setResponses={setResponses} modify={modify} agregar={agregar} />
         </div>
         <div className="d-flex justify-content-end">
           
