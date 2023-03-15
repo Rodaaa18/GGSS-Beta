@@ -14,6 +14,7 @@ import InputFormPiso from "../Inputs/InputForm/InputFormPiso";
 import { inputClassCalleDomicilios, inputClassProvinciasDomicilios } from "../../classes/classes";
 import { useEffect } from "react";
 import { setRefetch } from "../../redux/actions/modalesActions";
+import { updateDomicilio } from "../../redux/actions/fetchActions";
 
 //#endregion
 const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValues, formDatosPersonales, setFormDatosPersonales, domiciliosEmpleados, setRefectch, refetch, handleClickRef, referencia, modify, agregar }) => {
@@ -57,16 +58,19 @@ const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValu
 
  
   let arrayDepartamentos = provinciaSelected && provinciaSelected.payload && generalStateData.departamentos !== undefined && generalStateData.departamentos !== "" ? generalStateData.departamentos.filter((departamento) => departamento.idProvincia === provinciaSelected.payload.idProvincia) : null;
+  
   if(domicilioSelected && domicilioSelected !== ""){
     arrayDepartamentos =  generalStateData && generalStateData?.departamentos?.filter((departamento) => departamento.idProvincia === domicilioSelected.idProvincia);
   }
 
   let arrayLocalidades = departamentoSelected && departamentoSelected.payload && generalStateData.localidades !== undefined && generalStateData.localidades !== "" ? generalStateData.localidades.filter((localidad) => localidad.idDepartamento === departamentoSelected.payload.idDepartamento) : null;
+  
   if(domicilioSelected && domicilioSelected !== ""){
     arrayLocalidades =  generalStateData && generalStateData?.localidades?.filter((localidad) => localidad.idDepartamento === domicilioSelected.idDepartamento);
   }
 
   let arrayBarrios = localidadSelected  && localidadSelected.payload &&  generalStateData.barrios !== undefined && generalStateData.barrios !== "" ? generalStateData.barrios.filter((barrio) => barrio.idLocalidad === localidadSelected.payload.idLocalidad) : null;
+  
   if(domicilioSelected && domicilioSelected !== ""){
     arrayBarrios =  generalStateData && generalStateData?.barrios?.filter((barrio) => barrio.idLocalidad === domicilioSelected.idLocalidad);
   }
@@ -112,7 +116,7 @@ const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValu
               .then((res)=> {     
                     
                 if(res.status === 200){ 
-                  dispatch(addNewDomicilio(res.data))  
+                  dispatch(updateDomicilio(bodyUpdateDomicilio))  
                   setRefectch(!refetch)
                   dispatch(setRefetch(!refetching))
                   dispatch(cleanIdsDom());
@@ -365,6 +369,7 @@ const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValu
                       provinciaAction = {selectedOptionDpto}
                       valueId="idDepartamento"
                       obligatorio ={true}
+                      dptoOpcion={true}
                     />
                     <InputCbo
                       value={
@@ -392,6 +397,7 @@ const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValu
                       provinciaAction = {selectedOptionBarrio}
                       valueId="idLocalidad"
                       obligatorio ={true}
+                      dptoOpcion={true}
                     />
                     <InputCbo
                       value={
@@ -418,6 +424,7 @@ const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValu
                       onChange={onChangeValues}
                       valueId="idBarrio"
                       obligatorio ={true}
+                      dptoOpcion={true}
                     />
                   </div>
                   <ButtonCancelarAceptar idElimiar={domicilioDelEmpleado} refetch={refetch} setRefectch={setRefectch} cancelar="-" aceptar="+"disabled={disabled} functionSend={sendDataDomicilios} functionDelete={deleteDomicilio}/>

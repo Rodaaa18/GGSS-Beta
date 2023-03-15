@@ -51,6 +51,7 @@ import {
   addSindicatos,
   addTareasDesempeñadas,
   addTiposDocumento,
+  deleteDomicilio,
   disabledInputs,
   getArchivosAdjuntos,
   getParSueldos,
@@ -953,6 +954,7 @@ useEffect(() => {
                   setDisable(true)
                   setRefectch(!refetch)
                   dispatch(deleteOneDomicilioSelect(id))
+                  dispatch(deleteDomicilio(id));
                   const newResponse = {...responses.formDatosPersonales};
                   newResponse["inputPredeterminado"] = false;
                   newResponse["inputCalleDomicilios"] = 0;

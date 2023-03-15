@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import "./InputCbo.css";
 
-const InputCbo = ({nameLabel, array, value, display, nameButton, idSelected, sexo, idModal, disabled, idInput,onChange, datosPersonalesValue, action, propArrayOp,propArrayOpFem,provinciaAction,valueId, clasess, obligatorio, licencia, defaultChecked, nameCheck,handleClickRef, referencia,modalName, esCalle
+const InputCbo = ({nameLabel, array, value, display, nameButton, idSelected, sexo, idModal, disabled, idInput,onChange, datosPersonalesValue, action, propArrayOp,propArrayOpFem,provinciaAction,valueId, clasess, obligatorio, licencia, defaultChecked, nameCheck,handleClickRef, referencia,modalName, esCalle, dptoOpcion
 }) => {
   
     const [mostrarComponente, setMostrarComponente] = useState(true);
@@ -32,7 +32,9 @@ const InputCbo = ({nameLabel, array, value, display, nameButton, idSelected, sex
             </div>
             <div className={`${clasess.classFive}`}>
                 <select className={`${clasess.classSix}`} defaultValue="" onChange={(e)=>onChange(e.target.value, idInput)} value={datosPersonalesValue} id={idInput} disabled={disabled} name={idInput}>
-                  
+                  {
+                    dptoOpcion && <option value={0}>(Sin Definir)</option>
+                  }
                     {
                     sexo && sexo.length > 0  && sexo === "M" ? array !== undefined && array.map((op, index)=>{
                         return(
@@ -78,6 +80,9 @@ const InputCbo = ({nameLabel, array, value, display, nameButton, idSelected, sex
             </div>
             <div className='segundo'>
                 <select className={obligatorio ? "formulario-input-Estado form-select ml-0 px-0 obligatorio" : "formulario-input-Estado form-select ml-0 px-0"} onChange={(e)=>onChange(e.target.value, idInput)} value={datosPersonalesValue} id={idInput} disabled={disabled} name={idInput}>
+                {
+                    dptoOpcion && <option value={0}>(Sin Definir)</option>
+                  }
                     {
                        sexo && sexo.length > 0  && sexo === "M" ? array !== undefined && array.map((op, index)=>{
                         return(

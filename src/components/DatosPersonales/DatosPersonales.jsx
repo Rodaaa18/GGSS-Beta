@@ -80,7 +80,7 @@ useEffect(()=>{
     });
 },[])
 
-console.log(domicilioSelected !== "" ? domicilioSelected?.idDepartamento : ( modify || agregar ? formDatosPersonales?.inputDepartamentosDomicilios : 0))
+
 
 useEffect(()=>{
   const newResponse = {...formDatosPersonales};
