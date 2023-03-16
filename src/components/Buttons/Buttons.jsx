@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import "./Buttons.css";
 
 const Buttons = ({
   type,
@@ -8,11 +9,33 @@ const Buttons = ({
   disabled,
   functionSend,
   functionDelete,
-  idElimiar,
+  idEliminar,
   refetch,
   setRefectch,
 }) => {
-  const icon = type === "add" ? "./icons/add.svg" : "./icons/delete.svg";
+  const iconAdd = "./icons/add.svg";
+  const iconDelete = "./icons/delete.svg";
+  const iconAddWhite = "./icons/add-white.svg";
+  const iconDeleteWhite = "./icons/delete-white.svg";
+
+  const [isHoveringDelete, setIsHoveringDelete] = useState(false);
+  const [isHoveringAdd, setIsHoveringAdd] = useState(false);
+
+  const handleMouseEnterDelete = () => {
+    setIsHoveringDelete(true);
+  };
+
+  const handleMouseLeaveDelete = () => {
+    setIsHoveringDelete(false);
+  };
+
+  const handleMouseEnterAdd = () => {
+    setIsHoveringAdd(true);
+  };
+
+  const handleMouseLeaveAdd = () => {
+    setIsHoveringAdd(false);
+  };
 
   return (
     <>
@@ -21,32 +44,35 @@ const Buttons = ({
           <button
             className="btn border border-danger"
             disabled={disabled}
-            onClick={(e) => functionDelete(idElimiar)}
+            onClick={(e) => functionDelete(idEliminar)}
+            onMouseEnter={handleMouseEnterDelete}
+            onMouseLeave={handleMouseLeaveDelete}
           >
-               {
-            cancelar
-              ? 
-              <img src={icon} 
-             alt={type}
+            {cancelar ? (
+              <img
+                src={isHoveringDelete ? iconDeleteWhite : iconDelete}
+                alt={type}
               />
-            : aceptar
-            }
-           
+            ) : (
+              aceptar
+            )}
           </button>
 
           <button
-            className="btn border border-success"
+            className="btn border border-success "
             disabled={disabled}
             onClick={functionSend}
+            onMouseEnter={handleMouseEnterAdd}
+            onMouseLeave={handleMouseLeaveAdd}
           >
-            {
-            aceptar
-              ? 
-              <img src={"./icons/add.svg"} 
-              alt={type}
+            {aceptar ? (
+              <img
+                src={isHoveringAdd ? iconAddWhite : iconAdd}
+                alt={type}
               />
-            : cancelar
-            }
+            ) : (
+              cancelar
+            )}
           </button>
         </div>
       </div>

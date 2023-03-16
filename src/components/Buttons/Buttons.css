@@ -5,17 +5,25 @@
   pointer-events: none;
   cursor: default;
 }
-
-.svg-white {
-  fill: #ffff;
-}
-.btn-outline-danger:hover {
+/* 
+.btn-danger {
   background-color: #dc3545;
+  color: #fff;
 }
 
-.btn-outline-success:hover {
+.btn-success {
   background-color: #28a745;
+  color: #fff;
+} */
+
+.btn-danger .btn-icon {
+  background-image: url('../../../public/icons/delete-white.svg');
 }
+
+.btn-success .btn-icon {
+  background-image: url('../../../public/icons/add-white.svg');
+}
+
 
 @media screen and (max-width: 1366px) {
   .btnTablaDom {
