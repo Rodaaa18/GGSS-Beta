@@ -23,11 +23,11 @@ const TableBasic = ({
         <table className="table table-danger table-fit ">
           <thead>
             <tr>
-              <th>Sel.</th>
+              <th >Sel.</th>
               {columns.map((col, i) => {
                 return (
                   <>
-                    <td key={i} scope="col-12" className="pl-4 nameColums">
+                    <td key={i} scope="col-12"  className="pl-4 nameColums">
                       {col}
                     </td>
                   </>

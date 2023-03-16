@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Buttons from "../../Buttons/Buttons";
 import "./InputTextTrabajos.css";
 
@@ -16,7 +16,30 @@ const InputTextTrabajos = ({
   cancelar,
   aceptar,
 }) => {
-  const icon = type === "add" ? "./icons/add.svg" : "./icons/delete.svg";
+  const iconAdd = "./icons/add.svg";
+  const iconDelete = "./icons/delete.svg";
+  const iconAddWhite = "./icons/add-white.svg";
+  const iconDeleteWhite = "./icons/delete-white.svg";
+
+  const [isHoveringDelete, setIsHoveringDelete] = useState(false);
+  const [isHoveringAdd, setIsHoveringAdd] = useState(false);
+
+  const handleMouseEnterDelete = () => {
+    setIsHoveringDelete(true);
+  };
+
+  const handleMouseLeaveDelete = () => {
+    setIsHoveringDelete(false);
+  };
+
+  const handleMouseEnterAdd = () => {
+    setIsHoveringAdd(true);
+  };
+
+  const handleMouseLeaveAdd = () => {
+    setIsHoveringAdd(false);
+  };
+
 
   return (
     <>
@@ -35,31 +58,36 @@ const InputTextTrabajos = ({
       <div className="col-xl-4 d-flex flex-row justify-content-start align-items-center mt-2 ">
         <button
           disabled={disable}
-          className="btn btn-outline-success btn-sm buttonAceptarCancelar"
+          className="btn border border-success btn-outline-success buttonAceptarCancelar"
           onClick={onSend}
+          onMouseEnter={handleMouseEnterAdd}
+          onMouseLeave={handleMouseLeaveAdd}
+          
         >
-         {
-            aceptar
-              ? 
-              <img src={"./icons/add.svg"} 
-              alt={type}
+          {aceptar ? (
+              <img
+                src={isHoveringAdd ? iconAddWhite : iconAdd}
+                alt={type}
               />
-            : cancelar
-            }
+            ) : (
+              cancelar
+            )}
         </button>
         <button
           disabled={disable}
-          className="btn btn-outline-danger btn-sm buttonAceptarCancelar"
+          className="btn  border border-danger btn-outline-danger buttonAceptarCancelar"
           onClick={() => onDelete(id)}
+          onMouseEnter={handleMouseEnterDelete}
+            onMouseLeave={handleMouseLeaveDelete}
         >
-           {
-            cancelar
-              ? 
-              <img src={icon} 
-             alt={type}
+            {cancelar ? (
+              <img
+                src={isHoveringDelete ? iconDeleteWhite : iconDelete}
+                alt={type}
               />
-            : aceptar
-            }
+            ) : (
+              aceptar
+            )}
         </button>
       </div>
     </>

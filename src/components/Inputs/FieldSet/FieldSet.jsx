@@ -8,7 +8,11 @@ import {
   updateLicencia,
   deleteLicencia,
 } from "../../../redux/actions/fetchActions";
-import { deleteLicEmpleado, licenciaSelected, saveIdsLic } from "../../../redux/actions/licenciasActions";
+import {
+  deleteLicEmpleado,
+  licenciaSelected,
+  saveIdsLic,
+} from "../../../redux/actions/licenciasActions";
 import TableLicencias from "../../Tables/TableLicencias";
 import TableSuspenLicencia from "../../Tables/TableSuspenLicencia";
 import FechaSuspencion from "./Childs/FechaSuspencion";
@@ -33,7 +37,9 @@ const FieldSet = ({
   refetch,
   disabled,
   setFormLicencias,
-  type, cancelar, aceptar,
+  type,
+  cancelar,
+  aceptar,
 }) => {
   const columns1 = [
     "Seleccionar",
@@ -50,32 +56,59 @@ const FieldSet = ({
 
   const empleadoUno = useSelector((state) => state.employeStates.employe);
 
-
-  const licenciuaSelected = useSelector((state)=> state.licenciasState.licenciaSelected);
+  const licenciuaSelected = useSelector(
+    (state) => state.licenciasState.licenciaSelected
+  );
 
   const detalleSelected = useSelector(
     (state) => state.licenciasState.detalleSelect
   );
-    const licenciaDelEmpleado = useSelector((state)=> state.licenciasState.licenciasEmpleado);
- 
-  const icon = type === "add" ? "./icons/add.svg" : "./icons/delete.svg";
+  const licenciaDelEmpleado = useSelector(
+    (state) => state.licenciasState.licenciasEmpleado
+  );
 
-  
+  const iconAdd = "./icons/add.svg";
+  const iconDelete = "./icons/delete.svg";
+  const iconAddWhite = "./icons/add-white.svg";
+  const iconDeleteWhite = "./icons/delete-white.svg";
 
-  const url = `http://54.243.192.82/api/ActualizaDisponibles/0?idEmpleado=${empleadoUno.iDempleado}&anio=${formLicencias?.inputCboAñosLicencia}&diasDisponiblesTotales=${formLicencias?.inputCantDiasDispLicencia}&fechaVencimiento=${formLicencias?.inputVencimientoLicencias}&newId=0`
+  const [isHoveringDelete, setIsHoveringDelete] = useState(false);
+  const [isHoveringDeleteTwo, setIsHoveringDeleteTwo] = useState(false);
+  const [isHoveringAdd, setIsHoveringAdd] = useState(false);
 
-  const urlCreateLicencia = "http://54.243.192.82/api/InsertarNuevaLicencia"
+  const handleMouseEnterDelete = () => {
+    setIsHoveringDelete(true);
+  };
+  const handleMouseEnterDeleteTwo = () => {
+    setIsHoveringDeleteTwo(true);
+  };
+
+  const handleMouseLeaveDelete = () => {
+    setIsHoveringDelete(false);
+  };
+
+  const handleMouseLeaveDeleteTwo = () => {
+    setIsHoveringDeleteTwo(false);
+  };
+
+  const handleMouseEnterAdd = () => {
+    setIsHoveringAdd(true);
+  };
+
+  const handleMouseLeaveAdd = () => {
+    setIsHoveringAdd(false);
+  };
+
+  const url = `http://54.243.192.82/api/ActualizaDisponibles/0?idEmpleado=${empleadoUno.iDempleado}&anio=${formLicencias?.inputCboAñosLicencia}&diasDisponiblesTotales=${formLicencias?.inputCantDiasDispLicencia}&fechaVencimiento=${formLicencias?.inputVencimientoLicencias}&newId=0`;
+
+  const urlCreateLicencia = "http://54.243.192.82/api/InsertarNuevaLicencia";
   const urlCreateLicencias = `http://54.243.192.82/api/ActualizaDisponibles/0?idEmpleado=${empleadoUno.iDempleado}&anio=${formLicencias?.inputCboAñosLicencia}&diasDisponiblesTotales=${formLicencias?.inputCantDiasDispLicencia}&fechaVencimiento=${formLicencias?.inputVencimientoLicencias}&newId=0`;
-
-
- 
-
 
   const urlLicencias = "http://54.243.192.82/api/ModificarDatos";
   const detalleSeleccionado = useSelector(
     (state) => state.licenciasState.detalleSelect
   );
-  const idSelected = useSelector((state)=> state.licenciasState.idSelected);
+  const idSelected = useSelector((state) => state.licenciasState.idSelected);
 
   const urlCreateDetalleLicencia = `http://54.243.192.82/api/DetalleLicenciasEmpleados`;
   const urlDetalleLicenciaEmpleados =
@@ -83,18 +116,16 @@ const FieldSet = ({
   const urlDeleteLicencia = "http://54.243.192.82/api/";
   const dispatch = useDispatch();
   const urlLicenciaEmpleados = "http://54.243.192.82/api/MostrarDatosLicencias";
-  const licenciasDelEmpleado = useSelector((state)=> state.licenciasState.licenciasEmpleado);
-
-  
+  const licenciasDelEmpleado = useSelector(
+    (state) => state.licenciasState.licenciasEmpleado
+  );
 
   const urlUpdateDetalle = `http://54.243.192.82/api/DetalleLicenciasEmpleados?IdDetalleLicenciaEmpleado=${detalleSeleccionado.idDetalleLicenciaEmpleado}&FechaSuspension=${formLicencias?.inputDateSuspLic}`;
 
-
   const [checked, setChecked] = useState(false);
 
-  let urlNueva = "http://54.243.192.82/api/DetalleLicenciasEmpleados?IdDetalleLicenciaEmpleado=0&IdLicenciaEmpleado=${}&Desde=2017-07-21T17%3A32%3A28Z&Hasta=2017-07-21T17%3A32%3A28Z&NewId=0"
-
- 
+  let urlNueva =
+    "http://54.243.192.82/api/DetalleLicenciasEmpleados?IdDetalleLicenciaEmpleado=0&IdLicenciaEmpleado=${}&Desde=2017-07-21T17%3A32%3A28Z&Hasta=2017-07-21T17%3A32%3A28Z&NewId=0";
 
   let bodyLicencias = {
     idEmpleado: empleadoUno.iDempleado,
@@ -108,7 +139,7 @@ const FieldSet = ({
     fechaProrroga: null,
     nroResolucion: null,
   };
- 
+
   let bodyLicenciasUpdateSolicita = {
     idLicenciaEmpleado: licenciuaSelected?.idLicenciaEmpleado,
     idEmpleado: licenciuaSelected?.idEmpleado,
@@ -122,7 +153,7 @@ const FieldSet = ({
     fechaProrroga: null,
     nroResolucion: null,
   };
-  
+
   let bodyLicenciasUpdateProrroga = {
     idLicenciaEmpleado: licenciuaSelected?.idLicenciaEmpleado,
     idEmpleado: empleadoUno?.iDempleado,
@@ -135,12 +166,12 @@ const FieldSet = ({
     nroResolucion: formLicencias?.inputNuevaResolucionLic,
   };
 
-  const arrayIds = useSelector((state)=> state.licenciasState.idsLic);
-
+  const arrayIds = useSelector((state) => state.licenciasState.idsLic);
 
   const bodyDetalleLicencia = {
     IdDetalleLicenciaEmpleado: 0,
-    IdLicenciaEmpleado: licenciuaSelected && licenciuaSelected.idLicenciaEmpleado,
+    IdLicenciaEmpleado:
+      licenciuaSelected && licenciuaSelected.idLicenciaEmpleado,
     Desde: formLicencias && formLicencias.inputDesdeSolicitaLic,
     Hasta: formLicencias && formLicencias.inputHastaSolicitaLic,
   };
@@ -151,11 +182,10 @@ const FieldSet = ({
     0,
     0
   );
-  
 
   let dateTwo = new Date(
     licenciuaSelected?.fechaVencimiento &&
-    licenciuaSelected?.fechaVencimiento.substring(
+      licenciuaSelected?.fechaVencimiento.substring(
         0,
         licenciuaSelected?.fechaVencimiento.length - 9
       )
@@ -170,20 +200,21 @@ const FieldSet = ({
 
   let dateHasta = new Date();
 
-    const bodyDeleteSusp = {
-      "idDetalleLicenciaEmpleado": detalleSeleccionado.idDetalleLicenciaEmpleado,
-      "fechaSuspension": null
-    }
-    const bodyCreateSusp = {
-      "idDetalleLicenciaEmpleado": detalleSeleccionado.idDetalleLicenciaEmpleado,
-      "fechaSuspension": formLicencias?.inputDateSuspLic
-    }
-    console.log(formLicencias?.inputDateSuspLic)
+  const bodyDeleteSusp = {
+    idDetalleLicenciaEmpleado: detalleSeleccionado.idDetalleLicenciaEmpleado,
+    fechaSuspension: null,
+  };
+  const bodyCreateSusp = {
+    idDetalleLicenciaEmpleado: detalleSeleccionado.idDetalleLicenciaEmpleado,
+    fechaSuspension: formLicencias?.inputDateSuspLic,
+  };
+  console.log(formLicencias?.inputDateSuspLic);
   async function deleteSuspencion() {
     try {
       axios
         .put(
-          `http://54.243.192.82/api/DetalleLicenciasEmpleados`, bodyDeleteSusp
+          `http://54.243.192.82/api/DetalleLicenciasEmpleados`,
+          bodyDeleteSusp
         )
         .then((res) => {
           setRefectch(!refetch);
@@ -196,22 +227,26 @@ const FieldSet = ({
       });
     }
   }
-    let dateHastas = new Date(detalleSeleccionado.hasta).setHours(0, 0, 0, 0);
-    let dateSusp = new Date(formLicencias?.inputDateSuspLic).setHours(0, 0, 0, 0);
+  let dateHastas = new Date(detalleSeleccionado.hasta).setHours(0, 0, 0, 0);
+  let dateSusp = new Date(formLicencias?.inputDateSuspLic).setHours(0, 0, 0, 0);
 
-    console.log(dateHastas)
-    console.log(dateSusp)
-    console.log(dateSusp.valueOf() < dateHastas.valueOf() &&
-    !formLicencias?.inputQuitaSusp)
+  console.log(dateHastas);
+  console.log(dateSusp);
+  console.log(
+    dateSusp.valueOf() < dateHastas.valueOf() && !formLicencias?.inputQuitaSusp
+  );
 
-    
-    console.log(formLicencias?.inputQuitaSusp)
-
+  console.log(formLicencias?.inputQuitaSusp);
 
   async function updateDetalle(url) {
     let dateDesde = new Date(detalleSeleccionado.desde).setHours(0, 0, 0, 0);
     let dateHasta = new Date(detalleSeleccionado.hasta).setHours(0, 0, 0, 0);
-    let dateSusp = new Date(formLicencias?.inputDateSuspLic).setHours(0, 0, 0, 0);
+    let dateSusp = new Date(formLicencias?.inputDateSuspLic).setHours(
+      0,
+      0,
+      0,
+      0
+    );
 
     if (detalleSeleccionado) {
       if (
@@ -219,11 +254,16 @@ const FieldSet = ({
         !formLicencias?.inputQuitaSusp
       ) {
         try {
-          await axios.put(`http://54.243.192.82/api/DetalleLicenciasEmpleados`, bodyCreateSusp).then((res) => {
-            console.log(bodyCreateSusp)
-            console.log(res)
-            setRefectch(!refetch);
-          });
+          await axios
+            .put(
+              `http://54.243.192.82/api/DetalleLicenciasEmpleados`,
+              bodyCreateSusp
+            )
+            .then((res) => {
+              console.log(bodyCreateSusp);
+              console.log(res);
+              setRefectch(!refetch);
+            });
         } catch (err) {
           return swal({
             title: "Error",
@@ -235,7 +275,8 @@ const FieldSet = ({
         try {
           axios
             .put(
-              `http://54.243.192.82/api/DetalleLicenciasEmpleados`, bodyDeleteSusp
+              `http://54.243.192.82/api/DetalleLicenciasEmpleados`,
+              bodyDeleteSusp
             )
             .then((res) => {
               setRefectch(!refetch);
@@ -263,7 +304,6 @@ const FieldSet = ({
     });
   }
   async function updateData(url, bodyPetition, id) {
-     
     if (dateTwo.valueOf() > dateProrroga) {
       return swal({
         title: "Error",
@@ -274,7 +314,6 @@ const FieldSet = ({
     if (id) {
       try {
         await axios.put(url, bodyPetition).then((res) => {
-        
           setRefectch(!refetch);
         });
       } catch (err) {
@@ -292,51 +331,43 @@ const FieldSet = ({
       });
   }
   function deleteLicenciaAxios(id) {
-      dispatch(deleteLicEmpleado(id))     
-      dispatch(saveIdsLic(id))
-          
+    dispatch(deleteLicEmpleado(id));
+    dispatch(saveIdsLic(id));
   }
   function deleteDetalleLicencia(urlDetalleLicenciaEmpleados, id) {
     swal({
-        title: "¿Desea eliminar el Detalle de Licencia?",
-        text: "Si acepta, el detalle se eliminará de la Base de Datos",
-        icon: "warning",
-        buttons: true,
-        dangerMode: true,
-      })
-      .then((willDelete) => {
-        if (willDelete) {
-          axios.delete(`${urlDetalleLicenciaEmpleados}/${id}`).then((res) => {
-        
-            setRefectch(!refetch);
-            return swal("Detalle eliminado con éxito", {
-                    icon: "success",
-                  });
-            
+      title: "¿Desea eliminar el Detalle de Licencia?",
+      text: "Si acepta, el detalle se eliminará de la Base de Datos",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        axios.delete(`${urlDetalleLicenciaEmpleados}/${id}`).then((res) => {
+          setRefectch(!refetch);
+          return swal("Detalle eliminado con éxito", {
+            icon: "success",
           });
-          
-        } else {
-          return swal("Cancelado, puede seguir operando");
-        }
-      });
-    
+        });
+      } else {
+        return swal("Cancelado, puede seguir operando");
+      }
+    });
   }
- 
+
   const bodyPetitionCreate = {
-    "idEmpleado": empleadoUno?.iDempleado,
-    "año": formLicencias?.inputCboAñosLicencia,
-    "diasDisponiblesTotales": formLicencias?.inputCantDiasDispLicencia,
-    "fechaVencimiento": formLicencias?.inputVencimientoLicencias,
-    "desde": null,
-    "hasta": null,
-    "fechaProrroga": null,
-    "nroResolucion": null
-  }
+    idEmpleado: empleadoUno?.iDempleado,
+    año: formLicencias?.inputCboAñosLicencia,
+    diasDisponiblesTotales: formLicencias?.inputCantDiasDispLicencia,
+    fechaVencimiento: formLicencias?.inputVencimientoLicencias,
+    desde: null,
+    hasta: null,
+    fechaProrroga: null,
+    nroResolucion: null,
+  };
   function deleteWithOptions() {
     switch (selectedOption) {
-      case 
-
-        "1 - Disponibles por Periodo" ||
+      case "1 - Disponibles por Periodo" ||
         "3 - Prorroga Vencimiento" ||
         "2 - Solicita Nueva Licencia":
         deleteLicenciaAxios(idSelected);
@@ -367,11 +398,7 @@ const FieldSet = ({
         solicitanuevaLic(bodyDetalleLicencia, bodyPetitionCreate);
         break;
       case "3 - Prorroga Vencimiento":
-        updateData(
-          urlLicencias,
-          bodyLicenciasUpdateProrroga,
-          idSelected
-        );
+        updateData(urlLicencias, bodyLicenciasUpdateProrroga, idSelected);
         break;
       case "4 - Suspende Licencia":
         updateDetalle(urlUpdateDetalle);
@@ -380,9 +407,9 @@ const FieldSet = ({
         return null;
     }
   }
-  
+
   async function solicitanuevaLic(bodyDetalleLicencia) {
-     debugger;
+    debugger;
     if (licenciuaSelected.fechaProrroga && licenciuaSelected.fechaProrroga) {
       let dateProrroga = new Date(licenciuaSelected.fechaProrroga).setHours(
         0,
@@ -390,12 +417,13 @@ const FieldSet = ({
         0,
         0
       );
-      
+
       if (dateOne.valueOf() < dateProrroga.valueOf()) {
-        await axios.post(urlCreateDetalleLicencia, bodyDetalleLicencia).then((res) => {
-    
-          setRefectch(!refetch);
-        });
+        await axios
+          .post(urlCreateDetalleLicencia, bodyDetalleLicencia)
+          .then((res) => {
+            setRefectch(!refetch);
+          });
       } else {
         return swal({
           title: "Error",
@@ -406,10 +434,11 @@ const FieldSet = ({
       return;
     }
     if (dateOne.valueOf() < dateTwo.valueOf()) {
-      await axios.post(urlCreateDetalleLicencia, bodyDetalleLicencia).then((res) => {
-    
-        setRefectch(!refetch);
-      });
+      await axios
+        .post(urlCreateDetalleLicencia, bodyDetalleLicencia)
+        .then((res) => {
+          setRefectch(!refetch);
+        });
     } else
       return swal({
         title: "Error",
@@ -478,38 +507,43 @@ const FieldSet = ({
                 checked={checked}
                 valueForm={valueForm}
                 onChange={onChange}
-                formLicencias = {formLicencias}
+                formLicencias={formLicencias}
               />
             )}
           </div>
         </fieldset>
         <div className="col-xl-12 d-flex flex-row-reverse mt-2 w-100 gap-1">
           <button
-            className="btn border border-danger btnAgregar "
+            className="btn border border-danger btn-outline-danger btnAgregar "
             onClick={deleteWithOptions}
+            onMouseEnter={handleMouseEnterDelete}
+            onMouseLeave={handleMouseLeaveDelete}
             disabled={disabled}
           >
-  {
-            cancelar
-              ? 
-              <img src={icon} 
-             alt={type}
+            {cancelar ? (
+              <img
+                src={isHoveringDelete ? iconDeleteWhite : iconDelete}
+                alt={type}
               />
-            : aceptar
-            }          </button>
+            ) : (
+              aceptar
+            )}
+          </button>
           <button
-            className="btn border border-success btnAgregar "
+            className="btn border border-success btn-outline-success btnAgregar "
             onClick={fetchApiWithOptions}
+            onMouseEnter={handleMouseEnterAdd}
+            onMouseLeave={handleMouseLeaveAdd}
             disabled={disabled}
           >
-               {
-            aceptar
-              ? 
-              <img src={"./icons/add.svg"} 
-              alt={type}
+              {aceptar ? (
+              <img
+                src={isHoveringAdd ? iconAddWhite : iconAdd}
+                alt={type}
               />
-            : cancelar
-            }
+            ) : (
+              cancelar
+            )}
           </button>
         </div>
         <TableLicencias
@@ -524,7 +558,7 @@ const FieldSet = ({
         />
         <div className="col-xl-12 d-flex flex-row-reverse mt-2">
           <button
-            className="btn border border-danger btnAgregar"
+            className="btn border border-danger btn-outline-danger btnAgregar"
             disabled={disabled}
             onClick={() =>
               deleteDetalleLicencia(
@@ -532,15 +566,17 @@ const FieldSet = ({
                 detalleSeleccionado.idDetalleLicenciaEmpleado
               )
             }
+            onMouseEnter={handleMouseEnterDeleteTwo}
+            onMouseLeave={handleMouseLeaveDeleteTwo}
           >
-           {
-            cancelar
-              ? 
-              <img src={icon} 
-             alt={type}
+            {cancelar ? (
+              <img
+                src={isHoveringDeleteTwo ? iconDeleteWhite : iconDelete}
+                alt={type}
               />
-            : aceptar
-            }       
+            ) : (
+              aceptar
+            )}
           </button>
         </div>
         <TableSuspenLicencia

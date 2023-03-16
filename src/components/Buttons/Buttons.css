@@ -5,16 +5,6 @@
   pointer-events: none;
   cursor: default;
 }
-/* 
-.btn-danger {
-  background-color: #dc3545;
-  color: #fff;
-}
-
-.btn-success {
-  background-color: #28a745;
-  color: #fff;
-} */
 
 .btn-danger .btn-icon {
   background-image: url('../../../public/icons/delete-white.svg');
