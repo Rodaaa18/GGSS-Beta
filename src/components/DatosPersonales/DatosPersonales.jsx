@@ -35,8 +35,9 @@ const DatosPersonales = ({ modify,tabIndex ,handleTabChange, responses, setRespo
   const empleadoUno = useSelector((state)=> state.employeStates.employe);
   const datosPersonalesState = useSelector((state)=> state.generalState);
   const numeradores = useSelector((state)=> state.generalState.numeradores);
-  
+  const parSueldos = useSelector((state)=> state.generalState.parSueldos);
  
+  console.log(parSueldos)
   
   //#endregion
 
@@ -99,10 +100,29 @@ useEffect(()=>{
 useEffect(()=>{
   const newResponse = {...formDatosPersonales};
   newResponse["inputSexo"] = "F";
+  if(agregar){
+    newResponse["documentoInput"] = parSueldos && parSueldos[0].idTipoDocumentoPredeterminado;
+    newResponse["estadosEmpleados"] = parSueldos && parSueldos[0].estadoAltaEmpleado;
+    newResponse["paisOrigenInput"] = parSueldos && parSueldos[0].idPaisPredeterminado;
+  }
   setFormDatosPersonales({
     ...newResponse
   });
 },[])
+
+
+  useEffect(()=>{
+    const newResponse = {...formDatosPersonales};
+    if(agregar){
+      newResponse["dniSelected"] = parSueldos && parSueldos[0].idTipoDocumentoPredeterminado;
+      newResponse["estadosEmpleados"] = parSueldos && parSueldos[0].estadoAltaEmpleado;
+      newResponse["paisOrigenInput"] = parSueldos && parSueldos[0].idPaisPredeterminado;
+    }
+    setFormDatosPersonales({
+      ...newResponse
+    });
+  },[agregar])
+
    function getNumeradorId(tabla){
     return numeradores && numeradores.filter((num)=>{
       return (num.tabla === tabla)
@@ -178,8 +198,7 @@ useEffect(()=>{
     dispatch(disableFunctions(false));
      
   }
-
-  
+  console.log(formDatosPersonales)
   return (
       //#region Menú Principal
 
@@ -268,11 +287,11 @@ useEffect(()=>{
                             onChange={onChangeValues}
                             selectedId="dniSelected"
                             idSelected={formDatosPersonales?.dniSelected && formDatosPersonales?.dniSelected  !== "" ? formDatosPersonales?.dniSelected && formDatosPersonales?.dniSelected : empleadoUno.iDtipoDocumento}
-                          
+                            agregar={agregar}
                             handleClickRef={handleClickRef}
                             referencia= {referencia.tipoDocumentoRef}
                             modalName="Tipos Documento"
-
+                            parSueldos={parSueldos && parSueldos}
 
                             validateNumbersDNI={validateNumbersDNI}
                             obligatorio ={true}
@@ -384,7 +403,8 @@ useEffect(()=>{
                             propArrayOp="nombreEstado"
                             propArrayOpFem="nombreEstado"
                             idSelected={formDatosPersonales?.estadosEmpleados ? formDatosPersonales?.estadosEmpleados : empleadoUno.idEstado}
-                         
+                            parSueldos={parSueldos && parSueldos[0]?.estadoAltaEmpleado}
+                            agregar={agregar}
                             valueId="idEstado"
                             masculinos=""
                             femeninos=""
@@ -458,6 +478,8 @@ useEffect(()=>{
                             idSelected={formDatosPersonales?.paisOrigenInput ? formDatosPersonales?.paisOrigenInput : empleadoUno.idPaisOrigen}
                             handleClickRef={handleClickRef}
                             referencia= {referencia.paisesRef}
+                            parSueldos={parSueldos && parSueldos[0]?.idPaisPredeterminado}
+                            agregar={agregar}
                             modalName="Paises"
                             valueId="idPais"
                             masculinos=""

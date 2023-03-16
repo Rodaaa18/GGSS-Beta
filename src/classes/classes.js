@@ -132,7 +132,7 @@ export const classesEstadosCiviles = {
   }
   export const inputClassCalleDomicilios= {
     classOne : "formulario__grupo__inputs__cbo" ,
-    classTwo : 'form__grupo__label__inp',
+    classTwo : 'form__grupo__label__inp w-100',
     classThree : "primero",
     classFour :  "formulario__label mt-2 mb-0",
     classFive : "segundo",

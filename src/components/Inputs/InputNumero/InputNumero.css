@@ -13,13 +13,11 @@
 	z-index: 0;
 }
 .formulario__grupo__numero{
-	position: relative;
-	left: 40%;
 	display: flex;
 	flex-flow: row;
-	justify-content: end;
+	justify-content: flex-start;
 	align-items: center;
-	width: 60%;
+	width: 100%;
 	
 	
 }
@@ -60,7 +58,7 @@
 }
 .formulario-input-Legajo-Domicilios{
 	
-	width: 45%;
+	width: 100%;
 	border: none;
 	border-bottom-color: currentcolor;
 	border-bottom-style: none;

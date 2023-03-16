@@ -247,7 +247,7 @@ const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValu
                       //#endregion
                     }
                     <div className="row">
-                    <div className="col-xl-6 col-lg-6 col-md-6">
+                    <div className="col-xl-6 col-lg-6 col-md-6 w-100">
                       <InputCbo
                         clasess={inputClassCalleDomicilios}
                         value={formDatosPersonales?.inputCalleDomicilios ? formDatosPersonales?.inputCalleDomicilios : empleadoUno?.calle}
@@ -276,24 +276,8 @@ const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValu
                         esCalle = {true}
                         usaNumero={true}
                         dptoOpcion={true}
-                      />
-                    </div>
-                    <div className="col-xl-6 col-lg-6 col-md-6 ">
-                      <InputNumero
-                        nameInput="inputNumCalle"
-                        array={paises !== null ? paises : []}
-                        generalState = {domicilios}
-                        setGeneralState = {setDomicilios}
-                        placeHolder="N° Calle"
-                        nameCheck="Fijar"
-                        defaultChecked=""
-                        display={false}
-                        //value={numCalleSelected !== undefined && numCalleSelected !== null ? numCalleSelected.toString() : domiciliosState.inputNumCalle}
-                        disabled={disabled}
-                        idInput="inputNumCalle"
-                        nameLabel="N°"
-                        onChange={onChangeValues}
-                        inputValueState={formDatosPersonales?.inputNumCalle ? formDatosPersonales?.inputNumCalle : empleadoUno.nroCalle}
+                        esCalleDom={true}
+                        inputValueSate={formDatosPersonales?.inputNumCalle ? formDatosPersonales?.inputNumCalle : empleadoUno.nroCalle}
                       />
                     </div>
                     </div>

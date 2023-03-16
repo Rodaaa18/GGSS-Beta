@@ -905,22 +905,24 @@ useEffect(() => {
                 'Access-Control-Allow-Origin' : '*'
               }})
              .then((res)=>{
-              setRefectch(!refetch);
-              setSaveEmpleado(!saveEmpleado)
-              setDisable(true)
-              if(res.data.statusCode === 200){
-                return swal({
-                 title: "Ok",
-                 text: "Empleado Guardado con éxito",
-                 icon: "success",
-                 })
-              }else{
-                swal({
-                  title: "Error",
-                  text: "Error al guardar el Empleado",
-                  icon: "error",
+                setRefectch(!refetch);
+                setSaveEmpleado(!saveEmpleado)
+                setDisable(true)
+                setModify(false)
+                setAgregar(false)
+                if(res.data.statusCode === 200){
+                  return swal({
+                  title: "Ok",
+                  text: "Empleado Guardado con éxito",
+                  icon: "success",
                   })
-              }
+                }else{
+                  swal({
+                    title: "Error",
+                    text: "Error al guardar el Empleado",
+                    icon: "error",
+                    })
+                }
               
              })
           }else{
@@ -932,6 +934,8 @@ useEffect(() => {
                 dispatch(setRefetch(!refetching))
                 setRefectch(!refetch);
                 setDisable(true)
+                setModify(false)
+                setAgregar(false)
                  return swal({
                   title: "Ok",
                   text: "Empleado Modificado con éxito",
@@ -955,6 +959,8 @@ useEffect(() => {
                   setRefectch(!refetch)
                   dispatch(deleteOneDomicilioSelect(id))
                   dispatch(deleteDomicilio(id));
+                  setModify(false)
+                  setAgregar(false)
                   const newResponse = {...responses.formDatosPersonales};
                   newResponse["inputPredeterminado"] = false;
                   newResponse["inputCalleDomicilios"] = 0;
@@ -1032,71 +1038,84 @@ useEffect(() => {
                 ]
               }
               await axios.delete(`${urls.urlTRabajoDelete}${id}`, {data : array, headers : {'Content-Type': 'application/json;'}})
-              .then((res) => swal({
-                title: "Ok",
-                text: "Trabajo Anterior eliminado con éxito",
-                icon: "success",
-            }))
-          });
-          arrays[1].map(async (id)=>{
-            await axios.delete(`${urls.urlDocDelte}${id}`)
-            .then((res) => { if(res.status === 200){swal({
-              title: "Ok",
-              text: "Documentacion eliminada con éxito",
-              icon: "success",
-          })}})
-          });
-          arrays[2].map(async (id)=>{
-            let array = {
-              "arrayList": [
-                id
-              ]
-            }
-
-            try{
-              await axios.delete(`${urls.urlLicDelete}${id}`, {data : array, headers : {'Content-Type': 'application/json;','Access-Control-Allow-Origin' : '*'}})
-            .then((res) => {
-
-                  if(res.status === 200){
-                  return swal({
+              .then((res) => 
+              {
+                if(res.status === 200){
+                  setDisable(true);
+                  swal({
                     title: "Ok",
-                    text: "Licencia eliminada con éxito",
+                    text: "Trabajo Anterior eliminado con éxito",
+                    icon: "success",
+                    })
+                  }
+                })              
+            });
+            arrays[1].map(async (id)=>{
+              await axios.delete(`${urls.urlDocDelte}${id}`)
+              .then((res) => { 
+                if(res.status === 200){
+                  setDisable(true);
+                  swal({
+                      title: "Ok",
+                      text: "Documentacion eliminada con éxito",
+                      icon: "success",
+                  })
+                }
+              })
+            });
+            arrays[2].map(async (id)=>{
+              let array = {
+                "arrayList": [
+                  id
+                ]
+              }
+              try{
+                await axios.delete(`${urls.urlLicDelete}${id}`, {data : array, headers : {'Content-Type': 'application/json;','Access-Control-Allow-Origin' : '*'}})
+              .then((res) => {
+
+                    if(res.status === 200){
+                      setDisable(true);
+                    return swal({
+                      title: "Ok",
+                      text: "Licencia eliminada con éxito",
+                      icon: "success",
+                  })
+                  }
+                }
+              )
+              }catch(err){
+                setRefectch(!refetch);
+                return swal({
+                  title: "Error",
+                  text: "No se puede elimiar una Licencia que tiene asignado un Detalle",
+                  icon: "error",
+              })
+              }
+
+          });
+              arrays[4].map(async (id)=>{
+                await axios.delete(`${urls.urlDeleteFAmiliar}${id}`)
+                .then((res) => {
+                  if(res.status === 200){
+                    setDisable(true);
+                  swal({
+                    title: "Ok",
+                    text: "Familiar eliminado con éxito",
                     icon: "success",
                 })
-                }
-              }
-            )
-            }catch(err){
-              setRefectch(!refetch);
-              return swal({
-                title: "Error",
-                text: "No se puede elimiar una Licencia que tiene asignado un Detalle",
-                icon: "error",
-            })
-            }
-
-         });
-            arrays[4].map(async (id)=>{
-              await axios.delete(`${urls.urlDeleteFAmiliar}${id}`)
-              .then((res) => {
-                if(res.status === 200){
-                swal({
-                  title: "Ok",
-                  text: "Familiar eliminado con éxito",
-                  icon: "success",
-              })
-              }} )
-          });
-            arrays[5].map(async (id)=>{
-              await axios.delete(`${urls.urlDatoExtraElimina}${id}`)
-              .then((res) => {if(res.status === 200){
-                swal({
-                  title: "Ok",
-                  text: "Dato Extra eliminado con éxito",
-                  icon: "success",
-              })
-              }} )
-          });
+                }} )
+            });
+              arrays[5].map(async (id)=>{
+                await axios.delete(`${urls.urlDatoExtraElimina}${id}`)
+                .then((res) => {if(res.status === 200){
+                  setDisable(true);
+                  swal({
+                    title: "Ok",
+                    text: "Dato Extra eliminado con éxito",
+                    icon: "success",
+                })
+                }} )
+            });
         }
       }
     }

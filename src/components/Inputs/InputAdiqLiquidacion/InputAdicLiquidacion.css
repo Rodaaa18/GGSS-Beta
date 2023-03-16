@@ -1,22 +1,22 @@
 .formulario__grupo__inputs__cbo{
-    display: grid;
+   /*  display: grid;
     grid-template-areas: "nombre cbo";
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr;
+    grid-template-rows: 1fr; */
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
     width: 100%;
 }
 
 .form__grupo__label__inp{
     grid-area: nombre;   
     display: grid;
-    grid-template-areas: "primer segun tercer";
-    grid-template-columns: 0.4fr 1.1fr 0.5fr;
+    grid-template-areas: "primer segun tercer cuar";
+    grid-template-columns: 0.3fr 0.6fr 0.2fr 0.6fr;
     grid-template-rows: 1fr;
     width: 100%;
-    flex-flow: column;
-    align-items: flex-start;
-    justify-content: space-between;
-    align-items: center;
 }
 .primero{
     grid-area: primer;
@@ -33,11 +33,14 @@
 
 }
 .cuarto{
-   /* margin-left: 100px;  */
-   /* grid-area: tercer; */
-   width: 1px;
-   height: 1px;
+    grid-area: cuar;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
 }
+
 .none{
     display: none;
 }

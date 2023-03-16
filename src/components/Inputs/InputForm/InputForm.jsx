@@ -38,7 +38,16 @@ const InputForm = ({
           onChange={(e)=>onChange(e.target.value, idInput)}
           disabled={disabled}
           name={idInput}
-          onKeyPress={(numbers && validateNumbers) || (!numbers && validateLetters)}
+          onKeyPress={(e)=>{
+            if(e.key !== 'Enter'){
+              if(numbers){
+                validateNumbers(e);
+              }else{
+                validateLetters(e);
+              }
+            }
+          }
+        }
         /> :
         <input
           type="text"
@@ -50,7 +59,16 @@ const InputForm = ({
           onChange={(e)=>onChange(e.target.value, idInput)}
           disabled={disabled}
           name={idInput}
-          onKeyPress={(numbers && validateNumbers) || (!numbers && validateLetters)}
+          onKeyPress={(e)=>{
+            if(e.key !== 'Enter'){
+              if(numbers){
+                validateNumbers(e);
+              }else{
+                validateLetters(e);
+              }
+            }
+          }
+        }
         />
         }
       </div>
