@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addNewFamiliar } from "../../redux/actions/familiaActions";
+import { addFamiliar, addNewFamiliar } from "../../redux/actions/familiaActions";
 import "./TableBootstrap.css"
 
 const TableBasic = ({
@@ -49,7 +49,7 @@ const TableBasic = ({
                           name="imputRadio"
                           value={item.idFamiliares}
                           id={`selected${i}`}
-                          onClick={(e) => dispatch(addNewFamiliar(item.idFamiliares))}
+                          onClick={(e) => {dispatch(addNewFamiliar(item.idFamiliares)); dispatch(addFamiliar(item))}}
                         />
                       </th>
                       <td

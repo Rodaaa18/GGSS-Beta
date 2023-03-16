@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import './TextArea.css'
 
 
-const TextArea = ({ characterLimit = 255, onChange,idInput, disableModal, clasess, disable }) => {
+const TextArea = ({ characterLimit = 255, onChange,idInput, disableModal, clasess, disable, value }) => {
     const [input, setInput] = useState('');
 
     function handleChange(event) {
@@ -11,9 +11,9 @@ const TextArea = ({ characterLimit = 255, onChange,idInput, disableModal, clases
         onChange(event.target.value,idInput )
       }
     
-      const charactersLeft = characterLimit - input.length;
+      const charactersLeft = characterLimit - value?.length;
 
-   
+   console.log(value)
 return (
     <>
     {clasess ? 
@@ -35,8 +35,8 @@ return (
                   id={idInput}
                   name={idInput}
                   className={clasess.classFour}
-                  onChange={handleChange}
-                  value={input}
+                  onChange={(e)=>onChange(e.target.value,idInput )}
+                  value={value}
                   cols="51" 
                   rows="2"
                 />
@@ -74,8 +74,8 @@ return (
                   id={idInput}
                   name={idInput}
                   className="bg-white w-100 form-control text-black fs-6 pt-0 pb-0"
-                  onChange={handleChange}
-                  value={input}
+                  onChange={(e)=>onChange(e.target.value,idInput )}
+                  value={value ? value : ""}
                   cols="51" 
                   rows="2"
                 />

@@ -28,7 +28,7 @@ const InputMultiple = ({
   
   useEffect(() => {
     valueInput();
-  }, [valorRadioM, valorRadioF, valor]);
+  }, [valorRadioM, valorRadioF, valueRadio]);
 
   useEffect(()=>{
     setValor(valueRadio);
@@ -42,16 +42,16 @@ const InputMultiple = ({
 
 
   const valueInput = () => {    
-      if(valor === "M"){
+      if(valueRadio === "M"){
         setValorRadioM(true);
         setValorRadioF(false);
       }
-      if(valor === "F"){
+      if(valueRadio === "F"){
         setValorRadioF(true);
         setValorRadioM(false);
       } 
     }    
-
+console.log(valueRadio)
  
   return (
     // <div className="container-flex align-items-center">
@@ -99,7 +99,7 @@ const InputMultiple = ({
                   id={propsRadioButton.idRadioBtn}
                   name={propsRadioButton.idRadioBtn}
                   defaultChecked
-                  checked={valorRadioM}
+                  checked={valueRadio == "M"}
                   onChange={(e)=>onChange(e.target.value, propsRadioButton.idRadioBtn)}
                   value="M"
                   disabled={disable}
@@ -115,7 +115,7 @@ const InputMultiple = ({
                   id={propsRadioButton.idRadioBtn}
                   defaultChecked
                   name={propsRadioButton.idRadioBtn}
-                  checked={valorRadioF}
+                  checked={valueRadio === "F"}
                   onChange={(e)=>onChange(e.target.value, propsRadioButton.idRadioBtn)}
                   value="F"
                   disabled={disable}
