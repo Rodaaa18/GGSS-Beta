@@ -73,7 +73,7 @@ return (
                   maxLength={characterLimit}
                   id={idInput}
                   name={idInput}
-                  className="bg-white w-100 form-control text-black fs-6 pt-0 pb-0"
+                  className="formulario-input-TextArea bg-white w-100 form-control text-black fs-6 pt-0 pb-0"
                   onChange={handleChange}
                   value={input}
                   cols="51" 

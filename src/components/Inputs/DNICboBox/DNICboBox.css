@@ -26,6 +26,7 @@
     grid-area: segundo;
     margin: 0;
 }
+
 .form__input{
     width: 100%;
     
@@ -78,6 +79,10 @@
     /* margin-right: 5px; */
     /* outline: none !important; */
 }
+.formulario-input-DNI::placeholder {
+    font-family: 'Poppins', sans-serif;
+    font-size: .9rem;
+  }
 .formulario-input-DNI{
 	width: 7.5rem;
 	text-align: start;

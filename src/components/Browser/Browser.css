@@ -2,6 +2,10 @@
     height: 42rem;
     
 }
+.form__grupo__input__browser::placeholder {
+    font-family: 'Poppins', sans-serif;
+    font-size: .9rem;
+  }
 .form__grupo__input__browser{
     width: 100%;
     margin: 0;

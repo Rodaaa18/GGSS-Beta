@@ -84,7 +84,6 @@ import ChildModalOptions from "../Modals/ChildModalOptions";
 import { ModalParentesco } from "../Modals/Modales Complejos/ModalParentesco";
 import { ModalPaises } from "../Modals/Modales Complejos/ModalPaises";
 import { ModalProvinciasDptos } from "../Modals/Modales Complejos/ModalProvinciasDptos";
-import ErrorPage from "../ErrorPage/ErrorPage";
 
 // import { getEstadosCivilesModal } from '../../services/fetchAPI';
 // import { useEffect } from 'react';
@@ -717,8 +716,9 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario, referenci
 							
 								</ul>
 							</li>
-							{/* <li className="nav-item">
-								<a className="nav-link" href="/some/valid/uri">Liquidación</a>
+							{/*<li className="nav-item">
+								 <a className="nav-link" href="/some/valid/uri"> 
+							 </a> 
 							</li> 
 							<li className="nav-item">
 								<a className="nav-link" href="/some/valid/uri">Esquemas y Conceptos</a>
@@ -726,6 +726,7 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario, referenci
 							<li className="nav-item">
 								<a className="nav-link" href="/some/valid/uri">Períodos</a>
 							</li>*/}
+							
 							<li className="nav-item dropdown">
 								<a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 									Tabla de Datos
@@ -1221,7 +1222,7 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario, referenci
 										</ul>
 									</li> 
 									<li class="nav-item">
-										<a class="nav-link" onClick={()=> closeSession()} href="http://www.loginweb.ggmm.com.ar/" target="_blank">Salir</a>
+										<a class="nav-link" onClick={()=> closeSession()} href="http://www.loginweb.ggmm.com.ar/" target="_blank" rel="noreferrer">Salir</a>
 									</li>
 									{
 										<li class="nav-item">
