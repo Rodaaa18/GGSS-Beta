@@ -78,7 +78,7 @@ import "./Home.css"
 import ErrorPage from "../ErrorPage/ErrorPage";
 import Loader from "../Loader/Loader";
 
-const Empleados = ({tokenDef, setTokenDef, sePerfilesUSuario, loading, handleClickRef, referencia}) => {
+const Empleados = ({tokenDef, setTokenDef, sePerfilesUSuario, loading, handleClickRef, referencia, renderButtons}) => {
   const [tabIndex, setTabIndex] = useState(0);
   
   const [responses, setResponses] = useState({});
@@ -111,9 +111,7 @@ const Empleados = ({tokenDef, setTokenDef, sePerfilesUSuario, loading, handleCli
   const conceptosPorEmpelado = useSelector(
     (state) => state.generalState.conceptosXesquemas
   );
-
-   
-    
+  
   //#region URLs
 
   const urlEstados = "http://54.243.192.82/api/Estados";
@@ -432,25 +430,18 @@ useEffect(() => {
 
 
     const url = `http://54.243.192.82/api/Empleados?filter=12121212121`;
-    const urlEmpleadoPorApellido = `http://54.243.192.82/api/Empleados?filter=${responses?.browser?.inputApellidoNombreBrowser ? responses?.browser?.inputApellidoNombreBrowser : null}&ordered=true`;
-    const urlEmpleadoPorLegajo = `http://54.243.192.82/api/Empleados?legajo=${responses?.browser?.inpurLegajoBrowser ? responses?.browser?.inpurLegajoBrowser : null}&ordered=true`;
-    const urlEmpleadoApYLegajo = `http://54.243.192.82/api/Empleados?filter=${responses?.browser?.inputApellidoNombreBrowser ? responses?.browser.inputApellidoNombreBrowser : null}&legajo=${responses?.browser?.inpurLegajoBrowser ? responses?.browser?.inpurLegajoBrowser : null}&ordered=true`;
-    const urlApeLegOrdered = `http://54.243.192.82/api/Empleados?filter=${responses?.browser?.inputApellidoNombreBrowser ? responses?.browser?.inputApellidoNombreBrowser : null}&legajo=${responses?.browser?.inpurLegajoBrowser ? responses?.browser?.inpurLegajoBrowser : null}&ordered=true`;
+    const urlEmpleadoPorApellido = `http://54.243.192.82/api/Empleados?filter=${responses?.browser?.inputApellidoNombreBrowser ? responses?.browser?.inputApellidoNombreBrowser : null}&modo=${renderButtons}`;
+    const urlEmpleadoPorLegajo = `http://54.243.192.82/api/Empleados?legajo=${responses?.browser?.inpurLegajoBrowser ? responses?.browser?.inpurLegajoBrowser : null}&modo=${renderButtons}`;
+    const urlEmpleadoApYLegajo = `http://54.243.192.82/api/Empleados?filter=${responses?.browser?.inputApellidoNombreBrowser ? responses?.browser.inputApellidoNombreBrowser : null}&legajo=${responses?.browser?.inpurLegajoBrowser ? responses?.browser?.inpurLegajoBrowser : null}&modo=${renderButtons}`;
+    const urlApeLegOrdered = `http://54.243.192.82/api/Empleados?filter=${responses?.browser?.inputApellidoNombreBrowser ? responses?.browser?.inputApellidoNombreBrowser : null}&legajo=${responses?.browser?.inpurLegajoBrowser ? responses?.browser?.inpurLegajoBrowser : null}&modo=${renderButtons}`;
 
-    
+    console.log(urlEmpleadoPorApellido)
     async function getEmpleados(){
-      if(responses?.browser.inputApellidoNombreBrowser && responses?.browser.inpurLegajoBrowser){
-        await axios({method: 'get',
-                    url: urlEmpleadoApYLegajo,
-                    timeout: 2000}).then((res) => {
-            dispatch(getEmployes(res.data.result));
-        });
-        return;
-      }
-      else if(responses?.browser.inputApellidoNombreBrowser){
+      if(responses?.browser.inputApellidoNombreBrowser){
         await axios({method: 'get',
                       url: urlEmpleadoPorApellido,
                       timeout: 2000}).then((res) => {
+                        console.log(res)
           dispatch(getEmployes(res.data.result));
         });
         return;
@@ -462,13 +453,6 @@ useEffect(() => {
           dispatch(getEmployes(res.data.result));
         });
         return;      
-      }else if(responses?.browser.inputApellidoNombreBrowser && responses?.browser.inpurLegajoBrowser && responses?.browser.ordered){
-        await axios.get({method: 'get',
-                        url: urlApeLegOrdered,
-                        timeout: 2000}).then((res) => {
-          dispatch(getEmployes(res.data.result));
-        });
-        return;
       }else{
        
           dispatch(getEmployes(null));
@@ -482,7 +466,7 @@ useEffect(() => {
 
     useEffect(() => {
     getEmpleados();
-  }, [responses?.browser?.inputApellidoNombreBrowser,responses?.browser?.inpurLegajoBrowser,responses?.browser?.ordered, saveEmpleado, refetch]);
+  }, [responses?.browser?.inputApellidoNombreBrowser,responses?.browser?.inpurLegajoBrowser,responses?.browser?.ordered, saveEmpleado, refetch, renderButtons]);
 
 
   const idsTrabajosAnterioresDelete = useSelector((state)=> state.trabajosAnteriores.ids);
@@ -1254,10 +1238,10 @@ const getTabComponent = (tabIndex) => {
     {  localStorage.getItem('token') ? <div className="container-fluid">
       <div className="row">
         <div className="col-xl-3 col-lg-3 col-md-3">
-          <Browser getEmpleados={getEmpleados} modify={modify} setModify={setModify} deleteEmploye={deleteEmploye} setRefectch={setRefectch} refetch={refetch} disable={disable} setDisable={setDisable} setValueEmpl={setValueEmpl} responses={responses} setResponses={setResponses} agregar={agregar}  setAgregar={setAgregar}  />
+          <Browser renderButtons={renderButtons} getEmpleados={getEmpleados} modify={modify} setModify={setModify} deleteEmploye={deleteEmploye} setRefectch={setRefectch} refetch={refetch} disable={disable} setDisable={setDisable} setValueEmpl={setValueEmpl} responses={responses} setResponses={setResponses} agregar={agregar}  setAgregar={setAgregar}  />
         </div>
         <div className="col-xl-9 col-lg-9 col-md-9 ">
-          <Navbar handleTabChange={handleTabChange} tabIndex={tabIndex} />
+          <Navbar  handleTabChange={handleTabChange} tabIndex={tabIndex} />
           {(tabIndex === 0 || tabIndex === 8) && (
             <DatosPersonales
               empleados={empleados}
@@ -1363,10 +1347,10 @@ const getTabComponent = (tabIndex) => {
         </div>
       </div>
       <div className="d-flex flex-row-reverse btnEmpl w-100 gap-2">
-        <button className="btn btn-danger btnSize " onClick={()=> cleanIdsGeneral()}>
+        <button className="btn btn-danger btnSize " onClick={()=> {cleanIdsGeneral(); handleTabChange(0)}}>
           Cancelar
         </button>
-        <button className="btn btn-success btnSize " onClick={()=> deleteItems( objectRequest)}>Aceptar</button>
+        <button className="btn btn-success btnSize " onClick={()=> {deleteItems( objectRequest); handleTabChange(0)}}>Aceptar</button>
       </div>
       <Footer setTokenDef={setTokenDef} tokenDef={tokenDef}/>
     </div> : <ErrorPage loading={loading}/>}

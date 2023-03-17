@@ -25,10 +25,14 @@ import {
 import { setRefetch } from "../../redux/actions/modalesActions";
 import { domicilioSelected, recharge } from "../../redux/actions/domiciliosActions";
 
-const Browser = ({ getEmpleados, disable, setDisable, setValueEmpl, responses, setResponses, setRefectch, refetch, deleteEmploye,setModify, agregar , setAgregar  }) => {
+const Browser = ({ getEmpleados, disable, setDisable, setValueEmpl, responses, setResponses, setRefectch, refetch, deleteEmploye,setModify, agregar , setAgregar, renderButtons  }) => {
   const [checked, setChecked] = useState(false);
   const [ browser, setBrowser ] = useState(responses["browser"]);
-
+  const empleadoUno = useSelector((state)=> state.employeStates.employe);
+  const estados = useSelector((state)=> state.generalState.estados);
+  const parSueldos = useSelector((state)=> state.generalState.parSueldos);
+  const idEstadoSelec = empleadoUno && empleadoUno.idEstado;
+  const estadoSEleccionado = estados && estados.find(est => est.idEstado === idEstadoSelec); 
   function onChangeValues(e, key){
     const newResponse = {...browser};
     if(key === 'inpurLegajoBrowser'){
@@ -67,7 +71,6 @@ const Browser = ({ getEmpleados, disable, setDisable, setValueEmpl, responses, s
   const valueInputApellido = useSelector(
     (state) => state.employeStates.formulario.inputApellidoNombreBrowser
   );
-  const empleadoUno = useSelector((state) => state.employeStates.employe);
   const deshabilitado = useSelector((state) => state.employeStates.disable);
   const recharged = useSelector((state)=> state.domiciliosStates.recharge);
   
@@ -138,7 +141,8 @@ const Browser = ({ getEmpleados, disable, setDisable, setValueEmpl, responses, s
       icon: "error",
     });
   }
-
+  console.log(estadoSEleccionado?.idEstado === (parSueldos && parSueldos[0]?.estadoBajaEmpleado))
+  console.log(parSueldos)
   /* useEffect(()=>{
     clearLegajo();
   },[browser?.inputApellidoNombreBrowser, browser?.inpurLegajoBrowser]) */
@@ -203,6 +207,16 @@ const Browser = ({ getEmpleados, disable, setDisable, setValueEmpl, responses, s
               {empleados &&
                 empleados?.map((emp, i) => {
                   return (
+                    emp.idEstado === (parSueldos && parSueldos[0]?.estadoBajaEmpleado) ?  
+                    <option
+                    className="empleadoBaja"
+                    key={i}
+                    onClick={(e) => onSelect(e, emp.apellido, emp.iDempleado)}
+                    value={`${emp.apellido},${emp.iDempleado}`}
+                    apellido={emp.apellido && emp.apellido}
+                    idEmpleado={emp.iDempleado && emp.iDempleado}
+                  >{`${emp.apellido}, ${emp.nombres} (*)`}</option>
+                    :
                     <option
                       key={i}
                       onClick={(e) => onSelect(e, emp.apellido, emp.iDempleado)}
@@ -218,33 +232,50 @@ const Browser = ({ getEmpleados, disable, setDisable, setValueEmpl, responses, s
 
         <div className="container ">
           <div className="row align-items-start">
-            <div className="col">
-              <button
-                className={`btn btn-danger btn-sm d-flex justify-content-center m-1 align-items- newClass`}
-                onClick={habilitaEdit}
-                disabled={!disable}
-              >
-                Agregar
-              </button>
-            </div>
-            <div className="col">
-              <button
-                className={`btn btn-danger btn-sm d-flex justify-content-center m-1 align-items- newClass`}
-                onClick={(e) => habilitaUpdate(e)}
-                disabled={!disable}
-              >
-                Modificar
-              </button>
-            </div>
-            <div className="col">
-              <button
-                className={`btn btn-danger btn-sm d-flex justify-content-center m-1 align-items- newClass`}
-                onClick={() => deleteEmploye(empleadoUno.iDempleado)}
-                disabled={!disable}
-              >
-                Eliminar
-              </button>
-            </div>
+            {
+              renderButtons === 0 && <><div className="col">
+                <button
+                  className={`btn btn-danger btn-sm d-flex justify-content-center m-1 align-items- newClass`}
+                  onClick={habilitaEdit}
+                  disabled={!disable}
+                >
+                  Agregar
+                </button>
+              </div>
+              <div className="col">
+                  <button
+                    className={`btn btn-danger btn-sm d-flex justify-content-center m-1 align-items- newClass`}
+                    onClick={(e) => habilitaUpdate(e)}
+                    disabled={ estadoSEleccionado?.idEstado === (parSueldos && parSueldos[0]?.estadoBajaEmpleado) ? true : !disable}
+                  >
+                    Modificar
+                  </button>
+                </div>
+                <div className="col">
+                  <button
+                    className={`btn btn-danger btn-sm d-flex justify-content-center m-1 align-items- newClass`}
+                    onClick={() => deleteEmploye(empleadoUno.iDempleado)}
+                    disabled={ estadoSEleccionado?.idEstado === (parSueldos && parSueldos[0]?.estadoBajaEmpleado) ? true : !disable}
+                  >
+                    Eliminar
+                  </button>
+                </div></>
+            }
+            {
+              renderButtons === 1 && <div className="d-flex flex-row justify-content-center align-items-center w-100">
+                  <button className="btn btn-danger btn-sm">Reincorporación</button>
+              </div>
+            }
+            {
+              renderButtons === 2 && <div className="d-flex flex-row justify-content-center align-items-center w-100">
+              <button className="btn btn-danger btn-sm">Baja de un Empleado</button>
+              </div>
+            }
+            {
+              renderButtons === 3 && <div className="d-flex flex-row justify-content-center align-items-center w-100">
+              <button className="btn btn-danger btn-sm">Cambio de Categoría</button>
+              </div>
+            }
           </div>
         </div>
       </div>

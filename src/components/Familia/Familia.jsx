@@ -119,9 +119,9 @@ const urlCreateFamiliar = "http://54.243.192.82/api/InsertarNuevoFamiliar"
     "País Origen",
     "Nacionalidad",
     "Estudios",
-    "Fecha Baja",
-    "No Deducir",
-    "Incluir Cuota",
+    "Baja",
+    "Deduce",
+    "C. Alim",
     "Obs"
   ];
   function onSelect(saveFamiliar, idFamiliar) {

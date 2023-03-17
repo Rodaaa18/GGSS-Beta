@@ -22,7 +22,9 @@ function App() {
   const [ loading, setLoading ] = useState(false);
   const [ statusCode, setStatusCode ] = useState(0);
   const [ perfilesUsuario, sePerfilesUSuario ] = useState({});
- 
+  const [ renderButtons, setRenderButtons ] = useState(0);
+
+  
   const queryParams = new URLSearchParams(window.location.search);
   const token = queryParams.get('token');
   const dispatch = useDispatch();
@@ -44,7 +46,10 @@ function App() {
     e.preventDefault();
     referencia.current.click(modalName);
   }
-
+  function renderButtonFunction(index){
+    setRenderButtons(index)
+ }
+  
     const referencias = {
       estadoCivilRef : estadoCivilRef,
       estudiosRef: estudiosRef,
@@ -124,13 +129,13 @@ function App() {
     <>
       {
         tokenDef ? 
-        <NavbarMenu perfilesUsuario={perfilesUsuario} referencias={referencias} setTokenDef={setTokenDef} sePerfilesUSuario={sePerfilesUSuario} /> 
+        <NavbarMenu renderButtonFunction={renderButtonFunction} perfilesUsuario={perfilesUsuario} referencias={referencias} setTokenDef={setTokenDef} sePerfilesUSuario={sePerfilesUSuario} /> 
         : 
         <ErrorPage message={error} statusCode={statusCode} loading={loading} /> 
       } 
       {
       tokenDef && <Switch>
-        <Route path="/ficha-empleados" exact element={<Empleados handleClickRef={handleClickRef} referencia={referencias} loading={loading} sePerfilesUSuario={sePerfilesUSuario} tokenDef={tokenDef}/>} /> 
+        <Route path="/ficha-empleados" exact element={<Empleados renderButtons={renderButtons} handleClickRef={handleClickRef} referencia={referencias} loading={loading} sePerfilesUSuario={sePerfilesUSuario} tokenDef={tokenDef}/>} /> 
         <Route path="/superadmin" exact element={<Superadmin />} />
       </Switch> 
       }       

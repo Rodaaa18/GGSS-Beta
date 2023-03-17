@@ -16,8 +16,8 @@ const TableBootstrap = ({
 
   return (
     <>
-      <div className="table-responsive mt-5">
-        <table className="table table-striped table-danger ">
+      <div className="table-responsive mt-5 overflow-scroll rowTAbles">
+        <table className="table table-striped table-danger  ">
           <thead>
             <tr>
               <th>Sel.</th>
