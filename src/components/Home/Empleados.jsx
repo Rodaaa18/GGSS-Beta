@@ -355,7 +355,7 @@ useEffect(() => {
 
 
      handleFetch(urlTrabajosAnteriores, getTrabajosAnteriores);
-  }, [disable, refetch,refetching]);
+  }, [disable, refetch,refetching, empleadoUno]);
 
   useEffect(() => {
 
