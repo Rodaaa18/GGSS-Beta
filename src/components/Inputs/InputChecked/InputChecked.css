@@ -3,9 +3,10 @@
 	
 }
 .formulario-input-Familia{
+	width : 29.5rem;
     margin-bottom: 3px;
 	/* width: 200px; */
-	margin-left: 0px;
+	/* margin-left: 0px; */
     /* margin-right: 29px; */
 	background: #fff;
 	border: 3px solid transparent;
@@ -13,13 +14,12 @@
 	height: 42px;
 	transition: .3s ease all;
     border-bottom: 1px solid rgb(78, 6, 6);
-	width : 29.5rem;
 }
 
-.FijarNombFlia{
+/* .FijarNombFlia{
 	margin-top: 0px;
     margin-left: 10%;
-}
+} */
 
 .form__labelFlia{
 	width: 10rem;

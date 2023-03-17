@@ -15,7 +15,8 @@ table.table-fit tbody td, table.table-fit tfoot td {
 
 .rowTAbles{
     height: auto;
-    /* max-height: 10rem; */
+    max-height: 14.2rem;
+    font-size: small;
 }
 .DeCeldas{
     width: 550%;

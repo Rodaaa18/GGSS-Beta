@@ -1,14 +1,15 @@
+.selectDoc{
+	margin-right: 1.4rem;
+}
+
+
+
 .formulario-label-DNIFamilia{
 	display: flex;
 	flex-flow: row;
-	justify-content: flex-start;
-	align-items: center;
 	font-style: normal;
 	font-weight: 400;
 	color: black;
-	margin: 0;
-	padding: 0;
-	display: block;
 }
 .formulario-input-DNI-familia{
 	width: 100%;
@@ -22,16 +23,8 @@
 
 }
 .form-check-input-flia{
-	width: 20px;
+	/* width: 2rem; */
 	font-size: medium;
-}
-.divLabelMultiple{
-	width: 10rem;
-	
-}
-.divCboMultiple{
-	width: 7.3rem;
-
 }
 
 .formulario-input-DNI-input{
@@ -51,27 +44,27 @@
 	font-weight: 400;
 	color: black;
 	margin-top: 0px;
-	margin-right: 20px;
+	/* margin-right: 20px; */
     margin-left: 0px;
 	margin-bottom: 0px;
 	display: block;
 }
 .form-select-FliaDNI{
-	margin-left: 5%;
-	width: 80px;
+	/* margin-left: 5%; */
+	width: 25rem;
 }
 .form-inputs-radioFlia{
 	display: flex;
 	flex-direction: row;
-	justify-content: flex-start;
+	/* justify-content: flex-start; */
 	align-items: center;
-	width: 5rem;
+	/* width: 5rem; */
 	height: 4rem;
 }
 .form-input-DNIfamilia{
-	width: 89px;
+	width: 25rem;
 	text-align: start;
-	margin-left: 166px;
+	/* margin-left: 166px; */
     /* margin-right: 0px; */
 	background: #fff;
 	border: 3px solid transparent;
@@ -100,12 +93,15 @@
 
 @media screen and (max-width : 1280px){
 	.formulario-input-DNI-familia{
-		
 		width: 8rem;
 	}
 	.formulario-input-DNI-input{
 		width: 6rem;
 	}
+	.selectDoc{
+		margin-right: 1.2rem;
+	}
+	
 	
 }
 @media screen and (max-width : 1200px){
@@ -117,10 +113,18 @@
 		width: 5rem;
 		height: 4rem;
 	}
+	.selectDoc{
+		margin-right: 1.2rem;
+	}
+	
 }
 @media screen and (max-width : 1024px){
 	.formulario-input-DNI-familia{
 		/* margin-left: 2.6rem; */
 		width: 5rem;
 	}
+	.selectDoc{
+		margin-right: 1.2rem;
+	}
+	
 }

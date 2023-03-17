@@ -70,8 +70,8 @@ const TableBasic = ({
                           0,
                           item?.fBaja?.length - 9
                         )}</td>
-                      <td>{item.noDeducirGanancias === false ? "No deduce" : "Si deduce"}</td>
-                      <td>{item.inlcuirCuotaAlimentaria === false ? "No incluye" : "Incluye"}</td>
+                      <td>{item.noDeducirGanancias === false ? "No" : "Si"}</td>
+                      <td>{item.inlcuirCuotaAlimentaria === false ? "No" : "Si"}</td>
                       <td>{item.obs}</td>
                     </tr>
                   )
