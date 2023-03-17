@@ -1,4 +1,4 @@
-  //#region Imports
+//#region Imports
 import axios from "axios";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,7 +11,10 @@ import './Domicilios.css';
 import { addNewDomicilio, cleanIdsDom, deleteOneDomicilioSelect, saveIdsDom, selectedOption, selectedOptionBarrio, selectedOptionDpto } from "../../redux/actions/domiciliosActions";
 import swal from "sweetalert";
 import InputFormPiso from "../Inputs/InputForm/InputFormPiso";
-import { inputClassCalleDomicilios, inputClassProvinciasDomicilios } from "../../classes/classes";
+import {
+  inputClassCalleDomicilios,
+  inputClassProvinciasDomicilios,
+} from "../../classes/classes";
 import { useEffect } from "react";
 import { setRefetch } from "../../redux/actions/modalesActions";
 import { updateDomicilio } from "../../redux/actions/fetchActions";
@@ -22,7 +25,9 @@ const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValu
 
   const [domicilios, setDomicilios] = useState([]);
   const [checked, setChecked] = useState(false);
-  const [ formDomicilios, setFormDomicilios ] = useState(responses["formDomicilios"]);
+  const [formDomicilios, setFormDomicilios] = useState(
+    responses["formDomicilios"]
+  );
 
   const generalStateData = useSelector((state)=> state.generalState)
   const provinciaSelected = useSelector((state)=> state.domiciliosStates.provinciaSelected);
@@ -45,13 +50,10 @@ const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValu
     "Piso/Of/Dpto",
     "Provincia",
   ];
- 
-  
+
   const paises = ["Argentina", "Uruguay", "Paraguay", "Bolivia", "Peru"];
   //#region ------------------------------------------------------------------------------REDUX
   const urlDomicilios = `http://54.243.192.82/api/InsertarNuevoDomicilio`;
-
-
 
   const dispatch = useDispatch();
 
@@ -181,7 +183,7 @@ const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValu
         title: "Error",
         text: "Debe completar todos los campos",
         icon: "error",
-      })
+      });
     }
   }
   const deleteDomicilio = (id)=>{
@@ -199,12 +201,16 @@ const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValu
         ...newResponse
       });
   }
+console.log(domicilioSelected)
 
   return (
-    
-      //#region Menú Principal
-    
-    <div to="/domicilios" className="accordion-item" onClick={handleTabChange(0)} >
+    //#region Menú Principal
+
+    <div
+      to="/domicilios"
+      className="accordion-item"
+      onClick={handleTabChange(0)}
+    >
       <h2 className="accordion-header" id="headingTwo">
             <button
               className="accordion-button collapsed"
@@ -254,15 +260,20 @@ const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValu
                         action={ADD_DOMICILIOS}
                         sexo=""
                         handleClickRef={handleClickRef}
-                        referencia= {referencia.callesRef}
+                        referencia={referencia.callesRef}
                         modalName="Calles"
                         nameButton="..."
-                        nameLabel="Calle"                    
-                        array={generalStateData.calles !== null && generalStateData.calles !== "" ? generalStateData.calles : ["calle", "calle"]}
+                        nameLabel="Calle"
+                        array={
+                          generalStateData.calles !== null &&
+                          generalStateData.calles !== ""
+                            ? generalStateData.calles
+                            : ["calle", "calle"]
+                        }
                         propArrayOp="calle"
                         propArrayOpFem="calle"
-                        propArray={empleadoDomicilio ? empleadoDomicilio : (empleadoDomicilio !== undefined && empleadoDomicilio !== null ? empleadoDomicilio.idCalle : null)}
-                        idSelected={formDatosPersonales?.inputCalleDomicilios ? formDatosPersonales?.inputCalleDomicilios : domicilioSelected?.idCalle}
+                        propArray={empleadoDomicilio !== undefined && empleadoDomicilio !== null ? empleadoDomicilio.idCalle : null}
+                        idSelected={formDomicilios?.inputCalleDomicilios ? formDomicilios?.inputCalleDomicilios : domicilioSelected.idCalle}
                         masculinos=""
                         femeninos=""
                         display={false}
@@ -282,7 +293,9 @@ const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValu
                     </div>
                     </div>
                       <InputFormPiso
-                        value={formDatosPersonales?.inputPisoCalle ? formDatosPersonales?.inputPisoCalle : empleadoUno.pisoCalle}
+                        value={
+                          formDomicilios?.inputPisoCalle ? formDomicilios?.inputPisoCalle : domicilioSelected.dpto
+                        }
                         nameInput="inputPisoCalle"
                         idInput="inputPisoCalle"
                         messageError="Solo puede contener números."

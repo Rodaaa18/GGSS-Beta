@@ -190,7 +190,7 @@ const TrabajosAnteriores = ({responses, setResponses, setRefetch, refetch,disabl
             </div>        
         </div>
         <div className='row px-3'>
-            <InputTextTrabajos disable={disable} nameLabel="Descripción" inputId="idDescripcionTrabajos" onChange={onChangeValues} value={modificar ? (formTrabajosAnteriores?.idDescripcionTrabajos ? formTrabajosAnteriores?.idDescripcionTrabajos : trabajoAnterior?.descripcion) : formTrabajosAnteriores?.idDescripcionTrabajos && formTrabajosAnteriores?.idDescripcionTrabajos} action={GET_INPUT} onSend={sendData} onDelete={deleteTRabajoAnterior} id={valueIdTrabajoAnterior} />
+            <InputTextTrabajos cancelar="cancelar" aceptar="acpetar" disable={disable} nameLabel="Descripción" inputId="idDescripcionTrabajos" onChange={onChangeValues} value={modificar ? (formTrabajosAnteriores?.idDescripcionTrabajos ? formTrabajosAnteriores?.idDescripcionTrabajos : trabajoAnterior?.descripcion) : formTrabajosAnteriores?.idDescripcionTrabajos && formTrabajosAnteriores?.idDescripcionTrabajos} action={GET_INPUT} onSend={sendData} onDelete={deleteTRabajoAnterior} id={valueIdTrabajoAnterior} />
         </div>
         <div className='row px-3'>
             <TableTrabajosAnteriores disable={disable} setModificar={setModificar} nameLabel="Historial:" columns={columns} array={trabajosAnterioresDelEmpleado}/>

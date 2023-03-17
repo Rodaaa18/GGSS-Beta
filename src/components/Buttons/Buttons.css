@@ -1,13 +1,23 @@
-.btnCallModal{
-    z-index: 56;
+.btnCallModal {
+  z-index: 56;
 }
-.disabledClass{
-    pointer-events: none;
-    cursor: default;
+.disabledClass {
+  pointer-events: none;
+  cursor: default;
 }
-@media screen and (max-width: 1366px){
-    .btnTablaDom{
-        width: 10%;
-        padding: 0.1rem 0.2rem 0.1rem 0.2rem;
-    }
+
+.btn-danger .btn-icon {
+  background-image: url('../../../public/icons/delete-white.svg');
+}
+
+.btn-success .btn-icon {
+  background-image: url('../../../public/icons/add-white.svg');
+}
+
+
+@media screen and (max-width: 1366px) {
+  .btnTablaDom {
+    width: 10%;
+    padding: 0.1rem 0.2rem 0.1rem 0.2rem;
+  }
 }

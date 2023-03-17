@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import InputNumero from "../InputNumero/InputNumero";
 import "./InputCbo.css";
 
-const InputCbo = ({nameLabel, array, value, display, nameButton, idSelected, sexo, idModal, disabled, idInput,onChange, datosPersonalesValue, action, propArrayOp,propArrayOpFem,provinciaAction,valueId, clasess, obligatorio, licencia, defaultChecked, nameCheck,handleClickRef, referencia,modalName, esCalle, dptoOpcion
+const InputCbo = ({nameLabel, array, value, display, nameButton, idSelected, sexo, idModal, disabled, idInput,onChange, datosPersonalesValue, action, propArrayOp,propArrayOpFem,provinciaAction,valueId, clasess, obligatorio, licencia, defaultChecked, nameCheck,handleClickRef, referencia,modalName, esCalle, dptoOpcion, esCalleDom, inputValueState
 }) => {
-  
-    const [mostrarComponente, setMostrarComponente] = useState(true);
-    const [valor, setValor] = useState("");
-    const dispatch = useDispatch();
+  const [mostrarComponente, setMostrarComponente] = useState(true);
+  const [valor, setValor] = useState("");
+  const dispatch = useDispatch();
 
     useEffect(()=>{
       setValor(datosPersonalesValue)
@@ -67,12 +67,23 @@ const InputCbo = ({nameLabel, array, value, display, nameButton, idSelected, sex
                     <button disabled={disabled} className=" btnModalDp btn btn-outline-danger btn-sm " onClick={(e)=>handleClickRef(e,referencia,modalName)}>...</button>
             </div>
             }
-            
+            {
+              esCalleDom && <InputNumero 
+                              nameInput="inputNumCalle"
+                              placeHolder="N° Calle"
+                              defaultChecked=""
+                              display={false}
+                              disabled={disabled}
+                              idInput="inputNumCalle"
+                              nameLabel="N°"
+                              onChange={onChange}
+                              inputValueState={inputValueState}
+                            />
+            }
         </div>
+       
       </div>
-
-
-    :
+ : (
     <div className="formulario__grupo__inputs__cbo">
         <div className="form__grupo__label__inp">
             <div className="primero">
@@ -114,6 +125,8 @@ const InputCbo = ({nameLabel, array, value, display, nameButton, idSelected, sex
        
         </div>
       </div>
-  );
+  )
+
+  )
 };
 export default InputCbo;

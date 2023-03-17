@@ -1362,11 +1362,11 @@ const getTabComponent = (tabIndex) => {
           )}
         </div>
       </div>
-      <div className="d-flex flex-row-reverse  w-100 ">
-        <button className="btn btn-danger  btnEmpl" onClick={()=> cleanIdsGeneral()}>
+      <div className="d-flex flex-row-reverse btnEmpl w-100 gap-2">
+        <button className="btn btn-danger btnSize " onClick={()=> cleanIdsGeneral()}>
           Cancelar
         </button>
-        <button className="btn btn-success btnEmpl" onClick={()=> deleteItems( objectRequest)}>Aceptar</button>
+        <button className="btn btn-success btnSize " onClick={()=> deleteItems( objectRequest)}>Aceptar</button>
       </div>
       <Footer setTokenDef={setTokenDef} tokenDef={tokenDef}/>
     </div> : <ErrorPage loading={loading}/>}
