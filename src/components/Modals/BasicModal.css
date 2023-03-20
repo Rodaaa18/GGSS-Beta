@@ -4,6 +4,9 @@
     z-index: 99999;
     
 }
+.modalClassAbsolute{
+  position: absolute;
+}
 .cortina{
     position: absolute;
     top: 0;
@@ -73,9 +76,40 @@
   background-color: brown;
   width: 100%;
 }
+.bodyBajaEmpleado{
+  color: black;
+}
 .transitionClassUp {
   animation: transition 0.3s;
   transition: 0.2s;
+}
+.labelModalBaja{
+  width: 9rem;
+}
+.fechaModalBaja{
+}
+.btnModalBaja{
+  margin-left: 2%;
+}
+.modalOPen{
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.selectModalBaja{
+  margin-bottom: 3px;
+	width: 15rem;
+	margin-left: 0;
+	margin-right: 0px;
+	border: none;
+	height: 42px;
+	transition: .3s ease all;
+	border-bottom: 1px solid rgb(78, 6, 6);
+}
+.inputModalBaja{
+  color: black;
+  border: none;
+  pointer-events: none;
 }
 .col-form-label{
   color: black;
@@ -105,6 +139,8 @@
 .transitionClassUp{
     animation: transition 1s;
     transition: 0.3s;
+  position: absolute;
+
 }
 .bodyBarrios{
   height: 100%;

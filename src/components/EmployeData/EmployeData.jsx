@@ -6,7 +6,6 @@ import "./EmployeData.css";
 
 const EmployeData = ({disabled, image, responses}) => {
   const empleadoUno = useSelector((state)=> state.employeStates.employe);
-  const estadosCiviles = useSelector((state)=> state.generalState.estadosCiviles);
   const estados = useSelector((state)=> state.generalState.estados);
 
   const idEstadoSelec = empleadoUno && empleadoUno.idEstado;

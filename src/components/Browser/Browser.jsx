@@ -8,6 +8,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import ButtonLarge from "../Buttons/ButtonLarge";
 import "./Browser.css";
+import ButtonCallModal from "../ButtonCallModal/ButtonCallModal";
 import {
   addOneEmploye,
   cleanEmploye,
@@ -24,10 +25,13 @@ import {
 } from "../../redux/actions/licenciasActions";
 import { setRefetch } from "../../redux/actions/modalesActions";
 import { domicilioSelected, recharge } from "../../redux/actions/domiciliosActions";
+import ChildBajaEmpleado from "../Modals/ChildBajaEmpleado";
 
-const Browser = ({ getEmpleados, disable, setDisable, setValueEmpl, responses, setResponses, setRefectch, refetch, deleteEmploye,setModify, agregar , setAgregar, renderButtons  }) => {
+const Browser = ({ getEmpleados, disable, setDisable, setValueEmpl, responses, setResponses, setRefectch, refetch, deleteEmploye,setModify, agregar , setAgregar, renderButtons, handleClickRef, referencia, modalOpen, setModalOpen }) => {
   const [checked, setChecked] = useState(false);
   const [ browser, setBrowser ] = useState(responses["browser"]);
+  const [ nameModal, setNameModal ] = useState({});
+
   const empleadoUno = useSelector((state)=> state.employeStates.employe);
   const estados = useSelector((state)=> state.generalState.estados);
   const parSueldos = useSelector((state)=> state.generalState.parSueldos);
@@ -125,7 +129,7 @@ const Browser = ({ getEmpleados, disable, setDisable, setValueEmpl, responses, s
     setDisable(false);
 
   }
-
+  
   function habilitaUpdate(e) {
     e.preventDefault();
     dispatch(domicilioSelected(""))
@@ -141,12 +145,50 @@ const Browser = ({ getEmpleados, disable, setDisable, setValueEmpl, responses, s
       icon: "error",
     });
   }
-  console.log(estadoSEleccionado?.idEstado === (parSueldos && parSueldos[0]?.estadoBajaEmpleado))
-  console.log(parSueldos)
+  /* async function bajaEmpleado(){
+    if(empleadoUno?.iDempleado){
+      try{
+        await axios.post(`http://54.243.192.82/api/Empleados/sp_BajaEmpleado?idEmpleado=${empleadoUno?.iDempleado}&idMotivoEgreso=${}&FechaEgreso=${}`)
+        .then((res)=>{
+          if(res.status === 200){
+            try{
+              axios.post().then((res)=>{
+                if(res.status === 200){
+                  return swal({
+                    title : "Ok",
+                    text : "Baja realizada con éxito",
+                    icon : "success"
+                  })
+                }
+              })
+            }catch(err){
+              return swal({
+                title : "Error",
+                text : "Error al realizar la baja del Empleado" + err,
+                icon : "error"
+              })
+            }
+            
+          }
+        })
+      }catch(err){
+        return swal({
+          title : "Error",
+          text : "Error al realizar la baja del Empleado" + err,
+          icon : "error"
+        })
+      }
+    }
+  } */
   /* useEffect(()=>{
     clearLegajo();
   },[browser?.inputApellidoNombreBrowser, browser?.inpurLegajoBrowser]) */
-  
+  const handleClickClose=(nameModalProp)=>{
+    let newState = {...nameModal}
+
+    newState[nameModalProp] = false;
+    setNameModal(newState);
+}
   return (
     <>
       <div className="row gy-1 container-flex p-0 m-o ">
@@ -264,11 +306,29 @@ const Browser = ({ getEmpleados, disable, setDisable, setValueEmpl, responses, s
             {
               renderButtons === 1 && <div className="d-flex flex-row justify-content-center align-items-center w-100">
                   <button className="btn btn-danger btn-sm">Reincorporación</button>
+                  
               </div>
             }
             {
               renderButtons === 2 && <div className="d-flex flex-row justify-content-center align-items-center w-100">
-              <button className="btn btn-danger btn-sm">Baja de un Empleado</button>
+                <ButtonCallModal  esBoton={true} nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="bajaEmpleado" nameButton="Baja de un Empleado">
+                  <ChildBajaEmpleado
+                  handleClickClose={handleClickClose}
+                  nameModal = "Baja de un Empleado"
+                  nameModalProp="bajaEmpleado"
+                  onChangeValues={onChangeValues}
+                  formDocumentacion={setBrowser}
+                  value={browser}
+                  refetch={refetch} 
+                  setRefetch={setRefectch} 
+                  handleClickRef={handleClickRef}
+                  referencia= {referencia.docuRef}
+                  modalName="Documentacion"
+                  modalOpen={modalOpen} 
+									setModalOpen={setModalOpen}
+                  setRefectch={setRefectch} 
+                  />
+                </ButtonCallModal>
               </div>
             }
             {

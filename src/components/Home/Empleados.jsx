@@ -54,6 +54,7 @@ import {
   deleteDomicilio,
   disabledInputs,
   getArchivosAdjuntos,
+  getMotivosEgreso,
   getParSueldos,
   saveDatosExtrasEmpleados,
 } from "../../redux/actions/fetchActions";
@@ -78,7 +79,7 @@ import "./Home.css"
 import ErrorPage from "../ErrorPage/ErrorPage";
 import Loader from "../Loader/Loader";
 
-const Empleados = ({tokenDef, setTokenDef, sePerfilesUSuario, loading, handleClickRef, referencia, renderButtons}) => {
+const Empleados = ({tokenDef, setTokenDef, sePerfilesUSuario, loading, handleClickRef, referencia, renderButtons, modalOpen, setModalOpen}) => {
   const [tabIndex, setTabIndex] = useState(0);
   
   const [responses, setResponses] = useState({});
@@ -162,6 +163,7 @@ const Empleados = ({tokenDef, setTokenDef, sePerfilesUSuario, loading, handleCli
   const urlEsquemasConceptos = "http://54.243.192.82/api/ConceptosEsquemas";
   const urlParSueldos = "http://54.243.192.82/api/ParSueldos";
  const urlArchivosAdjuntos = "http://54.243.192.82/api/ArchivosDocumentacionEmpleados/sp_ArchivosDocumentacionEmpleadosDatos"
+ const urlMotivosEgreso = "http://54.243.192.82/api/MotivosEgreso/0,%201"
 
   //#endregion
 
@@ -227,6 +229,7 @@ useEffect(()=>{
    handleFetch(urlDomicilios, addDomicilios);
    handleFetch(urlParSueldos, getParSueldos);
    handleFetch(urlDocumentacionEmpleados, addDocumentacionEmpleados);
+
    axios.post(urlArchivosAdjuntos, bodyArchivosDocs).then((res)=>{
     if(res.status === 200){
       dispatch(getArchivosAdjuntos(res.data.result))
@@ -339,9 +342,7 @@ useEffect(() => {
 
      handleFetch(urlConceptos, addConceptos);
 
-
      handleFetch(urlDocumentacion, getOneDocumento);
-
 
 
 
@@ -354,6 +355,8 @@ useEffect(() => {
 
      handleFetch(urlTrabajosAnteriores, getTrabajosAnteriores);
   }, [disable, refetch,refetching, empleadoUno]);
+  const motivosEgreso = useSelector((state)=> state.generalState.motivosEgreso);
+
 
   useEffect(() => {
 
@@ -371,7 +374,7 @@ useEffect(() => {
     setDisableEstado(false);
   }, [responses?.inputSexo]);
 
-
+  
 
   useEffect(() => {
     axios
@@ -401,6 +404,7 @@ useEffect(() => {
       handleFetch(urlDocumentacionEmpleados, addDocumentacionEmpleados);
       handleFetch(urlFamiliares, addFamiliares);
       handleFetch(urlParentescos, addParentescos);
+      handleFetch(urlMotivosEgreso, getMotivosEgreso);
 
   }, [empleadoUno?.iDempleado, refetch, refetching]);
 
@@ -435,9 +439,9 @@ useEffect(() => {
     const urlEmpleadoApYLegajo = `http://54.243.192.82/api/Empleados?filter=${responses?.browser?.inputApellidoNombreBrowser ? responses?.browser.inputApellidoNombreBrowser : null}&legajo=${responses?.browser?.inpurLegajoBrowser ? responses?.browser?.inpurLegajoBrowser : null}&modo=${renderButtons}`;
     const urlApeLegOrdered = `http://54.243.192.82/api/Empleados?filter=${responses?.browser?.inputApellidoNombreBrowser ? responses?.browser?.inputApellidoNombreBrowser : null}&legajo=${responses?.browser?.inpurLegajoBrowser ? responses?.browser?.inpurLegajoBrowser : null}&modo=${renderButtons}`;
 
-    console.log(urlEmpleadoPorApellido)
+    
     async function getEmpleados(){
-      if(responses?.browser.inputApellidoNombreBrowser){
+      if(responses?.browser?.inputApellidoNombreBrowser){
         await axios({method: 'get',
                       url: urlEmpleadoPorApellido,
                       timeout: 2000}).then((res) => {
@@ -446,7 +450,7 @@ useEffect(() => {
         });
         return;
       }
-      else if(responses?.browser.inpurLegajoBrowser){
+      else if(responses?.browser?.inpurLegajoBrowser){
         await axios({method: 'get',
                     url: urlEmpleadoPorLegajo,
                     timeout: 2000}).then((res) => {
@@ -1135,6 +1139,8 @@ const getTabComponent = (tabIndex) => {
           setImageSelectedPrevious={setImageSelectedPrevious}
           modify={modify}
           agregar = {agregar}
+          handleClickRef={handleClickRef}
+          referencia={referencia}
         />
       );
     case 1:
@@ -1238,7 +1244,8 @@ const getTabComponent = (tabIndex) => {
     {  localStorage.getItem('token') ? <div className="container-fluid">
       <div className="row">
         <div className="col-xl-3 col-lg-3 col-md-3">
-          <Browser renderButtons={renderButtons} getEmpleados={getEmpleados} modify={modify} setModify={setModify} deleteEmploye={deleteEmploye} setRefectch={setRefectch} refetch={refetch} disable={disable} setDisable={setDisable} setValueEmpl={setValueEmpl} responses={responses} setResponses={setResponses} agregar={agregar}  setAgregar={setAgregar}  />
+          <Browser renderButtons={renderButtons} getEmpleados={getEmpleados} modify={modify} setModify={setModify} deleteEmploye={deleteEmploye} setRefectch={setRefectch} refetch={refetch} disable={disable} setDisable={setDisable} setValueEmpl={setValueEmpl} responses={responses} setResponses={setResponses} agregar={agregar}  setAgregar={setAgregar} handleClickRef={handleClickRef} referencia={referencia} modalOpen={modalOpen} 
+									setModalOpen={setModalOpen} />
         </div>
         <div className="col-xl-9 col-lg-9 col-md-9 ">
           <Navbar  handleTabChange={handleTabChange} tabIndex={tabIndex} />

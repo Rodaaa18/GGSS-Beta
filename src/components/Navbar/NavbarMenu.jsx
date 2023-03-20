@@ -18,6 +18,7 @@ import {
   objectModosContratacion,
   objectCargos,
   objectProvincias,
+  objectDocumentación,
 } from "./Objects";
 // -----------------------------------------------------------
 
@@ -68,6 +69,7 @@ import {
   propsModal,
   propsModalCalles,
   propsModalCargos,
+  propsModalDocumentacion,
   propsModalEstado,
   propsModalEstudios,
   propsModalFormasdePagos,
@@ -85,12 +87,13 @@ import { ModalParentesco } from "../Modals/Modales Complejos/ModalParentesco";
 import { ModalPaises } from "../Modals/Modales Complejos/ModalPaises";
 import { ModalProvinciasDptos } from "../Modals/Modales Complejos/ModalProvinciasDptos";
 import ErrorPage from "../ErrorPage/ErrorPage";
+import { actualizaCreateDocu, actualizaDeleteDocu, actualizaUpdateDocu } from "../../redux/actions/documentacionActions";
 
 // import { getEstadosCivilesModal } from '../../services/fetchAPI';
 // import { useEffect } from 'react';
 //#endregion
 
-const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario, referencias,renderButtonFunction }) => {
+const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario, referencias,renderButtonFunction, modalOpen, setModalOpen }) => {
   const [modalValues, setModalValues] = useState({});
   const [nameModal, setNameModal] = useState({});
   const [valueItemModal, setValueItemModal] = useState({});
@@ -107,7 +110,7 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario, referenci
   const dispatch = useDispatch();
   const refetch = useSelector((state) => state.modalState.refetch);
   const navigate = useNavigate();
-
+  const documentaciones = useSelector((state)=> state.documentacionState.domiciliosDelEmpleado);
  const estadoCivilRef = useRef();
 
 
@@ -269,6 +272,7 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario, referenci
   const urlPaises = "http://54.243.192.82/api/Paises";
   const urlProvincias = "http://54.243.192.82/api/Provincias";
   const urlEmpleadores = "http://54.243.192.82/api/Empleadores";
+  const urlDocumentacion = "http://54.243.192.82/api/Documentacion"
 
   //#endregion
 
@@ -595,9 +599,19 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario, referenci
     "nacionalidad_masc": modalValues?.nacMac,
   	"nacionalidad_fem": modalValues?.nacFem
   };
-
+ 
   //Alicuotas
-
+const bodyCreateDocumentacion= {
+	"idDocumentacion": 0,
+	"documentacion1": modalValues?.documentacionModal,
+	"obs": modalValues?.obsDocumentacion
+  }
+ 
+  const bodyUpdateDocumentacion= {
+	"idDocumentacion": valueItemModal?.idDocumentacion,
+	"documentacion1": modalValues?.documentacionModal,
+	"obs": modalValues?.obsDocumentacion
+  }
   //Provincias, Deptos y demás.
 
   const bodyProvincias = {
@@ -1165,7 +1179,45 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario, referenci
 														/>
 													</ButtonCallModal>
 												</li>  
-												
+												<li>
+													<ButtonCallModal parameterRef={referencias.docuRef}  nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="Documentación"  setTransition={setTransition} nameButton="Documentación" modalOpen={modalOpen} 
+															setModalOpen={setModalOpen}>
+														<ChildModal 
+															modalValues={modalValues} 
+															onChangeValues={onChangeValues}  
+															valueItemModal={valueItemModal} 
+															setValueItemModal={setValueItemModal} 
+															nameModalProp="Documentación" 
+															handleClickClose={handleClickClose} 
+															setTransition={setTransition} 
+															array={ documentaciones && documentaciones }  
+															nameModal="Documentación" 
+															propsModal={propsModalDocumentacion} 
+															optionsInputs={objectDocumentación} 
+															transition={transition}
+															functionAdd={sendModalData}
+															urlApi={urlDocumentacion}
+															bodyPetition ={bodyCreateDocumentacion}
+															bodyUpdate={bodyUpdateDocumentacion}
+															modify={modify} 
+															setModify={setModify}
+															idAModificar={valueItemModal?.idDocumentacion }
+															functionDelete={deleteItemModal}
+															disableModal={disableModal}
+															setDisableMOdal={setDisableMOdal}
+															actionActualizaDelete={actualizaDeleteDocu}
+															disableModalButtons={disableModalButtons}
+															setDisableModalButtons={setDisableModalButtons}
+															actualizaCreate={actualizaCreateDocu}
+															actualizaUpdate={actualizaUpdateDocu}
+															usaEstados={true}
+															idInputTextArea = "obsDocumentacion"
+															urlDelete = {urlDocumentacion}
+															modalOpen={modalOpen} 
+															setModalOpen={setModalOpen}
+														/>														
+													</ButtonCallModal>
+												</li> 
 											</div>
 										</ul>
 									</li>

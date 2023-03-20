@@ -196,7 +196,12 @@ export const objectModosLiquidacion = [
     "nameInput" : "modoLiquidacion"
   }
 ]
-
+export const objectDocumentación = [{
+    "label": "Documentación:",
+    "placeholder": "Documentación",
+    "idInput" : "documentacionModal",
+    "nameInput" : "documentacionModal"
+}]
 export const objectProvincias = [
   {
     "label": "Provincia",

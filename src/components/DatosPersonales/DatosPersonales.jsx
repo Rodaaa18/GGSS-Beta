@@ -37,7 +37,7 @@ const DatosPersonales = ({ modify,tabIndex ,handleTabChange, responses, setRespo
   const numeradores = useSelector((state)=> state.generalState.numeradores);
   const parSueldos = useSelector((state)=> state.generalState.parSueldos);
  
-  console.log(parSueldos)
+
   
   //#endregion
 
@@ -198,7 +198,7 @@ useEffect(()=>{
     dispatch(disableFunctions(false));
      
   }
-  console.log(formDatosPersonales)
+
   return (
       //#region Menú Principal
 

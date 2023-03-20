@@ -87,6 +87,11 @@ export const propsModalEmpleadores = {
     nameModal : "Empleadores"
 }
 
+export const propsModalDocumentacion = {
+    propArrayId : "idDocumentacion",
+    propArrayOp : "documentacion1",
+    nameModal : "Documentación"
+}
 //FALTA EP
 // export const propsModalAlicuotas = {
 //     propArrayId : "idAlicuota",

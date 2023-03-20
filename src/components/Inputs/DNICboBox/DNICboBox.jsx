@@ -11,7 +11,6 @@ const DNICboBox = ({  messageError, placeHolder, array, value , disabled, idInpu
   },[value])
 
 
-  console.log(parSueldos && parSueldos[0].idTipoDocumentoPredeterminado)
 
   return (
     <div className="formulario__grupo">

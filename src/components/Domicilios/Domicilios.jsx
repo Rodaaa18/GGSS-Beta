@@ -201,7 +201,7 @@ const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValu
         ...newResponse
       });
   }
-console.log(domicilioSelected)
+
 
   return (
     //#region Menú Principal
