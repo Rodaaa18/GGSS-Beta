@@ -26,6 +26,7 @@ import {
 import { setRefetch } from "../../redux/actions/modalesActions";
 import { domicilioSelected, recharge } from "../../redux/actions/domiciliosActions";
 import ChildBajaEmpleado from "../Modals/ChildBajaEmpleado";
+import ChildModalReincorporacion from "../Modals/ChildModalReincorporacion";
 
 const Browser = ({ getEmpleados, disable, setDisable, setValueEmpl, responses, setResponses, setRefectch, refetch, deleteEmploye,setModify, agregar , setAgregar, renderButtons, handleClickRef, referencia, modalOpen, setModalOpen }) => {
   const [checked, setChecked] = useState(false);
@@ -305,7 +306,24 @@ const Browser = ({ getEmpleados, disable, setDisable, setValueEmpl, responses, s
             }
             {
               renderButtons === 1 && <div className="d-flex flex-row justify-content-center align-items-center w-100">
-                  <button className="btn btn-danger btn-sm">Reincorporación</button>
+                <ButtonCallModal  esBoton={true} nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="reincorporacionEmpleado" nameButton="Reincorporación">
+                  <ChildModalReincorporacion
+                  handleClickClose={handleClickClose}
+                  nameModal = "Reincorporación"
+                  nameModalProp="reincorporacionEmpleado"
+                  onChangeValues={onChangeValues}
+                  formDocumentacion={setBrowser}
+                  value={browser}
+                  refetch={refetch} 
+                  setRefetch={setRefectch} 
+                  handleClickRef={handleClickRef}
+                  referencia= {referencia.docuRef}
+                  modalName="Reincorporación"
+                  modalOpen={modalOpen} 
+									setModalOpen={setModalOpen}
+                  setRefectch={setRefectch} 
+                  />
+                </ButtonCallModal>
                   
               </div>
             }
@@ -323,7 +341,7 @@ const Browser = ({ getEmpleados, disable, setDisable, setValueEmpl, responses, s
                   setRefetch={setRefectch} 
                   handleClickRef={handleClickRef}
                   referencia= {referencia.docuRef}
-                  modalName="Documentacion"
+                  modalName="Baja de un Empleado"
                   modalOpen={modalOpen} 
 									setModalOpen={setModalOpen}
                   setRefectch={setRefectch} 

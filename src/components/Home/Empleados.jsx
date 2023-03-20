@@ -470,7 +470,7 @@ useEffect(() => {
 
     useEffect(() => {
     getEmpleados();
-  }, [responses?.browser?.inputApellidoNombreBrowser,responses?.browser?.inpurLegajoBrowser,responses?.browser?.ordered, saveEmpleado, refetch, renderButtons]);
+  }, [responses?.browser?.inputApellidoNombreBrowser,responses?.browser?.inpurLegajoBrowser, saveEmpleado, refetch, renderButtons]);
 
 
   const idsTrabajosAnterioresDelete = useSelector((state)=> state.trabajosAnteriores.ids);
