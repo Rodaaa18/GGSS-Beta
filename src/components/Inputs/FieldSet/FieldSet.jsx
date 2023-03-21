@@ -505,7 +505,7 @@ const FieldSet = ({
         </fieldset>
         <div className="col-xl-12 d-flex flex-row-reverse mt-2 w-100 gap-1">
           <button
-            className="btn border border-danger btn-outline-danger btnAgregar "
+            className="btn border border-danger btn-outline-danger btnAgregar buttonWidth"
             onClick={deleteWithOptions}
             onMouseEnter={handleMouseEnterDelete}
             onMouseLeave={handleMouseLeaveDelete}
@@ -521,7 +521,7 @@ const FieldSet = ({
             )}
           </button>
           <button
-            className="btn border border-success btn-outline-success btnAgregar "
+            className="btn border border-success btn-outline-success btnAgregar buttonWidth "
             onClick={fetchApiWithOptions}
             onMouseEnter={handleMouseEnterAdd}
             onMouseLeave={handleMouseLeaveAdd}
@@ -549,7 +549,7 @@ const FieldSet = ({
         />
         <div className="col-xl-12 d-flex flex-row-reverse mt-2">
           <button
-            className="btn border border-danger btn-outline-danger btnAgregar"
+            className="btn border border-danger btn-outline-danger btnAgregar buttonWidth"
             disabled={disabled}
             onClick={() =>
               deleteDetalleLicencia(

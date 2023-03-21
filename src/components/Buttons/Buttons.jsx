@@ -42,7 +42,7 @@ const Buttons = ({
       <div className="d-flex flex-row">
         <div className="form__grupo__icons d-flex flex-row-reverse w-100 gap-1">
           <button
-            className="btn border border-danger btn-outline-danger"
+            className="btn border border-danger btn-outline-danger buttonWidth"
             disabled={disabled}
             onClick={(e) => functionDelete(idEliminar)}
             onMouseEnter={handleMouseEnterDelete}
@@ -59,7 +59,7 @@ const Buttons = ({
           </button>
 
           <button
-            className="btn border  border-success btn-outline-success"
+            className="btn border  border-success btn-outline-success buttonWidth"
             disabled={disabled}
             onClick={functionSend}
             onMouseEnter={handleMouseEnterAdd}

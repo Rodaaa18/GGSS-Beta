@@ -18,6 +18,7 @@ import {
 import { useEffect } from "react";
 import { setRefetch } from "../../redux/actions/modalesActions";
 import { updateDomicilio } from "../../redux/actions/fetchActions";
+import Buttons from "../Buttons/Buttons";
 
 //#endregion
 const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValues, formDatosPersonales, setFormDatosPersonales, domiciliosEmpleados, setRefectch, refetch, handleClickRef, referencia, modify, agregar }) => {
@@ -423,7 +424,7 @@ const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValu
                       dptoOpcion={true}
                     />
                   </div>
-                  <ButtonCancelarAceptar idElimiar={domicilioDelEmpleado} refetch={refetch} setRefectch={setRefectch} cancelar="-" aceptar="+"disabled={disabled} functionSend={sendDataDomicilios} functionDelete={deleteDomicilio}/>
+                  <Buttons cancelar="cancelar" aceptar="aceptar" idElimiar={domicilioDelEmpleado} functionDelete={deleteDomicilio} functionSend={sendDataDomicilios}  disabled={disabled} />
                   <TablaDomicilios 
                     columns={columns} 
                     disabled={disabled}

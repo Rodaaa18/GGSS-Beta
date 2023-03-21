@@ -13,7 +13,9 @@
 .btn-success .btn-icon {
   background-image: url('../../../public/icons/add-white.svg');
 }
-
+.buttonWidth{
+  width: 7rem;
+}
 
 @media screen and (max-width: 1366px) {
   .btnTablaDom {
