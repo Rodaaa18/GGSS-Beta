@@ -46,6 +46,7 @@ const Familia = ({
 }) => {
   //const { saveEmpl, saveNacionalidad, saveEstudio, parentescos, disable, saveFamSelect } = useContext(employeContext);
 
+  const [checked, setChecked] = useState(false);
   const [familiarSeleccionado, setFamiliarSeleccionado] = useState({});
   const [formFamilia, setFormFamilia] = useState(responses["formFamilia"]);
   const familiarSeleccionadoR = useSelector(
@@ -218,6 +219,8 @@ const Familia = ({
     dispatch(disableFunctions(false));
   }
   console.log(familiarSeleccionadoR?.sexo);
+  console.log (formFamilia?.checkNoDeducirGana)
+  console.log (formFamilia?.checkCuotaAlim)
   return (
     <>
       <div className="container-fluid contFamilia">
@@ -449,27 +452,21 @@ const Familia = ({
               />
               <div className="col-xl-12 ">
                 <CheckLabel
-                  idInput="inputCheckNoDEDUCIR GANANCIAS"
+                  idInput="checkNoDeducirGana"
                   nameLabel="No Deducir Ganancias"
                   onChange={onChangeValues}
-                  // action={GET_INPUT_VALUE}
-                  value={
-                    formFamilia?.inputCheckLiquidacion &&
-                    formFamilia?.inputCheckLiquidacion
-                  }
+                  checked={checked}
+                  value={formFamilia?.idInput}
                   disabled={disable}
                 />
               </div>
               <div className="col-xl-12 ">
                 <CheckLabel
-                  idInput="inputIncluirCuotaAlimSOLAPA-FLIA"
+                  idInput="checkCuotaAlim"
                   nameLabel="Incluir en cuota Alimentaria"
                   onChange={onChangeValues}
-                  // action={GET_INPUT_VALUE}
-                  value={
-                    formFamilia?.inputIncluirCuotaAlim &&
-                    formFamilia?.inputIncluirCuotaAlim
-                  }
+                  checked={checked}
+                  value={formFamilia?.idInput}
                   disabled={disable}
                 />
               </div>
