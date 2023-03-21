@@ -101,11 +101,11 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario, referenci
   const [disableModal, setDisableMOdal] = useState(true);
   const [transition, setTransition] = useState(false);
   const [disableModalButtons, setDisableModalButtons] = useState(false);
-  const [ reload, setReload ] = useState(false);
+  const [reload, setReload] = useState(false);
   const [arrayList, setArrayList] = useState({
-	departamentos: [],
-	localidades: [],
-	barrios: [],
+    departamentos: [],
+    localidades: [],
+    barrios: [],
   });
   const dispatch = useDispatch();
   const refetch = useSelector((state) => state.modalState.refetch);
@@ -113,41 +113,47 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario, referenci
   const documentaciones = useSelector((state)=> state.documentacionState.domiciliosDelEmpleado);
  const estadoCivilRef = useRef();
 
+  const handleClickClose = (nameModalProp) => {
+    let newState = { ...nameModal };
 
-
-
-	const handleClickClose=(nameModalProp)=>{
-        let newState = {...nameModal}
-    
-        newState[nameModalProp] = false;
-        setNameModal(newState);
-        setTransition(true);
-    }
-	function closeSession(){
-		setTokenDef(null);
-		sePerfilesUSuario(null);
-		return navigate("/");
-	}
-	async function sendModalData(url, body, bodyUpdate, id, actualizaCreate, actualizaUpdate, valueIdUrl, diferentUrl){
-        if(modify){
-            try{
-                await axios
-                .put(`${url}/${diferentUrl ? valueIdUrl : id }`, bodyUpdate)
-                .then((res)=>{
-                    if(res.status === 200){
-                        setModify(false);
-                        setDisableMOdal(true)
-						dispatch(actualizaUpdate(bodyUpdate))
-                        dispatch(setRefetch(refetch))
-						setReload(!reload)
-            return swal({
-              title: "Ok",
-              text: "Item actualizado con éxito",
-              icon: "success",
-            });
-          }
-          return;
-        });
+    newState[nameModalProp] = false;
+    setNameModal(newState);
+    setTransition(true);
+  };
+  function closeSession() {
+    setTokenDef(null);
+    sePerfilesUSuario(null);
+    return navigate("/");
+  }
+  async function sendModalData(
+    url,
+    body,
+    bodyUpdate,
+    id,
+    actualizaCreate,
+    actualizaUpdate,
+    valueIdUrl,
+    diferentUrl
+  ) {
+    if (modify) {
+      try {
+        await axios
+          .put(`${url}/${diferentUrl ? valueIdUrl : id}`, bodyUpdate)
+          .then((res) => {
+            if (res.status === 200) {
+              setModify(false);
+              setDisableMOdal(true);
+              dispatch(actualizaUpdate(bodyUpdate));
+              dispatch(setRefetch(refetch));
+              setReload(!reload);
+              return swal({
+                title: "Ok",
+                text: "Item actualizado con éxito",
+                icon: "success",
+              });
+            }
+            return;
+          });
       } catch (err) {
         setModify(false);
         setDisableMOdal(true);
@@ -165,7 +171,7 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario, referenci
           setDisableMOdal(true);
           dispatch(actualizaCreate(body));
           dispatch(setRefetch(refetch));
-		  setReload(!reload)
+          setReload(!reload);
           return swal({
             title: "Ok",
             text: "Item guardado con éxito",
@@ -182,11 +188,7 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario, referenci
       });
     }
   }
-  async function deleteItemModal(
-    url,
-    id,
-    actualizaDelete,
-  ) {
+  async function deleteItemModal(url, id, actualizaDelete) {
     swal({
       title: "Desea eliminar el item?",
       text: "Si confirma el item será borrado de la Base de Datos",
@@ -198,11 +200,10 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario, referenci
         try {
           await axios.delete(`${url}/${id}`).then((res) => {
             if (res.status === 200) {
-              
               dispatch(actualizaDelete(id));
-			  dispatch(setRefetch(!refetch));
+              dispatch(setRefetch(!refetch));
               setDisableMOdal(true);
-			  setReload(!reload)
+              setReload(!reload);
               return swal({
                 title: "Ok",
                 text: "Item eliminado con éxito",
@@ -225,35 +226,48 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario, referenci
     });
   }
 
-  const generalStateData = useSelector((state)=> state.generalState)
-  const provinciaSelected = useSelector((state)=> state.modalState.provSelect);
-  const departamentoSelected = useSelector((state)=> state.modalState.dptoSelect);
-  const localidadSelected = useSelector((state)=> state.modalState.localSelect);
-
-  
+  const generalStateData = useSelector((state) => state.generalState);
+  const provinciaSelected = useSelector((state) => state.modalState.provSelect);
+  const departamentoSelected = useSelector(
+    (state) => state.modalState.dptoSelect
+  );
+  const localidadSelected = useSelector(
+    (state) => state.modalState.localSelect
+  );
 
   useEffect(() => {
-	if (provinciaSelected && generalStateData.departamentos) {
-	  const arrayDepartamentos = generalStateData.departamentos.filter(
-		(departamento) => departamento.idProvincia === provinciaSelected.idProvincia
-	  );
-	  setArrayList((prevState) => ({ ...prevState, departamentos: arrayDepartamentos }));
-	}
-	if (departamentoSelected && generalStateData.localidades) {
-		
-	  const arrayLocalidades = generalStateData.localidades.filter(
-		(localidad) => localidad.idDepartamento === departamentoSelected.idDepartamento
-	  );
-	  setArrayList((prevState) => ({ ...prevState, localidades: arrayLocalidades }));
-	}
-	if (localidadSelected && generalStateData.barrios) {
-	  const arrayBarrios = generalStateData.barrios.filter(
-		(barrio) => barrio.idLocalidad === localidadSelected.idLocalidad
-	  );
-	  setArrayList((prevState) => ({ ...prevState, barrios: arrayBarrios }));
-	}
-  }, [provinciaSelected, departamentoSelected, localidadSelected, generalStateData]);
-
+    if (provinciaSelected && generalStateData.departamentos) {
+      const arrayDepartamentos = generalStateData.departamentos.filter(
+        (departamento) =>
+          departamento.idProvincia === provinciaSelected.idProvincia
+      );
+      setArrayList((prevState) => ({
+        ...prevState,
+        departamentos: arrayDepartamentos,
+      }));
+    }
+    if (departamentoSelected && generalStateData.localidades) {
+      const arrayLocalidades = generalStateData.localidades.filter(
+        (localidad) =>
+          localidad.idDepartamento === departamentoSelected.idDepartamento
+      );
+      setArrayList((prevState) => ({
+        ...prevState,
+        localidades: arrayLocalidades,
+      }));
+    }
+    if (localidadSelected && generalStateData.barrios) {
+      const arrayBarrios = generalStateData.barrios.filter(
+        (barrio) => barrio.idLocalidad === localidadSelected.idLocalidad
+      );
+      setArrayList((prevState) => ({ ...prevState, barrios: arrayBarrios }));
+    }
+  }, [
+    provinciaSelected,
+    departamentoSelected,
+    localidadSelected,
+    generalStateData,
+  ]);
 
   //#region ----------------------------------- URLS DE LOS MODALES
   const urlEstadosCiviles = "http://54.243.192.82/api/EstadosCiviles";
@@ -568,18 +582,18 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario, referenci
         parentescosValue[parentescosValue.length - 1] !== undefined &&
         parentescosValue[parentescosValue.length - 1].iDparentesco) + 1,
     nombreParentesco: modalValues?.nombreParentesco,
-	"generaAsignacion": modalValues?.generaAsignacion,
-	"obs": modalValues?.obsParentescos,
-	"deduceGanancias": modalValues?.deduceGanancias,
-	"importeDeduce": Number(modalValues?.importe)
+    generaAsignacion: modalValues?.generaAsignacion,
+    obs: modalValues?.obsParentescos,
+    deduceGanancias: modalValues?.deduceGanancias,
+    importeDeduce: Number(modalValues?.importe),
   };
   const bodyUpdateParentesco = {
     iDparentesco: valueItemModal?.iDparentesco,
     nombreParentesco: modalValues?.nombreParentesco,
-    "generaAsignacion": modalValues?.generaAsignacion,
-	"obs": modalValues?.obsParentescos,
-	"deduceGanancias": modalValues?.deduceGanancias,
-	"importeDeduce": Number(modalValues?.importe)
+    generaAsignacion: modalValues?.generaAsignacion,
+    obs: modalValues?.obsParentescos,
+    deduceGanancias: modalValues?.deduceGanancias,
+    importeDeduce: Number(modalValues?.importe),
   };
 
   //Paises
@@ -590,14 +604,14 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario, referenci
         paisesValue[paisesValue.length - 1] !== undefined &&
         paisesValue[paisesValue.length - 1].idPais) + 1,
     nombrePais: modalValues?.nombrePais,
-	"nacionalidad_masc": modalValues?.nacMac,
-	"nacionalidad_fem": modalValues?.nacFem
+    nacionalidad_masc: modalValues?.nacMac,
+    nacionalidad_fem: modalValues?.nacFem,
   };
   const bodyUpdatePaises = {
     idPais: valueItemModal?.idPais,
     nombrePais: modalValues?.nombrePais,
-    "nacionalidad_masc": modalValues?.nacMac,
-  	"nacionalidad_fem": modalValues?.nacFem
+    nacionalidad_masc: modalValues?.nacMac,
+    nacionalidad_fem: modalValues?.nacFem,
   };
  
   //Alicuotas
@@ -643,10 +657,24 @@ const bodyCreateDocumentacion= {
     cuit: modalValues?.cuit,
   };
 
- 
+  //#endregion ----------------------------------- Body de Lauty  -----------------------------------
+  function showSuperadmin() {
+    let perfilAdmin =
+      perfilesUsuario &&
+      perfilesUsuario.filter(
+        (perfil) => perfil.nombre.toLowerCase() === "administrador"
+      );
 
-//#endregion ----------------------------------- Body de Lauty  -----------------------------------
-	function showSuperadmin(){
+    if (perfilAdmin.length > 0) {
+      return (
+        <Link class="nav-link" to="/superadmin">
+          Superadmin
+        </Link>
+      );
+    } else {
+      return null;
+    }
+  }
 
 		let perfilAdmin = perfilesUsuario && perfilesUsuario.filter((perfil)=> perfil.nombre.toLowerCase() === "administrador");
 		

@@ -1,5 +1,7 @@
+//#region imports---------------------------------------
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import {
   getEmployeById,
   getEmployeByLegajo,
@@ -17,7 +19,7 @@ import {
 } from "../../redux/actions/employeActions";
 import { GET_INPUT_VALU_BROWSER } from "../../redux/types/employeTypes";
 import swal from "sweetalert";
-import { disabledInputs } from "../../redux/actions/fetchActions";
+import { actualizaCreateEstadosCiviles, actualizaDelete, actualizaUpdateEstadosCiviles, disabledInputs } from "../../redux/actions/fetchActions";
 import "./Browser.css";
 import {
   clearLicSelect,
@@ -37,33 +39,77 @@ const Browser = ({ getEmpleados, disable, setDisable, setValueEmpl, responses, s
   const estados = useSelector((state)=> state.generalState.estados);
   const parSueldos = useSelector((state)=> state.generalState.parSueldos);
   const idEstadoSelec = empleadoUno && empleadoUno.idEstado;
-  const estadoSEleccionado = estados && estados.find(est => est.idEstado === idEstadoSelec); 
-  function onChangeValues(e, key){
-    const newResponse = {...browser};
-    if(key === 'inpurLegajoBrowser'){
-      if(browser?.inputApellidoNombreBrowser !== "" && e !== ""){
-        newResponse.inputApellidoNombreBrowser = "";
+  const estadoSEleccionado =
+    estados && estados.find((est) => est.idEstado === idEstadoSelec);
+ 
+
+    function onChangeValues(e, key, isModal) {
+      const newResponse = isModal ? { ...modalValues } : { ...browser };
+    
+      if (isModal) {
+        newResponse[key] = e;
+      } else {
+        if (key === "inpurLegajoBrowser") {
+          if (browser?.inputApellidoNombreBrowser !== "" && e !== "") {
+            newResponse.inputApellidoNombreBrowser = "";
+          }
+          newResponse.inpurLegajoBrowser = e;
+        } else if (key === "inputApellidoNombreBrowser") {
+          if (browser?.inpurLegajoBrowser !== "" && e !== "") {
+            newResponse.inpurLegajoBrowser = "";
+          }
+          newResponse.inputApellidoNombreBrowser = e;
+        }
+        newResponse[key] = e;
       }
-      newResponse.inpurLegajoBrowser = e;
-    } else if(key === "inputApellidoNombreBrowser"){
-      if(browser?.inpurLegajoBrowser !== "" && e !== ""){
-        newResponse.inpurLegajoBrowser = "";
+    
+      if (isModal) {
+        setModalValues({
+          ...newResponse,
+        });
+      } else {
+        setBrowser({
+          ...newResponse,
+        });
       }
-      newResponse.inputApellidoNombreBrowser = e;
     }
-    newResponse[key] = e;
-    setBrowser({
-      ...newResponse
-    });
-};
-  
-  useEffect(() => {  
+    
+
+
+  //   function onChangeValues(e, key) {
+  //     const newResponse = { ...modalValues };
+  //     newResponse[key] = e;
+  //     setModalValues({
+  //       ...newResponse,
+  //     });
+  //   }
+ 
+ 
+  //   function onChangeValues(e, key) {
+  //   const newResponse = { ...browser };
+  //   if (key === "inpurLegajoBrowser") {
+  //     if (browser?.inputApellidoNombreBrowser !== "" && e !== "") {
+  //       newResponse.inputApellidoNombreBrowser = "";
+  //     }
+  //     newResponse.inpurLegajoBrowser = e;
+  //   } else if (key === "inputApellidoNombreBrowser") {
+  //     if (browser?.inpurLegajoBrowser !== "" && e !== "") {
+  //       newResponse.inpurLegajoBrowser = "";
+  //     }
+  //     newResponse.inputApellidoNombreBrowser = e;
+  //   }
+  //   newResponse[key] = e;
+  //   setBrowser({
+  //     ...newResponse,
+  //   });
+  // }
+
+  useEffect(() => {
     setResponses({
       ...responses,
-      browser
-    });    
-},[browser]);
-
+      browser,
+    });
+  }, [browser]);
 
   const url = "http://54.243.192.82/api/Empleados?records=100";
 
@@ -77,42 +123,35 @@ const Browser = ({ getEmpleados, disable, setDisable, setValueEmpl, responses, s
     (state) => state.employeStates.formulario.inputApellidoNombreBrowser
   );
   const deshabilitado = useSelector((state) => state.employeStates.disable);
-  const recharged = useSelector((state)=> state.domiciliosStates.recharge);
-  
-
- 
+  const recharged = useSelector((state) => state.domiciliosStates.recharge);
 
   const detalleSeleccionado = useSelector(
     (state) => state.licenciasState.detalleSelect
   );
 
   function onSelect(e, name, idEmpleado) {
-    dispatch(recharge(!recharged))
+    dispatch(recharge(!recharged));
     getEmployeById(empleados, idEmpleado).then((res) => {
-      
       dispatch(addOneEmploye(res[0]));
     });
   }
-  function onEnter(name, esLegajo, legajo){
-    dispatch(recharge(!recharged))
-    if(!esLegajo){
-      getEmpleados()
-    }else{
+  function onEnter(name, esLegajo, legajo) {
+    dispatch(recharge(!recharged));
+    if (!esLegajo) {
+      getEmpleados();
+    } else {
       getEmployeByLegajo(empleados, legajo).then((res) => {
-      
         dispatch(addOneEmploye(res[0]));
       });
     }
-    
   }
-  
 
   function habilitaEdit() {
-    setValueEmpl(true)
-    setRefectch(!refetch)
-    dispatch(cleanEmploye())
+    setValueEmpl(true);
+    setRefectch(!refetch);
+    dispatch(cleanEmploye());
     setAgregar(true);
-    
+
     Array.from(document.querySelectorAll("input")).forEach(
       (input) => (input.value = "")
     );
@@ -126,17 +165,17 @@ const Browser = ({ getEmpleados, disable, setDisable, setValueEmpl, responses, s
     const formDatosPersonales = Object.fromEntries(formDatosPersonale);
     setResponses({
       ...responses,
-      formDatosPersonales})
+      formDatosPersonales,
+    });
     setDisable(false);
-
   }
   
   function habilitaUpdate(e) {
     e.preventDefault();
-    dispatch(domicilioSelected(""))
+    dispatch(domicilioSelected(""));
     setModify(true);
-    setValueEmpl(true)
-    setRefectch(!refetch)
+    setValueEmpl(true);
+    setRefectch(!refetch);
     if (empleadoUno.iDempleado && empleadoUno.iDempleado) {
       return setDisable(false);
     }
@@ -198,7 +237,9 @@ const Browser = ({ getEmpleados, disable, setDisable, setValueEmpl, responses, s
         <div className="row mt-1 p-0 m-0 ">
           <div className="container m-0 p-2">
             <input
-              onChange={(e) => onChangeValues(e.target.value, "inpurLegajoBrowser")}
+              onChange={(e) =>
+                onChangeValues(e.target.value, "inpurLegajoBrowser")
+              }
               value={browser?.inpurLegajoBrowser}
               className="form__grupo__input__browser "
               type="number"
@@ -206,18 +247,19 @@ const Browser = ({ getEmpleados, disable, setDisable, setValueEmpl, responses, s
               id="inpurLegajoBrowser"
               placeholder="Ingrese Legajo "
               disabled={!disable}
-              onKeyDown={(e)=>{
-                if(e.key === 'Enter'){
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
                   const legajo = e.target.value;
-                  onEnter(null, true, legajo)
+                  onEnter(null, true, legajo);
                 }
               }}
-              
             />
 
             <div className="row mt-1 m-0 p-0  w-100">
               <input
-                onChange={(e) => onChangeValues(e.target.value, "inputApellidoNombreBrowser")}
+                onChange={(e) =>
+                  onChangeValues(e.target.value, "inputApellidoNombreBrowser")
+                }
                 value={browser?.inputApellidoNombreBrowser}
                 className="form__grupo__input__browser "
                 type="text"
@@ -225,14 +267,13 @@ const Browser = ({ getEmpleados, disable, setDisable, setValueEmpl, responses, s
                 id="inputApellidoNombreBrowser"
                 placeholder="Ingrese Nombre "
                 disabled={!disable}
-                onKeyDown={(e)=>{
-                  if(e.key === 'Enter'){
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
                     const name = e.target.value;
-                    onEnter(name, false, null)
+                    onEnter(name, false, null);
                   }
                 }}
-                
-              />              
+              />
             </div>
             {/* <div className="wor mt-1 m-0 p-0 w-100">
               <label htmlFor="ordered">Ordenar:</label>
@@ -244,22 +285,34 @@ const Browser = ({ getEmpleados, disable, setDisable, setValueEmpl, responses, s
               multiple
               aria-label="multiple select example"
               disabled={!disable}
-              onKeyDown={(e)=> onSelect(e,e.target.value.split(',')[0],Number(e.target.value.split(',')[1]))}
-              onKeyUp={(e)=> onSelect(e,e.target.value.split(',')[0],Number(e.target.value.split(',')[1]))}
+              onKeyDown={(e) =>
+                onSelect(
+                  e,
+                  e.target.value.split(",")[0],
+                  Number(e.target.value.split(",")[1])
+                )
+              }
+              onKeyUp={(e) =>
+                onSelect(
+                  e,
+                  e.target.value.split(",")[0],
+                  Number(e.target.value.split(",")[1])
+                )
+              }
             >
               {empleados &&
                 empleados?.map((emp, i) => {
-                  return (
-                    emp.idEstado === (parSueldos && parSueldos[0]?.estadoBajaEmpleado) ?  
+                  return emp.idEstado ===
+                    (parSueldos && parSueldos[0]?.estadoBajaEmpleado) ? (
                     <option
-                    className="empleadoBaja"
-                    key={i}
-                    onClick={(e) => onSelect(e, emp.apellido, emp.iDempleado)}
-                    value={`${emp.apellido},${emp.iDempleado}`}
-                    apellido={emp.apellido && emp.apellido}
-                    idEmpleado={emp.iDempleado && emp.iDempleado}
-                  >{`${emp.apellido}, ${emp.nombres} (*)`}</option>
-                    :
+                      className="empleadoBaja"
+                      key={i}
+                      onClick={(e) => onSelect(e, emp.apellido, emp.iDempleado)}
+                      value={`${emp.apellido},${emp.iDempleado}`}
+                      apellido={emp.apellido && emp.apellido}
+                      idEmpleado={emp.iDempleado && emp.iDempleado}
+                    >{`${emp.apellido}, ${emp.nombres} (*)`}</option>
+                  ) : (
                     <option
                       key={i}
                       onClick={(e) => onSelect(e, emp.apellido, emp.iDempleado)}
@@ -275,21 +328,27 @@ const Browser = ({ getEmpleados, disable, setDisable, setValueEmpl, responses, s
 
         <div className="container ">
           <div className="row align-items-start">
-            {
-              renderButtons === 0 && <><div className="col">
-                <button
-                  className={`btn btn-danger btn-sm d-flex justify-content-center m-1 align-items- newClass`}
-                  onClick={habilitaEdit}
-                  disabled={!disable}
-                >
-                  Agregar
-                </button>
-              </div>
-              <div className="col">
+            {renderButtons === 0 && (
+              <>
+                <div className="col">
+                  <button
+                    className={`btn btn-danger btn-sm d-flex justify-content-center m-1 align-items- newClass`}
+                    onClick={habilitaEdit}
+                    disabled={!disable}
+                  >
+                    Agregar
+                  </button>
+                </div>
+                <div className="col">
                   <button
                     className={`btn btn-danger btn-sm d-flex justify-content-center m-1 align-items- newClass`}
                     onClick={(e) => habilitaUpdate(e)}
-                    disabled={ estadoSEleccionado?.idEstado === (parSueldos && parSueldos[0]?.estadoBajaEmpleado) ? true : !disable}
+                    disabled={
+                      estadoSEleccionado?.idEstado ===
+                      (parSueldos && parSueldos[0]?.estadoBajaEmpleado)
+                        ? true
+                        : !disable
+                    }
                   >
                     Modificar
                   </button>
@@ -298,7 +357,12 @@ const Browser = ({ getEmpleados, disable, setDisable, setValueEmpl, responses, s
                   <button
                     className={`btn btn-danger btn-sm d-flex justify-content-center m-1 align-items- newClass`}
                     onClick={() => deleteEmploye(empleadoUno.iDempleado)}
-                    disabled={ estadoSEleccionado?.idEstado === (parSueldos && parSueldos[0]?.estadoBajaEmpleado) ? true : !disable}
+                    disabled={
+                      estadoSEleccionado?.idEstado ===
+                      (parSueldos && parSueldos[0]?.estadoBajaEmpleado)
+                        ? true
+                        : !disable
+                    }
                   >
                     Eliminar
                   </button>
@@ -352,17 +416,11 @@ const Browser = ({ getEmpleados, disable, setDisable, setValueEmpl, responses, s
                   />
                 </ButtonCallModal>
               </div>
-            }
-            {
-              renderButtons === 3 && <div className="d-flex flex-row justify-content-center align-items-center w-100">
-              <button className="btn btn-danger btn-sm">Cambio de Categoría</button>
-              </div>
-            }
+            )}
           </div>
         </div>
       </div>
     </>
   );
 };
-
 export default Browser;
