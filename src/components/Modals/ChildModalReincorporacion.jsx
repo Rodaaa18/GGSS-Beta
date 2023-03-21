@@ -9,10 +9,9 @@ const ChildModalReincorporacion = ({handleClickClose, nameModalProp,  nameModal,
     const empleadoUno = useSelector((state)=> state.employeStates.employe);
     const motivosEgreso = useSelector((state)=> state.generalState.motivosEgreso);
 
-    console.log(empleadoUno?.iDempleado)
     const bodyDocu = {
         "fecha": value?.fechaPresentacionReincorpora,
-        "idEmpleado": empleadoUno?.iDempelado,
+        "idEmpleado": empleadoUno?.iDempleado,
         "idDocumentacion": value?.cboReincorporacion,
         "rutaAdjunto": "",
         "obs": value?.txtReincorporacion,
@@ -20,6 +19,8 @@ const ChildModalReincorporacion = ({handleClickClose, nameModalProp,  nameModal,
         "generaLiquidacion": false,
         "incluirCuotaAlimentaria": false
       }
+ 
+
     async function sendDataReincorporacion(){
         if(empleadoUno?.iDempleado){
             try{
@@ -119,7 +120,7 @@ const ChildModalReincorporacion = ({handleClickClose, nameModalProp,  nameModal,
                 
                   <div className='col-6 '>
                      <label className='labelModalBaja' htmlFor="fechaPresentacionReincorpora">Fecha Presentación:</label>
-                     <input onChange={(e)=> onChangeValues(e.target.value, "fechaPresentacionReincorpora")} value={value?.datePResentacionBaja} className='fechaModalBaja' type="date" name="fechaPresentacionReincorpora" id="fechaPresentacionReincorpora" />
+                     <input onChange={(e)=> onChangeValues(e.target.value, "fechaPresentacionReincorpora")} value={value?.fechaPresentacionReincorpora} className='fechaModalBaja' type="date" name="fechaPresentacionReincorpora" id="fechaPresentacionReincorpora" />
                   </div>
                   
               </div>

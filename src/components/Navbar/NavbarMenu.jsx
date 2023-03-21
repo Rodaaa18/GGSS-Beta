@@ -678,10 +678,20 @@ const bodyCreateDocumentacion= {
 								</a>
 								<ul className=" dropdown-menu styleMenu">
 									
-									<li><Link onClick={()=>renderButtonFunction(0)} className="dropdown-item" to="/ficha-empleados">Ficha Empleados</Link></li>
-									<li><Link onClick={()=>renderButtonFunction(1)} className="dropdown-item">Reincorporación</Link></li>
-									<li><Link onClick={()=>renderButtonFunction(2)} className="dropdown-item">Baja de un empleado</Link></li>
-									<li><Link onClick={()=>renderButtonFunction(3)} className="dropdown-item">Cambio de Categoría</Link></li>	
+									<li>
+										<Link onClick={()=>renderButtonFunction(0)} className="dropdown-item" to="/ficha-empleados">Ficha Empleados</Link>
+									</li>
+									<li>
+
+										<Link onClick={()=>renderButtonFunction(1)} className="dropdown-item">Reincorporación</Link>
+									</li>
+									<li>
+										
+										<Link onClick={()=>renderButtonFunction(2)} className="dropdown-item">Baja de un empleado</Link>
+									</li>
+									<li>
+										<Link onClick={()=>renderButtonFunction(3)} className="dropdown-item">Cambio de Categoría</Link>
+									</li>	
 								</ul>
 							</li>
 							{/* <li className="nav-item">

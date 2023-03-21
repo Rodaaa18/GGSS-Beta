@@ -17,7 +17,7 @@ const documentaciones = useSelector((state)=> state.documentacionState.domicilio
     "idEmpleado": empleadoUno?.iDempleado,
     "obs": value?.txtCateModal
   }
-
+  console.log(bodyCate)
   async function sendDataBaja(){
     if(empleadoUno?.iDempleado){
         try{
@@ -95,7 +95,7 @@ const documentaciones = useSelector((state)=> state.documentacionState.domicilio
               <div className='row d-flex flex-row align-items-center justify-content-start'>
                   <div className='col-6 '>
                      <label className='labelModalBaja' htmlFor="fechaCategoriaModal">Fecha:</label>
-                     <input onChange={(e)=> onChangeValues(e.target.value, "fechaCategoriaModal")} value={value?.datePResentacionBaja} className='fechaModalBaja' type="date" name="fechaCategoriaModal" id="fechaCategoriaModal" />
+                     <input onChange={(e)=> onChangeValues(e.target.value, "fechaCategoriaModal")} value={value?.fechaCategoriaModal} className='fechaModalBaja' type="date" name="fechaCategoriaModal" id="fechaCategoriaModal" />
                   </div>
               </div>
               <div className='row'>

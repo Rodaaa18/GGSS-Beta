@@ -36,8 +36,7 @@ const Familia = ({responses, setResponses,disable, setRefetch, refetch, agregar 
 
   //#region ------------------------------------------------------------------------------CONSTANTES DE DATOS
   const urlFamiliares = "http://54.243.192.82/api/EliminarFamiliarPorId";
-const urlCreateFamiliar = "http://54.243.192.82/api/InsertarNuevoFamiliar"
-
+const urlCreateFamiliar = "http://54.243.192.82/api/GuardarFamiliar";
   function onChangeValues(e, key){
     let newResponse = {...formFamilia};
     if(key === "inputDateNac"){
@@ -82,6 +81,16 @@ const urlCreateFamiliar = "http://54.243.192.82/api/InsertarNuevoFamiliar"
       let newResponse = {...formFamilia};
       newResponse["textAreaObservacionesFamilia"] = "";
       newResponse["idRadioBtn"] = "";
+      newResponse["inputCmbDni"] = null;
+      newResponse["inputNroDni"] = "";
+      
+      newResponse["inputApellidoNombres"] = "";
+      newResponse["inputParentesco"] = null;
+      newResponse["inputDateNac"] = "";
+      newResponse["nacionalidadFamilia"] = null;
+      newResponse["idInputEstudios"] = null;
+      newResponse["inputPaisOrigen"] = null;
+      newResponse["inputDateBaja"] = "";
       setFormFamilia({
         ...newResponse
       });
@@ -130,23 +139,92 @@ const urlCreateFamiliar = "http://54.243.192.82/api/InsertarNuevoFamiliar"
       setFamiliarSeleccionado(res);
     });
   }
-  
+  let bodyPetition = {
+    "iDFamiliares": ((familiaresValue && familiaresValue[familiaresValue.length -1]  && (familiaresValue[familiaresValue.length -1].iDfamiliares))+1),
+    "iDEmpleado": empleadoUno.iDempleado,
+    "apellidoyNombres": responses.formFamilia?.inputApellidoNombres,
+    "iDParentesco": responses.formFamilia?.inputParentesco,
+    "sexo": responses.formFamilia?.idRadioBtn,
+    "fechaNacimiento": responses.formFamilia?.inputDateNac,
+    "iDNacionalidad": responses.formFamilia?.nacionalidadFamilia,
+    "iDTipoDocumento": responses.formFamilia?.inputCmbDni,
+    "nroDocumento": responses.formFamilia?.inputNroDni,
+    "iDEstudios": responses.formFamilia?.idInputEstudios,
+    "iDPaisOrigen": responses.formFamilia?.inputPaisOrigen,
+    "f_Baja": responses.formFamilia?.inputDateBaja,
+    "noDeducirGanancias": true,
+    "incluirCuotaAlimentaria": true,
+    "obs": responses.formFamilia?.textAreaObservacionesFamilia
+  }
+   let bodyPetitionUpdate = {
+    "iDFamiliares": familiarSeleccionadoR?.idFamiliares,
+    "iDEmpleado": empleadoUno.iDempleado,
+    "apellidoyNombres": responses.formFamilia?.inputApellidoNombres ? responses.formFamilia?.inputApellidoNombres : familiarSeleccionadoR?.apellidoyNombres,
+    "iDParentesco": responses.formFamilia?.inputParentesco ? responses.formFamilia?.inputParentesco : familiarSeleccionadoR?.idParentesco,
+    "sexo": responses.formFamilia?.idRadioBtn ? responses.formFamilia?.idRadioBtn : familiarSeleccionadoR?.sexo,
+    "fechaNacimiento": responses.formFamilia?.inputDateNac ? responses.formFamilia?.inputDateNac : familiarSeleccionadoR?.fechaNacimiento,
+    "iDnacionalidad": responses.formFamilia?.nacionalidadFamilia ? responses.formFamilia?.nacionalidadFamilia : familiarSeleccionadoR?.idNacionalidad,
+    "iDTipoDocumento": responses.formFamilia?.inputCmbDni ? responses.formFamilia?.inputCmbDni : familiarSeleccionadoR?.idTipoDocumento,
+    "nroDocumento": responses.formFamilia?.inputNroDni ? responses.formFamilia?.inputNroDni : familiarSeleccionadoR?.nroDocumento,
+    "iDEstudios": responses.formFamilia?.idInputEstudios ? responses.formFamilia?.idInputEstudios : familiarSeleccionadoR?.idEstudios,
+    "iDPaisOrigen": responses.formFamilia?.inputPaisOrigen ? responses.formFamilia?.inputPaisOrigen : familiarSeleccionadoR?.idPaisOrigen,
+    "f_Baja": responses.formFamilia?.inputDateBaja ? responses.formFamilia?.inputDateBaja : familiarSeleccionadoR?.f_Baja,
+    "noDeducirGanancias": true,
+    "incluirCuotaAlimentaria": true,
+    "obs": responses.formFamilia?.textAreaObservacionesFamilia ? responses.formFamilia?.textAreaObservacionesFamilia : familiarSeleccionadoR?.obs
+  } 
+
+  console.log(bodyPetitionUpdate)
+
+
   async function sendData() {
-    try {
-      await axios.post(urlCreateFamiliar, bodyPetition)
+    if(familiarSeleccionadoR){
+      try{
+        await axios.post(urlCreateFamiliar, bodyPetitionUpdate)
         .then(res => {
           //dispatch(addNewFamiliar(res.data));
-          setRefetch(!refetch)
-          swal({
-            title: "Ok",
-            text: "Familiar cargado correctamente",
-            icon: "success",
-          })
+          if(res.status === 200){
+            setRefetch(!refetch)
+            return swal({
+              title: "Ok",
+              text: "Familiar actualizado correctamente",
+              icon: "success",
+            })
+          }
+          
         })
-      return;
-    } catch (err) {
-      return err;
+      }catch(err){
+        return swal({
+          title: "Error",
+          text: "Error al Actualizar el Familiar" + err,
+          icon: "error",
+        })
+      }
+    }else{
+      try {
+        await axios.post(urlCreateFamiliar, bodyPetition)
+          .then(res => {
+            //dispatch(addNewFamiliar(res.data));
+            if(res.status === 200){
+              setRefetch(!refetch)
+              return swal({
+                title: "Ok",
+                text: "Familiar cargado correctamente",
+                icon: "success",
+              })
+            }
+            
+          })
+        return;
+      } catch (err) {
+        return swal({
+          title: "Error",
+          text: "Error al Actualizar el Familiar" + err,
+          icon: "error",
+        })
+      }
     }
+    
   }
   const deleteFamiliar = (id) => {
     
@@ -154,27 +232,9 @@ const urlCreateFamiliar = "http://54.243.192.82/api/InsertarNuevoFamiliar"
       dispatch(saveIdFam(id))
   }
 
-  let bodyPetition = {
-    "iDfamiliares": ((familiaresValue && familiaresValue[familiaresValue.length -1]  && (familiaresValue[familiaresValue.length -1].iDfamiliares))+1),
-    "iDempleado": empleadoUno.iDempleado,
-    "apellidoyNombres": responses.formFamilia?.inputApellidoNombres,
-    "iDparentesco": responses.formFamilia?.inputParentesco,
-    "sexo": responses.formFamilia?.idRadioBtn,
-    "fechaNacimiento": responses.formFamilia?.inputDateNac,
-    "iDnacionalidad": responses.formFamilia?.nacionalidadFamilia,
-    "iDtipoDocumento": responses.formFamilia?.inputCmbDni,
-    "nroDocumento": responses.formFamilia?.inputNroDni,
-    "iDestudios": responses.formFamilia?.idInputEstudios,
-    "iDpaisOrigen": responses.formFamilia?.inputPaisOrigen,
-    "fBaja": responses.formFamilia?.inputDateBaja,
-    "noDeducirGanancias": true,
-    "incluirCuotaAlimentaria": true,
-    "fechaCasamiento": null,
-    "fechaParto": null,
-    "fechaAcargoDesde": null,
-    "obs": responses.formFamilia?.textAreaObservacionesFamilia
-  }
   
+
+
   function cancelButton(){
     Array.from(document.querySelectorAll("input")).forEach(
       input => (input.value = "")
