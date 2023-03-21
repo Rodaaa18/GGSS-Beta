@@ -414,6 +414,7 @@ useEffect(()=>{
                             idModal="estadosEmpleados"
                             disabled={disable} 
                             obligatorio ={true}
+                            esAltaDeEmpleado={true}
                             />
                           <InputRadio
                             value={agregar || modify ? formDatosPersonales?.inputSexo : empleadoUno.sexo}

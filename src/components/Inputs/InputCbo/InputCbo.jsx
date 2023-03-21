@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import InputNumero from "../InputNumero/InputNumero";
 import "./InputCbo.css";
 
-const InputCbo = ({nameLabel, array, value, display, nameButton, idSelected, sexo, idModal, disabled, idInput,onChange, datosPersonalesValue, action, propArrayOp,propArrayOpFem,provinciaAction,valueId, clasess, obligatorio, licencia, defaultChecked, nameCheck,handleClickRef, referencia,modalName, esCalle, dptoOpcion, esCalleDom, inputValueState
+const InputCbo = ({nameLabel, array, value, display, nameButton, idSelected, sexo, idModal, disabled, idInput,onChange, datosPersonalesValue, action, propArrayOp,propArrayOpFem,provinciaAction,valueId, clasess, obligatorio, licencia, defaultChecked, nameCheck,handleClickRef, referencia,modalName, esCalle, dptoOpcion, esCalleDom, inputValueState, esAltaDeEmpleado, agregar
 }) => {
   const [mostrarComponente, setMostrarComponente] = useState(true);
   const [valor, setValor] = useState("");
@@ -23,7 +23,10 @@ const InputCbo = ({nameLabel, array, value, display, nameButton, idSelected, sex
     const onClickOption=(value)=>{
       dispatch(provinciaAction(value))
     }
-    
+    let arrayAltaEmpleado = array && array.filter((item)=> item.idEstado !== 8);
+
+  
+
   return (
         clasess ? <div className={`${clasess.classOne}`}>
         <div className={`${clasess.classTwo}`}>
@@ -35,8 +38,35 @@ const InputCbo = ({nameLabel, array, value, display, nameButton, idSelected, sex
                   {
                     dptoOpcion && <option value={0}>(Sin Definir)</option>
                   }
-                    {
-                    sexo && sexo.length > 0  && sexo === "M" ? array !== undefined && array.map((op, index)=>{
+                  {
+                    (esAltaDeEmpleado && agregar) ? 
+                    (sexo && sexo.length > 0  && sexo === "M" ? arrayAltaEmpleado && arrayAltaEmpleado.map((op, index)=>{
+                      console.log("enro al filter")
+                      return(
+                    ( Number(idSelected) === op[valueId]) ? <option className="options" key={index}  onClick={(e)=>onClickOption(op)} selected value={op[valueId]}>
+                      {op[propArrayOp]} 
+                    </option> :
+                    <option onClick={(e)=>onClickOption(op)} value={op[valueId]} key={index}>                                                          
+                      {op[propArrayOp]}
+                    </option> 
+                      )
+                  }) 
+                  
+                  :
+                      array  && array.map((op, index)=>{
+                        console.log("enro al map")
+                          return(
+                            (Number(idSelected) === op[valueId]) ? <option key={index} selected onClick={(e)=>onClickOption(op)} value={op[valueId]}>
+                            {op[propArrayOpFem]} 
+                          </option> :
+                          <option  onClick={(e)=>onClickOption(op)} value={op[valueId]} key={index}>
+                          
+                            {op[propArrayOpFem]}
+                          </option> 
+                          )
+                      }))
+                      :
+                    (sexo && sexo.length > 0  && sexo === "M" ? array !== undefined && array.map((op, index)=>{
                         return(
                       ( Number(idSelected) === op[valueId]) ? <option className="options" key={index}  onClick={(e)=>onClickOption(op)} selected value={op[valueId]}>
                         {op[propArrayOp]} 
@@ -58,7 +88,7 @@ const InputCbo = ({nameLabel, array, value, display, nameButton, idSelected, sex
                               {op[propArrayOpFem]}
                             </option> 
                             )
-                        })
+                        }))
                     }
                 </select>
             </div>
@@ -95,7 +125,33 @@ const InputCbo = ({nameLabel, array, value, display, nameButton, idSelected, sex
                     dptoOpcion && <option value={0}>(Sin Definir)</option>
                   }
                     {
-                       sexo && sexo.length > 0  && sexo === "M" ? array !== undefined && array.map((op, index)=>{
+                      (esAltaDeEmpleado && agregar) ? 
+                      (sexo && sexo.length > 0  && sexo === "M" ? arrayAltaEmpleado !== undefined && arrayAltaEmpleado.map((op, index)=>{
+                        console.log("enro al filter")
+                        return(
+                      ( Number(idSelected) === op[valueId]) ? <option className="options" key={index}  onClick={(e)=>onClickOption(op)} selected value={op[valueId]}>
+                        {op[propArrayOp]} 
+                      </option> :
+                      <option onClick={(e)=>onClickOption(op)} value={op[valueId]} key={index}>                                                          
+                        {op[propArrayOp]}
+                      </option> 
+                        )
+                    }) 
+                    
+                    :
+                        array  && array.map((op, index)=>{
+                            return(
+                              (Number(idSelected) === op[valueId]) ? <option key={index} selected onClick={(e)=>onClickOption(op)} value={op[valueId]}>
+                              {op[propArrayOpFem]} 
+                            </option> :
+                            <option  onClick={(e)=>onClickOption(op)} value={op[valueId]} key={index}>
+                            
+                              {op[propArrayOpFem]}
+                            </option> 
+                            )
+                        }))
+                        :
+                       (sexo && sexo.length > 0  && sexo === "M" ? array !== undefined && array.map((op, index)=>{
                         return(
                          ( Number(idSelected) === op[valueId]) ? <option key={index}  onClick={(e)=>onClickOption(op)} selected value={op[valueId]}>
                                                             {op[propArrayOp]} 
@@ -115,7 +171,7 @@ const InputCbo = ({nameLabel, array, value, display, nameButton, idSelected, sex
                                                                 {op[propArrayOpFem]}
                                                             </option> 
                             )
-                        })
+                        }))
                     }
                 </select>
             </div>
