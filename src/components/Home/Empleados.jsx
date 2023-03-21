@@ -445,7 +445,7 @@ useEffect(() => {
         await axios({method: 'get',
                       url: urlEmpleadoPorApellido,
                       timeout: 2000}).then((res) => {
-                        console.log(res)
+                      
           dispatch(getEmployes(res.data.result));
         });
         return;

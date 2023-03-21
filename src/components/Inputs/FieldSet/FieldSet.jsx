@@ -208,7 +208,7 @@ const FieldSet = ({
     idDetalleLicenciaEmpleado: detalleSeleccionado.idDetalleLicenciaEmpleado,
     fechaSuspension: formLicencias?.inputDateSuspLic,
   };
-  console.log(formLicencias?.inputDateSuspLic);
+
   async function deleteSuspencion() {
     try {
       axios
@@ -230,13 +230,7 @@ const FieldSet = ({
   let dateHastas = new Date(detalleSeleccionado.hasta).setHours(0, 0, 0, 0);
   let dateSusp = new Date(formLicencias?.inputDateSuspLic).setHours(0, 0, 0, 0);
 
-  console.log(dateHastas);
-  console.log(dateSusp);
-  console.log(
-    dateSusp.valueOf() < dateHastas.valueOf() && !formLicencias?.inputQuitaSusp
-  );
 
-  console.log(formLicencias?.inputQuitaSusp);
 
   async function updateDetalle(url) {
     let dateDesde = new Date(detalleSeleccionado.desde).setHours(0, 0, 0, 0);
@@ -260,9 +254,6 @@ const FieldSet = ({
               bodyCreateSusp
             )
             .then((res) => {
-              console.log(bodyCreateSusp);
-              console.log(res);
-              setRefectch(!refetch);
             });
         } catch (err) {
           return swal({

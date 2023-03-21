@@ -190,7 +190,7 @@ const urlCreateFamiliar = "http://54.243.192.82/api/InsertarNuevoFamiliar"
     }
     dispatch(disableFunctions(false));
   }
-  console.log(familiarSeleccionadoR?.sexo)
+
   return (
     <>
       <div className="container-fluid contFamilia">

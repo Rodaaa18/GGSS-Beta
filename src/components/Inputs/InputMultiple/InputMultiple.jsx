@@ -51,7 +51,7 @@ const InputMultiple = ({
         setValorRadioM(false);
       } 
     }    
-console.log(valueRadio)
+
  
   return (
     // <div className="container-flex align-items-center">

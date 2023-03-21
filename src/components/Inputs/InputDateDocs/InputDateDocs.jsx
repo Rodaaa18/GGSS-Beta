@@ -39,7 +39,7 @@ const InputDateDocs = ({
     setMostrarComponente2(display);
   }, [display]);
 
-  console.log(value)
+
 
   return (
     <div className="formulario__grupo__inputs__docs mt-2">

@@ -159,7 +159,7 @@ const Documentacion = ({responses, setResponses, disable, setRefectch, refetch})
         newState[nameModalProp] = false;
         setNameModal(newState);
     }
-    console.log(documentacionSeleccionada)
+   
 
     useEffect(()=>{
         let newResponse = {...formDocumentacion};

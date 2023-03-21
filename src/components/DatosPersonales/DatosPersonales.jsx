@@ -110,7 +110,7 @@ useEffect(()=>{
   });
 },[])
 
-console.log(formDatosPersonales)
+
   useEffect(()=>{
     const newResponse = {...formDatosPersonales};
     if(agregar){

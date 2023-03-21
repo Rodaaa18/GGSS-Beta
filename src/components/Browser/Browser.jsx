@@ -57,7 +57,7 @@ const Browser = ({ getEmpleados, disable, setDisable, setValueEmpl, responses, s
       ...newResponse
     });
 };
-  console.log(browser)
+ 
   useEffect(() => {  
     setResponses({
       ...responses,
