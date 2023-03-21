@@ -10,7 +10,7 @@ const ChildModalReincorporacion = ({handleClickClose, nameModalProp,  nameModal,
     const motivosEgreso = useSelector((state)=> state.generalState.motivosEgreso);
 
     const bodyDocu = {
-        "fecha": value?.fechaPresentacionReincorpora,
+        "fecha": value?.fechaPresentacionReincorpora && value?.fechaPresentacionReincorpora.substring(0, value?.fechaPresentacionReincorpora.length -3),
         "idEmpleado": empleadoUno?.iDempleado,
         "idDocumentacion": value?.cboReincorporacion,
         "rutaAdjunto": "",
