@@ -202,7 +202,6 @@ const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValu
       });
   }
 
-
   return (
     //#region Menú Principal
 
@@ -288,7 +287,7 @@ const Domicilios = ({tabIndex,handleTabChange, responses, disabled, onChangeValu
                         usaNumero={true}
                         dptoOpcion={true}
                         esCalleDom={true}
-                        inputValueSate={formDatosPersonales?.inputNumCalle ? formDatosPersonales?.inputNumCalle : empleadoUno.nroCalle}
+                        inputValueSate={formDatosPersonales?.inputNumCalle ? formDatosPersonales?.inputNumCalle : domicilioSelected.numero}
                       />
                     </div>
                     </div>
