@@ -2,11 +2,13 @@ import InputModal from '../Inputs/InputModal/InputModal';
 import TextArea from '../Inputs/TextArea/TextArea';
 import "./BasicModal.css"
 import {classesTxtAreaModal} from '../../classes/classes'
-const ChildModal = ({nameModalProp, disabled, array , propsModal, optionsInputs, transition, setTransition, handleClickClose,functionAdd, functionUpdate, functionDelete, valueItemModal, setValueItemModal, onChangeValues, modalValues, urlApi, bodyPetition, bodyUpdate,setModify, modify, idAModificar, disableModal, setDisableMOdal, actionActualizaDelete, actualizaCreate, actualizaUpdate, idInputTextArea, disableModalButtons , setDisableModalButtons, usaEstados, urlDelete, changeUrl, valueIdUrl, diferentUrl}) => {
+const ChildModal = ({nameModalProp, disabled, array , propsModal, optionsInputs, transition, setTransition, handleClickClose,functionAdd, functionUpdate, functionDelete, valueItemModal, setValueItemModal, onChangeValues, modalValues, urlApi, bodyPetition, bodyUpdate,setModify, modify, idAModificar, disableModal, setDisableMOdal, actionActualizaDelete, actualizaCreate, actualizaUpdate, idInputTextArea, disableModalButtons , setDisableModalButtons, usaEstados, urlDelete, changeUrl, valueIdUrl, diferentUrl, modalOpen, setModalOpen}) => {
+
+
 
   return (
     
-    <section className={transition ? 'transitionClassUp' : ' transitionClassneDone'} >
+    <section className={modalOpen ? 'transitionClassUp' : ' transitionClassneDone'} >
         <div className='cortina'></div>
     <div className='modalBodyClass ' >
         <div className="row p-2 titleBg">
@@ -17,6 +19,7 @@ const ChildModal = ({nameModalProp, disabled, array , propsModal, optionsInputs,
               onClick={() => {
                 handleClickClose(nameModalProp);
                 setTransition(false);
+                setModalOpen(false);
               }}
             >
               <span aria-hidden="true">&times;</span>

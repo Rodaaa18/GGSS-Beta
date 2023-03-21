@@ -28,7 +28,7 @@ const InputMultiple = ({
   
   useEffect(() => {
     valueInput();
-  }, [valorRadioM, valorRadioF, valor]);
+  }, [valorRadioM, valorRadioF, valueRadio]);
 
   useEffect(()=>{
     setValor(valueRadio);
@@ -42,16 +42,16 @@ const InputMultiple = ({
 
 
   const valueInput = () => {    
-      if(valor === "M"){
+      if(valueRadio === "M"){
         setValorRadioM(true);
         setValorRadioF(false);
       }
-      if(valor === "F"){
+      if(valueRadio === "F"){
         setValorRadioF(true);
         setValorRadioM(false);
       } 
     }    
-
+console.log(valueRadio)
  
   return (
     // <div className="container-flex align-items-center">
@@ -65,7 +65,6 @@ const InputMultiple = ({
           </div>
           <div className="col-xl-4 divCboMultiple  d-flex justify-content-start align-items-center">
             <select className={obligatorio ? "formulario-input-DNI-familia form-select  px-0 obligatorio" : "formulario-input-DNI-familia form-select  px-0"} value={datosFamiliaValue1 !== undefined ? datosFamiliaValue1 : null}  disabled={disable} id={propsRadioButton.idCboDni} name={propsRadioButton.idCboDni} onChange={(e)=>onChange(e.target.value,propsRadioButton.idCboDni)}>
-              <option value="">Seleccionar</option>  
               {optionsDNI && optionsDNI.map((op, i) => {
                 return propSelected === op[idSelected] ? <option key={i} selected value={op[idSelected]}>{op[namePropOp]}</option> :
                 <option key={i} value={op[idSelected]}>{op[namePropOp]}</option> 
@@ -100,7 +99,7 @@ const InputMultiple = ({
                   id={propsRadioButton.idRadioBtn}
                   name={propsRadioButton.idRadioBtn}
                   defaultChecked
-                  checked={valorRadioM}
+                  checked={valueRadio == "M"}
                   onChange={(e)=>onChange(e.target.value, propsRadioButton.idRadioBtn)}
                   value="M"
                   disabled={disable}
@@ -116,7 +115,7 @@ const InputMultiple = ({
                   id={propsRadioButton.idRadioBtn}
                   defaultChecked
                   name={propsRadioButton.idRadioBtn}
-                  checked={valorRadioF}
+                  checked={valueRadio === "F"}
                   onChange={(e)=>onChange(e.target.value, propsRadioButton.idRadioBtn)}
                   value="F"
                   disabled={disable}

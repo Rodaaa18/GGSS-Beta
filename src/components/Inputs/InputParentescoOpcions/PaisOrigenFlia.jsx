@@ -43,7 +43,6 @@ const PaisOrigenFlia = ({
           disabled={disable}
           onChange={(e) => onChange(e.target.value, nameInput)}
         >
-          <option value="">Seleccionar</option> 
           {array &&
             array.map((op, i) => {
               return propArray === op[idSelected] ? (

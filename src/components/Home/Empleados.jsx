@@ -51,8 +51,10 @@ import {
   addSindicatos,
   addTareasDesempeñadas,
   addTiposDocumento,
+  deleteDomicilio,
   disabledInputs,
   getArchivosAdjuntos,
+  getMotivosEgreso,
   getParSueldos,
   saveDatosExtrasEmpleados,
 } from "../../redux/actions/fetchActions";
@@ -70,14 +72,14 @@ import swal from "sweetalert";
 import { getEmployeByLegajo, getEmployeByName } from "../../services/fetchAPI";
 import { cleanEmploye, getEmployes, updateEmploye } from "../../redux/actions/employeActions";
 import { cleanIdFam, getDAtosFamiliaresEmpleado } from "../../redux/actions/familiaActions";
-import { addOneDomicilio, cleanIdsDom } from "../../redux/actions/domiciliosActions";
+import { addOneDomicilio, cleanIdsDom, deleteOneDomicilioSelect } from "../../redux/actions/domiciliosActions";
 import { addDatosExtraPorEmpleado, cleanIdDe } from "../../redux/actions/extrasActions";
 import { setRefetch } from "../../redux/actions/modalesActions";
 import "./Home.css"
 import ErrorPage from "../ErrorPage/ErrorPage";
 import Loader from "../Loader/Loader";
 
-const Empleados = ({tokenDef, setTokenDef, sePerfilesUSuario, loading, handleClickRef, referencia}) => {
+const Empleados = ({tokenDef, setTokenDef, setRenderButtons, loading, handleClickRef, referencia, renderButtons, modalOpen, setModalOpen}) => {
   const [tabIndex, setTabIndex] = useState(0);
   
   const [responses, setResponses] = useState({});
@@ -101,7 +103,7 @@ const Empleados = ({tokenDef, setTokenDef, sePerfilesUSuario, loading, handleCli
   const detalleSeleccionado = useSelector(
     (state) => state.licenciasState.detalleSelect
   );
-
+  const domicilioSelected = useSelector((state)=> state.domiciliosStates.domicilioSelected);
   const licenciaEmpleado = useSelector(
     (state) => state.licenciasState.licenciaEmpleado
   );
@@ -110,8 +112,7 @@ const Empleados = ({tokenDef, setTokenDef, sePerfilesUSuario, loading, handleCli
   const conceptosPorEmpelado = useSelector(
     (state) => state.generalState.conceptosXesquemas
   );
-
-    
+  
   //#region URLs
 
   const urlEstados = "http://54.243.192.82/api/Estados";
@@ -162,6 +163,7 @@ const Empleados = ({tokenDef, setTokenDef, sePerfilesUSuario, loading, handleCli
   const urlEsquemasConceptos = "http://54.243.192.82/api/ConceptosEsquemas";
   const urlParSueldos = "http://54.243.192.82/api/ParSueldos";
  const urlArchivosAdjuntos = "http://54.243.192.82/api/ArchivosDocumentacionEmpleados/sp_ArchivosDocumentacionEmpleadosDatos"
+ const urlMotivosEgreso = "http://54.243.192.82/api/MotivosEgreso/0,%201"
 
   //#endregion
 
@@ -227,6 +229,7 @@ useEffect(()=>{
    handleFetch(urlDomicilios, addDomicilios);
    handleFetch(urlParSueldos, getParSueldos);
    handleFetch(urlDocumentacionEmpleados, addDocumentacionEmpleados);
+
    axios.post(urlArchivosAdjuntos, bodyArchivosDocs).then((res)=>{
     if(res.status === 200){
       dispatch(getArchivosAdjuntos(res.data.result))
@@ -339,9 +342,7 @@ useEffect(() => {
 
      handleFetch(urlConceptos, addConceptos);
 
-
      handleFetch(urlDocumentacion, getOneDocumento);
-
 
 
 
@@ -353,7 +354,9 @@ useEffect(() => {
 
 
      handleFetch(urlTrabajosAnteriores, getTrabajosAnteriores);
-  }, [disable, refetch,refetching]);
+  }, [disable, refetch,refetching, empleadoUno]);
+  const motivosEgreso = useSelector((state)=> state.generalState.motivosEgreso);
+
 
   useEffect(() => {
 
@@ -371,7 +374,7 @@ useEffect(() => {
     setDisableEstado(false);
   }, [responses?.inputSexo]);
 
-
+  
 
   useEffect(() => {
     axios
@@ -401,6 +404,7 @@ useEffect(() => {
       handleFetch(urlDocumentacionEmpleados, addDocumentacionEmpleados);
       handleFetch(urlFamiliares, addFamiliares);
       handleFetch(urlParentescos, addParentescos);
+      handleFetch(urlMotivosEgreso, getMotivosEgreso);
 
   }, [empleadoUno?.iDempleado, refetch, refetching]);
 
@@ -429,49 +433,34 @@ useEffect(() => {
 
 
 
-    const url = `http://54.243.192.82/api/Empleados?page=2000`;
-    const urlEmpleadoPorApellido = `http://54.243.192.82/api/Empleados?filter=${responses?.browser?.inputApellidoNombreBrowser ? responses?.browser?.inputApellidoNombreBrowser : null}&ordered=true`;
-    const urlEmpleadoPorLegajo = `http://54.243.192.82/api/Empleados?legajo=${responses?.browser?.inpurLegajoBrowser ? responses?.browser?.inpurLegajoBrowser : null}&ordered=true`;
-    const urlEmpleadoApYLegajo = `http://54.243.192.82/api/Empleados?filter=${responses?.browser?.inputApellidoNombreBrowser ? responses?.browser.inputApellidoNombreBrowser : null}&legajo=${responses?.browser?.inpurLegajoBrowser ? responses?.browser?.inpurLegajoBrowser : null}&ordered=true`;
-    const urlApeLegOrdered = `http://54.243.192.82/api/Empleados?filter=${responses?.browser?.inputApellidoNombreBrowser ? responses?.browser?.inputApellidoNombreBrowser : null}&legajo=${responses?.browser?.inpurLegajoBrowser ? responses?.browser?.inpurLegajoBrowser : null}&ordered=true`;
+    const url = `http://54.243.192.82/api/Empleados?filter=12121212121`;
+    const urlEmpleadoPorApellido = `http://54.243.192.82/api/Empleados?filter=${responses?.browser?.inputApellidoNombreBrowser ? responses?.browser?.inputApellidoNombreBrowser : null}&modo=${renderButtons}`;
+    const urlEmpleadoPorLegajo = `http://54.243.192.82/api/Empleados?legajo=${responses?.browser?.inpurLegajoBrowser ? responses?.browser?.inpurLegajoBrowser : null}&modo=${renderButtons}`;
+    const urlEmpleadoApYLegajo = `http://54.243.192.82/api/Empleados?filter=${responses?.browser?.inputApellidoNombreBrowser ? responses?.browser.inputApellidoNombreBrowser : null}&legajo=${responses?.browser?.inpurLegajoBrowser ? responses?.browser?.inpurLegajoBrowser : null}&modo=${renderButtons}`;
+    const urlApeLegOrdered = `http://54.243.192.82/api/Empleados?filter=${responses?.browser?.inputApellidoNombreBrowser ? responses?.browser?.inputApellidoNombreBrowser : null}&legajo=${responses?.browser?.inpurLegajoBrowser ? responses?.browser?.inpurLegajoBrowser : null}&modo=${renderButtons}`;
 
     
     async function getEmpleados(){
-      if(responses?.browser.inputApellidoNombreBrowser && responses?.browser.inpurLegajoBrowser){
-        await axios({method: 'get',
-                    url: urlEmpleadoApYLegajo,
-                    timeout: 2000}).then((res) => {
-            dispatch(getEmployes(res.data.result));
-        });
-        return;
-      }
-      else if(responses?.browser.inputApellidoNombreBrowser){
+      if(responses?.browser?.inputApellidoNombreBrowser){
         await axios({method: 'get',
                       url: urlEmpleadoPorApellido,
                       timeout: 2000}).then((res) => {
+                        console.log(res)
           dispatch(getEmployes(res.data.result));
         });
         return;
       }
-      else if(responses?.browser.inpurLegajoBrowser){
+      else if(responses?.browser?.inpurLegajoBrowser){
         await axios({method: 'get',
                     url: urlEmpleadoPorLegajo,
                     timeout: 2000}).then((res) => {
           dispatch(getEmployes(res.data.result));
         });
         return;      
-      }else if(responses?.browser.inputApellidoNombreBrowser && responses?.browser.inpurLegajoBrowser && responses?.browser.ordered){
-        await axios.get({method: 'get',
-                        url: urlApeLegOrdered,
-                        timeout: 2000}).then((res) => {
-          dispatch(getEmployes(res.data.result));
-        });
-        return;
       }else{
-        await axios.get(url).then((res) => {
-
+       
           dispatch(getEmployes(null));
-        });
+      
       }
     }
 
@@ -481,7 +470,7 @@ useEffect(() => {
 
     useEffect(() => {
     getEmpleados();
-  }, [responses?.browser?.inputApellidoNombreBrowser,responses?.browser?.inpurLegajoBrowser,responses?.browser?.ordered, saveEmpleado, refetch]);
+  }, [responses?.browser?.inputApellidoNombreBrowser,responses?.browser?.inpurLegajoBrowser, saveEmpleado, refetch, renderButtons]);
 
 
   const idsTrabajosAnterioresDelete = useSelector((state)=> state.trabajosAnteriores.ids);
@@ -520,7 +509,7 @@ useEffect(() => {
     ]
   }
 
-
+ 
 
 
   const { urls, arrays } = objectRequest;
@@ -804,125 +793,7 @@ useEffect(() => {
               icon: "error",
             })
           }
-          /* if(!bodyPetitionEmpleadoGuarda.iDEmpleador){
-            return swal({
-              title: "Error",
-              text: "Debe seleccionar el Empleador del Empleado",
-              icon: "error",
-            })
-          }
-          if(!bodyPetitionEmpleadoGuarda.iDCategoria){
-            return swal({
-              title: "Error",
-              text: "Debe seleccionar la Categoría del Empleado",
-              icon: "error",
-            })
-          }
-          if(!bodyPetitionEmpleadoGuarda.idAgrupamiento){
-            return swal({
-              title: "Error",
-              text: "Debe seleccionar el Agrupamiento del Empleado",
-              icon: "error",
-            })
-          }
-          if(!bodyPetitionEmpleadoGuarda.iDCargo){
-            return swal({
-              title: "Error",
-              text: "Debe seleccionar el Cargo del Empleado",
-              icon: "error",
-            })
-          }
-          if(!bodyPetitionEmpleadoGuarda.iDTareaDesempeñada){
-            return swal({
-              title: "Error",
-              text: "Debe seleccionar la Tarea Desempeñada del Empleado",
-              icon: "error",
-            })
-          }
-          if(!bodyPetitionEmpleadoGuarda.iDModoContratacion){
-            return swal({
-              title: "Error",
-              text: "Debe seleccionar el Modo de Contratación del Empleado",
-              icon: "error",
-            })
-          }
-          if(!bodyPetitionEmpleadoGuarda.iDModoLiquidacion){
-            return swal({
-              title: "Error",
-              text: "Debe seleccionar el Modo de Liquidación del Empleado",
-              icon: "error",
-            })
-          }
-          if(!bodyPetitionEmpleadoGuarda.idCentrodeCosto){
-            return swal({
-              title: "Error",
-              text: "Debe seleccionar el Centro de Costo del Empleado",
-              icon: "error",
-            })
-          } */
-          /* if(!bodyPetitionEmpleadoGuarda.iDSectorDpto){
-            return swal({
-              title: "Error",
-              text: "Debe seleccionar el Sector del Empleado",
-              icon: "error",
-            })
-          } */
-          /* if(!bodyPetitionEmpleadoGuarda.idObraSocial){
-            return swal({
-              title: "Error",
-              text: "Debe seleccionar la Obra Social del Empleado",
-              icon: "error",
-            })
-          }
-          if(!bodyPetitionEmpleadoGuarda.iDFormadePago){
-            return swal({
-              title: "Error",
-              text: "Debe seleccionar la Forma de Pago del Empleado",
-              icon: "error",
-            })
-          }
-          if(!bodyPetitionEmpleadoGuarda.iDLugardePago){
-            return swal({
-              title: "Error",
-              text: "Debe seleccionar el Lugar de Pago del Empleado",
-              icon: "error",
-            })
-          }
-          if(!bodyPetitionEmpleadoGuarda.idBanco){
-            return swal({
-              title: "Error",
-              text: "Debe seleccionar el Banco del Empleado",
-              icon: "error",
-            })
-          }
-          if(!bodyPetitionEmpleadoGuarda.nroCtaBanco){
-            return swal({
-              title: "Error",
-              text: "Debe escribir el N° de Cuenta del Empleado",
-              icon: "error",
-            })
-          }
-          if(!bodyPetitionEmpleadoGuarda.tipoCuenta){
-            return swal({
-              title: "Error",
-              text: "Debe seleccionar el Tipo de Cuenta del Empleado",
-              icon: "error",
-            })
-          }
-          if(!bodyPetitionEmpleadoGuarda.cbu){
-            return swal({
-              title: "Error",
-              text: "Debe escribir el CBU del Empleado",
-              icon: "error",
-            })
-          }
-          if(responses.fomrLiquidacion?.inputCheckAsigna && !bodyPetitionEmpleadoGuarda.iDEsquema){
-            return swal({
-              title: "Error",
-              text: "Debe seleccionar el Esquema del Empleado",
-              icon: "error",
-            })
-          } */
+          
         //#endregion
 
       }else{
@@ -1022,43 +893,46 @@ useEffect(() => {
                 'Access-Control-Allow-Origin' : '*'
               }})
              .then((res)=>{
-              setRefectch(!refetch);
-              setSaveEmpleado(!saveEmpleado)
-              setDisable(true)
-              if(res.data.statusCode === 200){
-                return swal({
-                 title: "Ok",
-                 text: "Empleado Guardado con éxito",
-                 icon: "success",
-                 })
-              }else{
-                swal({
-                  title: "Error",
-                  text: "Error al guardar el Empleado",
-                  icon: "error",
+                setRefectch(!refetch);
+                setSaveEmpleado(!saveEmpleado)
+                setDisable(true)
+                setModify(false)
+                setAgregar(false)
+                if(res.data.statusCode === 200){
+                  return swal({
+                  title: "Ok",
+                  text: "Empleado Guardado con éxito",
+                  icon: "success",
                   })
-              }
+                }else{
+                  swal({
+                    title: "Error",
+                    text: "Error al guardar el Empleado",
+                    icon: "error",
+                    })
+                }
               
              })
           }else{
             await axios.put(urls.urlEmpleadoGuarda, bodyPetitionEmpleadoUpdate)
             .then((res)=>{
-              if(res.data.statusCode === 0){     
-                debugger;      
-                dispatch(updateEmploye(bodyPetitionEmpleadoUpdate))
+              if(res.status === 200){     
+                 
+                dispatch(updateEmploye(res.data.result))
                 dispatch(setRefetch(!refetching))
                 setRefectch(!refetch);
                 setDisable(true)
+                setModify(false)
+                setAgregar(false)
                  return swal({
                   title: "Ok",
                   text: "Empleado Modificado con éxito",
                   icon: "success",
               })
               }
-              
             })
             arrays[3].map(async (id)=>{
-
+        
               let array = {
                 "arrayList": [
                   id
@@ -1066,6 +940,39 @@ useEffect(() => {
               }
               await axios.delete(`${urls.urlDOmicilioElimina}${id}`, {headers : {'Content-Type': 'application/json;'}})
               .then((res) => {
+                
+                if(res.data.statusCode === 200){
+                  dispatch(setRefetch(!refetching))
+                  setDisable(true)
+                  setRefectch(!refetch)
+                  dispatch(deleteOneDomicilioSelect(id))
+                  dispatch(deleteDomicilio(id));
+                  setModify(false)
+                  setAgregar(false)
+                  const newResponse = {...responses.formDatosPersonales};
+                  newResponse["inputPredeterminado"] = false;
+                  newResponse["inputCalleDomicilios"] = 0;
+                  newResponse["inputNumCalle"] = "";
+                  newResponse["inputPisoCalle"] = "";
+                  newResponse["inputProvinciaDomicilios"] = 0;
+                  newResponse["inputDepartamentosDomicilios"] = 0;
+                  newResponse["inputLocalidadesDomicilios"] = 0;
+                  newResponse["inputBarriosDomicilios"] = 0;
+                  setResponses({
+                    ...newResponse
+                  });  
+                  return swal({
+                    title : "Ok",
+                    text : "Domicilio eliminado con éxito",
+                    icon : "success"
+                  })
+                }else{
+                  return swal({
+                    title : "Error",
+                    text : "Error al eliminar el Domicilio",
+                    icon : "error"
+                  })
+                }
                 setRefectch(!refetch)
               })
            });
@@ -1094,8 +1001,11 @@ useEffect(() => {
           })}
         case urls.urlDOmicilioElimina : {
           arrays.idDomiciliosArray.map(async (id)=>{
+
             await axios.delete(`${urls.urlDOmicilioElimina}${id}`)
-            .then((res) => {})
+            .then((res) => {
+           
+            })
           })}
           case urls.urlDeleteFAmiliar : {
             arrays.arraysFamiliares.map(async (id)=>{
@@ -1116,71 +1026,84 @@ useEffect(() => {
                 ]
               }
               await axios.delete(`${urls.urlTRabajoDelete}${id}`, {data : array, headers : {'Content-Type': 'application/json;'}})
-              .then((res) => swal({
-                title: "Ok",
-                text: "Trabajo Anterior eliminado con éxito",
-                icon: "success",
-            }))
-          });
-          arrays[1].map(async (id)=>{
-            await axios.delete(`${urls.urlDocDelte}${id}`)
-            .then((res) => { if(res.status === 200){swal({
-              title: "Ok",
-              text: "Documentacion eliminada con éxito",
-              icon: "success",
-          })}})
-          });
-          arrays[2].map(async (id)=>{
-            let array = {
-              "arrayList": [
-                id
-              ]
-            }
-
-            try{
-              await axios.delete(`${urls.urlLicDelete}${id}`, {data : array, headers : {'Content-Type': 'application/json;','Access-Control-Allow-Origin' : '*'}})
-            .then((res) => {
-
-                  if(res.status === 200){
-                  return swal({
+              .then((res) => 
+              {
+                if(res.status === 200){
+                  setDisable(true);
+                  swal({
                     title: "Ok",
-                    text: "Licencia eliminada con éxito",
+                    text: "Trabajo Anterior eliminado con éxito",
+                    icon: "success",
+                    })
+                  }
+                })              
+            });
+            arrays[1].map(async (id)=>{
+              await axios.delete(`${urls.urlDocDelte}${id}`)
+              .then((res) => { 
+                if(res.status === 200){
+                  setDisable(true);
+                  swal({
+                      title: "Ok",
+                      text: "Documentacion eliminada con éxito",
+                      icon: "success",
+                  })
+                }
+              })
+            });
+            arrays[2].map(async (id)=>{
+              let array = {
+                "arrayList": [
+                  id
+                ]
+              }
+              try{
+                await axios.delete(`${urls.urlLicDelete}${id}`, {data : array, headers : {'Content-Type': 'application/json;','Access-Control-Allow-Origin' : '*'}})
+              .then((res) => {
+
+                    if(res.status === 200){
+                      setDisable(true);
+                    return swal({
+                      title: "Ok",
+                      text: "Licencia eliminada con éxito",
+                      icon: "success",
+                  })
+                  }
+                }
+              )
+              }catch(err){
+                setRefectch(!refetch);
+                return swal({
+                  title: "Error",
+                  text: "No se puede elimiar una Licencia que tiene asignado un Detalle",
+                  icon: "error",
+              })
+              }
+
+          });
+              arrays[4].map(async (id)=>{
+                await axios.delete(`${urls.urlDeleteFAmiliar}${id}`)
+                .then((res) => {
+                  if(res.status === 200){
+                    setDisable(true);
+                  swal({
+                    title: "Ok",
+                    text: "Familiar eliminado con éxito",
                     icon: "success",
                 })
-                }
-              }
-            )
-            }catch(err){
-              setRefectch(!refetch);
-              return swal({
-                title: "Error",
-                text: "No se puede elimiar una Licencia que tiene asignado un Detalle",
-                icon: "error",
-            })
-            }
-
-         });
-            arrays[4].map(async (id)=>{
-              await axios.delete(`${urls.urlDeleteFAmiliar}${id}`)
-              .then((res) => {
-                if(res.status === 200){
-                swal({
-                  title: "Ok",
-                  text: "Familiar eliminado con éxito",
-                  icon: "success",
-              })
-              }} )
-          });
-            arrays[5].map(async (id)=>{
-              await axios.delete(`${urls.urlDatoExtraElimina}${id}`)
-              .then((res) => {if(res.status === 200){
-                swal({
-                  title: "Ok",
-                  text: "Dato Extra eliminado con éxito",
-                  icon: "success",
-              })
-              }} )
-          });
+                }} )
+            });
+              arrays[5].map(async (id)=>{
+                await axios.delete(`${urls.urlDatoExtraElimina}${id}`)
+                .then((res) => {if(res.status === 200){
+                  setDisable(true);
+                  swal({
+                    title: "Ok",
+                    text: "Dato Extra eliminado con éxito",
+                    icon: "success",
+                })
+                }} )
+            });
         }
       }
     }
@@ -1214,6 +1137,10 @@ const getTabComponent = (tabIndex) => {
           tabIndex={tabIndex}
           ImageSelectedPrevious={ImageSelectedPrevious}
           setImageSelectedPrevious={setImageSelectedPrevious}
+          modify={modify}
+          agregar = {agregar}
+          handleClickRef={handleClickRef}
+          referencia={referencia}
         />
       );
     case 1:
@@ -1225,6 +1152,8 @@ const getTabComponent = (tabIndex) => {
           setResponses={setResponses}
           setRefetch={setRefectch}
           refetch={refetch}
+          modify={modify}
+          agregar = {agregar}
         />
       )
     case 2 :
@@ -1235,6 +1164,7 @@ const getTabComponent = (tabIndex) => {
             responses={responses}
             setResponses={setResponses}
             modify={modify}
+            agregar = {agregar}
           />
       )
     case 3 :
@@ -1245,6 +1175,7 @@ const getTabComponent = (tabIndex) => {
           responses={responses}
           setResponses={setResponses}
           modify={modify}
+          agregar = {agregar}
         />
       )
     case 4 :
@@ -1256,6 +1187,8 @@ const getTabComponent = (tabIndex) => {
         setDisable={setDisable}
         responses={responses}
         setResponses={setResponses}
+        modify={modify}
+          agregar = {agregar}
       />
       )
     case 5 :
@@ -1267,6 +1200,8 @@ const getTabComponent = (tabIndex) => {
           setDisable={setDisable}
           responses={responses}
           setResponses={setResponses}
+          modify={modify}
+          agregar = {agregar}
         />
       )
       case 6 :
@@ -1280,6 +1215,8 @@ const getTabComponent = (tabIndex) => {
             setDisable={setDisable}
             responses={responses}
             setResponses={setResponses}
+            modify={modify}
+          agregar = {agregar}
           />
         )
       case 7 :
@@ -1293,6 +1230,8 @@ const getTabComponent = (tabIndex) => {
             setResponses={setResponses}
             refetch={refetch}
             setRefetch={setRefectch}
+            modify={modify}
+          agregar = {agregar}
           />
         )
       ;default:
@@ -1305,10 +1244,11 @@ const getTabComponent = (tabIndex) => {
     {  localStorage.getItem('token') ? <div className="container-fluid">
       <div className="row">
         <div className="col-xl-3 col-lg-3 col-md-3">
-          <Browser getEmpleados={getEmpleados} modify={modify} setModify={setModify} deleteEmploye={deleteEmploye} setRefectch={setRefectch} refetch={refetch} disable={disable} setDisable={setDisable} setValueEmpl={setValueEmpl} responses={responses} setResponses={setResponses} agregar={agregar}  setAgregar={setAgregar}  />
+          <Browser setRenderButtons={setRenderButtons} renderButtons={renderButtons} getEmpleados={getEmpleados} modify={modify} setModify={setModify} deleteEmploye={deleteEmploye} setRefectch={setRefectch} refetch={refetch} disable={disable} setDisable={setDisable} setValueEmpl={setValueEmpl} responses={responses} setResponses={setResponses} agregar={agregar}  setAgregar={setAgregar} handleClickRef={handleClickRef} referencia={referencia} modalOpen={modalOpen} 
+									setModalOpen={setModalOpen} />
         </div>
         <div className="col-xl-9 col-lg-9 col-md-9 ">
-          <Navbar handleTabChange={handleTabChange} tabIndex={tabIndex} />
+          <Navbar  handleTabChange={handleTabChange} tabIndex={tabIndex} />
           {(tabIndex === 0 || tabIndex === 8) && (
             <DatosPersonales
               empleados={empleados}
@@ -1414,10 +1354,10 @@ const getTabComponent = (tabIndex) => {
         </div>
       </div>
       <div className="d-flex flex-row-reverse btnEmpl w-100 gap-2">
-        <button className="btn btn-danger btnSize " onClick={()=> cleanIdsGeneral()}>
+        <button className="btn btn-danger btnSize " onClick={()=> {cleanIdsGeneral(); handleTabChange(0)}}>
           Cancelar
         </button>
-        <button className="btn btn-success btnSize " onClick={()=> deleteItems( objectRequest)}>Aceptar</button>
+        <button className="btn btn-success btnSize " onClick={()=> {deleteItems( objectRequest); handleTabChange(0)}}>Aceptar</button>
       </div>
       <Footer setTokenDef={setTokenDef} tokenDef={tokenDef}/>
     </div> : <ErrorPage loading={loading}/>}

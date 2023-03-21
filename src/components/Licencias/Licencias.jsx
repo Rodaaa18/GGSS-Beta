@@ -22,6 +22,8 @@ const Licencias = ({responses, setResponses, licenciaEmpleadoDatos, setLicenciaE
 
 
     const opciones = [{
+        opcion : "Seleccionar"
+    },{
         opcion : "1 - Disponibles por Periodo",        
     },{
         opcion : "2 - Solicita Nueva Licencia",        

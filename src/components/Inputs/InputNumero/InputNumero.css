@@ -15,10 +15,11 @@
 .formulario__grupo__numero{
 	display: flex;
 	flex-flow: row;
-	justify-content: end;
+	justify-content: flex-start;
 	align-items: center;
-	width: 40%;
-	z-index: 0;
+	width: 100%;
+	
+	
 }
 .formulario-label-Parentesco{
 	font-style: normal;
@@ -53,19 +54,16 @@
 }
 .label_numeros{
 	margin: 2%;
-	margin-left: 16%;
 	
 }
 .formulario-input-Legajo-Domicilios{
-	margin-bottom: 3px;
-	width: 50%;
-	margin-left: 0px;
-	margin-right: 0px;
+	
+	width: 100%;
 	border: none;
 	border-bottom-color: currentcolor;
 	border-bottom-style: none;
 	border-bottom-width: medium;
-	height: 42px;
+	height: 40px;
 	transition: .3s ease all;
 	border-bottom: 1px solid rgb(78, 6, 6);
 }
@@ -81,6 +79,5 @@
 }
 @media screen and (max-width : 1280px){
     .label_numeros{
-		margin-left: 2rem;
 	}
 }

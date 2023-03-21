@@ -35,8 +35,9 @@ const DatosPersonales = ({ modify,tabIndex ,handleTabChange, responses, setRespo
   const empleadoUno = useSelector((state)=> state.employeStates.employe);
   const datosPersonalesState = useSelector((state)=> state.generalState);
   const numeradores = useSelector((state)=> state.generalState.numeradores);
-  
+  const parSueldos = useSelector((state)=> state.generalState.parSueldos);
  
+
   
   //#endregion
 
@@ -59,6 +60,7 @@ const DatosPersonales = ({ modify,tabIndex ,handleTabChange, responses, setRespo
         ...newResponse
       });
   };
+  const domicilioSelected = useSelector((state)=> state.domiciliosStates.domicilioSelected);
   
 
 
@@ -78,13 +80,49 @@ useEffect(()=>{
       ...newResponse
     });
 },[])
+
+
+
+useEffect(()=>{
+  const newResponse = {...formDatosPersonales};
+  newResponse["inputPredeterminado"] = domicilioSelected !== "" ? domicilioSelected?.predeterminado : ( modify || agregar ? formDatosPersonales?.inputPredeterminado : false);
+  newResponse["inputCalleDomicilios"] = domicilioSelected !== "" ? domicilioSelected?.idCalle : (modify || agregar ? formDatosPersonales?.inputCalleDomicilios : 0);
+  newResponse["inputNumCalle"] = domicilioSelected !== "" ? domicilioSelected?.numero : ( modify || agregar ? formDatosPersonales?.inputNumCalle : "");
+  newResponse["inputPisoCalle"] = domicilioSelected !== "" ? domicilioSelected?.dpto : ( modify || agregar ? formDatosPersonales?.inputPisoCalle : "");
+  newResponse["inputProvinciaDomicilios"] = domicilioSelected !== "" ? domicilioSelected?.idProvincia : ( modify || agregar ? formDatosPersonales?.inputProvinciaDomicilios : 0);
+  newResponse["inputDepartamentosDomicilios"] = domicilioSelected !== "" ? domicilioSelected?.idDepartamento : ( modify || agregar ? formDatosPersonales?.inputDepartamentosDomicilios : 0);
+  newResponse["inputLocalidadesDomicilios"] = domicilioSelected !== "" ? domicilioSelected?.idLocalidades : ( modify || agregar ? formDatosPersonales?.inputLocalidadesDomicilios : 0);
+  newResponse["inputBarriosDomicilios"] = domicilioSelected !== "" ? domicilioSelected?.idBarrio : ( modify || agregar ? formDatosPersonales?.inputBarriosDomicilios : 0);
+  setFormDatosPersonales({
+    ...newResponse
+  });
+},[domicilioSelected])
 useEffect(()=>{
   const newResponse = {...formDatosPersonales};
   newResponse["inputSexo"] = "F";
+  if(agregar){
+    newResponse["documentoInput"] = parSueldos && parSueldos[0].idTipoDocumentoPredeterminado;
+    newResponse["estadosEmpleados"] = parSueldos && parSueldos[0].estadoAltaEmpleado;
+    newResponse["paisOrigenInput"] = parSueldos && parSueldos[0].idPaisPredeterminado;
+  }
   setFormDatosPersonales({
     ...newResponse
   });
 },[])
+
+
+  useEffect(()=>{
+    const newResponse = {...formDatosPersonales};
+    if(agregar){
+      newResponse["dniSelected"] = parSueldos && parSueldos[0].idTipoDocumentoPredeterminado;
+      newResponse["estadosEmpleados"] = parSueldos && parSueldos[0].estadoAltaEmpleado;
+      newResponse["paisOrigenInput"] = parSueldos && parSueldos[0].idPaisPredeterminado;
+    }
+    setFormDatosPersonales({
+      ...newResponse
+    });
+  },[agregar])
+
    function getNumeradorId(tabla){
     return numeradores && numeradores.filter((num)=>{
       return (num.tabla === tabla)
@@ -161,7 +199,6 @@ useEffect(()=>{
      
   }
 
-  
   return (
       //#region Menú Principal
 
@@ -250,11 +287,11 @@ useEffect(()=>{
                             onChange={onChangeValues}
                             selectedId="dniSelected"
                             idSelected={formDatosPersonales?.dniSelected && formDatosPersonales?.dniSelected  !== "" ? formDatosPersonales?.dniSelected && formDatosPersonales?.dniSelected : empleadoUno.iDtipoDocumento}
-                          
+                            agregar={agregar}
                             handleClickRef={handleClickRef}
                             referencia= {referencia.tipoDocumentoRef}
                             modalName="Tipos Documento"
-
+                            parSueldos={parSueldos && parSueldos}
 
                             validateNumbersDNI={validateNumbersDNI}
                             obligatorio ={true}
@@ -366,7 +403,8 @@ useEffect(()=>{
                             propArrayOp="nombreEstado"
                             propArrayOpFem="nombreEstado"
                             idSelected={formDatosPersonales?.estadosEmpleados ? formDatosPersonales?.estadosEmpleados : empleadoUno.idEstado}
-                         
+                            parSueldos={parSueldos && parSueldos[0]?.estadoAltaEmpleado}
+                            agregar={agregar}
                             valueId="idEstado"
                             masculinos=""
                             femeninos=""
@@ -376,6 +414,7 @@ useEffect(()=>{
                             idModal="estadosEmpleados"
                             disabled={disable} 
                             obligatorio ={true}
+                            esAltaDeEmpleado={true}
                             />
                           <InputRadio
                             value={agregar || modify ? formDatosPersonales?.inputSexo : empleadoUno.sexo}
@@ -440,6 +479,8 @@ useEffect(()=>{
                             idSelected={formDatosPersonales?.paisOrigenInput ? formDatosPersonales?.paisOrigenInput : empleadoUno.idPaisOrigen}
                             handleClickRef={handleClickRef}
                             referencia= {referencia.paisesRef}
+                            parSueldos={parSueldos && parSueldos[0]?.idPaisPredeterminado}
+                            agregar={agregar}
                             modalName="Paises"
                             valueId="idPais"
                             masculinos=""
@@ -511,7 +552,7 @@ useEffect(()=>{
               </div>
             </div>
           </div>
-          <Domicilios referencia={referencia} handleClickRef={handleClickRef} tabIndex={tabIndex} handleTabChange={handleTabChange} setRefectch={setRefectch} refetch={refetch} domiciliosEmpleados={domiciliosEmpleados} onChangeValues={onChangeValues} formDatosPersonales={formDatosPersonales} setFormDatosPersonales={setFormDatosPersonales} disabled={disable} deshabilitar={disable} responses={responses} setResponses={setResponses} />
+          <Domicilios referencia={referencia} handleClickRef={handleClickRef} tabIndex={tabIndex} handleTabChange={handleTabChange} setRefectch={setRefectch} refetch={refetch} domiciliosEmpleados={domiciliosEmpleados} onChangeValues={onChangeValues} formDatosPersonales={formDatosPersonales} setFormDatosPersonales={setFormDatosPersonales} disabled={disable} deshabilitar={disable} responses={responses} setResponses={setResponses} modify={modify} agregar={agregar} />
         </div>
         <div className="d-flex justify-content-end">
           

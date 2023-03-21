@@ -42,7 +42,6 @@ const InputEfectivo = ({nameLabel, idInputCheck,idInputDate, idInputCheckAsigna,
         <input onChange={(e)=> {onChange(e.target.checked, idInputCheckAsigna);setChecked2(!checked2); setDisabled2(!disabled2)}} disabled={disableds} className=' checkAsigna' type="checkbox" name={idInputCheckAsigna} id={idInputCheckAsigna} checked={checked2}  />
         <label className='labelAsigna' htmlFor="">{nameLabelAsigna}</label>
         <select className={obligatorio ? 'selectAsigna obligatorio' : 'selectAsigna'} disabled={disabled2} onChange={(e)=> onChange(e.target.value, idSelect)} name={idSelect} id={idSelect}>
-          <option value="">Seleccionar</option> 
           {
             esquemas && esquemas.map((op, index)=>{
               return(

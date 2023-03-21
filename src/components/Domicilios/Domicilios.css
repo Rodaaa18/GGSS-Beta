@@ -2,11 +2,11 @@
     margin-left: 92%;
 }
 .colTapaModal{
-    position: absolute;
+  
     display: flex;
     flex-direction: row;
     justify-content: end;
     align-items: start;
-    width: 38rem;
+    width: 20rem;
     height: 0;
 }

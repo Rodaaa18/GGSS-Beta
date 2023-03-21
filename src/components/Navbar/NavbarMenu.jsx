@@ -18,6 +18,7 @@ import {
   objectModosContratacion,
   objectCargos,
   objectProvincias,
+  objectDocumentación,
 } from "./Objects";
 // -----------------------------------------------------------
 
@@ -68,6 +69,7 @@ import {
   propsModal,
   propsModalCalles,
   propsModalCargos,
+  propsModalDocumentacion,
   propsModalEstado,
   propsModalEstudios,
   propsModalFormasdePagos,
@@ -84,12 +86,14 @@ import ChildModalOptions from "../Modals/ChildModalOptions";
 import { ModalParentesco } from "../Modals/Modales Complejos/ModalParentesco";
 import { ModalPaises } from "../Modals/Modales Complejos/ModalPaises";
 import { ModalProvinciasDptos } from "../Modals/Modales Complejos/ModalProvinciasDptos";
+import ErrorPage from "../ErrorPage/ErrorPage";
+import { actualizaCreateDocu, actualizaDeleteDocu, actualizaUpdateDocu } from "../../redux/actions/documentacionActions";
 
 // import { getEstadosCivilesModal } from '../../services/fetchAPI';
 // import { useEffect } from 'react';
 //#endregion
 
-const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario, referencias }) => {
+const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario, referencias,renderButtonFunction, modalOpen, setModalOpen }) => {
   const [modalValues, setModalValues] = useState({});
   const [nameModal, setNameModal] = useState({});
   const [valueItemModal, setValueItemModal] = useState({});
@@ -106,7 +110,7 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario, referenci
   const dispatch = useDispatch();
   const refetch = useSelector((state) => state.modalState.refetch);
   const navigate = useNavigate();
-
+  const documentaciones = useSelector((state)=> state.documentacionState.domiciliosDelEmpleado);
  const estadoCivilRef = useRef();
 
 
@@ -268,6 +272,7 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario, referenci
   const urlPaises = "http://54.243.192.82/api/Paises";
   const urlProvincias = "http://54.243.192.82/api/Provincias";
   const urlEmpleadores = "http://54.243.192.82/api/Empleadores";
+  const urlDocumentacion = "http://54.243.192.82/api/Documentacion"
 
   //#endregion
 
@@ -594,9 +599,19 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario, referenci
     "nacionalidad_masc": modalValues?.nacMac,
   	"nacionalidad_fem": modalValues?.nacFem
   };
-
+ 
   //Alicuotas
-
+const bodyCreateDocumentacion= {
+	"idDocumentacion": 0,
+	"documentacion1": modalValues?.documentacionModal,
+	"obs": modalValues?.obsDocumentacion
+  }
+ 
+  const bodyUpdateDocumentacion= {
+	"idDocumentacion": valueItemModal?.idDocumentacion,
+	"documentacion1": modalValues?.documentacionModal,
+	"obs": modalValues?.obsDocumentacion
+  }
   //Provincias, Deptos y demás.
 
   const bodyProvincias = {
@@ -628,56 +643,7 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario, referenci
     cuit: modalValues?.cuit,
   };
 
-  //Parentesco para después
-  // const bodyParentesco = {
-  // 	"iDparentesco": ((parentescosValue && parentescosValue[parentescosValue.length - 1] !== undefined && (parentescosValue[parentescosValue.length - 1].iDparentesco)) + 1),
-  // 	"parentesco": modalValues?.parentesco,
-  // 	"id": null
-  // }
-  // const bodyUpdateParentesco = {
-  // 	"iDparentesco": valueItemModal?.iDparentesco,
-  // 	"parentesco": modalValues?.parentesco,
-  // 	"id": null
-  // }
-
-  //Motivos de Ingreso se deja para VERSION 2.0
-  // const bodyMotivoIngreso = {
-  // 	"iDmotivoIngreso": ((motivosIngresoValue && motivosIngresoValue[motivosIngresoValue.length - 1] !== undefined && (motivosIngresoValue[motivosIngresoValue.length - 1].iDmotivoIngreso)) + 1),
-  // 	"nombreMotivoIngreso": modalValues?.nombreMotivoIngreso,
-  // 	"observacion": modalValues?.observacion
-  // }
-  // const bodyUpdateMotivoIngreso = {
-  // 	"iDmotivoIngreso": valueItemModal?.iDmotivoIngreso,
-  // 	"nombreMotivoIngreso": modalValues?.nombreMotivoIngreso,
-  // 	"observacion": modalValues?.observacion
-  // }
-
-  //#endregion ----------------------------------- ID Review 2023  -----------------------------------
-
-  //#region ----------------------------------- Body de Lauty  -----------------------------------
-
-	// //Parentescos
-	// const idParentesco = ((parentescosValue && parentescosValue[parentescosValue.length - 1] !== undefined && (parentescosValue[parentescosValue.length - 1].iDparentesco)) + 1)
-	// const bodyPetParentescos = { "iDparentesco": idParentesco ,
-	// 							"nombreParentesco": responses.modalDataInputs?.nombreParentesco,
-	// 							"generaAsignacion": responses.modalDataInputs?.generaAsignacion,
-	// 							"obs": responses.modalDataInputs?.obs,
-	// 							"deduceGanancias": responses.modalDataInputs?.deduceGanancias,
-	// 							"importeDeduce": responses.modalDataInputs?.importeDeduce }
-	// // cargos
-	// const idCargo = ((cargosValue && cargosValue[cargosValue.length - 1] !== undefined && (cargosValue[cargosValue.length - 1].iDcargo)) + 1)
-	// const bodyPetCargos = {
-	// 						"iDcargo": idCargo,
-	// 						"nombreCargo": responses.modalDataInputs?.nombreCargo,
-	// 						"observacion": responses.modalDataInputs?.observacion
-	// 					}
-	// // tareas desempeñadas
-	// const idTarea = ((tareasValue && tareasValue[tareasValue.length - 1] !== undefined && (tareasValue[tareasValue.length - 1].idTareaDesempeñada)) + 1)
-	// const bodyPetTareas = {
-	// 	"idTareaDesempeñada": idTarea,
-	// 	"tareaDesempeñada": responses.modalDataInputs?.tareaDesempeñada,
-	// 	"obs": responses.modalDataInputs?.obs
-	// }
+ 
 
 //#endregion ----------------------------------- Body de Lauty  -----------------------------------
 	function showSuperadmin(){
@@ -710,10 +676,12 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario, referenci
 								<a className="  nav-link dropdown-toggle" href="" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 									Empleados
 								</a>
-								<ul className=" dropdown-menu">
+								<ul className=" dropdown-menu styleMenu">
 									
-									<li><Link className="dropdown-item" to="/ficha-empleados">Ficha Empleados</Link></li>
-							
+									<li><Link onClick={()=>renderButtonFunction(0)} className="dropdown-item" to="/ficha-empleados">Ficha Empleados</Link></li>
+									<li><Link onClick={()=>renderButtonFunction(1)} className="dropdown-item">Reincorporación</Link></li>
+									<li><Link onClick={()=>renderButtonFunction(2)} className="dropdown-item">Baja de un empleado</Link></li>
+									<li><Link onClick={()=>renderButtonFunction(3)} className="dropdown-item">Cambio de Categoría</Link></li>	
 								</ul>
 							</li>
 							{/*<li className="nav-item">
@@ -1213,7 +1181,45 @@ const NavbarMenu = ({ setTokenDef, sePerfilesUSuario, perfilesUsuario, referenci
 														/>
 													</ButtonCallModal>
 												</li>  
-												
+												<li>
+													<ButtonCallModal parameterRef={referencias.docuRef}  nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="Documentación"  setTransition={setTransition} nameButton="Documentación" modalOpen={modalOpen} 
+															setModalOpen={setModalOpen}>
+														<ChildModal 
+															modalValues={modalValues} 
+															onChangeValues={onChangeValues}  
+															valueItemModal={valueItemModal} 
+															setValueItemModal={setValueItemModal} 
+															nameModalProp="Documentación" 
+															handleClickClose={handleClickClose} 
+															setTransition={setTransition} 
+															array={ documentaciones && documentaciones }  
+															nameModal="Documentación" 
+															propsModal={propsModalDocumentacion} 
+															optionsInputs={objectDocumentación} 
+															transition={transition}
+															functionAdd={sendModalData}
+															urlApi={urlDocumentacion}
+															bodyPetition ={bodyCreateDocumentacion}
+															bodyUpdate={bodyUpdateDocumentacion}
+															modify={modify} 
+															setModify={setModify}
+															idAModificar={valueItemModal?.idDocumentacion }
+															functionDelete={deleteItemModal}
+															disableModal={disableModal}
+															setDisableMOdal={setDisableMOdal}
+															actionActualizaDelete={actualizaDeleteDocu}
+															disableModalButtons={disableModalButtons}
+															setDisableModalButtons={setDisableModalButtons}
+															actualizaCreate={actualizaCreateDocu}
+															actualizaUpdate={actualizaUpdateDocu}
+															usaEstados={true}
+															idInputTextArea = "obsDocumentacion"
+															urlDelete = {urlDocumentacion}
+															modalOpen={modalOpen} 
+															setModalOpen={setModalOpen}
+														/>														
+													</ButtonCallModal>
+												</li> 
 											</div>
 										</ul>
 									</li>

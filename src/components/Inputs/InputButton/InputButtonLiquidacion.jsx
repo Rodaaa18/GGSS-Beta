@@ -5,18 +5,6 @@ import "./InputButton.css";
 const InputButtonLiquidacion = ({nameButton, placeholder, nameLabel, maxLeght, value, disabled, nameInput, id,onChange,funcionCuil,nroDocumento,genre, swal , clasess, array,propArrayOp, propIdOption, idInput, obligatorio, display, useButton, idSelected}) => {
 
 
-    const [mostrarComponente, setMostrarComponente] = useState (false);
-
-  useEffect(() => {
-    setMostrarComponente(display);
-  }, [display]);
-
-
-    // useEffect(()=>{
-    //     usaBotton(useButton);
-    //   },[])
-
-// console.log(disabled)
   return (
     clasess ? <div className={`${clasess.classOne}`}>      
     <div className={`${clasess.classTwo}`}>
@@ -29,7 +17,6 @@ const InputButtonLiquidacion = ({nameButton, placeholder, nameLabel, maxLeght, v
        className={obligatorio ? `${clasess.classFour}` : `${clasess.classFour}`} 
        onChange={(e)=>onChange(e.target.value, idInput)} 
        value={value && value} >
-        <option value="">Seleccionar</option> 
         {
             array && array.map((valor,index)=>{
                 return(
@@ -39,10 +26,6 @@ const InputButtonLiquidacion = ({nameButton, placeholder, nameLabel, maxLeght, v
             })
         }
        </select>
-        {/* <button type="button" onClick={()=>funcionCuil(nroDocumento,genre, swal)}
-              className={`${clasess.classFive}`} disabled={disabled}>
-              {nameButton}
-        </button> */}
     </div>
     
 </div>

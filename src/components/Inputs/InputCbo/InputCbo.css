@@ -9,7 +9,7 @@
 .form__grupo__label__inp{
     grid-area: nombre;   
     display: grid;
-    grid-template-areas: "primer segun tercer";
+    grid-template-areas: "primer segun tercer cuar";
     grid-template-columns: 0.4fr 1.1fr 0.5fr;
     grid-template-rows: 1fr;
     width: 100%;
@@ -32,16 +32,18 @@
     
 }
 .cuarto{
-   /* margin-left: 100px;  */
-   /* grid-area: tercer; */
-   width: 1px;
-   height: 1px;
+    grid-area: cuar;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    grid-area: cuar;
 }
 .none{
     display: none;
 }
 .formulario-input-Estado-Calle{
-    width: 12.2rem;
+    width: 98%;
 	text-align: start;
 	margin-left: 0px;
     margin-right: 0px;

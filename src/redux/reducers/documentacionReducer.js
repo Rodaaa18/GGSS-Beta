@@ -1,4 +1,4 @@
-import { ADD_NEW_DOC, CLEAN_IDS_DOC, DELETE_DOC_EMPLEADO, DOCU_DEL_EMPLEADO, GET_AR_AD, GET_DOC_EMPL, GET_DOC_SELECT, GET_INPUT_VALUE, SAVE_IDS } from "../types/documentacionTypes";
+import { ACTUALIZA_CREATE_DOCU, ACTUALIZA_DELETE_DOCU, ACTUALIZA_UPDATE_DOCU, ADD_NEW_DOC, CLEAN_IDS_DOC, DELETE_DOC_EMPLEADO, DOCU_DEL_EMPLEADO, GET_AR_AD, GET_DOC_EMPL, GET_DOC_SELECT, GET_INPUT_VALUE, SAVE_IDS } from "../types/documentacionTypes";
 
 export const initialState = {
     domiciliosDelEmpleado : "",
@@ -37,6 +37,28 @@ export const documentacionReducer=(state = initialState, action)=>{
             ...state,
             documentacionSeleccionada : payload
         }
+    }
+    case  ACTUALIZA_CREATE_DOCU :{
+          return{
+            ...state,
+            domiciliosDelEmpleado : [...state.domiciliosDelEmpleado, payload]
+          }
+    }
+    case ACTUALIZA_DELETE_DOCU : {
+        return {
+            ...state,
+            domiciliosDelEmpleado : state.domiciliosDelEmpleado && state.domiciliosDelEmpleado.filter((doc)=> doc.idDocumentacion !== action.payload)
+        }
+    }
+    case ACTUALIZA_UPDATE_DOCU : {
+      const newDomicilio = { ...action.payload };
+      return{
+        ...state.domiciliosDelEmpleado,
+        domiciliosDelEmpleado : state.domiciliosDelEmpleado.filter(
+          (doc) =>
+          doc.idDocumentacion === newDomicilio.idDocumentacion
+        )
+      }
     }
     case SAVE_IDS : {
         return {

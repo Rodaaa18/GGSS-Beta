@@ -24,12 +24,13 @@ import { addFamiliar, deleteFam, saveIdFam } from "../../redux/actions/familiaAc
 import "./Familia.css"
 import Buttons from "../Buttons/Buttons";
 
-const Familia = ({responses, setResponses,disable, setRefetch, refetch, agregar , setAgregar, handleClickRef, referencia }) => {
+const Familia = ({responses, setResponses,disable, setRefetch, refetch, agregar , setAgregar, handleClickRef, referencia, modify }) => {
   
   //const { saveEmpl, saveNacionalidad, saveEstudio, parentescos, disable, saveFamSelect } = useContext(employeContext);
 
   const [familiarSeleccionado, setFamiliarSeleccionado] = useState({});
   const [ formFamilia, setFormFamilia ] = useState(responses["formFamilia"]);
+  const familiarSeleccionadoR = useSelector((state)=> state.familiaStates.familiarSeleccionado);
 
   const dispatch = useDispatch();
 
@@ -77,7 +78,14 @@ const urlCreateFamiliar = "http://54.243.192.82/api/InsertarNuevoFamiliar"
       });      
   },[formFamilia]);
 
-    
+    useEffect(()=>{
+      let newResponse = {...formFamilia};
+      newResponse["textAreaObservacionesFamilia"] = "";
+      newResponse["idRadioBtn"] = "";
+      setFormFamilia({
+        ...newResponse
+      });
+    },[familiarSeleccionadoR])
 
 
   const empleadoUno = useSelector((state) => state.employeStates.employe)
@@ -89,7 +97,6 @@ const urlCreateFamiliar = "http://54.243.192.82/api/InsertarNuevoFamiliar"
   const familiaresValue = useSelector((state)=> state.generalState.familiares);
   const idFamiliarSelected = useSelector((state)=> state.familiaStates.familiar);
   const familiaresPorEmpleado = familiaresValue && familiaresValue.filter((familiar)=> familiar.iDempleado === empleadoUno.iDempleado);
-  const familiarSeleccionadoR = useSelector((state)=> state.familiaStates.familiarSeleccionado);
   const familiaresPorEmplado = useSelector((state)=> state.familiaStates.familiarPorEmpleado);
 
 
@@ -112,9 +119,9 @@ const urlCreateFamiliar = "http://54.243.192.82/api/InsertarNuevoFamiliar"
     "País Origen",
     "Nacionalidad",
     "Estudios",
-    "Fecha Baja",
-    "No Deducir",
-    "Incluir Cuota",
+    "Baja",
+    "Deduce",
+    "C. Alim",
     "Obs"
   ];
   function onSelect(saveFamiliar, idFamiliar) {
@@ -183,7 +190,7 @@ const urlCreateFamiliar = "http://54.243.192.82/api/InsertarNuevoFamiliar"
     }
     dispatch(disableFunctions(false));
   }
-  console.log(formFamilia)
+  console.log(familiarSeleccionadoR?.sexo)
   return (
     <>
       <div className="container-fluid contFamilia">
@@ -194,7 +201,7 @@ const urlCreateFamiliar = "http://54.243.192.82/api/InsertarNuevoFamiliar"
           <div className="row">
             <div className="col-xl-7 col-lg-7 col-md-7 p-2">
               <InputChecked
-                value={formFamilia?.inputApellidoNombres ? formFamilia?.inputApellidoNombres : familiarSeleccionado.apellidoyNombres}
+                value={formFamilia?.inputApellidoNombres ? formFamilia?.inputApellidoNombres : familiarSeleccionadoR.apellidoyNombres}
                 nameLabel="Apellido y Nombres"
                 nameCheck="Fijar"
                 placeHolder="Apellido y Nombres"
@@ -210,10 +217,10 @@ const urlCreateFamiliar = "http://54.243.192.82/api/InsertarNuevoFamiliar"
                 namePropOp="tipoDocumento"
                 nameInputDNI="Documento"
                 valueRadio={
-                  formFamilia?.idRadioBtn && formFamilia?.idRadioBtn
+                  formFamilia?.idRadioBtn ? formFamilia?.idRadioBtn : familiarSeleccionadoR?.sexo
                 }
                 valueDNI={
-                  formFamilia?.inputNroDni && formFamilia?.inputNroDni 
+                  formFamilia?.inputNroDni ? formFamilia?.inputNroDni : familiarSeleccionadoR?.nroDocumento
                 }
                 nameFirst="Masculino"
                 nameSecond="Femenino"
@@ -224,7 +231,7 @@ const urlCreateFamiliar = "http://54.243.192.82/api/InsertarNuevoFamiliar"
                 onChange={onChangeValues}
                 datosFamiliaValue1={ formFamilia?.inputCmbDni && formFamilia?.inputCmbDni }
                 datosFamiliaRadio={formFamilia?.idRadioBtn && formFamilia?.idRadioBtn}
-                propSelected= {formFamilia?.inputCmbDni && formFamilia?.inputCmbDni}
+                propSelected= {formFamilia?.inputCmbDni ? formFamilia?.inputCmbDni : familiarSeleccionadoR?.idTipoDocumento}
                 obligatorio ={true}
               />
               <InputParentesco
@@ -248,7 +255,7 @@ const urlCreateFamiliar = "http://54.243.192.82/api/InsertarNuevoFamiliar"
                 propArray={formFamilia?.inputParentesco && formFamilia?.inputParentesco}
                 disable={disable}
                 idInput="inputParentesco"
-                value={formFamilia?.inputParentesco !== undefined ? formFamilia?.inputParentesco : null}
+                value={formFamilia?.inputParentesco ? formFamilia?.inputParentesco : familiarSeleccionadoR?.idParentesco}
                 onChange={onChangeValues}
                 action={ADD_FAMILIA}
                 obligatorio ={true}
@@ -261,7 +268,7 @@ const urlCreateFamiliar = "http://54.243.192.82/api/InsertarNuevoFamiliar"
                 checked={false}
                 nameInput="Nacimiento"
                 idInput="inputDateNac"
-                valueGeneral={ formFamilia?.inputDateNac && formFamilia?.inputDateNac }
+                valueGeneral={ formFamilia?.inputDateNac ? formFamilia?.inputDateNac : familiarSeleccionadoR && familiarSeleccionadoR?.fechaNacimiento?.substring(0, familiarSeleccionadoR && familiarSeleccionadoR?.fechaNacimiento?.length -9)}
                 onChange={onChangeValues}
                 disable={disable}
                 familiarSeleccionado={familiarSeleccionado && familiarSeleccionado }
@@ -276,7 +283,7 @@ const urlCreateFamiliar = "http://54.243.192.82/api/InsertarNuevoFamiliar"
                   array={estudiosValue && estudiosValue}                
                   namePropOp="estudiosNivel"
                   idSelect="iDestudios"
-                  propArray={ formFamilia?.idInputEstudios && formFamilia?.idInputEstudios }
+                  propArray={ formFamilia?.idInputEstudios ? formFamilia?.idInputEstudios : familiarSeleccionadoR?.idEstudios}
                   placeHolder="Estudios"
                   nameButton="..."
                   nameCheck="Fijar"
@@ -309,7 +316,7 @@ const urlCreateFamiliar = "http://54.243.192.82/api/InsertarNuevoFamiliar"
                 checked=""
                 useButton={false}
                 display={false}
-                propArray={formFamilia?.nombrePais && formFamilia?.nombrePais }
+                propArray={formFamilia?.nombrePais ? formFamilia?.nombrePais : familiarSeleccionadoR?.idPaisOrigen}
                 idModal="paises"
                 disable={disable}
                 onChange={onChangeValues}
@@ -334,7 +341,7 @@ const urlCreateFamiliar = "http://54.243.192.82/api/InsertarNuevoFamiliar"
                 femeninos={paisesValue && paisesValue}
                 propArrayOpFem = "nacionalidad_fem"
                 sexo={formFamilia?.idRadioBtn && formFamilia?.idRadioBtn}
-                propArray={formFamilia?.idRadioBtn && formFamilia?.idRadioBtn}
+                propArray={formFamilia?.idRadioBtn ? formFamilia?.idRadioBtn : familiarSeleccionadoR?.idNacionalidad}
                 idModal="nacionalidades"
                 useButton={false}
                 disable={disable}
@@ -352,10 +359,18 @@ const urlCreateFamiliar = "http://54.243.192.82/api/InsertarNuevoFamiliar"
                 idInput="inputDateBaja"
                 disable={disable}
                 familiarSeleccionado={familiarSeleccionado !== undefined ? familiarSeleccionado : null}
-                valueGeneral={formFamilia?.inputDateBaja && formFamilia?.inputDateBaja }
+                valueGeneral={formFamilia?.inputDateBaja ? formFamilia?.inputDateBaja : familiarSeleccionadoR && familiarSeleccionadoR?.f_Baja?.substring(0, familiarSeleccionadoR && familiarSeleccionadoR?.f_Baja?.length -9)}
                 onChange={onChangeValues}
               />
-              <TextArea disableModal={disable} inputName="Observaciones" maxLength="255" disabled={disable} onChange={onChangeValues} idInput="textAreaObservacionesFamilia"  value={formFamilia?.textAreaObservacionesFamilia && formFamilia?.textAreaObservacionesFamilia} />
+              <TextArea 
+              disableModal={disable} 
+              inputName="Observaciones" 
+              maxLength="255" 
+              disabled={disable} 
+              onChange={onChangeValues} 
+              idInput="textAreaObservacionesFamilia" 
+              value={ formFamilia?.textAreaObservacionesFamilia ? formFamilia?.textAreaObservacionesFamilia : familiarSeleccionadoR?.obs } 
+              />
             </div>
           </div>
         </div>

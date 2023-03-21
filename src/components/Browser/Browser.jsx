@@ -8,6 +8,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import ButtonLarge from "../Buttons/ButtonLarge";
 import "./Browser.css";
+import ButtonCallModal from "../ButtonCallModal/ButtonCallModal";
 import {
   addOneEmploye,
   cleanEmploye,
@@ -23,12 +24,20 @@ import {
   deleteDetLic,
 } from "../../redux/actions/licenciasActions";
 import { setRefetch } from "../../redux/actions/modalesActions";
-import { recharge } from "../../redux/actions/domiciliosActions";
+import { domicilioSelected, recharge } from "../../redux/actions/domiciliosActions";
+import ChildBajaEmpleado from "../Modals/ChildBajaEmpleado";
+import ChildModalReincorporacion from "../Modals/ChildModalReincorporacion";
 
-const Browser = ({ getEmpleados, disable, setDisable, setValueEmpl, responses, setResponses, setRefectch, refetch, deleteEmploye,setModify, agregar , setAgregar  }) => {
+const Browser = ({ getEmpleados, disable, setDisable, setValueEmpl, responses, setResponses, setRefectch, refetch, deleteEmploye,setModify, agregar , setAgregar, renderButtons, handleClickRef, referencia, modalOpen, setModalOpen, setRenderButtons }) => {
   const [checked, setChecked] = useState(false);
   const [ browser, setBrowser ] = useState(responses["browser"]);
+  const [ nameModal, setNameModal ] = useState({});
 
+  const empleadoUno = useSelector((state)=> state.employeStates.employe);
+  const estados = useSelector((state)=> state.generalState.estados);
+  const parSueldos = useSelector((state)=> state.generalState.parSueldos);
+  const idEstadoSelec = empleadoUno && empleadoUno.idEstado;
+  const estadoSEleccionado = estados && estados.find(est => est.idEstado === idEstadoSelec); 
   function onChangeValues(e, key){
     const newResponse = {...browser};
     if(key === 'inpurLegajoBrowser'){
@@ -67,7 +76,6 @@ const Browser = ({ getEmpleados, disable, setDisable, setValueEmpl, responses, s
   const valueInputApellido = useSelector(
     (state) => state.employeStates.formulario.inputApellidoNombreBrowser
   );
-  const empleadoUno = useSelector((state) => state.employeStates.employe);
   const deshabilitado = useSelector((state) => state.employeStates.disable);
   const recharged = useSelector((state)=> state.domiciliosStates.recharge);
   
@@ -122,9 +130,10 @@ const Browser = ({ getEmpleados, disable, setDisable, setValueEmpl, responses, s
     setDisable(false);
 
   }
-
+  
   function habilitaUpdate(e) {
     e.preventDefault();
+    dispatch(domicilioSelected(""))
     setModify(true);
     setValueEmpl(true)
     setRefectch(!refetch)
@@ -137,11 +146,50 @@ const Browser = ({ getEmpleados, disable, setDisable, setValueEmpl, responses, s
       icon: "error",
     });
   }
-
+  /* async function bajaEmpleado(){
+    if(empleadoUno?.iDempleado){
+      try{
+        await axios.post(`http://54.243.192.82/api/Empleados/sp_BajaEmpleado?idEmpleado=${empleadoUno?.iDempleado}&idMotivoEgreso=${}&FechaEgreso=${}`)
+        .then((res)=>{
+          if(res.status === 200){
+            try{
+              axios.post().then((res)=>{
+                if(res.status === 200){
+                  return swal({
+                    title : "Ok",
+                    text : "Baja realizada con éxito",
+                    icon : "success"
+                  })
+                }
+              })
+            }catch(err){
+              return swal({
+                title : "Error",
+                text : "Error al realizar la baja del Empleado" + err,
+                icon : "error"
+              })
+            }
+            
+          }
+        })
+      }catch(err){
+        return swal({
+          title : "Error",
+          text : "Error al realizar la baja del Empleado" + err,
+          icon : "error"
+        })
+      }
+    }
+  } */
   /* useEffect(()=>{
     clearLegajo();
   },[browser?.inputApellidoNombreBrowser, browser?.inpurLegajoBrowser]) */
-  
+  const handleClickClose=(nameModalProp)=>{
+    let newState = {...nameModal}
+
+    newState[nameModalProp] = false;
+    setNameModal(newState);
+}
   return (
     <>
       <div className="row gy-1 container-flex p-0 m-o ">
@@ -202,6 +250,16 @@ const Browser = ({ getEmpleados, disable, setDisable, setValueEmpl, responses, s
               {empleados &&
                 empleados?.map((emp, i) => {
                   return (
+                    emp.idEstado === (parSueldos && parSueldos[0]?.estadoBajaEmpleado) ?  
+                    <option
+                    className="empleadoBaja"
+                    key={i}
+                    onClick={(e) => onSelect(e, emp.apellido, emp.iDempleado)}
+                    value={`${emp.apellido},${emp.iDempleado}`}
+                    apellido={emp.apellido && emp.apellido}
+                    idEmpleado={emp.iDempleado && emp.iDempleado}
+                  >{`${emp.apellido}, ${emp.nombres} (*)`}</option>
+                    :
                     <option
                       key={i}
                       onClick={(e) => onSelect(e, emp.apellido, emp.iDempleado)}
@@ -217,33 +275,89 @@ const Browser = ({ getEmpleados, disable, setDisable, setValueEmpl, responses, s
 
         <div className="container ">
           <div className="row align-items-start">
-            <div className="col">
-              <button
-                className={`btn btn-danger btn-sm d-flex justify-content-center m-1 align-items- newClass`}
-                onClick={habilitaEdit}
-                disabled={!disable}
-              >
-                Agregar
-              </button>
-            </div>
-            <div className="col">
-              <button
-                className={`btn btn-danger btn-sm d-flex justify-content-center m-1 align-items- newClass`}
-                onClick={(e) => habilitaUpdate(e)}
-                disabled={!disable}
-              >
-                Modificar
-              </button>
-            </div>
-            <div className="col">
-              <button
-                className={`btn btn-danger btn-sm d-flex justify-content-center m-1 align-items- newClass`}
-                onClick={() => deleteEmploye(empleadoUno.iDempleado)}
-                disabled={!disable}
-              >
-                Eliminar
-              </button>
-            </div>
+            {
+              renderButtons === 0 && <><div className="col">
+                <button
+                  className={`btn btn-danger btn-sm d-flex justify-content-center m-1 align-items- newClass`}
+                  onClick={habilitaEdit}
+                  disabled={!disable}
+                >
+                  Agregar
+                </button>
+              </div>
+              <div className="col">
+                  <button
+                    className={`btn btn-danger btn-sm d-flex justify-content-center m-1 align-items- newClass`}
+                    onClick={(e) => habilitaUpdate(e)}
+                    disabled={ estadoSEleccionado?.idEstado === (parSueldos && parSueldos[0]?.estadoBajaEmpleado) ? true : !disable}
+                  >
+                    Modificar
+                  </button>
+                </div>
+                <div className="col">
+                  <button
+                    className={`btn btn-danger btn-sm d-flex justify-content-center m-1 align-items- newClass`}
+                    onClick={() => deleteEmploye(empleadoUno.iDempleado)}
+                    disabled={ estadoSEleccionado?.idEstado === (parSueldos && parSueldos[0]?.estadoBajaEmpleado) ? true : !disable}
+                  >
+                    Eliminar
+                  </button>
+                </div></>
+            }
+            {
+              renderButtons === 1 && <div className="d-flex flex-row justify-content-center align-items-center w-100">
+                <ButtonCallModal  esBoton={true} nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="reincorporacionEmpleado" nameButton="Reincorporación">
+                  <ChildModalReincorporacion
+                  handleClickClose={handleClickClose}
+                  nameModal = "Reincorporación"
+                  nameModalProp="reincorporacionEmpleado"
+                  onChangeValues={onChangeValues}
+                  formDocumentacion={setBrowser}
+                  value={browser}
+                  refetch={refetch} 
+                  setRefetch={setRefectch} 
+                  handleClickRef={handleClickRef}
+                  referencia= {referencia.docuRef}
+                  modalName="Reincorporación"
+                  modalOpen={modalOpen} 
+									setModalOpen={setModalOpen}
+                  setRefectch={setRefectch}
+                  setRenderButtons={setRenderButtons} 
+                  valueRender={1}
+                  />
+                </ButtonCallModal>
+                  
+              </div>
+            }
+            {
+              renderButtons === 2 && <div className="d-flex flex-row justify-content-center align-items-center w-100">
+                <ButtonCallModal  esBoton={true} nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="bajaEmpleado" nameButton="Baja de un Empleado">
+                  <ChildBajaEmpleado
+                  handleClickClose={handleClickClose}
+                  nameModal = "Baja de un Empleado"
+                  nameModalProp="bajaEmpleado"
+                  onChangeValues={onChangeValues}
+                  formDocumentacion={setBrowser}
+                  value={browser}
+                  refetch={refetch} 
+                  setRefetch={setRefectch} 
+                  handleClickRef={handleClickRef}
+                  referencia= {referencia.docuRef}
+                  modalName="Baja de un Empleado"
+                  modalOpen={modalOpen} 
+									setModalOpen={setModalOpen}
+                  setRefectch={setRefectch}
+                  setRenderButtons={setRenderButtons} 
+                  valueRender={2}
+                  />
+                </ButtonCallModal>
+              </div>
+            }
+            {
+              renderButtons === 3 && <div className="d-flex flex-row justify-content-center align-items-center w-100">
+              <button className="btn btn-danger btn-sm">Cambio de Categoría</button>
+              </div>
+            }
           </div>
         </div>
       </div>

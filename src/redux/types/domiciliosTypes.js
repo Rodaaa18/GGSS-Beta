@@ -12,3 +12,4 @@ export const SAVE_IDS_DOM = "SAVE_IDS_DOM"
 
 export const RECHARGE = "RECHARGE"
 export const CLEAR_ID_DOM = "CLEAR_ID_DOM"
+export const DOMICILIO_SELECTED = "DOMICILIO_SELECTED"

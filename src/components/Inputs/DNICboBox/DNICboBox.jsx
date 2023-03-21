@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./DNICboBox.css";
-const DNICboBox = ({  messageError, placeHolder, array, value , disabled, idInput, nameLabel, onChange, selectedId, propArray, action, validateNumbersDNI,propArrayOp,propArrayId, idSelected, obligatorio, handleClickRef, referencia,modalName}) => {
+const DNICboBox = ({  messageError, placeHolder, array, value , disabled, idInput, nameLabel, onChange, selectedId, propArray, action, validateNumbersDNI,propArrayOp,propArrayId, idSelected, obligatorio, handleClickRef, referencia,modalName, agregar, parSueldos}) => {
 
 
   const [valor, setValor] = useState("");
@@ -11,19 +11,30 @@ const DNICboBox = ({  messageError, placeHolder, array, value , disabled, idInpu
   },[value])
 
 
+
   return (
     <div className="formulario__grupo">
       <div className="d-flex flex-column justify-content-center align-items-cener">
         <label className="formulario__label mt-2 ml-4">{nameLabel}</label>
       </div>
       <div className="">
-        <select disabled={disabled} defaultValue="" className={obligatorio ? "formulario-input-DNI  ml-0 px-0 obligatorio" : "formulario-input-DNI ml-0 px-0"} id={selectedId} name={selectedId} onChange={(e)=> onChange(e.target.value, selectedId)}>
-          <option value="">Seleccionar</option>
-          {array && array.map((op, i) => {
-
-
-            return (Number(idSelected) === op[propArrayId] ? <option selected key={i} value={op[propArrayId]}>{op[propArrayOp]}</option> : <option key={i} value={op[propArrayId]}>{op[propArrayOp]}</option>);
-          })}
+        <select disabled={disabled} className={obligatorio ? "formulario-input-DNI  ml-0 px-0 obligatorio" : "formulario-input-DNI ml-0 px-0"} id={selectedId} name={selectedId} onChange={(e)=> onChange(e.target.value, selectedId)}>
+          {
+          
+            agregar &&
+            array && array.map((op, i)=>{
+              return (Number(parSueldos && parSueldos[0]?.idTipoDocumentoPredeterminado) === op[propArrayId] ? <option selected key={i} value={op[propArrayId]}>{op[propArrayOp]}</option> : <option  key={i} value={op[propArrayId]}>{op[propArrayOp]}</option>)
+            })
+          }
+          {
+            !agregar && 
+            array && array.map((op, i)=>{
+              return(Number(idSelected) === op[propArrayId] ? <option selected key={i} value={op[propArrayId]}>{op[propArrayOp]}</option> : <option key={i} value={op[propArrayId]}>{op[propArrayOp]}</option>);
+            })
+            
+          }
+          
+          
         </select>
       </div>
       <div className="d-flex flex-row justify-content-start align-items-cener">

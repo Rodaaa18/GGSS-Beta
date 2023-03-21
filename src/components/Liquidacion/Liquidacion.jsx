@@ -20,13 +20,6 @@ const Liquidacion = ({responses, setResponses, disable, setDisable, modify, agre
   const empleadoUno = useSelector((state)=> state.employeStates.employe);
     const [ formLiquidacion, setFormLiquidacion ] = useState(responses["formLiquidacion"]);
     const [ windowsScreen, setWindowsScreen ] = useState(0);
-
-    const dispatch = useDispatch();
-    const deshabilitar = useSelector((state)=> state.employeStates.disable);
-    
-    //#region ------------------------------------------------------------------------------------URLs
-   
-//#endregion
     
     
     function onChangeValues(e, key){
@@ -46,16 +39,7 @@ const Liquidacion = ({responses, setResponses, disable, setDisable, modify, agre
     },[formLiquidacion]);
 
 
-    const handleFetch=(url, action )=>{
-        dispatch({type: SET_LOADING});
-          axios.get(url)
-          .then((res)=>{
-            dispatch( action(res.data.result));
-          })
-          .catch((err)=>{
-            dispatch({type:AXIOS_ERROR});
-          })
-    }
+    
 
     function getWidthScreen(){
       setWindowsScreen(window.screen.width)
