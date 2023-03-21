@@ -676,17 +676,10 @@ const bodyCreateDocumentacion= {
     }
   }
 
-		let perfilAdmin = perfilesUsuario && perfilesUsuario.filter((perfil)=> perfil.nombre.toLowerCase() === "administrador");
-		
-		if(perfilAdmin.length > 0){
-			return(<Link class="nav-link" to="/superadmin">Superadmin</Link>)
-		}else{
-			return null;
-		}
-	}
 	
 
 	return (
+    <>
 		<nav className="row gy-3 navbar navbar-expand-lg navbar-light bg-light col-sm-12">
 			<div className="container-sm">
 				<button className="navbar-toggler" type="button"
@@ -1272,6 +1265,12 @@ const bodyCreateDocumentacion= {
 			</div> 
 			</div> 
 			</nav>
-)}
+      </>
+    );
+  };
+
+
+
+
 
 export default NavbarMenu;

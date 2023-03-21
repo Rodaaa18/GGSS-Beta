@@ -43,36 +43,36 @@ const Browser = ({ getEmpleados, disable, setDisable, setValueEmpl, responses, s
     estados && estados.find((est) => est.idEstado === idEstadoSelec);
  
 
-    function onChangeValues(e, key, isModal) {
-      const newResponse = isModal ? { ...modalValues } : { ...browser };
+    // function onChangeValues(e, key, isModal) {
+    //   const newResponse = isModal ? { ...modalValues } : { ...browser };
     
-      if (isModal) {
-        newResponse[key] = e;
-      } else {
-        if (key === "inpurLegajoBrowser") {
-          if (browser?.inputApellidoNombreBrowser !== "" && e !== "") {
-            newResponse.inputApellidoNombreBrowser = "";
-          }
-          newResponse.inpurLegajoBrowser = e;
-        } else if (key === "inputApellidoNombreBrowser") {
-          if (browser?.inpurLegajoBrowser !== "" && e !== "") {
-            newResponse.inpurLegajoBrowser = "";
-          }
-          newResponse.inputApellidoNombreBrowser = e;
-        }
-        newResponse[key] = e;
-      }
+    //   if (isModal) {
+    //     newResponse[key] = e;
+    //   } else {
+    //     if (key === "inpurLegajoBrowser") {
+    //       if (browser?.inputApellidoNombreBrowser !== "" && e !== "") {
+    //         newResponse.inputApellidoNombreBrowser = "";
+    //       }
+    //       newResponse.inpurLegajoBrowser = e;
+    //     } else if (key === "inputApellidoNombreBrowser") {
+    //       if (browser?.inpurLegajoBrowser !== "" && e !== "") {
+    //         newResponse.inpurLegajoBrowser = "";
+    //       }
+    //       newResponse.inputApellidoNombreBrowser = e;
+    //     }
+    //     newResponse[key] = e;
+    //   }
     
-      if (isModal) {
-        setModalValues({
-          ...newResponse,
-        });
-      } else {
-        setBrowser({
-          ...newResponse,
-        });
-      }
-    }
+    //   if (isModal) {
+    //     setModalValues({
+    //       ...newResponse,
+    //     });
+    //   } else {
+    //     setBrowser({
+    //       ...newResponse,
+    //     });
+    //   }
+    // }
     
 
 
@@ -85,24 +85,24 @@ const Browser = ({ getEmpleados, disable, setDisable, setValueEmpl, responses, s
   //   }
  
  
-  //   function onChangeValues(e, key) {
-  //   const newResponse = { ...browser };
-  //   if (key === "inpurLegajoBrowser") {
-  //     if (browser?.inputApellidoNombreBrowser !== "" && e !== "") {
-  //       newResponse.inputApellidoNombreBrowser = "";
-  //     }
-  //     newResponse.inpurLegajoBrowser = e;
-  //   } else if (key === "inputApellidoNombreBrowser") {
-  //     if (browser?.inpurLegajoBrowser !== "" && e !== "") {
-  //       newResponse.inpurLegajoBrowser = "";
-  //     }
-  //     newResponse.inputApellidoNombreBrowser = e;
-  //   }
-  //   newResponse[key] = e;
-  //   setBrowser({
-  //     ...newResponse,
-  //   });
-  // }
+    function onChangeValues(e, key) {
+    const newResponse = { ...browser };
+    if (key === "inpurLegajoBrowser") {
+      if (browser?.inputApellidoNombreBrowser !== "" && e !== "") {
+        newResponse.inputApellidoNombreBrowser = "";
+      }
+      newResponse.inpurLegajoBrowser = e;
+    } else if (key === "inputApellidoNombreBrowser") {
+      if (browser?.inpurLegajoBrowser !== "" && e !== "") {
+        newResponse.inpurLegajoBrowser = "";
+      }
+      newResponse.inputApellidoNombreBrowser = e;
+    }
+    newResponse[key] = e;
+    setBrowser({
+      ...newResponse,
+    });
+  }
 
   useEffect(() => {
     setResponses({
@@ -229,6 +229,7 @@ const Browser = ({ getEmpleados, disable, setDisable, setValueEmpl, responses, s
     newState[nameModalProp] = false;
     setNameModal(newState);
 }
+
   return (
     <>
       <div className="row gy-1 container-flex p-0 m-o ">
@@ -328,8 +329,8 @@ const Browser = ({ getEmpleados, disable, setDisable, setValueEmpl, responses, s
 
         <div className="container ">
           <div className="row align-items-start">
-            {renderButtons === 0 && (
-              <>
+            {renderButtons === 0 && 
+              <div>
                 <div className="col">
                   <button
                     className={`btn btn-danger btn-sm d-flex justify-content-center m-1 align-items- newClass`}
@@ -366,7 +367,8 @@ const Browser = ({ getEmpleados, disable, setDisable, setValueEmpl, responses, s
                   >
                     Eliminar
                   </button>
-                </div></>
+                </div>
+                </div>
             }
             {
               renderButtons === 1 && <div className="d-flex flex-row justify-content-center align-items-center w-100">
@@ -415,12 +417,13 @@ const Browser = ({ getEmpleados, disable, setDisable, setValueEmpl, responses, s
                   valueRender={2}
                   />
                 </ButtonCallModal>
-              </div>
-            )}
+                </div>
+            }
           </div>
-        </div>
-      </div>
-    </>
-  );
-};
+          </div>
+
+          </div>
+          </>
+      );
+    };
 export default Browser;
