@@ -183,7 +183,7 @@ return (
         </div>
         <div className='row'>
             <div className='col-xl-12 d-flex flex-row justify-content-start align-items-center'>
-                <InputDateDocs nameInput="Fecha Presentación" idInput="inputDatePresentacion" display={false} onChange={onChangeValues} action={GET_INPUT_VALUE} disabled={disable} value={formDocumentacion?.inputDatePresentacion ? formDocumentacion?.inputDatePresentacion : (documentacionSeleccionada?.fecha.substring(0, documentacionSeleccionada?.fecha.length -9))} />
+                <InputDateDocs nameInput="Fecha Presentación" idInput="inputDatePresentacion" display={false} onChange={onChangeValues} action={GET_INPUT_VALUE} disabled={disable} value={formDocumentacion?.inputDatePresentacion ? formDocumentacion?.inputDatePresentacion : (documentacionSeleccionada?.fecha && documentacionSeleccionada?.fecha.substring(0, documentacionSeleccionada?.fecha.length -9))} />
             </div>
             <div className='col-xl-12'>
                 <InputDate clasess={classesDateDocs} disabled={disable} nameInput="Fecha Vencimiento:" disable={disableI} setDisable={setDisableI} idInput="inputDateVencimiento" display={true}  onChange={onChangeValues} action={GET_INPUT_VALUE} actionReset={getInputValue} value={formDocumentacion?.inputDateVencimiento ? formDocumentacion?.inputDateVencimiento : documentacionSeleccionada?.fechaVencimiento} valueCheck={formDocumentacion?.inputCheckDocusDate && formDocumentacion?.inputCheckDocusDate} idInputCheck="inputCheckDocusDate" />

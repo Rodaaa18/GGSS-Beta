@@ -125,7 +125,6 @@ const Extras = ({responses, setResponses, disable, setRefetch, refetch}) => {
     },[formDatosExtras]);
 
   
-    console.log(formDatosExtras?.inputDatosExtrasCbo )
   
 
   return (
