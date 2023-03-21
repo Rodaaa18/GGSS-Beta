@@ -141,6 +141,9 @@ return (
                             onChange={onChangeValues}
                             disabled={disable}
                             idSelected={empleadoUno?.iDcategoria}
+                            esCategoria={true}
+                            agregar={agregar}
+                            modify={modify}
                         />
                         <InputButtonLiquidacion
                             clasess={inputButtonClasess}

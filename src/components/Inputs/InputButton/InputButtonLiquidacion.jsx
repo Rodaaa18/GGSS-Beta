@@ -2,9 +2,9 @@ import React from 'react';
 import {useEffect, useState} from 'react';
 import "./InputButton.css";
 
-const InputButtonLiquidacion = ({nameButton, placeholder, nameLabel, maxLeght, value, disabled, nameInput, id,onChange,funcionCuil,nroDocumento,genre, swal , clasess, array,propArrayOp, propIdOption, idInput, obligatorio, display, useButton, idSelected}) => {
+const InputButtonLiquidacion = ({nameButton, placeholder, nameLabel, maxLeght, value, disabled, nameInput, id,onChange,funcionCuil,nroDocumento,genre, swal , clasess, array,propArrayOp, propIdOption, idInput, obligatorio, display, useButton, idSelected, agregar, modify, esCategoria}) => {
 
-
+  console.log(esCategoria && agregar)
   return (
     clasess ? <div className={`${clasess.classOne}`}>      
     <div className={`${clasess.classTwo}`}>
@@ -13,7 +13,7 @@ const InputButtonLiquidacion = ({nameButton, placeholder, nameLabel, maxLeght, v
        <select 
        name={idInput} 
        id={idInput} 
-       disabled={disabled} 
+       disabled={(esCategoria && !agregar) ? true : disabled} 
        className={obligatorio ? `${clasess.classFour}` : `${clasess.classFour}`} 
        onChange={(e)=>onChange(e.target.value, idInput)} 
        value={value && value} >
