@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import swal from 'sweetalert';
 import TextArea from '../Inputs/TextArea/TextArea';
 
-const ChildModalReincorporacion = ({handleClickClose, nameModalProp,  nameModal, disableModalButtons, setDisableMOdal, setDisableModalButtons, onChangeValues,  value,  modalOpen, setRefectch, refetch}) => {
+const ChildModalReincorporacion = ({handleClickClose, nameModalProp,  nameModal, disableModalButtons, setDisableMOdal, setDisableModalButtons, onChangeValues,  value,  modalOpen, setRefectch, refetch, setRenderButtons, valueRender}) => {
     const documentaciones = useSelector((state)=> state.documentacionState.domiciliosDelEmpleado);
     const empleadoUno = useSelector((state)=> state.employeStates.employe);
     const motivosEgreso = useSelector((state)=> state.generalState.motivosEgreso);
@@ -31,6 +31,7 @@ const ChildModalReincorporacion = ({handleClickClose, nameModalProp,  nameModal,
                             .then((res)=>{
                               if(res.status === 200){
                                 setRefectch(!refetch);
+                                setRenderButtons(valueRender);
                                 return swal({
                                     title : "Ok",
                                     text : "Reincorporación exitosa",

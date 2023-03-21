@@ -9,7 +9,7 @@ import InputModal from '../Inputs/InputModal/InputModal';
 import TextArea from '../Inputs/TextArea/TextArea';
 import "./BasicModal.css"
 
-const ChildBajaEmpleado = ({handleClickClose, nameModalProp,  nameModal, disableModalButtons, setDisableMOdal, setDisableModalButtons, onChangeValues,  value,  modalOpen, setRefectch, refetch}) => {
+const ChildBajaEmpleado = ({handleClickClose, nameModalProp,  nameModal, disableModalButtons, setDisableMOdal, setDisableModalButtons, onChangeValues,  value,  modalOpen, setRefectch, refetch, setRenderButtons, valueRender}) => {
   
   const documentaciones = useSelector((state)=> state.documentacionState.domiciliosDelEmpleado);
   const empleadoUno = useSelector((state)=> state.employeStates.employe);
@@ -38,6 +38,7 @@ const ChildBajaEmpleado = ({handleClickClose, nameModalProp,  nameModal, disable
               .then((res)=>{
                 if(res.status === 200){
                   setRefectch(refetch);
+                  setRenderButtons(valueRender);
                   return swal({
                     title : "Ok",
                     text : "Baja exitosa",

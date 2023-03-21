@@ -137,7 +137,7 @@ function App() {
       } 
       {
       tokenDef && <Switch>
-        <Route path="/ficha-empleados" exact element={<Empleados modalOpen={modalOpen} setModalOpen={setModalOpen}  renderButtons={renderButtons} handleClickRef={handleClickRef} referencia={referencias} loading={loading} sePerfilesUSuario={sePerfilesUSuario} tokenDef={tokenDef}/>} /> 
+        <Route path="/ficha-empleados" exact element={<Empleados setRenderButtons={setRenderButtons} modalOpen={modalOpen} setModalOpen={setModalOpen}  renderButtons={renderButtons} handleClickRef={handleClickRef} referencia={referencias} loading={loading} sePerfilesUSuario={sePerfilesUSuario} tokenDef={tokenDef}/>} /> 
         <Route path="/superadmin" exact element={<Superadmin />} />
       </Switch> 
       }       

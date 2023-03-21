@@ -79,7 +79,7 @@ import "./Home.css"
 import ErrorPage from "../ErrorPage/ErrorPage";
 import Loader from "../Loader/Loader";
 
-const Empleados = ({tokenDef, setTokenDef, sePerfilesUSuario, loading, handleClickRef, referencia, renderButtons, modalOpen, setModalOpen}) => {
+const Empleados = ({tokenDef, setTokenDef, setRenderButtons, loading, handleClickRef, referencia, renderButtons, modalOpen, setModalOpen}) => {
   const [tabIndex, setTabIndex] = useState(0);
   
   const [responses, setResponses] = useState({});
@@ -1244,7 +1244,7 @@ const getTabComponent = (tabIndex) => {
     {  localStorage.getItem('token') ? <div className="container-fluid">
       <div className="row">
         <div className="col-xl-3 col-lg-3 col-md-3">
-          <Browser renderButtons={renderButtons} getEmpleados={getEmpleados} modify={modify} setModify={setModify} deleteEmploye={deleteEmploye} setRefectch={setRefectch} refetch={refetch} disable={disable} setDisable={setDisable} setValueEmpl={setValueEmpl} responses={responses} setResponses={setResponses} agregar={agregar}  setAgregar={setAgregar} handleClickRef={handleClickRef} referencia={referencia} modalOpen={modalOpen} 
+          <Browser setRenderButtons={setRenderButtons} renderButtons={renderButtons} getEmpleados={getEmpleados} modify={modify} setModify={setModify} deleteEmploye={deleteEmploye} setRefectch={setRefectch} refetch={refetch} disable={disable} setDisable={setDisable} setValueEmpl={setValueEmpl} responses={responses} setResponses={setResponses} agregar={agregar}  setAgregar={setAgregar} handleClickRef={handleClickRef} referencia={referencia} modalOpen={modalOpen} 
 									setModalOpen={setModalOpen} />
         </div>
         <div className="col-xl-9 col-lg-9 col-md-9 ">

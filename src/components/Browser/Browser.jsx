@@ -28,7 +28,7 @@ import { domicilioSelected, recharge } from "../../redux/actions/domiciliosActio
 import ChildBajaEmpleado from "../Modals/ChildBajaEmpleado";
 import ChildModalReincorporacion from "../Modals/ChildModalReincorporacion";
 
-const Browser = ({ getEmpleados, disable, setDisable, setValueEmpl, responses, setResponses, setRefectch, refetch, deleteEmploye,setModify, agregar , setAgregar, renderButtons, handleClickRef, referencia, modalOpen, setModalOpen }) => {
+const Browser = ({ getEmpleados, disable, setDisable, setValueEmpl, responses, setResponses, setRefectch, refetch, deleteEmploye,setModify, agregar , setAgregar, renderButtons, handleClickRef, referencia, modalOpen, setModalOpen, setRenderButtons }) => {
   const [checked, setChecked] = useState(false);
   const [ browser, setBrowser ] = useState(responses["browser"]);
   const [ nameModal, setNameModal ] = useState({});
@@ -321,7 +321,9 @@ const Browser = ({ getEmpleados, disable, setDisable, setValueEmpl, responses, s
                   modalName="Reincorporación"
                   modalOpen={modalOpen} 
 									setModalOpen={setModalOpen}
-                  setRefectch={setRefectch} 
+                  setRefectch={setRefectch}
+                  setRenderButtons={setRenderButtons} 
+                  valueRender={1}
                   />
                 </ButtonCallModal>
                   
@@ -344,7 +346,9 @@ const Browser = ({ getEmpleados, disable, setDisable, setValueEmpl, responses, s
                   modalName="Baja de un Empleado"
                   modalOpen={modalOpen} 
 									setModalOpen={setModalOpen}
-                  setRefectch={setRefectch} 
+                  setRefectch={setRefectch}
+                  setRenderButtons={setRenderButtons} 
+                  valueRender={2}
                   />
                 </ButtonCallModal>
               </div>
