@@ -9,7 +9,7 @@ const Buttons = ({
   disabled,
   functionSend,
   functionDelete,
-  idEliminar,
+  idElimiar,
   refetch,
   setRefectch,
 }) => {
@@ -44,7 +44,7 @@ const Buttons = ({
           <button
             className="btn border border-danger btn-outline-danger buttonWidth"
             disabled={disabled}
-            onClick={(e) => functionDelete(idEliminar)}
+            onClick={(e) => functionDelete(idElimiar)}
             onMouseEnter={handleMouseEnterDelete}
             onMouseLeave={handleMouseLeaveDelete}
           >

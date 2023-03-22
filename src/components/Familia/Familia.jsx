@@ -23,6 +23,7 @@ import { disableFunctions } from "../../redux/actions/employeActions";
 import { addFamiliar, deleteFam, saveIdFam } from "../../redux/actions/familiaActions";
 import "./Familia.css"
 import Buttons from "../Buttons/Buttons";
+import CheckLabel from "../Inputs/CheckLabel/CheckLabel";
 
 const Familia = ({responses, setResponses,disable, setRefetch, refetch, agregar , setAgregar, handleClickRef, referencia, modify }) => {
   
@@ -152,8 +153,8 @@ const urlCreateFamiliar = "http://54.243.192.82/api/GuardarFamiliar";
     "iDEstudios": responses.formFamilia?.idInputEstudios,
     "iDPaisOrigen": responses.formFamilia?.inputPaisOrigen,
     "f_Baja": responses.formFamilia?.inputDateBaja,
-    "noDeducirGanancias": true,
-    "incluirCuotaAlimentaria": true,
+    "noDeducirGanancias": responses.formFamilia?.checkNoDeducirGana,
+    "incluirCuotaAlimentaria": responses.formFamilia?.checkCuotaAlim,
     "obs": responses.formFamilia?.textAreaObservacionesFamilia
   }
    let bodyPetitionUpdate = {
@@ -169,12 +170,11 @@ const urlCreateFamiliar = "http://54.243.192.82/api/GuardarFamiliar";
     "iDEstudios": responses.formFamilia?.idInputEstudios ? responses.formFamilia?.idInputEstudios : familiarSeleccionadoR?.idEstudios,
     "iDPaisOrigen": responses.formFamilia?.inputPaisOrigen ? responses.formFamilia?.inputPaisOrigen : familiarSeleccionadoR?.idPaisOrigen,
     "f_Baja": responses.formFamilia?.inputDateBaja ? responses.formFamilia?.inputDateBaja : familiarSeleccionadoR?.f_Baja,
-    "noDeducirGanancias": true,
-    "incluirCuotaAlimentaria": true,
+    "noDeducirGanancias": responses.formFamilia?.checkNoDeducirGana ? responses.formFamilia?.checkNoDeducirGana : familiarSeleccionadoR?.noDeducirGanancias,
+    "incluirCuotaAlimentaria": responses.formFamilia?.checkCuotaAlim ? responses.formFamilia?.checkCuotaAlim : familiarSeleccionadoR?.incluirCuotaAlimentaria,
     "obs": responses.formFamilia?.textAreaObservacionesFamilia ? responses.formFamilia?.textAreaObservacionesFamilia : familiarSeleccionadoR?.obs
   } 
 
-  console.log(bodyPetitionUpdate)
 
 
   async function sendData() {
@@ -250,7 +250,7 @@ const urlCreateFamiliar = "http://54.243.192.82/api/GuardarFamiliar";
     }
     dispatch(disableFunctions(false));
   }
-
+  
   return (
     <>
       <div className="container-fluid contFamilia">
@@ -422,14 +422,36 @@ const urlCreateFamiliar = "http://54.243.192.82/api/GuardarFamiliar";
                 valueGeneral={formFamilia?.inputDateBaja ? formFamilia?.inputDateBaja : familiarSeleccionadoR && familiarSeleccionadoR?.f_Baja?.substring(0, familiarSeleccionadoR && familiarSeleccionadoR?.f_Baja?.length -9)}
                 onChange={onChangeValues}
               />
-              <TextArea 
-              disableModal={disable} 
-              inputName="Observaciones" 
-              maxLength="255" 
-              disabled={disable} 
-              onChange={onChangeValues} 
-              idInput="textAreaObservacionesFamilia" 
-              value={ formFamilia?.textAreaObservacionesFamilia ? formFamilia?.textAreaObservacionesFamilia : familiarSeleccionadoR?.obs } 
+              <div className="col-xl-12 ">
+                <CheckLabel
+                  idInput="checkNoDeducirGana"
+                  nameLabel="No Deducir Ganancias"
+                  onChange={onChangeValues}
+                  value={formFamilia?.checkNoDeducirGana ? formFamilia?.checkNoDeducirGana : familiarSeleccionadoR?.noDeducirGanancias}
+                  disabled={disable}
+                />
+              </div>
+              <div className="col-xl-12 ">
+                <CheckLabel
+                  idInput="checkCuotaAlim"
+                  nameLabel="Incluir en cuota Alimentaria"
+                  onChange={onChangeValues}
+                  value={formFamilia?.checkCuotaAlim ? formFamilia?.checkCuotaAlim : familiarSeleccionadoR?.incluirCuotaAlimentaria}
+                  disabled={disable}
+                />
+              </div>
+              <TextArea
+                disableModal={disable}
+                inputName="Observaciones"
+                maxLength="255"
+                disabled={disable}
+                onChange={onChangeValues}
+                idInput="textAreaObservacionesFamilia"
+                value={
+                  formFamilia?.textAreaObservacionesFamilia
+                    ? formFamilia?.textAreaObservacionesFamilia
+                    : familiarSeleccionadoR?.obs
+                }
               />
             </div>
           </div>

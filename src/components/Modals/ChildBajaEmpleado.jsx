@@ -26,7 +26,6 @@ const ChildBajaEmpleado = ({handleClickClose, nameModalProp,  nameModal, disable
     "incluirCuotaAlimentaria": false
   }
 
-  console.log(value)
  
     async function sendDataBaja(){
     if(empleadoUno?.iDempleado){

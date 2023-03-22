@@ -373,7 +373,7 @@ const ArchivosAdjuntos = ({handleClickClose,disabled, nameModalProp, transition,
             <div className='col-xl-12'>
                 <InputForm disabled={disableButtons} idInput="nombreAdjunto" nameLabel="Nombre" value={modificar ? archivoSelected?.nombreOriginal : (file ? file?.name : null)} />
             </div>
-            <TextArea disableModal={disableButtons}  onChange={onChangeValues} idInput="obsArchivoDocEmpleado" />
+            <TextArea disableModal={disableButtons}  onChange={onChangeValues} idInput="obsArchivoDocEmpleado" value={formDocumentacion?.obsArchivoDocEmpleado} />
             <div className='col-xl-12 d-flex flex-row-reverse'>
                 <button disabled={disableButtons} onClick={()=> sendDataArchivos("modify")} className='btn btn-dark m-1'>
                     Aceptar

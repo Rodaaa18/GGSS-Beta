@@ -150,6 +150,7 @@ const Documentacion = ({responses, setResponses, disable, setRefectch, refetch})
     }
 
     function deleteData(id){
+      console.log("entra con id " + id)
         dispatch(deleteDocuEmpleado(id))
         dispatch(saveIds(id))
     }
@@ -175,7 +176,7 @@ const Documentacion = ({responses, setResponses, disable, setRefectch, refetch})
         });
       },[documentacionSeleccionada])
 
-
+console.log(documentacionSeleccionada)
 return (
     <div className='container'>
         <div className='row containerContainer'>
@@ -221,7 +222,7 @@ return (
                 <CheckLabel idInput="inputIncluirCuotaAlim" nameLabel="Incluir en cuota Alimentaria"  onChange={onChangeValues} action={GET_INPUT_VALUE} value={formDocumentacion?.inputIncluirCuotaAlim ? formDocumentacion?.inputIncluirCuotaAlim : documentacionSeleccionada?.incluirCuotaAlimentaria} disabled={disable} />
             </div>
             <div className='col-xl-12 contDocumentacion'>
-                <Buttons cancelar="cancelar" aceptar="aceptar" idElimiar={documentacionSeleccionada.idEmpleadoDocumentacion && documentacionSeleccionada.idEmpleadoDocumentacion} functionSend={sendDataDoc} functionDelete={deleteData} disabled={disable} />
+                <Buttons cancelar="cancelar" aceptar="aceptar" idElimiar={documentacionSeleccionada?.idEmpleadoDocumentacion && documentacionSeleccionada?.idEmpleadoDocumentacion} functionSend={sendDataDoc} functionDelete={deleteData} disabled={disable} />
                 <TableBasic1  refetch={refetch} setRefetch={setRefectch} columns={columns} value={documentacionDelEmpleado}  documentaciones={documentaciones} disabled={disable} />
             </div>
             <div className='col-xl-12 contDocumentacion mt-2'>

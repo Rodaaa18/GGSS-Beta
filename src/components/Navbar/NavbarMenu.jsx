@@ -1151,7 +1151,7 @@ const bodyCreateDocumentacion= {
 													</ButtonCallModal>
 												</li>    
 												<li>
-												<ButtonCallModal parameterRef={referencias.pldbRef}  nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="Provincias - Localidades - Departamentos - Barrios"  setTransition={setTransition} nameButton="Provincias - Localidades - Departamentos - Barrios">
+												<ButtonCallModal parameterRef={referencias.pldbRef}  nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="Provincias - Localidades - Departamentos - Barrios"  setTransition={setTransition} nameButton="Pro- Dptos - Loc - Barr">
 														<ModalProvinciasDptos 
 															modalValues={modalValues} 
 															onChangeValues={onChangeValues}  
