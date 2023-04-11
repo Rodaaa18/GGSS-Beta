@@ -39,6 +39,8 @@ const InputDateDocs = ({
     setMostrarComponente2(display);
   }, [display]);
 
+
+
   return (
     <div className="formulario__grupo__inputs__docs mt-2">
       <div class="form-check p-0">

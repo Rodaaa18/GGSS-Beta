@@ -106,7 +106,15 @@ const Extras = ({responses, setResponses, disable, setRefetch, refetch}) => {
           ...newResponse
         });
     };
-
+    useEffect(()=>{
+      let newResponse = {...formDatosExtras};
+      newResponse["inputDatosExtrasCbo"] = null;
+      newResponse["inputFechaExtras"] = "";
+      newResponse["inputTextExtras"] = "";
+      setFormDatosExtras({
+        ...newResponse
+      });
+    },[datoExtraSelected])
   
   
     useEffect(() => {    
@@ -117,7 +125,6 @@ const Extras = ({responses, setResponses, disable, setRefetch, refetch}) => {
     },[formDatosExtras]);
 
   
-
   
 
   return (
@@ -149,9 +156,10 @@ const Extras = ({responses, setResponses, disable, setRefetch, refetch}) => {
                         array={datosExtras && datosExtras}
                         propIdOption="idDatoExtra"
                         nameLabel="Datos Extras" 
-                        action={GET_INPUT_VALUES_EXTRAS} 
                         clasess={inputButtonClasessExtras}
-                        disabled={disable} />
+                        disabled={disable} 
+                        idSelected={formDatosExtras?.inputDatosExtrasCbo  ? formDatosExtras?.inputDatosExtrasCbo : datoExtraSelected?.idDatoExtra}
+                        />
                     </div>
                 </div>
                 <div className='row'>
@@ -164,7 +172,7 @@ const Extras = ({responses, setResponses, disable, setRefetch, refetch}) => {
                       </div>
                       <div className="d-flex flex-row justify-content-start align-items-center">
                           
-                          <input id="inputFechaExtras" className="secondCheckNacExtras" name="inputFechaExtras" type="date" value={formDatosExtras?.inputFechaExtras && formDatosExtras?.inputFechaExtras} disabled={disable} onChange={(e)=>onChangeValues(e.target.value, "inputFechaExtras")} />
+                          <input id="inputFechaExtras" className="secondCheckNacExtras" name="inputFechaExtras" type="date" value={formDatosExtras?.inputFechaExtras ? formDatosExtras?.inputFechaExtras : (datoExtraSelected?.fecha && datoExtraSelected?.fecha.substring(0, datoExtraSelected?.fecha.length -9))} disabled={disable} onChange={(e)=>onChangeValues(e.target.value, "inputFechaExtras")} />
                           
                       </div>
                   </div>
@@ -173,7 +181,7 @@ const Extras = ({responses, setResponses, disable, setRefetch, refetch}) => {
                 </div>
                 <div className='row'>
                       <div className='col-xl-12 fs-6 '>
-                          <TextArea  clasess={classesTxtAreaExtras}  onChange={onChangeValues} idInput="inputTextExtras" value={formDatosExtras?.inputTextExtras && formDatosExtras?.inputTextExtras} inputName="Observaciones" action={GET_INPUT_VALUES_EXTRAS} disableModal={disable} />
+                          <TextArea  clasess={classesTxtAreaExtras}  onChange={onChangeValues} idInput="inputTextExtras" value={formDatosExtras?.inputTextExtras ? formDatosExtras?.inputTextExtras : datoExtraSelected?.obs} inputName="Observaciones" action={GET_INPUT_VALUES_EXTRAS} disableModal={disable} />
                           <Buttons cancelar="cancelar" aceptar="aceptar" idElimiar={datoExtraSelected.idEmpleadoDatoExtra} functionDelete={deleteDatoExtra} functionSend={sendData}  disabled={disable} />
                           <TableExtras descripcion={datosExtras} disabled={disable} datosExtraEmpleado={datosExtraEmpleado && datosExtraEmpleado} columns={columns} />
                       </div>

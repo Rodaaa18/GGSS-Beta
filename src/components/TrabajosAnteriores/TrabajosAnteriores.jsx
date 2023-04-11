@@ -183,7 +183,7 @@ const TrabajosAnteriores = ({responses, setResponses, setRefetch, refetch,disabl
             <div className='col-xl-4'>
                 <div className='d-flex flex-row justify-content-start align-items-center mt-2 '>
                     <label htmlFor="idDateDesde">Hasta:</label>
-                    <input type="date" max="2050-12-31" onChange={(e)=> onChangeValues(e.target.value, "idDateHasta")} disabled={disable ? disable : disabled} value={modificar ? (checked ? null : formTrabajosAnteriores?.idDateHasta ? formTrabajosAnteriores?.idDateHasta : trabajoAnterior?.hasta.substring(0, trabajoAnterior?.desde.length - 9)) : formTrabajosAnteriores?.idDateHasta && formTrabajosAnteriores?.idDateHasta} name="idDateHasta" id="idDateHasta" className='dateTrabajos2 '/>
+                    <input type="date" max="2050-12-31" onChange={(e)=> onChangeValues(e.target.value, "idDateHasta")} disabled={disable ? disable : disabled} value={modificar ? (checked ? null : formTrabajosAnteriores?.idDateHasta ? formTrabajosAnteriores?.idDateHasta : (trabajoAnterior?.hasta &&trabajoAnterior?.hasta.substring(0, trabajoAnterior?.desde.length - 9))) : formTrabajosAnteriores?.idDateHasta && formTrabajosAnteriores?.idDateHasta} name="idDateHasta" id="idDateHasta" className='dateTrabajos2 '/>
                     <input type="checkbox" disabled={disable} checked={modificar ? (checked ? checked : trabajoAnterior?.actualidad) : checked && checked} name="idCheckTrabajos" id="idCheckTrabajos" className='checkTrabajos' onChange={(e)=>{ setChecked(!checked); onCheckActualidad(e.target.checked , "idCheckTrabajos", "idDateHasta")}} />
                     <label htmlFor="idDateDesde" className='labelTrabajos'>Hasta la Actualidad:</label>
                 </div>

@@ -190,43 +190,45 @@ const Documentacion = ({
       });
   }
 
-  function deleteData(id) {
-    dispatch(deleteDocuEmpleado(id));
-    dispatch(saveIds(id));
-  }
-  const handleClickClose = (nameModalProp) => {
-    let newState = { ...nameModal };
+    function deleteData(id){
+      console.log("entra con id " + id)
+        dispatch(deleteDocuEmpleado(id))
+        dispatch(saveIds(id))
+    }
+    const handleClickClose=(nameModalProp)=>{
+        let newState = {...nameModal}
+    
+        newState[nameModalProp] = false;
+        setNameModal(newState);
+    }
+   
 
-    newState[nameModalProp] = false;
-    setNameModal(newState);
-  };
+    useEffect(()=>{
+        let newResponse = {...formDocumentacion};
+        newResponse["inputDatePresentacion"] = "";
+        newResponse["inputDateVencimiento"] = "";
+        newResponse["inputCheckDocusDate"] = "";
+        newResponse["inputSelectDocumentacion"] = "";
+        newResponse["textAreaDocumentacion"] = "";
+        newResponse["inputCheckLiquidacion"] = "";
+        newResponse["inputIncluirCuotaAlim"] = "";
+        setFormDocumentacion({
+          ...newResponse
+        });
+      },[documentacionSeleccionada])
 
-  return (
-    <div className="container">
-      <div className="row containerContainer">
-        <EmployeData />
-      </div>
-      <div className="row">
-        <div className="col-xl-12 d-flex flex-row justify-content-start align-items-center">
-          <InputDateDocs
-            nameInput="Fecha Presentación"
-            idInput="inputDatePresentacion"
-            display={false}
-            onChange={onChangeValues}
-            action={GET_INPUT_VALUE}
-            disabled={disable}
-            value={
-              formDocumentacion?.inputDatePresentacion &&
-              formDocumentacion?.inputDatePresentacion
-            }
-          />
+console.log(documentacionSeleccionada)
+return (
+    <div className='container'>
+        <div className='row containerContainer'>
+            <EmployeData />
         </div>
         <div className='row'>
             <div className='col-xl-12 d-flex flex-row justify-content-start align-items-center'>
-                <InputDateDocs nameInput="Fecha Presentación" idInput="inputDatePresentacion" display={false} onChange={onChangeValues} action={GET_INPUT_VALUE} disabled={disable} value={formDocumentacion?.inputDatePresentacion && formDocumentacion?.inputDatePresentacion} />
+                <InputDateDocs nameInput="Fecha Presentación" idInput="inputDatePresentacion" display={false} onChange={onChangeValues} action={GET_INPUT_VALUE} disabled={disable} value={formDocumentacion?.inputDatePresentacion ? formDocumentacion?.inputDatePresentacion : (documentacionSeleccionada?.fecha && documentacionSeleccionada?.fecha.substring(0, documentacionSeleccionada?.fecha.length -9))} />
             </div>
             <div className='col-xl-12'>
-                <InputDate clasess={classesDateDocs} disabled={disable} nameInput="Fecha Vencimiento:" disable={disableI} setDisable={setDisableI} idInput="inputDateVencimiento" display={true}  onChange={onChangeValues} action={GET_INPUT_VALUE} actionReset={getInputValue} value={formDocumentacion?.inputDateVencimiento && formDocumentacion?.inputDateVencimiento} valueCheck={formDocumentacion?.inputCheckDocusDate && formDocumentacion?.inputCheckDocusDate} idInputCheck="inputCheckDocusDate" />
+                <InputDate clasess={classesDateDocs} disabled={disable} nameInput="Fecha Vencimiento:" disable={disableI} setDisable={setDisableI} idInput="inputDateVencimiento" display={true}  onChange={onChangeValues} action={GET_INPUT_VALUE} actionReset={getInputValue} value={formDocumentacion?.inputDateVencimiento ? formDocumentacion?.inputDateVencimiento : documentacionSeleccionada?.fechaVencimiento} valueCheck={formDocumentacion?.inputCheckDocusDate && formDocumentacion?.inputCheckDocusDate} idInputCheck="inputCheckDocusDate" />
             </div>
             <div className='col-xl-12'>
                 <InputButtonLiquidacion
@@ -242,6 +244,7 @@ const Documentacion = ({
                     action={GET_INPUT_VALUE}
                     value={formDocumentacion?.inputSelectDocumentacion && formDocumentacion?.inputSelectDocumentacion}
                     disabled={disable}
+                    idSelected={formDocumentacion?.inputSelectDocumentacion ? formDocumentacion?.inputSelectDocumentacion : documentacionSeleccionada?.idDocumentacion}
                 />
             </div>
             <div className='col-xl-12'>
@@ -250,17 +253,17 @@ const Documentacion = ({
                 inputName="Observaciones " 
                 onChange={onChangeValues} 
                 idInput="textAreaDocumentacion" 
-                value={formDocumentacion?.textAreaDocumentacion && formDocumentacion?.textAreaDocumentacion} 
+                value={formDocumentacion?.textAreaDocumentacion ? formDocumentacion?.textAreaDocumentacion : documentacionSeleccionada?.obs} 
                 disabled={disable} />
             </div>
             <div className='col-xl-12 contDocumentacion'>
-                <CheckLabel idInput="inputCheckLiquidacion" nameLabel="Se tiene en cuenta en la Liquidación (Sólo si se cumplen las condiciones necesarias)"  onChange={onChangeValues} action={GET_INPUT_VALUE} value={formDocumentacion?.inputCheckLiquidacion && formDocumentacion?.inputCheckLiquidacion} disabled={disable} />
+                <CheckLabel idInput="inputCheckLiquidacion" nameLabel="Se tiene en cuenta en la Liquidación (Sólo si se cumplen las condiciones necesarias)"  onChange={onChangeValues} action={GET_INPUT_VALUE} value={formDocumentacion?.inputCheckLiquidacion ? formDocumentacion?.inputCheckLiquidacion : documentacionSeleccionada?.generaLiquidacion} disabled={disable} />
             </div>
             <div className='col-xl-12 contDocumentacion'>
-                <CheckLabel idInput="inputIncluirCuotaAlim" nameLabel="Incluir en cuota Alimentaria"  onChange={onChangeValues} action={GET_INPUT_VALUE} value={formDocumentacion?.inputIncluirCuotaAlim && formDocumentacion?.inputIncluirCuotaAlim} disabled={disable} />
+                <CheckLabel idInput="inputIncluirCuotaAlim" nameLabel="Incluir en cuota Alimentaria"  onChange={onChangeValues} action={GET_INPUT_VALUE} value={formDocumentacion?.inputIncluirCuotaAlim ? formDocumentacion?.inputIncluirCuotaAlim : documentacionSeleccionada?.incluirCuotaAlimentaria} disabled={disable} />
             </div>
             <div className='col-xl-12 contDocumentacion'>
-                <Buttons cancelar="cancelar" aceptar="aceptar" idElimiar={documentacionSeleccionada.idEmpleadoDocumentacion && documentacionSeleccionada.idEmpleadoDocumentacion} functionSend={sendDataDoc} functionDelete={deleteData} disabled={disable} />
+                <Buttons cancelar="cancelar" aceptar="aceptar" idElimiar={documentacionSeleccionada?.idEmpleadoDocumentacion && documentacionSeleccionada?.idEmpleadoDocumentacion} functionSend={sendDataDoc} functionDelete={deleteData} disabled={disable} />
                 <TableBasic1  refetch={refetch} setRefetch={setRefectch} columns={columns} value={documentacionDelEmpleado}  documentaciones={documentaciones} disabled={disable} />
             </div>
             <div className='col-xl-12 contDocumentacion mt-2'>

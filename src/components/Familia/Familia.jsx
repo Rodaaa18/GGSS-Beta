@@ -57,11 +57,10 @@ const Familia = ({
 
   //#region ------------------------------------------------------------------------------CONSTANTES DE DATOS
   const urlFamiliares = "http://54.243.192.82/api/EliminarFamiliarPorId";
-  const urlCreateFamiliar = "http://54.243.192.82/api/InsertarNuevoFamiliar";
-
-  function onChangeValues(e, key) {
-    let newResponse = { ...formFamilia };
-    if (key === "inputDateNac") {
+const urlCreateFamiliar = "http://54.243.192.82/api/GuardarFamiliar";
+  function onChangeValues(e, key){
+    let newResponse = {...formFamilia};
+    if(key === "inputDateNac"){
       const inputDate = new Date(e);
       if (inputDate.getFullYear() > 2050) {
         const maxDate = new Date("2050-12-31");
@@ -98,14 +97,24 @@ const Familia = ({
     });
   }, [formFamilia]);
 
-  useEffect(() => {
-    let newResponse = { ...formFamilia };
-    newResponse["textAreaObservacionesFamilia"] = "";
-    newResponse["idRadioBtn"] = "";
-    setFormFamilia({
-      ...newResponse,
-    });
-  }, [familiarSeleccionadoR]);
+    useEffect(()=>{
+      let newResponse = {...formFamilia};
+      newResponse["textAreaObservacionesFamilia"] = "";
+      newResponse["idRadioBtn"] = "";
+      newResponse["inputCmbDni"] = null;
+      newResponse["inputNroDni"] = "";
+      
+      newResponse["inputApellidoNombres"] = "";
+      newResponse["inputParentesco"] = null;
+      newResponse["inputDateNac"] = "";
+      newResponse["nacionalidadFamilia"] = null;
+      newResponse["idInputEstudios"] = null;
+      newResponse["inputPaisOrigen"] = null;
+      newResponse["inputDateBaja"] = "";
+      setFormFamilia({
+        ...newResponse
+      });
+    },[familiarSeleccionadoR])
 
   const empleadoUno = useSelector((state) => state.employeStates.employe);
   const familiaRedux = useSelector((state) => state.familiaStates.formulario);
@@ -157,53 +166,101 @@ const Familia = ({
       setFamiliarSeleccionado(res);
     });
   }
+  let bodyPetition = {
+    "iDFamiliares": ((familiaresValue && familiaresValue[familiaresValue.length -1]  && (familiaresValue[familiaresValue.length -1].iDfamiliares))+1),
+    "iDEmpleado": empleadoUno.iDempleado,
+    "apellidoyNombres": responses.formFamilia?.inputApellidoNombres,
+    "iDParentesco": responses.formFamilia?.inputParentesco,
+    "sexo": responses.formFamilia?.idRadioBtn,
+    "fechaNacimiento": responses.formFamilia?.inputDateNac,
+    "iDNacionalidad": responses.formFamilia?.nacionalidadFamilia,
+    "iDTipoDocumento": responses.formFamilia?.inputCmbDni,
+    "nroDocumento": responses.formFamilia?.inputNroDni,
+    "iDEstudios": responses.formFamilia?.idInputEstudios,
+    "iDPaisOrigen": responses.formFamilia?.inputPaisOrigen,
+    "f_Baja": responses.formFamilia?.inputDateBaja,
+    "noDeducirGanancias": responses.formFamilia?.checkNoDeducirGana,
+    "incluirCuotaAlimentaria": responses.formFamilia?.checkCuotaAlim,
+    "obs": responses.formFamilia?.textAreaObservacionesFamilia
+  }
+   let bodyPetitionUpdate = {
+    "iDFamiliares": familiarSeleccionadoR?.idFamiliares,
+    "iDEmpleado": empleadoUno.iDempleado,
+    "apellidoyNombres": responses.formFamilia?.inputApellidoNombres ? responses.formFamilia?.inputApellidoNombres : familiarSeleccionadoR?.apellidoyNombres,
+    "iDParentesco": responses.formFamilia?.inputParentesco ? responses.formFamilia?.inputParentesco : familiarSeleccionadoR?.idParentesco,
+    "sexo": responses.formFamilia?.idRadioBtn ? responses.formFamilia?.idRadioBtn : familiarSeleccionadoR?.sexo,
+    "fechaNacimiento": responses.formFamilia?.inputDateNac ? responses.formFamilia?.inputDateNac : familiarSeleccionadoR?.fechaNacimiento,
+    "iDnacionalidad": responses.formFamilia?.nacionalidadFamilia ? responses.formFamilia?.nacionalidadFamilia : familiarSeleccionadoR?.idNacionalidad,
+    "iDTipoDocumento": responses.formFamilia?.inputCmbDni ? responses.formFamilia?.inputCmbDni : familiarSeleccionadoR?.idTipoDocumento,
+    "nroDocumento": responses.formFamilia?.inputNroDni ? responses.formFamilia?.inputNroDni : familiarSeleccionadoR?.nroDocumento,
+    "iDEstudios": responses.formFamilia?.idInputEstudios ? responses.formFamilia?.idInputEstudios : familiarSeleccionadoR?.idEstudios,
+    "iDPaisOrigen": responses.formFamilia?.inputPaisOrigen ? responses.formFamilia?.inputPaisOrigen : familiarSeleccionadoR?.idPaisOrigen,
+    "f_Baja": responses.formFamilia?.inputDateBaja ? responses.formFamilia?.inputDateBaja : familiarSeleccionadoR?.f_Baja,
+    "noDeducirGanancias": responses.formFamilia?.checkNoDeducirGana ? responses.formFamilia?.checkNoDeducirGana : familiarSeleccionadoR?.noDeducirGanancias,
+    "incluirCuotaAlimentaria": responses.formFamilia?.checkCuotaAlim ? responses.formFamilia?.checkCuotaAlim : familiarSeleccionadoR?.incluirCuotaAlimentaria,
+    "obs": responses.formFamilia?.textAreaObservacionesFamilia ? responses.formFamilia?.textAreaObservacionesFamilia : familiarSeleccionadoR?.obs
+  } 
+
+
 
   async function sendData() {
-    try {
-      await axios.post(urlCreateFamiliar, bodyPetition).then((res) => {
-        //dispatch(addNewFamiliar(res.data));
-        setRefetch(!refetch);
-        swal({
-          title: "Ok",
-          text: "Familiar cargado correctamente",
-          icon: "success",
-        });
-      });
-      return;
-    } catch (err) {
-      return err;
+    if(familiarSeleccionadoR){
+      try{
+        await axios.post(urlCreateFamiliar, bodyPetitionUpdate)
+        .then(res => {
+          //dispatch(addNewFamiliar(res.data));
+          if(res.status === 200){
+            setRefetch(!refetch)
+            return swal({
+              title: "Ok",
+              text: "Familiar actualizado correctamente",
+              icon: "success",
+            })
+          }
+          
+        })
+      }catch(err){
+        return swal({
+          title: "Error",
+          text: "Error al Actualizar el Familiar" + err,
+          icon: "error",
+        })
+      }
+    }else{
+      try {
+        await axios.post(urlCreateFamiliar, bodyPetition)
+          .then(res => {
+            //dispatch(addNewFamiliar(res.data));
+            if(res.status === 200){
+              setRefetch(!refetch)
+              return swal({
+                title: "Ok",
+                text: "Familiar cargado correctamente",
+                icon: "success",
+              })
+            }
+            
+          })
+        return;
+      } catch (err) {
+        return swal({
+          title: "Error",
+          text: "Error al Actualizar el Familiar" + err,
+          icon: "error",
+        })
+      }
     }
+    
   }
   const deleteFamiliar = (id) => {
     dispatch(deleteFam(id));
     dispatch(saveIdFam(id));
   };
 
-  let bodyPetition = {
-    iDfamiliares:
-      (familiaresValue &&
-        familiaresValue[familiaresValue.length - 1] &&
-        familiaresValue[familiaresValue.length - 1].iDfamiliares) + 1,
-    iDempleado: empleadoUno.iDempleado,
-    apellidoyNombres: responses.formFamilia?.inputApellidoNombres,
-    iDparentesco: responses.formFamilia?.inputParentesco,
-    sexo: responses.formFamilia?.idRadioBtn,
-    fechaNacimiento: responses.formFamilia?.inputDateNac,
-    iDnacionalidad: responses.formFamilia?.nacionalidadFamilia,
-    iDtipoDocumento: responses.formFamilia?.inputCmbDni,
-    nroDocumento: responses.formFamilia?.inputNroDni,
-    iDestudios: responses.formFamilia?.idInputEstudios,
-    iDpaisOrigen: responses.formFamilia?.inputPaisOrigen,
-    fBaja: responses.formFamilia?.inputDateBaja,
-    checkNoDeducirGana: false,
-    checkCuotaAlim: false,
-    fechaCasamiento: null,
-    fechaParto: null,
-    fechaAcargoDesde: null,
-    obs: responses.formFamilia?.textAreaObservacionesFamilia,
-  };
+  
 
-  function cancelButton() {
+
+  function cancelButton(){
     Array.from(document.querySelectorAll("input")).forEach(
       (input) => (input.value = "")
     );
@@ -218,9 +275,7 @@ const Familia = ({
     }
     dispatch(disableFunctions(false));
   }
-  console.log(familiarSeleccionadoR?.sexo);
-  console.log (formFamilia?.checkNoDeducirGana)
-  console.log (formFamilia?.checkCuotaAlim)
+  
   return (
     <>
       <div className="container-fluid contFamilia">
@@ -455,8 +510,7 @@ const Familia = ({
                   idInput="checkNoDeducirGana"
                   nameLabel="No Deducir Ganancias"
                   onChange={onChangeValues}
-                  checked={checked}
-                  value={formFamilia?.idInput}
+                  value={formFamilia?.checkNoDeducirGana ? formFamilia?.checkNoDeducirGana : familiarSeleccionadoR?.noDeducirGanancias}
                   disabled={disable}
                 />
               </div>
@@ -465,8 +519,7 @@ const Familia = ({
                   idInput="checkCuotaAlim"
                   nameLabel="Incluir en cuota Alimentaria"
                   onChange={onChangeValues}
-                  checked={checked}
-                  value={formFamilia?.idInput}
+                  value={formFamilia?.checkCuotaAlim ? formFamilia?.checkCuotaAlim : familiarSeleccionadoR?.incluirCuotaAlimentaria}
                   disabled={disable}
                 />
               </div>

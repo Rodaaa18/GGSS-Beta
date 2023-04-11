@@ -13,7 +13,7 @@ const TextArea = ({ characterLimit = 255, onChange,idInput, disableModal, clases
     
       const charactersLeft = characterLimit - value?.length;
 
-   console.log(value)
+  
 return (
     <>
     {clasess ? 

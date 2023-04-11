@@ -13,6 +13,9 @@
 	transition: .3s ease all;
 	border-bottom: 1px solid rgb(78, 6, 6);
 }
+.buttonWidth{
+	width: 7rem;
+}
 .formulario-input-Legajo:focus{
     background-image: linear-gradient(to bottom, transparent, rgb(189, 103, 103, 0.3));
     outline: none;

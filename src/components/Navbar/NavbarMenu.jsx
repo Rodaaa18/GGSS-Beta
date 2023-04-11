@@ -699,10 +699,20 @@ const bodyCreateDocumentacion= {
 								</a>
 								<ul className=" dropdown-menu styleMenu">
 									
-									<li><Link onClick={()=>renderButtonFunction(0)} className="dropdown-item" to="/ficha-empleados">Ficha Empleados</Link></li>
-									<li><Link onClick={()=>renderButtonFunction(1)} className="dropdown-item">Reincorporación</Link></li>
-									<li><Link onClick={()=>renderButtonFunction(2)} className="dropdown-item">Baja de un empleado</Link></li>
-									<li><Link onClick={()=>renderButtonFunction(3)} className="dropdown-item">Cambio de Categoría</Link></li>	
+									<li>
+										<Link onClick={()=>renderButtonFunction(0)} className="dropdown-item" to="/ficha-empleados">Ficha Empleados</Link>
+									</li>
+									<li>
+
+										<Link onClick={()=>renderButtonFunction(1)} className="dropdown-item">Reincorporación</Link>
+									</li>
+									<li>
+										
+										<Link onClick={()=>renderButtonFunction(2)} className="dropdown-item">Baja de un empleado</Link>
+									</li>
+									<li>
+										<Link onClick={()=>renderButtonFunction(3)} className="dropdown-item">Cambio de Categoría</Link>
+									</li>	
 								</ul>
 							</li>
 							{/*<li className="nav-item">
@@ -1164,7 +1174,7 @@ const bodyCreateDocumentacion= {
 													</ButtonCallModal>
 												</li>    
 												<li>
-												<ButtonCallModal parameterRef={referencias.pldbRef}  nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="Provincias - Localidades - Departamentos - Barrios"  setTransition={setTransition} nameButton="Provincias - Localidades - Departamentos - Barrios">
+												<ButtonCallModal parameterRef={referencias.pldbRef}  nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="Provincias - Localidades - Departamentos - Barrios"  setTransition={setTransition} nameButton="Pro- Dptos - Loc - Barr">
 														<ModalProvinciasDptos 
 															modalValues={modalValues} 
 															onChangeValues={onChangeValues}  

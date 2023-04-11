@@ -58,7 +58,7 @@ const InputTextTrabajos = ({
       <div className="col-xl-4 d-flex flex-row justify-content-start align-items-center mt-2 ">
         <button
           disabled={disable}
-          className="btn border border-success btn-outline-success buttonAceptarCancelar"
+          className="btn border border-success btn-outline-success  buttonWidth"
           onClick={onSend}
           onMouseEnter={handleMouseEnterAdd}
           onMouseLeave={handleMouseLeaveAdd}
@@ -75,7 +75,7 @@ const InputTextTrabajos = ({
         </button>
         <button
           disabled={disable}
-          className="btn  border border-danger btn-outline-danger buttonAceptarCancelar"
+          className="btn  border border-danger btn-outline-danger m-1 buttonWidth"
           onClick={() => onDelete(id)}
           onMouseEnter={handleMouseEnterDelete}
             onMouseLeave={handleMouseLeaveDelete}

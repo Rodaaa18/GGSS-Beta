@@ -16,7 +16,7 @@ const ChildBajaEmpleado = ({handleClickClose, nameModalProp,  nameModal, disable
   const motivosEgreso = useSelector((state)=> state.generalState.motivosEgreso);
   
   const bodyDocu = {
-    "fecha": value?.datePResentacionBaja,
+    "fecha": value?.datePResentacionBaja && value?.datePResentacionBaja.substring(0, value?.datePResentacionBaja.length -3),
     "idEmpleado": empleadoUno?.iDempelado,
     "idDocumentacion": value?.labelModalBaja,
     "rutaAdjunto": "",
@@ -26,7 +26,6 @@ const ChildBajaEmpleado = ({handleClickClose, nameModalProp,  nameModal, disable
     "incluirCuotaAlimentaria": false
   }
 
-  console.log(value)
  
     async function sendDataBaja(){
     if(empleadoUno?.iDempleado){

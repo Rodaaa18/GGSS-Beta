@@ -117,6 +117,10 @@ useEffect(()=>{
       newResponse["dniSelected"] = parSueldos && parSueldos[0].idTipoDocumentoPredeterminado;
       newResponse["estadosEmpleados"] = parSueldos && parSueldos[0].estadoAltaEmpleado;
       newResponse["paisOrigenInput"] = parSueldos && parSueldos[0].idPaisPredeterminado;
+    }else{
+      newResponse["dniSelected"] = empleadoUno?.idTipoDocumentoPredeterminado;
+      newResponse["estadosEmpleados"] = empleadoUno?.idEstado;
+      newResponse["paisOrigenInput"] = empleadoUno?.idPaisPredeterminado;
     }
     setFormDatosPersonales({
       ...newResponse
@@ -391,7 +395,7 @@ useEffect(()=>{
                         </div>
                         <div className="tercera_columna col-xl-4 col-lg-4 col-md-4">
                           <InputCbo
-                            value={agregar || modify ? formDatosPersonales?.estadosEmpleados :  empleadoUno.idEstado }
+                            value={modify ? formDatosPersonales?.estadosEmpleados :  empleadoUno.idEstado }
                             handleClickRef={handleClickRef}
                             referencia= {referencia.estadoRef}
                             modalName="Estado"
@@ -415,6 +419,7 @@ useEffect(()=>{
                             disabled={disable} 
                             obligatorio ={true}
                             esAltaDeEmpleado={true}
+                            modify={modify}
                             />
                           <InputRadio
                             value={agregar || modify ? formDatosPersonales?.inputSexo : empleadoUno.sexo}

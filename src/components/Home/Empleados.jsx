@@ -229,7 +229,7 @@ useEffect(()=>{
    handleFetch(urlDomicilios, addDomicilios);
    handleFetch(urlParSueldos, getParSueldos);
    handleFetch(urlDocumentacionEmpleados, addDocumentacionEmpleados);
-
+   handleFetch(urlMotivosEgreso, getMotivosEgreso);
    axios.post(urlArchivosAdjuntos, bodyArchivosDocs).then((res)=>{
     if(res.status === 200){
       dispatch(getArchivosAdjuntos(res.data.result))
@@ -345,7 +345,7 @@ useEffect(() => {
      handleFetch(urlDocumentacion, getOneDocumento);
 
 
-
+     handleFetch(urlMotivosEgreso, getMotivosEgreso);
 
    handleFetch(urlSectorDepto, addSectorDepto);
      handleFetch(urlInstrumLegal, addInstrumLegales);
@@ -445,7 +445,7 @@ useEffect(() => {
         await axios({method: 'get',
                       url: urlEmpleadoPorApellido,
                       timeout: 2000}).then((res) => {
-                        console.log(res)
+                      
           dispatch(getEmployes(res.data.result));
         });
         return;
@@ -1354,10 +1354,10 @@ const getTabComponent = (tabIndex) => {
         </div>
       </div>
       <div className="d-flex flex-row-reverse btnEmpl w-100 gap-2">
-        <button className="btn btn-danger btnSize " onClick={()=> {cleanIdsGeneral(); handleTabChange(0)}}>
+        <button className="btn btn-danger btn-sm " onClick={()=> {cleanIdsGeneral(); handleTabChange(0)}}>
           Cancelar
         </button>
-        <button className="btn btn-success btnSize " onClick={()=> {deleteItems( objectRequest); handleTabChange(0)}}>Aceptar</button>
+        <button className="btn btn-success btn-sm " onClick={()=> {deleteItems( objectRequest); handleTabChange(0)}}>Aceptar</button>
       </div>
       <Footer setTokenDef={setTokenDef} tokenDef={tokenDef}/>
     </div> : <ErrorPage loading={loading}/>}

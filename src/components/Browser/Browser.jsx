@@ -29,6 +29,7 @@ import { setRefetch } from "../../redux/actions/modalesActions";
 import { domicilioSelected, recharge } from "../../redux/actions/domiciliosActions";
 import ChildBajaEmpleado from "../Modals/ChildBajaEmpleado";
 import ChildModalReincorporacion from "../Modals/ChildModalReincorporacion";
+import ChildModalCamCate from "../Modals/ChildModalCamCate";
 
 const Browser = ({ getEmpleados, disable, setDisable, setValueEmpl, responses, setResponses, setRefectch, refetch, deleteEmploye,setModify, agregar , setAgregar, renderButtons, handleClickRef, referencia, modalOpen, setModalOpen, setRenderButtons }) => {
   const [checked, setChecked] = useState(false);
@@ -102,9 +103,9 @@ const Browser = ({ getEmpleados, disable, setDisable, setValueEmpl, responses, s
     setBrowser({
       ...newResponse,
     });
-  }
-
-  useEffect(() => {
+};
+ 
+  useEffect(() => {  
     setResponses({
       ...responses,
       browser,
@@ -389,7 +390,7 @@ const Browser = ({ getEmpleados, disable, setDisable, setValueEmpl, responses, s
 									setModalOpen={setModalOpen}
                   setRefectch={setRefectch}
                   setRenderButtons={setRenderButtons} 
-                  valueRender={1}
+                  valueRender={0}
                   />
                 </ButtonCallModal>
                   
@@ -414,10 +415,34 @@ const Browser = ({ getEmpleados, disable, setDisable, setValueEmpl, responses, s
 									setModalOpen={setModalOpen}
                   setRefectch={setRefectch}
                   setRenderButtons={setRenderButtons} 
-                  valueRender={2}
+                  valueRender={0}
                   />
                 </ButtonCallModal>
-                </div>
+              </div>
+            }
+            {
+              renderButtons === 3 && <div className="d-flex flex-row justify-content-center align-items-center w-100">
+                 <ButtonCallModal  esBoton={true} nameModal={nameModal} setNameModal={setNameModal}  nameModalProp="cambioCategoria" nameButton="Cambio de Categoría">
+                  <ChildModalCamCate
+                  handleClickClose={handleClickClose}
+                  nameModal = "Cambio de Categoría"
+                  nameModalProp="cambioCategoria"
+                  onChangeValues={onChangeValues}
+                  formDocumentacion={setBrowser}
+                  value={browser}
+                  refetch={refetch} 
+                  setRefetch={setRefectch} 
+                  handleClickRef={handleClickRef}
+                  referencia= {referencia.docuRef}
+                  modalName="Cambio de Categoría"
+                  modalOpen={modalOpen} 
+									setModalOpen={setModalOpen}
+                  setRefectch={setRefectch}
+                  setRenderButtons={setRenderButtons} 
+                  valueRender={0}
+                  />
+                </ButtonCallModal>
+              </div>
             }
           </div>
           </div>

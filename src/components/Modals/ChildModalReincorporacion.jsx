@@ -27,51 +27,44 @@ const ChildModalReincorporacion = ({
     (state) => state.generalState.motivosEgreso
   );
 
-  console.log(empleadoUno?.iDempleado);
   const bodyDocu = {
-    fecha: value?.fechaPresentacionReincorpora,
-    idEmpleado: empleadoUno?.iDempelado,
-    idDocumentacion: value?.cboReincorporacion,
-    rutaAdjunto: "",
-    obs: value?.txtReincorporacion,
-    fechaVencimiento: null,
-    generaLiquidacion: false,
-    incluirCuotaAlimentaria: false,
-  };
-  async function sendDataReincorporacion() {
-    if (empleadoUno?.iDempleado) {
-      try {
-        axios
-          .post(
-            `http://54.243.192.82/api/Empleados/sp_EmpleadosReincorporacionEmpleado?idEmpleado=${empleadoUno?.iDempleado}`
-          )
-          .then((res) => {
-            if (res.status === 200) {
-              try {
-                axios
-                  .post(
-                    `http://54.243.192.82/api/EmpleadosDocumentacion`,
-                    bodyDocu
-                  )
-                  .then((res) => {
-                    if (res.status === 200) {
-                      setRefectch(!refetch);
-                      setRenderButtons(valueRender);
-                      return swal({
-                        title: "Ok",
-                        text: "Reincorporación exitosa",
-                        icon: "success",
-                      });
+    "fecha": value?.fechaPresentacionReincorpora && value?.fechaPresentacionReincorpora.substring(0, value?.fechaPresentacionReincorpora.length -3),
+    "idEmpleado": empleadoUno?.iDempleado,
+    "idDocumentacion": value?.cboReincorporacion,
+    "rutaAdjunto": "",
+    "obs": value?.txtReincorporacion,
+    "fechaVencimiento": null,
+    "generaLiquidacion": false,
+    "incluirCuotaAlimentaria": false
+  }
+
+
+async function sendDataReincorporacion(){
+    if(empleadoUno?.iDempleado){
+        try{
+            axios.post(`http://54.243.192.82/api/Empleados/sp_EmpleadosReincorporacionEmpleado?idEmpleado=${empleadoUno?.iDempleado}`)
+            .then((res)=>{
+                if(res.status === 200){
+                    try{
+                        axios.post(`http://54.243.192.82/api/EmpleadosDocumentacion`, bodyDocu)
+                        .then((res)=>{
+                          if(res.status === 200){
+                            setRefectch(!refetch);
+                            setRenderButtons(valueRender);
+                            return swal({
+                                title : "Ok",
+                                text : "Reincorporación exitosa",
+                                icon : "success"
+                            });
+                          }
+                        })
+                    }catch(err){
+                        return swal({
+                            title : "Error",
+                            text : "Error al realizar la reincorporación del Empelado" + err,
+                            icon : "error"
+                          });
                     }
-                  });
-              } catch (err) {
-                return swal({
-                  title: "Error",
-                  text:
-                    "Error al realizar la reincorporación del Empelado" + err,
-                  icon: "error",
-                });
-              }
             }
           });
       } catch (err) {
@@ -119,19 +112,13 @@ const ChildModalReincorporacion = ({
                   Empleado
                 </span>
               </legend>
-              <div className="row">
-                <div className="col-12 d-flex flex-row align-items-center justify-content-start">
-                  <label className="labelModalBaja" htmlFor="legajoModal">
-                    Legajo:
-                  </label>
-                  <input
-                    className="inputModalBaja"
-                    type="text"
-                    name="legajoModal"
-                    id="legajoModal"
-                    value={empleadoUno?.iDempleado ? empleadoUno?.legajo : ""}
-                  />
-                </div>
+              <div className='row d-flex flex-row align-items-center justify-content-start'>
+                
+                  <div className='col-6 '>
+                     <label className='labelModalBaja' htmlFor="fechaPresentacionReincorpora">Fecha Presentación:</label>
+                     <input onChange={(e)=> onChangeValues(e.target.value, "fechaPresentacionReincorpora")} value={value?.fechaPresentacionReincorpora} className='fechaModalBaja' type="date" name="fechaPresentacionReincorpora" id="fechaPresentacionReincorpora" />
+                  </div>
+                  
               </div>
               <div className="row">
                 <div className="col-12 d-flex flex-row align-items-center justify-content-start">
